@@ -4,15 +4,17 @@
  *
  * WHAT IT DOES : Two slides side by side: "Our plan" (our redrawn SVG) and
  *                "Posted map" (photo of the evacuation map in the building).
- *                Swipe between them (mid-swipe you see both) or use the switch
- *                above; the switch follows the swipe.
+ *                Swipe between them (mid-swipe you see both) or tap the switch
+ *                above. The slides are Framework7's Swiper; the switch's
+ *                highlight slides along with your finger.
  *                On our plan:
  *                  - tap a room to choose it,
  *                  - the chosen room is light blue, with arrows from where you
  *                    come in (js/planArt.js).
  *                The corner button opens the picture full screen.
- * DEPENDS ON   : ./config.js, ./store.js, ./planArt.js, #bs-slides and the
- *                switch in index.html, data/rooms.json (room outlines).
+ * DEPENDS ON   : Framework7's Swiper (<swiper-container>), ./config.js, ./store.js,
+ *                ./planArt.js, #bs-slides and the switch in index.html,
+ *                data/rooms.json (room outlines).
  * CONTROLS     : the floor plan slides, the switch and #bs-caption.
  * USED BY      : js/buildingSheet.js
  */
@@ -46,7 +48,8 @@ function inside(points, x, y) {
  */
 export function initFloorPlan(rooms, openViewer) {
   const words = CONFIG.sheet;
-  const slides = document.querySelector('#bs-slides');
+  const slides = document.querySelector('#bs-slides'); // <swiper-container>
+  const highlight = document.querySelector('.bs-switch .segmented-highlight');
   const caption = document.querySelector('#bs-caption');
   const views = {
     plan: {
@@ -71,11 +74,11 @@ export function initFloorPlan(rooms, openViewer) {
 
   /* ---------- Switch and swipe ---------- */
 
-  /** @param {'plan'|'posted'} name - highlight this tab in the switch */
-  function markTab(name) {
-    order.forEach((view) => {
-      views[view].tab.classList.toggle('button-active', view === name);
-      views[view].tab.setAttribute('aria-selected', String(view === name));
+  /** @param {number} index - 0 = Our plan, 1 = Posted map: bold text + screen readers */
+  function markTab(index) {
+    order.forEach((view, i) => {
+      views[view].tab.classList.toggle('button-active', i === index);
+      views[view].tab.setAttribute('aria-selected', String(i === index));
     });
   }
 
@@ -85,19 +88,27 @@ export function initFloorPlan(rooms, openViewer) {
    * @param {boolean} animate - false jumps straight there
    */
   function goTo(name, animate) {
-    slides.scrollTo({ left: views[name].slide.offsetLeft, behavior: animate ? 'smooth' : 'instant' });
-    markTab(name);
+    const index = order.indexOf(name);
+    if (slides.swiper) slides.swiper.slideTo(index, animate ? undefined : 0);
+    markTab(index);
   }
 
   order.forEach((name) => views[name].tab.addEventListener('click', () => goTo(name, true)));
 
-  // While swiping, the switch flips as soon as you're past halfway.
-  slides.addEventListener('scroll', () => {
-    const halfway = views.posted.slide.offsetLeft / 2;
-    markTab(slides.scrollLeft > halfway ? 'posted' : 'plan');
-  }, { passive: true });
+  // The highlight follows the swipe: Swiper's progress goes 0 (plan) to 1 (posted).
+  // Framework7 positions the highlight from --f7-segmented-highlight-active.
+  slides.addEventListener('swiperprogress', (event) => {
+    const [, progress] = event.detail;
+    highlight.style.setProperty('--f7-segmented-highlight-active', Math.min(1, Math.max(0, progress)));
+  });
+  slides.addEventListener('swiperslidechange', () => markTab(slides.swiper.activeIndex));
 
   /* ---------- Pictures ---------- */
+
+  /** Resize the slides to the shown slide's content (pictures and messages differ in height). */
+  function fitHeight() {
+    if (slides.swiper) slides.swiper.updateAutoHeight(0);
+  }
 
   /**
    * Put a picture (or a "not available" message) on one slide.
@@ -112,9 +123,11 @@ export function initFloorPlan(rooms, openViewer) {
       view.image.hidden = true;
       view.missing.textContent = view.missingText;
       view.missing.hidden = false;
+      fitHeight();
       return;
     }
     view.image.onerror = () => fillSlide(view, undefined, alt); // listed, but the file is missing
+    view.image.onload = fitHeight; // the slide takes the picture's height once it has loaded
     view.image.src = url;
     view.image.alt = alt;
     view.image.hidden = false;
@@ -169,6 +182,7 @@ export function initFloorPlan(rooms, openViewer) {
       if (thisRequest !== request) return; // something newer is already showing
     }
     fillSlide(views.plan, picture, floorName + ' ' + words.planAltText);
+    fitHeight();
   }
 
   /* ---------- Taps on the pictures ---------- */

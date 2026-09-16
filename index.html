@@ -91,8 +91,9 @@
             <button class="button" id="bs-tab-posted" type="button" role="tab" aria-selected="false" aria-controls="bs-slide-posted">Posted map</button>
             <span class="segmented-highlight"></span>
           </div>
-          <div id="bs-slides" class="bs-slides">
-            <div id="bs-slide-plan" class="bs-slide" role="tabpanel">
+          <!-- Framework7's Swiper: follows your finger, snaps, and each slide keeps its own height. -->
+          <swiper-container id="bs-slides" class="bs-slides" auto-height="true" space-between="16">
+            <swiper-slide id="bs-slide-plan" role="tabpanel">
               <div class="bs-frame">
                 <!-- Tap a room on the plan to choose it -->
                 <img id="bs-plan-img" class="bs-floor-img" alt="" hidden />
@@ -101,8 +102,9 @@
                 </button>
               </div>
               <p id="bs-plan-missing" class="bs-missing" hidden></p>
-            </div>
-            <div id="bs-slide-posted" class="bs-slide" role="tabpanel">
+              <p id="bs-caption" class="bs-caption"></p>
+            </swiper-slide>
+            <swiper-slide id="bs-slide-posted" role="tabpanel">
               <div class="bs-frame">
                 <img id="bs-posted-img" class="bs-floor-img" alt="" hidden />
                 <button class="bs-zoom" type="button" data-view="posted" aria-label="Open posted map full screen">
@@ -110,9 +112,8 @@
                 </button>
               </div>
               <p id="bs-posted-missing" class="bs-missing" hidden></p>
-            </div>
-          </div>
-          <p id="bs-caption" class="bs-caption"></p>
+            </swiper-slide>
+          </swiper-container>
 
           <!-- 2. Photos -->
           <section class="bs-section">
@@ -234,19 +235,26 @@
        left shows your location (js/locate.js).
        Kept outside #app so it floats above the map and the sheet. -->
   <!-- Turn-by-turn card while directions are on (js/routeCard.js). It takes the
-       pill's place at the bottom; X ends the route. -->
+       pill's place at the bottom. Tap it to see every step; X ends the trip. -->
   <div id="route-card" class="route-card" role="region" aria-label="Directions" hidden>
-    <div class="route-turn"><i id="route-turn-icon" class="icon f7-icons" aria-hidden="true">arrow_up</i></div>
-    <div class="route-text">
-      <p id="route-instruction" class="route-instruction" aria-live="polite"></p>
-      <p class="route-summary">
-        <span class="material-symbols-rounded route-walk" aria-hidden="true">directions_walk</span>
-        <span id="route-summary"></span>
-      </p>
-    </div>
-    <button id="route-end" class="route-end" type="button" aria-label="End route">
+    <span class="route-grabber" aria-hidden="true"></span>
+    <button id="route-toggle" class="route-head" type="button" aria-expanded="false" aria-controls="route-steps">
+      <span class="route-turn"><i id="route-turn-icon" class="icon f7-icons" aria-hidden="true">arrow_up</i></span>
+      <span class="route-text">
+        <span id="route-instruction" class="route-instruction" aria-live="polite"></span>
+        <span class="route-summary">
+          <span class="material-symbols-rounded route-walk" aria-hidden="true">directions_walk</span>
+          <span id="route-summary"></span>
+        </span>
+      </span>
+    </button>
+    <button id="route-end" class="route-end" type="button" aria-label="End trip">
       <i class="icon f7-icons" aria-hidden="true">xmark</i>
     </button>
+    <!-- Every step, shown when the card is expanded -->
+    <div class="route-steps-wrap">
+      <ol id="route-steps" class="route-steps"></ol>
+    </div>
   </div>
 
   <div id="pill" class="pill-bar">

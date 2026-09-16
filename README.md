@@ -68,7 +68,8 @@ js/search.js            search (buildings and rooms)
 js/searchMatch.js       what counts as a search match
 js/directions.js        walking directions
 js/turns.js             next turn, distance and time
-js/routeCard.js         turn-by-turn card
+js/routeCard.js         turn-by-turn card (tap for every step)
+js/heading.js           which way you're facing
 js/floorPlan.js         plan / posted-map slides, tap a room
 js/planArt.js           room highlight + indoor arrows on the plan
 js/geo.js               distance / inside-outline maths

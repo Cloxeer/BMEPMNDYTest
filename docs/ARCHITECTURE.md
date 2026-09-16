@@ -63,8 +63,9 @@ Three rules keep it predictable:
 | `js/searchMatch.js` | What counts as a match: room numbers, codes, small typos |
 | `js/directions.js` | Walking route with blue arrows (Dijkstra shortest path via geojson-path-finder); opens the sheet when you walk in |
 | `js/turns.js` | Route -> next turn, distance, time ("590 ft · Turn right onto the path") |
-| `js/routeCard.js` | The turn-by-turn card that replaces the pill during directions |
-| `js/floorPlan.js` | Plan / posted-map slides, tap a room to choose it |
+| `js/routeCard.js` | The turn-by-turn card that replaces the pill during directions; tap to list every step, X asks before ending |
+| `js/heading.js` | Compass beam on your location dot (which way you face) |
+| `js/floorPlan.js` | Plan / posted-map slides (Framework7 Swiper), tap a room to choose it |
 | `js/planArt.js` | Draws the chosen room and the indoor arrows onto our plan |
 | `js/geo.js` | Distances and point-inside-outline maths |
 | `js/locations.js` | The Locations page |

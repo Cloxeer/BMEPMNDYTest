@@ -6,7 +6,8 @@
  *                (1) groups them into legs: a new leg starts where the way's
  *                    name changes or the route bends sharply,
  *                (2) names each turn by its angle (slight / full, left / right),
- *                (3) formats distances (ft/mi or m/km) and the walking time.
+ *                (3) formats distances (ft/mi or m/km) and the walking time,
+ *                (4) lists every step for the expanded directions card.
  *                All words come from config.yml (directions section).
  * DEPENDS ON   : ./config.js, ./geo.js
  * USED BY      : js/directions.js
@@ -53,7 +54,7 @@ function wayLabel(way) {
  * Split the route into legs (stretches on one way without a sharp bend).
  * @param {number[][]} path - route points on the walkways
  * @param {(a: number[], b: number[]) => object} wayBetween - the way a segment is on
- * @returns {object[]} [{ label, endBearing, turn, metres }]
+ * @returns {object[]} [{ label, startBearing, endBearing, turn, metres }]
  */
 function legsOf(path, wayBetween) {
   const legs = [];
@@ -69,7 +70,7 @@ function legsOf(path, wayBetween) {
       leg.metres += metres;
       leg.endBearing = heading;
     } else {
-      legs.push({ label, endBearing: heading, turn, metres });
+      legs.push({ label, startBearing: heading, endBearing: heading, turn, metres });
     }
   }
   // Fold tiny legs into the one before, so a wiggle in a path isn't a "turn".
@@ -120,29 +121,39 @@ export function formatDistance(metres) {
 }
 
 /**
- * The card's contents for a route from where you are now.
+ * Everything the directions card shows for a route from where you are now.
  * @param {number} connectorMetres - straight walk from you to the first walkway point
  * @param {number[][]} path - route points on the walkways
  * @param {(a: number[], b: number[]) => object} wayBetween
  * @param {string} destination - e.g. "Hardman and Jacobs Undergraduate Learning Center"
- * @returns {{ instruction: string, icon: string, summary: string }}
+ * @returns {{ instruction: string, icon: string, summary: string, steps: object[] }}
+ *   instruction/icon: the next turn, e.g. "590 ft · Turn right onto the path"
+ *   summary: "11 min · 0.6 mi · arrive 12:07 PM"
+ *   steps: every step in order, [{ icon, text, distance }], ending with "Arrive at …"
  */
-export function nextStep(connectorMetres, path, wayBetween, destination) {
+export function planTrip(connectorMetres, path, wayBetween, destination) {
   const words = CONFIG.directions;
   const legs = legsOf(path, wayBetween);
   const totalMetres = connectorMetres + legs.reduce((sum, leg) => sum + leg.metres, 0);
   const minutes = Math.max(1, Math.round(totalMetres / words.walkingSpeed / 60));
   const arrival = new Date(Date.now() + minutes * 60000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
   const summary = minutes + ' ' + words.minText + ' · ' + formatDistance(totalMetres) + ' · ' + words.arrivalTimeText + ' ' + arrival;
+  const arrive = { icon: 'flag_fill', text: words.arriveText + ' ' + destination, distance: '' };
 
-  // No turns left: say where you'll arrive.
-  if (legs.length === 0) {
-    return { instruction: words.arriveText + ' ' + destination, icon: 'flag_fill', summary };
-  }
-  const untilTurn = connectorMetres + legs[0].metres;
-  if (legs.length === 1) {
-    return { instruction: formatDistance(untilTurn) + ' · ' + words.arriveText + ' ' + destination, icon: 'flag_fill', summary };
-  }
-  const turn = describe(legs[1]);
-  return { instruction: formatDistance(untilTurn) + ' · ' + turn.text, icon: turn.icon, summary };
+  // The full list: which way to start, every turn, then arriving.
+  const steps = legs.map((leg, i) => {
+    const metres = i === 0 ? connectorMetres + leg.metres : leg.metres;
+    if (i === 0) {
+      const compass = words.compass[Math.round(leg.startBearing / 45) % 8];
+      return { icon: 'arrow_up', text: words.headText + ' ' + compass + ' ' + words.onText + ' ' + leg.label, distance: formatDistance(metres) };
+    }
+    return { ...describe(leg), distance: formatDistance(metres) };
+  });
+  steps.push(arrive);
+
+  // The card's headline is the next thing to do after the stretch you're on.
+  if (legs.length === 0) return { instruction: arrive.text, icon: arrive.icon, summary, steps };
+  const untilNext = formatDistance(connectorMetres + legs[0].metres);
+  const next = steps[1]; // the next turn, or arriving
+  return { instruction: untilNext + ' · ' + next.text, icon: next.icon, summary, steps };
 }

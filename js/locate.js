@@ -6,6 +6,7 @@
  *                you as a blue dot and follows you. Tap again to stop.
  *                If location is blocked, or you're off the campus map, it says so.
  *                It only shows while you're looking at the map (hidden while a sheet is open).
+ *                A beam on the dot shows which way you're facing (js/heading.js).
  * DEPENDS ON   : ./store.js (is a sheet open?), maplibre-gl's GeolocateControl (does the GPS work and draws
  *                the dot), ./config.js, #locate-btn in index.html.
  *                Browsers only share location on https or localhost.
@@ -19,6 +20,7 @@
 
 import { CONFIG } from './config.js';
 import { store } from './store.js';
+import { initHeading } from './heading.js';
 
 /**
  * Wire the location button.
@@ -37,6 +39,7 @@ export function initLocate(app, map) {
     fitBoundsOptions: { maxZoom: settings.zoom }, // how close to zoom in on you
   });
   map.addControl(locator);
+  const heading = initHeading(map); // the beam showing which way you face
 
   /** @param {boolean} on - is your location being shown? */
   function setActive(on) {
@@ -52,9 +55,11 @@ export function initLocate(app, map) {
   }
 
   button.addEventListener('click', () => {
+    heading.start(); // needs this tap on iPhone
     // trigger() returns false while the control is still starting up or location isn't supported.
     if (!locator.trigger()) explain(settings.noLocationText);
   });
+  locator.on('geolocate', (position) => heading.fromGps(position.coords));
 
   locator.on('trackuserlocationstart', () => setActive(true));
   locator.on('trackuserlocationend', () => setActive(false));
@@ -70,6 +75,7 @@ export function initLocate(app, map) {
   return {
     /** Show and follow your location, unless it's already on (pressing again would turn it off). */
     showMyLocation() {
+      heading.start(); // called from the "Get directions" tap, so iPhone can ask for the compass
       if (!button.classList.contains('is-active')) locator.trigger();
     },
   };

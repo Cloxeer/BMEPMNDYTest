@@ -219,6 +219,9 @@ directions:
   slightLeftText: "Slight left"
   slightRightText: "Slight right"
   continueText: "Continue"
+  headText: "Head" # first step: "Head north on the path"
+  onText: "on"
+  compass: ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest"]
   arriveText: "Arrive at"
   ontoText: "onto"
   minText: "min"
@@ -235,6 +238,7 @@ directions:
     service: "the service road"
     default: "the street"
   cardMaxWidth: "420px"
+  cardLayer: 10000 # above the map, below Framework7 popups (11000) and dialogs (13500)
   cardRadius: "20px"
   turnSize: "44px"
   turnRadius: "12px"
@@ -243,6 +247,15 @@ directions:
   summarySize: "13px"
   walkIconSize: "18px"
   endIconSize: "14px"
+  expandTime: "0.4s" # the card growing to show every step
+  stepsMaxHeight: "50vh"
+  stepSize: "15px"
+  stepIconSize: "20px"
+  endTripTitle: "End trip?"
+  endTripText: "Are you sure you want to end your trip?"
+  endTripYes: "End trip"
+  endTripNo: "Keep going"
+  toText: "To" # the navbar title during directions: "To Zuhl Library"
   arrivedBackground: "rgba(52, 199, 89, 0.14)" # Apple system green, light
   arrivedColor: "#1d7a3a"
   indoorLineWidth: 10 # floor-plan units
@@ -269,6 +282,9 @@ directions:
   roomEdgeWidth: 6 # in floor-plan units
 
 locate:
+  beamSize: "72px" # the "which way you face" beam around your location dot
+  beamWidth: "60deg"
+  beamColor: "rgba(10, 132, 255, 0.45)"
   zoom: 17 # how close the map zooms in on your location
   noLocationTitle: "Location unavailable"
   noLocationText: "Allow location access for this site in your browser settings, then try again."

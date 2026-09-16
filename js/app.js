@@ -9,7 +9,8 @@
  *                    menu and welcome screen.
  * DEPENDS ON   : Framework7 (global `Framework7`), every js/ module,
  *                data/buildings.geojson and the campus files from tools/build_campuses.py.
- * CONTROLS     : start-up order, the menu, the welcome screen, the "Report a problem" button.
+ * CONTROLS     : start-up order, the menu, the welcome screen, the navbar title,
+ *                the "Report a problem" button.
  * USED BY      : index.html
  */
 
@@ -126,6 +127,33 @@ function initWelcome(app) {
 }
 
 /**
+ * The navbar title: "Campus" normally, "To Room 228" / "To Zuhl Library" during directions.
+ * @param {Object.<string, object>} buildingsById
+ */
+function initTitle(buildingsById) {
+  const title = document.querySelector('.navbar .title');
+  const normalTitle = title.textContent;
+
+  store.subscribe((state) => {
+    const trip = state.directionsTo;
+    if (!trip) {
+      title.textContent = normalTitle;
+      return;
+    }
+    const building = buildingsById[trip.buildingId];
+    const place = trip.room ? CONFIG.search.roomText + ' ' + trip.room.number : building.name;
+    title.textContent = CONFIG.directions.toText + ' ' + place;
+    if (trip.room) {
+      // Framework7's small second line under the title: which building the room is in.
+      const subtitle = document.createElement('span');
+      subtitle.className = 'subtitle';
+      subtitle.textContent = building.name;
+      title.appendChild(subtitle);
+    }
+  });
+}
+
+/**
  * "Report a problem" isn't built yet; say so instead of doing nothing.
  * @param {Framework7} app
  */
@@ -180,11 +208,12 @@ async function main() {
   initBuildingSheet(app, buildingsById, rooms);
   initPill(buildingsById);
   const locate = initLocate(app, map);
-  initDirections(app, map, locate, initRouteCard(), buildingsById);
+  initDirections(app, map, locate, initRouteCard(app), buildingsById);
   initSearch(buildings, rooms, buildingsById);
   initMenu(app, campuses);
   initWelcome(app);
   initReportButton(app);
+  initTitle(buildingsById);
 
   // Handy in the browser console while developing.
   Object.assign(window, { app, map, store, CONFIG });

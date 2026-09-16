@@ -32,7 +32,7 @@
 import { CONFIG } from './config.js';
 import { store } from './store.js';
 import { metresBetween, pointInShape, metresToEdge } from './geo.js';
-import { nextStep } from './turns.js';
+import { planTrip } from './turns.js';
 import { mapReady } from './map.js';
 
 const PATH_FINDER_URL = 'https://cdn.jsdelivr.net/npm/geojson-path-finder@2.1.0/+esm';
@@ -66,7 +66,7 @@ function drawArrow(settings) {
  * @param {Framework7} app - for messages
  * @param {maplibregl.Map} map
  * @param {{ showMyLocation: () => void }} locate - from js/locate.js
- * @param {{ show: (step: object) => void }} card - from js/routeCard.js
+ * @param {{ show: (trip: object) => void }} card - from js/routeCard.js
  * @param {Object.<string, object>} buildingsById
  */
 export function initDirections(app, map, locate, card, buildingsById) {
@@ -257,7 +257,7 @@ export function initDirections(app, map, locate, card, buildingsById) {
     if (end.door) hops.push([end.walkway, end.door]);
     drawRoute(found.path, hops);
     const room = target.room ? ' · ' + CONFIG.search.roomText + ' ' + target.room.number : '';
-    card.show(nextStep(start.metres, found.path, wayBetween, building.name + room));
+    card.show(planTrip(start.metres, found.path, wayBetween, building.name + room));
   }
 
   /** Turn directions on: load data, then follow GPS. */
