@@ -11,7 +11,7 @@
  *                (4) draws a crimson "i" badge on each building,
  *                (5) tells the store when a building or the map is tapped.
  * DEPENDS ON   : maplibre-gl (global `maplibregl`), ./config.js, ./store.js,
- *                data/nmsu-campuses.geojson (official NMSU Space Planning data).
+ *                official NMSU property + leased-parcel data, golf course outline.
  * CONTROLS     : the #map element, property highlight + labels, building badges.
  * USED BY      : js/app.js, js/locations.js (showProperty)
  *
@@ -117,10 +117,11 @@ export function showProperty(map, feature) {
  * Create the map, highlight NMSU, and draw a badge on every building.
  * @param {object} store - shared state from ./store.js
  * @param {Object.<string, object>} byId - buildings keyed by id (each has .center)
- * @param {object} campuses - parsed data/nmsu-campuses.geojson
+ * @param {object} campuses - NMSU properties to highlight
+ * @param {object} leased - NMSU parcels leased out (faded, not highlighted)
  * @returns {maplibregl.Map} the live map
  */
-export function initMap(store, byId, campuses) {
+export function initMap(store, byId, campuses, leased) {
   const fence = nearbyFence(campuses);
 
   const map = new maplibregl.Map({
@@ -171,6 +172,13 @@ export function initMap(store, byId, campuses) {
     map.addLayer({
       id: 'campus-edge', type: 'line', source: 'campuses',
       paint: { 'line-color': CONFIG.campus.outlineColor, 'line-width': CONFIG.campus.outlineWidth, 'line-opacity': 0.85 },
+    });
+    // Land NMSU leases out (charter high schools, office centre...) is faded
+    // like everything else that isn't a school place.
+    map.addSource('leased', { type: 'geojson', data: leased });
+    map.addLayer({
+      id: 'leased-mute', type: 'fill', source: 'leased',
+      paint: { 'fill-color': CONFIG.campus.muteColor, 'fill-opacity': CONFIG.campus.muteOpacity + 0.2 },
     });
     // Property names ("East Campus", "Horse Farm"...) when zoomed out.
     map.addLayer({

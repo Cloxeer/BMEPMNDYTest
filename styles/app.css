@@ -66,37 +66,25 @@
 .search-drop.is-open { transform: translateY(0); }
 .search-drop .searchbar { --f7-searchbar-bg-color: transparent; }
 
-/* ---------- 5. Bottom pills ---------- */
-/* The bar is just an anchor; the two pill sets sit on top of each other inside
-   it and cross-fade, so switching never makes anything jump. */
+/* ---------- 5. The bottom pill ---------- */
+/* The bar is pinned in one spot. The main pill never moves; the floor stack
+   opens ABOVE it, so nothing shifts when it appears. */
 .pill-bar {
   position: fixed;
   left: 50%;
   bottom: calc(var(--s16) + env(safe-area-inset-bottom, 0px)); /* clears the 2-line map credits */
-  width: 0;
-  height: 40px;
-  z-index: 15000;
-  transition: opacity 0.25s ease, transform 0.3s var(--spring);
-}
-.pill-bar.pill-hidden { opacity: 0; pointer-events: none; transform: translateY(var(--s6)); }
-
-.pill-set {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  display: flex;
-  gap: var(--s2);
-  white-space: nowrap;
   transform: translateX(-50%);
-  transition: opacity 0.2s ease, transform 0.35s var(--spring);
+  z-index: 15000;
+  transition: opacity 0.25s ease;
 }
-/* floor pills stack upward: Floor 1 at the bottom, higher floors above it */
-.pill-set--choose { flex-direction: column-reverse; align-items: stretch; opacity: 0; pointer-events: none; }
-.is-choosing .pill-set--main { opacity: 0; transform: translateX(-50%) scale(0.92); pointer-events: none; }
-.is-choosing .pill-set--choose { opacity: 1; pointer-events: auto; }
+.pill-bar.pill-hidden { opacity: 0; pointer-events: none; }
 
 .pill {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s1);
   height: 40px;
   padding: 0 var(--s4);
   border: none;
@@ -105,28 +93,46 @@
   color: #fff;
   font: 600 15px/1 -apple-system, "SF Pro Text", system-ui, sans-serif;
   letter-spacing: -0.2px;
+  white-space: nowrap;
   cursor: pointer;
   box-shadow: 0 var(--s1) var(--s4) rgba(0, 0, 0, 0.22);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--s1);
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+  transition: transform 0.15s ease;
 }
 .pill::after { content: ""; position: absolute; inset: -2px; } /* 44px tap target */
 .pill:active { transform: scale(0.96); }
-.pill[aria-disabled="true"] { opacity: 0.8; }
-/* The ^ on Info: only when a building is selected; flips when the sheet is open. */
-.pill-chev { display: none; font-size: 14px; font-weight: 700; transition: transform 0.3s var(--spring); }
-.pill.has-target .pill-chev { display: inline-block; }
-.pill.is-open .pill-chev { transform: rotate(180deg); }
-.pill.is-active { background: #fff; color: var(--f7-theme-color); box-shadow: inset 0 0 0 2px var(--f7-theme-color), 0 var(--s1) var(--s4) rgba(0, 0, 0, 0.22); }
 .pill:focus-visible { outline: 3px solid #1a73e8; outline-offset: 2px; }
+.pill--main { min-width: 112px; } /* same width for "Info ^" and "Floor 1 ^": no jump */
+.pill--main[aria-disabled="true"] { opacity: 0.8; cursor: default; }
 
-/* The floor pills split out one after another. */
-.pill-set--choose .pill { opacity: 0; transform: translateY(var(--s2)) scale(0.9); transition: opacity 0.2s ease calc(var(--i) * 45ms), transform 0.35s var(--spring) calc(var(--i) * 45ms); }
-.is-choosing .pill-set--choose .pill { opacity: 1; transform: none; }
+/* the ^ : only when tapping reveals something; flips while the stack is open */
+.pill-chev { display: none; font-size: 14px; font-weight: 700; transition: transform 0.3s var(--spring); }
+.pill.has-chev .pill-chev { display: inline-block; }
+.pill.is-stack-open .pill-chev { transform: rotate(180deg); }
+
+/* the other floors, stacked above the pill (higher floors further up) */
+.pill-stack {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + var(--s2));
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: stretch;
+  gap: var(--s2);
+  min-width: 112px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.pill-stack.is-open { pointer-events: auto; }
+.pill--floor {
+  background: #fff;
+  color: var(--f7-theme-color);
+  box-shadow: inset 0 0 0 2px var(--f7-theme-color), 0 var(--s1) var(--s4) rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  transform: translateY(var(--s3)) scale(0.9);
+  transition: opacity 0.2s ease calc(var(--i) * 50ms), transform 0.35s var(--spring) calc(var(--i) * 50ms);
+}
+.pill-stack.is-open .pill--floor { opacity: 1; transform: none; }
 
 /* ---------- 6. Apple-style squircle corners ----------
    corner-shape ships in Chrome/Edge/Samsung but NOT yet in Safari on iPhone
@@ -230,6 +236,6 @@
 
 /* ---------- 11. Respect "reduce motion" ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .search-drop, .pill, .pill-set, .pill-bar, .popup-menu, .menu-link { transition: none !important; animation: none !important; }
+  .search-drop, .pill, .pill-bar, .pill-chev, .popup-menu, .menu-link { transition: none !important; animation: none !important; }
   .menu-link { opacity: 1; transform: none; }
 }

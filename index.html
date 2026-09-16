@@ -183,16 +183,15 @@
 
   </div>
 
-  <!-- Bottom pills. [Info ^] opens the building sheet. While the sheet is open a
-       [Floor 1] pill appears; tap it and it splits into one pill per floor,
-       stacked like the building (Floor 2 above Floor 1); pick one to switch.
+  <!-- The bottom pill. It never moves: "Info ^" opens the sheet, then the same
+       pill becomes "Floor 1 ^" until the sheet is closed with X. Tapping it
+       reveals the other floors stacked above it.
        Kept outside #app so it floats above the map and the sheet. -->
   <div id="pill" class="pill-bar">
-    <div class="pill-set pill-set--main">
-      <button id="pill-info" class="pill" type="button" aria-expanded="false"><span id="pill-info-label">Info</span><i class="icon f7-icons pill-chev" aria-hidden="true">chevron_up</i></button>
-      <button id="pill-floor" class="pill" type="button" aria-haspopup="true" hidden>Floor 1</button>
-    </div>
-    <div id="pill-choose" class="pill-set pill-set--choose" role="group" aria-label="Choose a floor"></div>
+    <div id="pill-choose" class="pill-stack" role="group" aria-label="Other floors"></div>
+    <button id="pill-main" class="pill pill--main" type="button" aria-expanded="false">
+      <span id="pill-label">Info</span><i class="icon f7-icons pill-chev" aria-hidden="true">chevron_up</i>
+    </button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.js"></script>

@@ -36,7 +36,16 @@ export const CONFIG = {
     'North Campus':
       'NMSU-owned land leased to a Speedway, a FlixBus stop, and the Campus Suites / ' +
       'Aggie Oasis apartments. Not a student campus. (Checked against OpenStreetMap, Sept 2026.)',
+    'East Campus':
+      'Contains Centennial High School (Las Cruces Public Schools) and the NM Farm & Ranch ' +
+      'Heritage Museum. The NMSU Golf Course inside it is drawn on its own instead ' +
+      '(data/extra-properties.geojson).',
   },
+
+  // Rule for what we show: NMSU places where classes/teaching could happen.
+  // Land NMSU leases out ("Ground Lease" parcels in NMSU's official parcel
+  // data, e.g. Arrowhead Park's charter high schools and office centre) is
+  // faded out even when it sits inside a campus boundary.
 
   // Business / point-of-interest labels from the basemap are third-party and
   // unverified (e.g. a "Campus Bookstore" pin in the University Ave shops), so

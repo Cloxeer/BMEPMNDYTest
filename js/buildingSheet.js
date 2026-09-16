@@ -23,7 +23,9 @@ const NO_OFFICIAL_PLAN =
  * @param {Object.<string, object>} byId - buildings keyed by id
  */
 export function initSheet(app, store, byId) {
-  const sheet = app.sheet.create({ el: '#building-sheet', backdrop: false, swipeToClose: true });
+  // swipeToClose is OFF: scrolling or tapping inside must never close it by
+  // accident. The sheet opens from the pill/badge and closes only with X.
+  const sheet = app.sheet.create({ el: '#building-sheet', backdrop: false, swipeToClose: false });
   const $ = (sel) => document.querySelector(sel);
   const nameEl = $('#bs-name');
   const img = $('#bs-floor-img');
@@ -38,6 +40,7 @@ export function initSheet(app, store, byId) {
   let view = 'plan'; // 'plan' = our SVG, 'posted' = photo of the posted map
   let lastKey = '';
   let syncing = false;
+  let isOpen = false; // what the sheet is showing right now
 
   /** Show a message instead of an image. */
   function showMissing(text) {
@@ -131,13 +134,20 @@ export function initSheet(app, store, byId) {
         showPlan(b, s.activeFloor);
       }
     }
-    syncing = true;
-    if (s.sheetOpen) sheet.open();
-    else sheet.close();
-    syncing = false;
+    // Only open/close when that actually changed (re-opening an open sheet
+    // would replay its animation every time you switch floors).
+    if (s.sheetOpen !== isOpen) {
+      isOpen = s.sheetOpen;
+      syncing = true;
+      if (isOpen) sheet.open();
+      else sheet.close();
+      syncing = false;
+    }
   });
 
+  // X closes the sheet (Framework7's .sheet-close); keep the store in step.
   sheet.on('closed', () => {
+    isOpen = false;
     if (!syncing) store.set({ sheetOpen: false });
   });
 }

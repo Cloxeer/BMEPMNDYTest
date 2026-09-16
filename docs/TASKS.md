@@ -22,7 +22,10 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] NMSU Golf Course boundary: inside official **East Campus** (verified against OSM way/50280146)
 - [x] Horse Farm boundary: official NMSU Space Planning layer (OSM has none)
 - [x] All 33 official properties from NMSU Space Planning (ArcGIS Campus Boundaries); 8 nearby on map, the rest on the Locations page
-- [x] Excluded **North Campus** (NMSU-owned land leased to a Speedway, a FlixBus stop and apartments)
+- [x] Rule: only NMSU places where classes could happen
+- [x] Excluded **North Campus** (Toucan, McDonald's, Lorenzo's, Speedway, Pan Am Plaza)
+- [x] Excluded **East Campus** (Centennial High School, Farm & Ranch Heritage Museum); golf course drawn on its own from OSM way/50280146
+- [x] Faded NMSU's 22 official **Ground Lease** parcels (Arrowhead Park Early College HS, Medical Academy, Executive Office Center confirmed on them)
 - [x] Hid unverified basemap business labels (e.g. the wrong "Campus Bookstore" pin)
 - [x] Map fence fits the nearby properties; picking a far site lifts it
 - [x] Colour basemap (Liberty), campus highlighted, outside muted
@@ -30,7 +33,7 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 
 ## UI
 - [x] Pill: smaller, cleaner; orb removed; Info has a ^ that flips when open
-- [x] Floor pill only while the sheet is open; tapping it splits into stacked floor pills (top floor on top)
+- [x] ONE pill that never moves: Info ^ → Floor N ^ while the sheet is open (until X); ^ reveals the other floors stacked above; picking hides them
 - [x] Squircle corners via `corner-shape: squircle` (NOT supported on iPhone Safari yet; falls back to rounded)
 - [x] Sheet switch: Our plan / Posted map. NMSU does NOT publish floor plans (Space Planning gives them on request only)
 - [ ] Add the posted-map photos (data/floors/hjlc-1-posted.jpg, hjlc-2-posted.jpg). Team must add these files
