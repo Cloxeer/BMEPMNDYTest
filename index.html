@@ -4,8 +4,8 @@
 
   WHAT IT DOES : Lays out the UI from Framework7's iOS components (navbar, menu,
                  sheet, popups) plus our map, bottom pill, and search drop-down.
-  DEPENDS ON   : Framework7 + Framework7 Icons (CDN), MapLibre (CDN),
-                 styles/app.css, js/app.js
+  DEPENDS ON   : Framework7 + Framework7 Icons, MapLibre, js-yaml (all from a CDN),
+                 styles/app.css, js/app.js, config.yml
   CONTROLS     : everything on screen.
 
   Rule: bars/menus/sheets/popups are stock Framework7. Our own pieces are the
@@ -15,7 +15,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#8C0B42" />
+  <meta name="theme-color" content="#8C0B42" /><!-- replaced by theme.crimson from config.yml -->
   <title>Better NMSU Maps</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.css" />
@@ -34,11 +34,11 @@
           <div class="navbar-bg"></div>
           <div class="navbar-inner">
             <div class="left">
-              <a class="link icon-only" id="menu-btn" aria-label="Menu"><i class="icon f7-icons">menu</i></a>
+              <a class="link icon-only" id="menu-btn" href="#" aria-label="Menu"><i class="icon f7-icons">menu</i></a>
             </div>
             <div class="title">Campus</div>
             <div class="right">
-              <a class="link icon-only" id="search-btn" aria-label="Search"><i class="icon f7-icons">search</i></a>
+              <a class="link icon-only" id="search-btn" href="#" aria-label="Search" aria-controls="search-drop" aria-expanded="false"><i class="icon f7-icons">search</i></a>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
           <div id="search-results" class="list media-list search-results" hidden><ul></ul></div>
         </div>
 
-        <div class="page-content">
+        <div class="page-content page-fill">
           <div id="map"></div>
         </div>
 
@@ -79,7 +79,7 @@
             <img id="bs-floor-img" class="bs-floor-img" alt="" hidden />
           </button>
           <div id="bs-missing" class="bs-missing" hidden>
-            <p id="bs-missing-text">Floor plan not available yet.</p>
+            <p id="bs-missing-text"></p>
           </div>
           <div id="bs-caption" class="bs-caption"></div>
           <div id="bs-info" class="bs-info"></div>
@@ -87,14 +87,14 @@
       </div>
     </div>
 
-    <!-- Full-screen fade menu (Map / Schedule / Settings). -->
+    <!-- Full-screen fade menu. --i is each word's position, used to fade them in one after another. -->
     <div class="popup popup-menu popup-tablet-fullscreen" id="menu-popup">
       <a href="#" class="menu-close popup-close" aria-label="Close">&times;</a>
       <div class="menu-inner">
-        <a href="#" id="menu-map" class="menu-link">Map</a>
-        <a href="#" id="menu-locations" class="menu-link">Locations</a>
-        <a href="#" id="menu-schedule" class="menu-link">Schedule</a>
-        <a href="#" id="menu-settings" class="menu-link">Settings</a>
+        <a href="#" id="menu-map" class="menu-link" style="--i: 0">Map</a>
+        <a href="#" id="menu-locations" class="menu-link" style="--i: 1">Locations</a>
+        <a href="#" id="menu-schedule" class="menu-link" style="--i: 2">Schedule</a>
+        <a href="#" id="menu-settings" class="menu-link" style="--i: 3">Settings</a>
       </div>
     </div>
 
@@ -152,7 +152,7 @@
           <div class="block-title">Data</div>
           <div class="list simple-list"><ul>
             <li><span>Boundaries</span><span class="muted">NMSU Space Planning</span></li>
-            <li><span>Buildings</span><span class="muted">OpenStreetMap</span></li>
+            <li><span>Buildings</span><span class="muted">NMSU Space Planning</span></li>
             <li><span>Floor plans</span><span class="muted">Posted evacuation maps</span></li>
           </ul></div>
           <div class="block">
@@ -164,7 +164,7 @@
 
     <!-- Welcome popup (first visit only). -->
     <div class="popup popup-tablet-fullscreen" id="welcome-popup">
-      <div class="view"><div class="page"><div class="page-content">
+      <div class="view"><div class="page"><div class="page-content page-fill">
         <div class="welcome-card">
           <div class="block">
             <h1 class="welcome-h">Welcome to</h1>
@@ -187,12 +187,13 @@
   <div id="pill" class="pill-bar">
     <div id="pill-choose" class="pill-stack" role="group" aria-label="Other floors"></div>
     <button id="pill-main" class="pill pill--main" type="button" aria-expanded="false">
-      <span id="pill-label">Info</span><i class="icon f7-icons pill-chev" aria-hidden="true">chevron_up</i>
+      <span id="pill-label"></span><i class="icon f7-icons pill-chev" aria-hidden="true">chevron_up</i>
     </button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
   <script type="module" src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,174 @@
+# Better NMSU Maps — every value you can change.
+# Edit, save, refresh the page.
+#
+# Two kinds of values:
+#   - Used by the stylesheet: write the unit, like CSS ("40px", "0.25s", "50ms").
+#   - Used by JavaScript (all of `map`, all of `badge`, and search.maxResults /
+#     search.focusDelay): plain numbers. Map and badge sizes are pixels,
+#     fitDuration and focusDelay are milliseconds, nearbyKm is kilometres.
+# Every value also becomes a CSS variable (map.zoom -> --map-zoom,
+# pill.height -> --pill-height), even ones only JavaScript uses; that's harmless.
+
+theme:
+  crimson: "#8C0B42"
+  crimsonRgb: "140, 11, 66"
+  crimsonShade: "#6f0834"
+  crimsonTint: "#a81050"
+  white: "#ffffff"
+  textStrong: "#1b1b1d"
+  textBody: "#3b3b40"
+  textSoft: "#55525a"
+  textCaption: "#6b6b70"
+  textMuted: "#8a8690"
+  textFaint: "#9a96a0"
+  lineStrong: "#e6e6ea"
+  lineSoft: "#f0f0f3"
+  focus: "#1a73e8"
+  shadowSoft: "rgba(0, 0, 0, 0.12)"
+  shadowStrong: "rgba(0, 0, 0, 0.22)"
+  font: '-apple-system, "SF Pro Text", system-ui, sans-serif'
+  spacingUnit: "4px"
+  spring: "cubic-bezier(0.34, 1.4, 0.5, 1)"
+  focusRingWidth: "3px"
+  focusRingOffset: "2px"
+
+map:
+  center: [-106.7512196, 32.2824753]
+  zoom: 16.2
+  minZoom: 11
+  maxZoom: 18
+  styleUrl: "https://tiles.openfreemap.org/styles/liberty"
+  hiddenBasemapLayer: "poi"
+  nearbyKm: 10
+  fencePadding: 0.01
+  selectZoom: 16.8
+  flySpeed: 0.6
+  fitPadding: 48
+  fitMaxZoom: 17
+  fitDuration: 900
+  campusTintOpacity: 0.07
+  campusEdgeWidth: 2.5
+  campusEdgeOpacity: 0.85
+  outsideColor: "#ffffff"
+  outsideOpacity: 0.6
+  labelFont: "Noto Sans Bold"
+  labelSize: 13
+  labelMaxWidth: 8
+  labelHaloWidth: 2
+  labelMaxZoom: 15
+
+badge:
+  size: 28
+  pixelRatio: 2
+  ringRadius: 13
+  centerRadius: 11
+  selectedCenterRadius: 10
+  ring: "#ffffff"
+  selectedRing: "#000000"
+  letterFont: 'italic 700 15px Georgia, "Times New Roman", serif'
+  letterOffset: 1
+
+search:
+  maxResults: 8
+  focusDelay: 60
+  noMatchText: "No buildings match"
+  panelShadowY: "8px"
+  panelShadowBlur: "16px"
+  slideTime: "0.24s"
+  fadeTime: "0.18s"
+  fieldHeight: "40px"
+  fieldRadius: "12px"
+  iconSize: "18px"
+  inputSize: "16px"
+  focusRing: "rgba(255, 255, 255, 0.45)"
+  resultsMaxHeight: "50vh"
+  subtitleSize: "13px"
+  highlight: "rgba(140, 11, 66, 0.14)"
+  emptySize: "15px"
+  layer: 500
+
+pill:
+  idleText: "Tap a building"
+  infoText: "Info"
+  floorText: "Floor"
+  searchingText: "Searching…"
+  height: "40px"
+  minWidth: "112px"
+  radius: "20px"
+  fontSize: "15px"
+  fontSizeDesktop: "16px"
+  fontWeight: 600
+  letterSpacing: "-0.2px"
+  bottomOffset: "64px"
+  shadowY: "4px"
+  shadowBlur: "16px"
+  hideTime: "0.25s"
+  pressTime: "0.15s"
+  pressScale: 0.96
+  tapArea: "2px"
+  disabledOpacity: 0.8
+  chevronSize: "14px"
+  chevronTime: "0.3s"
+  floorRing: "2px"
+  floorGap: "8px"
+  floorRise: "12px"
+  floorStartScale: 0.9
+  floorFadeTime: "0.2s"
+  floorMoveTime: "0.35s"
+  floorStagger: "50ms"
+  layer: 15000
+
+menu:
+  background: "rgba(255, 255, 255, 0.97)"
+  blur: "8px"
+  fadeTime: "0.3s"
+  closeSize: "32px"
+  linkSize: "34px"
+  linkSizeDesktop: "44px"
+  linkWeight: 700
+  linkRise: "12px"
+  gap: "24px"
+  gapDesktop: "32px"
+  underlineOffset: "12px"
+  underlineThickness: "3px"
+  linkTime: "0.5s"
+  firstDelay: "0.05s"
+  delayStep: "0.2s"
+
+sheet:
+  noFloorPlanText: "Indoor floor plan coming soon."
+  planMissingText: "Floor plan not available yet."
+  noOfficialPlanText: "NMSU does not publish floor plans online. “Our plan” is redrawn from the evacuation map posted inside the building."
+  noDescriptionText: "A full description for this building is coming soon."
+  photoViewerTheme: "light"
+  titleSize: "16px"
+  closeSize: "28px"
+  bottomSpace: "120px"
+  switchMaxWidth: "320px"
+  imageRadius: "12px"
+  imageShadowY: "1px"
+  imageShadowBlur: "8px"
+  photoWidth: "82%"
+  photoRatio: "4 / 3"
+  creditSize: "12px"
+  captionSize: "13px"
+  headingSize: "15px"
+  bodySize: "14px"
+  bodyLineHeight: 1.55
+  labelWidth: "80px"
+  labelSize: "13px"
+  linkSize: "14px"
+  linkWeight: 600
+  sourceSize: "12px"
+  bodyMaxWidthDesktop: "720px"
+  imageMaxWidthDesktop: "640px"
+
+welcome:
+  storageKey: "bnm_visited"
+  titleLineHeight: 1.15
+  byline: "rgba(255, 255, 255, 0.85)"
+
+emptyState:
+  topSpace: "18vh"
+  iconSize: "44px"
+  titleSize: "20px"

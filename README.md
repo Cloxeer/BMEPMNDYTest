@@ -1,103 +1,90 @@
 # Better NMSU Maps
 
-A fast, no-login, Apple-style interactive map of the NMSU Las Cruces campus.
+A fast, no-login, Apple-style map of New Mexico State University.
 Built by **The Brainy Bunch** for CS 371.
 
-- **Map engine:** [MapLibre GL](https://maplibre.org/) (drag, pinch-zoom)
-- **Basemap:** [OpenFreeMap](https://openfreemap.org/) **Liberty** — full-colour vector tiles, **free, no API key**
-- **Campus highlight:** the **real** NMSU boundary (93 points) from OpenStreetMap relation 13399173 — campus keeps full colour, everything outside is washed back. No hand-drawn shapes anywhere.
-- **UI kit:** [Framework7](https://framework7.io/) iOS theme (navbar, menu, popups, sheet)
-- **No build step.** Plain HTML + CSS + JavaScript modules, loaded from a CDN.
+- **Map:** [MapLibre GL](https://maplibre.org/) on [OpenFreeMap](https://openfreemap.org/) Liberty tiles (free, no API key)
+- **Interface:** [Framework7](https://framework7.io/) iOS components
+- **Data:** NMSU Office of Space Planning, NMSU Registrar, OpenStreetMap
+- **No build step for the app.** Plain HTML, CSS and JavaScript modules.
 
-## What works now
+How it's put together: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+What's done and what's next: [docs/TASKS.md](docs/TASKS.md).
 
-- Full-page crimson **welcome** screen (shown once per browser session)
-- Clean, draggable, pinch-zoom campus map
-- Solid crimson iOS navbar: hamburger menu · **Campus** · search
-- Full-screen fade **menu** (Map / Schedule / Settings)
-- **One building wired end-to-end:** Hardman & Jacobs (HJLC) is outlined in
-  crimson. Tap it → a crimson pin drops, the map flies in, and a **full-page
-  floor viewer** slides up. The bottom pill morphs into a **Floor 1 / Floor 2**
-  selector. Closing keeps the building selected; tap the pill to reopen.
+## What it does
 
-## Floor plans
+- Welcome screen, once per browser session
+- Colour map with NMSU's class places highlighted; everything else faded
+- 10 buildings with official facts; tap a badge to open its sheet
+- Hardman & Jacobs has floor plans for floors 1–2 (tap to zoom)
+- Search by name, address, building code or number
+- Locations page: every NMSU place, nearest first
 
-Floors 1 and 2 of Hardman & Jacobs ship as clean **SVG floor plans**
-(`data/floors/hjlc-1.svg`, `hjlc-2.svg`) traced from the building's evacuation
-maps — they're tiny, crisp at any zoom, and work offline.
+## Change how it looks or behaves
 
-Want to use real photos instead? Drop `hjlc-1.jpg` / `hjlc-2.jpg` in `data/floors/`
-and change the `floorImages` paths in `data/buildings.geojson`. Any image type works.
+Open **`config.yml`**, change a value, save, refresh. Colours, sizes, animation
+times and labels are all there, grouped by page. If you make a typo the page
+tells you roughly which line to look at.
 
-## File guide
+## Run it on your computer
 
-```
-index.html               The whole screen (Framework7 markup + #map + pill)
-styles/app.css           Theme color, map sizing, the orb/pill/menu/sheet styles
-js/config.js             Map settings (center, zoom, bounds, basemap style)
-js/store.js              Tiny shared state (what's selected, sheet open, etc.)
-js/map.js                Draws the map, the campus places and the building badges
-js/buildingSheet.js      The full-page building sheet (plan, photos, facts)
-js/pill.js               The one bottom pill: Info, then floor picker
-js/locations.js          The Locations page (every NMSU place)
-js/search.js             The drop-down building search
-js/app.js                Starts everything and wires the menu/welcome
-data/buildings.geojson   The buildings we currently show (+ description, links)
-data/campuses.geojson        NMSU class places (built by tools/build_campuses.py)
-data/campus-labels.geojson   one name label per place (built)
-data/outside-mask.geojson    everything that isn't a class place, faded (built)
-data/source/                 raw inputs: NMSU Space Planning boundaries + ground-lease
-                             parcels, and the golf course outline (OSM way/50280146)
-tools/build_campuses.py      turns data/source/ into the 3 built files above
-data/floors/             Floor plans (SVG, redrawn from posted evacuation maps)
-```
-
-Gathered from OpenStreetMap, ready for the next phase (not wired up yet):
-
-```
-data/buildings-osm.geojson  15 real building footprints (12 ids from OSM `ref`)
-data/paths.geojson          708 walking ways — the campus footpath network
-data/entrances.geojson      49 entrance nodes (all plain `entrance=yes`;
-                            OSM has NO wheelchair or door-ref data here)
-```
-
-Every file starts with a comment (what it does / depends on / controls) and every
-function has a comment above it.
-
-## Add another building
-
-Copy the HJLC feature in `data/buildings.geojson`, then change: `id`, `name`,
-`aka`, `address`, the polygon `coordinates` (draw it at <https://geojson.io>),
-`floors`, and the `floorImages` paths. No code changes needed.
-
-## Run locally
-
-ES modules need a web server (opening the file directly won't work):
+JavaScript modules need a web server (double-clicking `index.html` won't work):
 
 ```bash
 python -m http.server 8000
 ```
 
-Open <http://localhost:8000>.
+Then open <http://localhost:8000>.
 
 ## Put it on your phone (GitHub Pages)
 
 ```bash
 git add .
-git commit -m "Update map"
+git commit -m "Describe your change"
 git push
 ```
 
-Then GitHub → **Settings → Pages → Source: Deploy from a branch → `main` / `/root`**.
-Open the shown URL (e.g. `https://cloxeer.github.io/BetterNMSUMapTest/`) on your phone.
+On GitHub: **Settings → Pages → Deploy from a branch → `main` / `/ (root)`**, then open
+`https://cloxeer.github.io/BetterNMSUMapTest/` on your phone.
 
-## Rebuild the campus shapes
+## Files
 
-Only needed if the files in `data/source/` change. The script cuts NMSU's leased-out
-parcels out of the campus shapes, drops non-class places (East/North Campus), and
-removes thin leftover strips, so the app itself never does geometry math.
+```
+index.html              every screen
+config.yml              every changeable value
+styles/app.css          look + animation
+js/app.js               starts the app, menu, welcome screen
+js/config.js            loads config.yml
+js/store.js             app state + the actions that change it
+js/html.js              makes data safe to put into HTML
+js/map.js               map, campus highlight, building badges
+js/buildingSheet.js     building sheet
+js/pill.js              bottom pill
+js/search.js            search
+js/locations.js         Locations page
+data/                   files the app reads (don't edit the built ones by hand)
+data/floors/            floor plans (SVG, redrawn from posted evacuation maps)
+data/photos/            building photos (licensed; credits in data/source/photos.json)
+data/source/            raw inputs for the tools below
+tools/                  scripts that rebuild data/ from official sources
+```
+
+Every file starts with a comment saying what it does, what it depends on and what
+it controls. Every function has a comment above it.
+
+## Rebuild the data
+
+Only needed when the sources change.
 
 ```bash
+# Buildings: downloads NMSU's official records (needs internet)
+python tools/build_buildings.py
+
+# Campus shapes: needs the shapely package once
 python -m pip install --user shapely
 python tools/build_campuses.py
 ```
+
+**Add a building:** add a row to `BUILDINGS` at the top of `tools/build_buildings.py`
+(property number, name, OpenStreetMap name, NMSU map id, photo key) and run it.
+Floor plans and descriptions go in `data/source/building-extras.json`.

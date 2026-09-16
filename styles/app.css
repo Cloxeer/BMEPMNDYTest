@@ -1,90 +1,106 @@
 /*
-  app.css — our styles on top of Framework7.
+  app.css — the app's styles, on top of Framework7.
 
-  WHAT IT DOES : recolours Framework7 crimson, sizes the map, and styles our few
-                 bespoke pieces (bottom pills, fade menu,
-                 search drop-down, building sheet).
-  DEPENDS ON   : Framework7 (we override its colour variables).
-  CONTROLS     : accent colour, map box, pills, sheet, squircle corners.
+  WHAT IT DOES : colours Framework7 crimson and styles our own pieces: search,
+                 bottom pill, menu, building sheet, welcome screen.
+  DEPENDS ON   : Framework7, and the CSS variables js/config.js creates from
+                 config.yml (pill.height -> --pill-height, and so on).
+  CONTROLS     : how everything looks and animates.
 
-  SPACING RULE : every padding / margin / gap / offset in this file is a
-  multiple of 4px (4, 8, 12, 16, 20, 24, 32, 48...). Nothing in between.
-  Use the --s* variables below so it stays that way.
+  RULES : • Values come from config.yml. Change them there, not here.
+          • Spacing uses --s1 … --s16: multiples of theme.spacingUnit (4px).
 */
 
-/* ---------- 1. Tokens ---------- */
+/* ---------- 1. Foundations ---------- */
 :root {
-  --f7-theme-color: #8c0b42;
-  --f7-theme-color-rgb: 140, 11, 66;
-  --f7-theme-color-shade: #6f0834;
-  --f7-theme-color-tint: #a81050;
-  --spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+  --f7-theme-color: var(--theme-crimson);
+  --f7-theme-color-rgb: var(--theme-crimson-rgb);
+  --f7-theme-color-shade: var(--theme-crimson-shade);
+  --f7-theme-color-tint: var(--theme-crimson-tint);
 
-  --s1: 4px;
-  --s2: 8px;
-  --s3: 12px;
-  --s4: 16px;
-  --s5: 20px;
-  --s6: 24px;
-  --s8: 32px;
-  --s12: 48px;
-  --s16: 64px;
+  --s1: calc(var(--theme-spacing-unit) * 1);
+  --s2: calc(var(--theme-spacing-unit) * 2);
+  --s3: calc(var(--theme-spacing-unit) * 3);
+  --s4: calc(var(--theme-spacing-unit) * 4);
+  --s5: calc(var(--theme-spacing-unit) * 5);
+  --s6: calc(var(--theme-spacing-unit) * 6);
+  --s8: calc(var(--theme-spacing-unit) * 8);
+  --s12: calc(var(--theme-spacing-unit) * 12);
+  --s16: calc(var(--theme-spacing-unit) * 16);
 }
 
-/* `hidden` must always win over our display rules. */
+/* Stay hidden until config.yml is applied, so nothing flashes unstyled. */
+html:not(.config-ready) body { visibility: hidden; }
+
+/* `hidden` must always win over the display rules below. */
 [hidden] { display: none !important; }
 
-/* ---------- 2. Inverted crimson navbar ---------- */
+/* Start-up failure message. Uses fixed values on purpose: it must work even when config.yml didn't load. */
+.startup-error {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  font-family: sans-serif;
+  color: #8c0b42;
+  background: #fff;
+  visibility: visible;
+}
+
+/* ---------- 2. Navbars (crimson, white text) ---------- */
 .navbar-crimson .navbar-bg { background: var(--f7-theme-color); }
 .navbar-crimson .navbar-bg::after { display: none; }
 .navbar-crimson,
 .navbar-crimson a,
 .navbar-crimson .title,
-.navbar-crimson .icon { color: #ffffff !important; }
-/* keeps the title centred when only a close button sits on the right */
-.nav-spacer { display: inline-block; width: var(--s6); }
+.navbar-crimson .icon { color: var(--theme-white) !important; } /* beats Framework7's navbar link colours */
+.nav-spacer { display: inline-block; width: var(--s6); } /* keeps the title centred next to a lone close button */
 
-/* ---------- 3. The map fills the screen ---------- */
-.page-content { padding: 0 !important; overflow: hidden; }
+/* ---------- 3. Page layouts ---------- */
+/* Full-bleed pages (map, welcome) drop Framework7's page padding and scrolling. */
+.page-content.page-fill { padding: 0 !important; overflow: hidden; }
 #map { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
-/* ordinary pages (schedule / settings) scroll and clear the navbar */
-.page-plain {
-  padding: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px) + var(--s3)) 0 var(--s8) !important;
-  overflow: auto !important;
+/* Ordinary pages (locations, schedule, settings) scroll below their navbar. */
+.page-content.page-plain {
+  padding: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px) + var(--s3)) 0 var(--s8);
 }
 
-/* ---------- 4. Search drop-down ---------- */
-/* Solid crimson panel under the navbar with one white rounded field, and a
-   white results card that only appears once you type. It slides with a plain
-   ease-out (no bounce), so it never overshoots and flashes a gap. */
+/* ---------- 4. Search ---------- */
 .search-drop {
   position: absolute;
   top: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px));
-  left: 0; right: 0; z-index: 500;
+  left: 0;
+  right: 0;
+  z-index: var(--search-layer);
   background: var(--f7-theme-color);
   padding: var(--s1) var(--s3) var(--s3);
-  box-shadow: 0 var(--s2) var(--s4) rgba(0, 0, 0, 0.12);
+  box-shadow: 0 var(--search-panel-shadow-y) var(--search-panel-shadow-blur) var(--theme-shadow-soft);
   transform: translateY(-100%);
   opacity: 0;
   visibility: hidden;
-  transition: transform 0.24s ease-out, opacity 0.18s ease-out, visibility 0s linear 0.24s;
+  transition: transform var(--search-slide-time) ease-out, opacity var(--search-fade-time) ease-out,
+    visibility 0s linear var(--search-slide-time);
 }
 .search-drop.is-open {
   transform: none;
   opacity: 1;
   visibility: visible;
-  transition: transform 0.24s ease-out, opacity 0.18s ease-out;
+  transition: transform var(--search-slide-time) ease-out, opacity var(--search-fade-time) ease-out;
 }
 .search-field {
   display: flex;
   align-items: center;
   gap: var(--s2);
-  height: 40px;
+  height: var(--search-field-height);
   padding: 0 var(--s3);
-  background: #fff;
-  border-radius: var(--s3);
+  background: var(--theme-white);
+  border-radius: var(--search-field-radius);
 }
-.search-field .icon { font-size: 18px; color: #8a8690; }
+.search-field .icon { font-size: var(--search-icon-size); color: var(--theme-text-muted); }
 .search-field input {
   flex: 1;
   min-width: 0;
@@ -92,33 +108,37 @@
   border: 0;
   outline: 0;
   background: none;
-  font-size: 16px; /* 16px stops iPhone Safari zooming in on focus */
-  color: #1b1b1d;
+  font-size: var(--search-input-size); /* 16px or more stops iPhone Safari zooming in */
+  color: var(--theme-text-strong);
 }
-.search-field:focus-within { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.45); }
+.search-field:focus-within { box-shadow: 0 0 0 var(--theme-focus-ring-width) var(--search-focus-ring); }
 .search-drop .search-results {
   margin: var(--s2) 0 0;
-  max-height: 50vh;
+  max-height: var(--search-results-max-height);
   overflow-y: auto;
-  background: #fff;
-  border-radius: var(--s3);
+  background: var(--theme-white);
+  border-radius: var(--search-field-radius);
 }
-.search-drop .search-results ul { background: #fff; }
-.search-drop .search-results .item-subtitle { color: #8a8690; font-size: 13px; }
-/* the letters you typed, highlighted in each result */
-.search-hit { background: rgba(140, 11, 66, 0.14); color: var(--f7-theme-color); font-weight: 700; border-radius: var(--s1); padding: 0; }
-.search-empty { padding: var(--s3) var(--s4); color: #8a8690; font-size: 15px; list-style: none; }
+.search-drop .search-results ul { background: var(--theme-white); }
+.search-drop .search-results .item-subtitle { color: var(--theme-text-muted); font-size: var(--search-subtitle-size); }
+.search-hit {
+  background: var(--search-highlight);
+  color: var(--f7-theme-color);
+  font-weight: 700;
+  border-radius: var(--s1);
+  padding: 0;
+}
+.search-empty { padding: var(--s3) var(--s4); color: var(--theme-text-muted); font-size: var(--search-empty-size); list-style: none; }
 
-/* ---------- 5. The bottom pill ---------- */
-/* The bar is pinned in one spot. The main pill never moves; the floor stack
-   opens ABOVE it, so nothing shifts when it appears. */
+/* ---------- 5. Bottom pill ---------- */
+/* The bar is pinned in one spot; the floor stack opens above it, so nothing shifts. */
 .pill-bar {
   position: fixed;
   left: 50%;
-  bottom: calc(var(--s16) + env(safe-area-inset-bottom, 0px)); /* clears the 2-line map credits */
+  bottom: calc(var(--pill-bottom-offset) + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
-  z-index: 15000;
-  transition: opacity 0.25s ease;
+  z-index: var(--pill-layer); /* above Framework7's sheet, which is why #pill sits outside #app */
+  transition: opacity var(--pill-hide-time) ease;
 }
 .pill-bar.pill-hidden { opacity: 0; pointer-events: none; }
 
@@ -128,156 +148,194 @@
   align-items: center;
   justify-content: center;
   gap: var(--s1);
-  height: 40px;
+  height: var(--pill-height);
   padding: 0 var(--s4);
   border: none;
-  border-radius: var(--s5);
+  border-radius: var(--pill-radius);
   background: var(--f7-theme-color);
-  color: #fff;
-  font: 600 15px/1 -apple-system, "SF Pro Text", system-ui, sans-serif;
-  letter-spacing: -0.2px;
+  color: var(--theme-white);
+  font: var(--pill-font-weight) var(--pill-font-size)/1 var(--theme-font);
+  letter-spacing: var(--pill-letter-spacing);
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: 0 var(--s1) var(--s4) rgba(0, 0, 0, 0.22);
+  box-shadow: 0 var(--pill-shadow-y) var(--pill-shadow-blur) var(--theme-shadow-strong);
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.15s ease;
+  transition: transform var(--pill-press-time) ease;
 }
-.pill::after { content: ""; position: absolute; inset: -2px; } /* 44px tap target */
-.pill:active { transform: scale(0.96); }
-.pill:focus-visible { outline: 3px solid #1a73e8; outline-offset: 2px; }
-.pill--main { min-width: 112px; } /* same width for "Info ^" and "Floor 1 ^": no jump */
-.pill--main[aria-disabled="true"] { opacity: 0.8; cursor: default; }
+.pill::after { content: ""; position: absolute; inset: calc(-1 * var(--pill-tap-area)); } /* bigger tap target */
+.pill:active { transform: scale(var(--pill-press-scale)); }
+.pill:focus-visible { outline: var(--theme-focus-ring-width) solid var(--theme-focus); outline-offset: var(--theme-focus-ring-offset); }
+.pill--main { min-width: var(--pill-min-width); } /* same width for every label: no jump */
+.pill--main[aria-disabled="true"] { opacity: var(--pill-disabled-opacity); cursor: default; }
 
-/* the ^ : only when tapping reveals something; flips while the stack is open */
-.pill .pill-chev { display: none; font-size: 14px; font-weight: 700; transition: transform 0.3s var(--spring); }
-.pill.has-chev .pill-chev { display: inline-block; } /* ".pill ." beats Framework7's i.icon rule */
+/* The ^ shows only when tapping reveals something, and flips while the stack is open.
+   ".pill .pill-chev" is needed to beat Framework7's "i.icon" rule. */
+.pill .pill-chev { display: none; font-size: var(--pill-chevron-size); font-weight: 700; transition: transform var(--pill-chevron-time) var(--theme-spring); }
+.pill.has-chev .pill-chev { display: inline-block; }
 .pill.is-stack-open .pill-chev { transform: rotate(180deg); }
 
-/* the other floors, stacked above the pill (higher floors further up) */
+/* Other floors, stacked above the pill. --i (set in pill.js) staggers them. */
 .pill-stack {
   position: absolute;
   left: 50%;
-  bottom: calc(100% + var(--s2));
+  bottom: calc(100% + var(--pill-floor-gap));
   display: flex;
   flex-direction: column-reverse;
   align-items: stretch;
-  gap: var(--s2);
-  min-width: 112px;
+  gap: var(--pill-floor-gap);
+  min-width: var(--pill-min-width);
   transform: translateX(-50%);
   pointer-events: none;
 }
 .pill-stack.is-open { pointer-events: auto; }
 .pill--floor {
-  background: #fff;
+  background: var(--theme-white);
   color: var(--f7-theme-color);
-  box-shadow: inset 0 0 0 2px var(--f7-theme-color), 0 var(--s1) var(--s4) rgba(0, 0, 0, 0.22);
+  box-shadow: inset 0 0 0 var(--pill-floor-ring) var(--f7-theme-color),
+    0 var(--pill-shadow-y) var(--pill-shadow-blur) var(--theme-shadow-strong);
   opacity: 0;
-  transform: translateY(var(--s3)) scale(0.9);
-  transition: opacity 0.2s ease calc(var(--i) * 50ms), transform 0.35s var(--spring) calc(var(--i) * 50ms);
+  transform: translateY(var(--pill-floor-rise)) scale(var(--pill-floor-start-scale));
+  transition: opacity var(--pill-floor-fade-time) ease calc(var(--i) * var(--pill-floor-stagger)),
+    transform var(--pill-floor-move-time) var(--theme-spring) calc(var(--i) * var(--pill-floor-stagger));
 }
 .pill-stack.is-open .pill--floor { opacity: 1; transform: none; }
 
 /* ---------- 6. Apple-style squircle corners ----------
-   corner-shape ships in Chrome/Edge/Samsung but NOT yet in Safari on iPhone
-   (as of Sept 2026: Safari Technology Preview only). Browsers without it just
-   keep the normal rounded corner, so nothing breaks. */
+   Chrome, Edge and Samsung Internet draw them; iPhone Safari doesn't yet and
+   keeps normal rounded corners, so nothing breaks. */
 @supports (corner-shape: squircle) {
-  .pill, .floor-option, .bs-floor-img, .bs-zoom, .bs-photo img, .bs-switch,
-  .bs-switch .button, .search-field, .search-drop .search-results, .list.inset ul,
-  .button, .empty-state, .welcome-card .button { corner-shape: squircle; }
+  .pill, .bs-floor-img, .bs-zoom, .bs-photo img, .bs-switch, .bs-switch .button,
+  .search-field, .search-drop .search-results, .list.inset ul, .button, .empty-state,
+  .welcome-card .button { corner-shape: squircle; }
 }
 
-/* ---------- 7. Full-screen fade menu ---------- */
+/* ---------- 7. Menu ---------- */
 .popup-menu {
-  background: rgba(255, 255, 255, 0.97);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-  transform: none !important; opacity: 0; transition: opacity 0.3s ease;
+  background: var(--menu-background);
+  -webkit-backdrop-filter: blur(var(--menu-blur));
+  backdrop-filter: blur(var(--menu-blur));
+  transform: none !important; /* fade instead of Framework7's slide-up */
+  opacity: 0;
+  transition: opacity var(--menu-fade-time) ease;
 }
 .popup-menu.menu-open { opacity: 1; }
 .menu-close {
-  position: absolute; top: calc(var(--s4) + env(safe-area-inset-top, 0px)); right: var(--s5);
-  font-size: 32px; line-height: 1; color: var(--f7-theme-color); z-index: 2;
+  position: absolute;
+  top: calc(var(--s4) + env(safe-area-inset-top, 0px));
+  right: var(--s5);
+  font-size: var(--menu-close-size);
+  line-height: 1;
+  color: var(--f7-theme-color);
+  z-index: 2;
 }
-.menu-inner { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s6); }
+.menu-inner { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--menu-gap); }
 .menu-link {
-  font-size: 34px; font-weight: 700; color: var(--f7-theme-color);
-  opacity: 0; transform: translateY(var(--s3));
-  text-decoration: none; text-underline-offset: var(--s3); text-decoration-thickness: 3px;
+  font-size: var(--menu-link-size);
+  font-weight: var(--menu-link-weight);
+  color: var(--f7-theme-color);
+  opacity: 0;
+  transform: translateY(var(--menu-link-rise));
+  text-decoration: none;
+  text-underline-offset: var(--menu-underline-offset);
+  text-decoration-thickness: var(--menu-underline-thickness);
 }
 .menu-link.is-current { text-decoration: underline; }
-.popup-menu.menu-open .menu-link { animation: menu-in 0.5s var(--spring) forwards; }
-.popup-menu.menu-open .menu-link:nth-child(1) { animation-delay: 0.05s; }
-.popup-menu.menu-open .menu-link:nth-child(2) { animation-delay: 0.25s; }
-.popup-menu.menu-open .menu-link:nth-child(3) { animation-delay: 0.45s; }
-.popup-menu.menu-open .menu-link:nth-child(4) { animation-delay: 0.65s; }
+/* Each word fades in after the one before it (--i is set on each link in index.html). */
+.popup-menu.menu-open .menu-link {
+  animation: menu-in var(--menu-link-time) var(--theme-spring) forwards;
+  animation-delay: calc(var(--menu-first-delay) + var(--i) * var(--menu-delay-step));
+}
 @keyframes menu-in { to { opacity: 1; transform: none; } }
 
-/* ---------- 8. Full-page building sheet ---------- */
+/* ---------- 8. Building sheet ---------- */
 .building-sheet { height: 100%; }
-.building-sheet .sheet-modal-inner { height: 100%; display: flex; flex-direction: column; background: #fff; }
+.building-sheet .sheet-modal-inner { height: 100%; display: flex; flex-direction: column; background: var(--theme-white); }
 .bs-head {
-  display: flex; align-items: center; gap: var(--s2);
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
   padding: calc(var(--s3) + env(safe-area-inset-top, 0px)) var(--s3) var(--s3);
-  background: var(--f7-theme-color); color: #fff;
+  background: var(--f7-theme-color);
+  color: var(--theme-white);
 }
-.bs-side { width: var(--s8); flex: none; }        /* keeps the title centred */
+.bs-side { width: var(--s8); flex: none; } /* equal space on both sides keeps the title centred */
 .bs-name {
-  flex: 1; text-align: center; font-weight: 700; font-size: 16px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+  font-size: var(--sheet-title-size);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.bs-x {
-  border: none; background: none; color: #fff;
-  font-size: 28px; line-height: 1; cursor: pointer; padding: 0;
-}
-.bs-body { flex: 1; overflow: auto; padding: var(--s3) var(--s4) 120px; text-align: center; }
-.bs-switch { margin: 0 auto var(--s3); max-width: 320px; }
-.bs-zoom { display: block; width: 100%; padding: 0; border: none; background: none; cursor: zoom-in; border-radius: var(--s3); }
+.bs-x { border: none; background: none; color: var(--theme-white); font-size: var(--sheet-close-size); line-height: 1; cursor: pointer; padding: 0; }
+.bs-body { flex: 1; overflow: auto; padding: var(--s3) var(--s4) var(--sheet-bottom-space); text-align: center; }
+.bs-switch { margin: 0 auto var(--s3); max-width: var(--sheet-switch-max-width); }
+.bs-zoom { display: block; width: 100%; padding: 0; border: none; background: none; cursor: zoom-in; border-radius: var(--sheet-image-radius); }
 .bs-zoom:disabled { cursor: default; }
-.bs-zoom:focus-visible { outline: 3px solid #1a73e8; outline-offset: 2px; }
-.bs-floor-img { display: block; width: 100%; height: auto; background: #fff; border-radius: var(--s3); box-shadow: 0 1px var(--s2) rgba(0, 0, 0, 0.12); }
-.bs-photos { display: flex; gap: var(--s2); overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 calc(-1 * var(--s4)) var(--s2); padding: 0 var(--s4); }
-.bs-photo { flex: 0 0 82%; padding: 0; border: none; background: none; scroll-snap-align: center; cursor: zoom-in; }
-.bs-photo img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--s3); }
-.bs-credit { font-size: 12px !important; color: #8a8690 !important; margin: 0 0 var(--s5) !important; }
-.bs-credit a { color: inherit; }
+.bs-zoom:focus-visible { outline: var(--theme-focus-ring-width) solid var(--theme-focus); outline-offset: var(--theme-focus-ring-offset); }
+.bs-floor-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--theme-white);
+  border-radius: var(--sheet-image-radius);
+  box-shadow: 0 var(--sheet-image-shadow-y) var(--sheet-image-shadow-blur) var(--theme-shadow-soft);
+}
 .bs-missing { padding: var(--s12) var(--s4); color: var(--f7-theme-color); }
-.bs-caption { margin-top: var(--s3); font-size: 13px; color: #6b6b70; }
+.bs-caption { margin-top: var(--s3); font-size: var(--sheet-caption-size); color: var(--theme-text-caption); }
 
-.bs-info { margin-top: var(--s6); text-align: left; border-top: 1px solid #e6e6ea; padding-top: var(--s5); }
-.bs-h3 { font-size: 15px; margin: 0 0 var(--s3); color: var(--f7-theme-color); }
-.bs-info p { font-size: 14px; line-height: 1.55; color: #3b3b40; margin: 0 0 var(--s3); }
+.bs-photos {
+  display: flex;
+  gap: var(--s2);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin: 0 calc(-1 * var(--s4)) var(--s2);
+  padding: 0 var(--s4);
+}
+.bs-photo { flex: 0 0 var(--sheet-photo-width); padding: 0; border: none; background: none; scroll-snap-align: center; cursor: zoom-in; }
+.bs-photo img { display: block; width: 100%; aspect-ratio: var(--sheet-photo-ratio); object-fit: cover; border-radius: var(--sheet-image-radius); }
+
+.bs-info { margin-top: var(--s6); text-align: left; border-top: 1px solid var(--theme-line-strong); padding-top: var(--s5); }
+.bs-h3 { font-size: var(--sheet-heading-size); margin: 0 0 var(--s3); color: var(--f7-theme-color); }
+.bs-info p { font-size: var(--sheet-body-size); line-height: var(--sheet-body-line-height); color: var(--theme-text-body); margin: 0 0 var(--s3); }
+/* ".bs-info .bs-credit" is more specific than ".bs-info p", so it wins without !important. */
+.bs-info .bs-credit { font-size: var(--sheet-credit-size); color: var(--theme-text-muted); margin: 0 0 var(--s5); }
+.bs-credit a { color: inherit; }
 .bs-facts { margin: var(--s4) 0; padding: 0; }
-.bs-row { display: flex; gap: var(--s3); padding: var(--s2) 0; border-bottom: 1px solid #f0f0f3; }
-.bs-row dt { flex: 0 0 80px; font-size: 13px; color: #8a8690; margin: 0; }
-.bs-row dd { flex: 1; font-size: 14px; color: #1b1b1d; margin: 0; }
-.bs-link { display: inline-block; margin-top: var(--s2); font-size: 14px; font-weight: 600; color: var(--f7-theme-color); }
-.bs-source { font-size: 12px !important; color: #9a96a0 !important; margin-top: var(--s4) !important; }
+.bs-row { display: flex; gap: var(--s3); padding: var(--s2) 0; border-bottom: 1px solid var(--theme-line-soft); }
+.bs-row dt { flex: 0 0 var(--sheet-label-width); font-size: var(--sheet-label-size); color: var(--theme-text-muted); margin: 0; }
+.bs-row dd { flex: 1; font-size: var(--sheet-body-size); color: var(--theme-text-strong); margin: 0; }
+.bs-link { display: inline-block; margin-top: var(--s2); font-size: var(--sheet-link-size); font-weight: var(--sheet-link-weight); color: var(--f7-theme-color); }
+.bs-info .bs-source { font-size: var(--sheet-source-size); color: var(--theme-text-faint); margin-top: var(--s4); }
 
-/* ---------- 9. Welcome + empty states ---------- */
+/* ---------- 9. Welcome screen ---------- */
 #welcome-popup { background: var(--f7-theme-color); }
-#welcome-popup .page, #welcome-popup .page-content { background: transparent; }
-.welcome-card { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff; }
-.welcome-h { margin: 0; line-height: 1.15; color: #fff; }
-.welcome-card .brand { color: #fff; }
-.welcome-card .by { color: rgba(255, 255, 255, 0.85); margin-top: var(--s2); }
-.welcome-card .button-fill { background: #fff; color: var(--f7-theme-color); }
+#welcome-popup .page,
+#welcome-popup .page-content { background: transparent; }
+.welcome-card { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--theme-white); }
+.welcome-h { margin: 0; line-height: var(--welcome-title-line-height); color: var(--theme-white); }
+.welcome-card .brand { color: var(--theme-white); }
+.welcome-card .by { color: var(--welcome-byline); margin-top: var(--s2); }
+.welcome-card .button-fill { background: var(--theme-white); color: var(--f7-theme-color); }
 
-.empty-state { text-align: center; padding: 18vh var(--s6) 0; }
-.empty-icon { font-size: 44px; color: var(--f7-theme-color); }
-.empty-state h2 { font-size: 20px; margin: var(--s4) 0 var(--s2); }
-.empty-state p { color: #55525a; margin: 0 0 var(--s2); }
-.muted { color: #8a8690; }
+/* ---------- 10. Empty pages (schedule) ---------- */
+.empty-state { text-align: center; padding: var(--empty-state-top-space) var(--s6) 0; }
+.empty-icon { font-size: var(--empty-state-icon-size); color: var(--f7-theme-color); }
+.empty-state h2 { font-size: var(--empty-state-title-size); margin: var(--s4) 0 var(--s2); }
+.empty-state p { color: var(--theme-text-soft); margin: 0 0 var(--s2); }
+.muted { color: var(--theme-text-muted); }
 
-/* ---------- 10. Bigger screens ---------- */
+/* ---------- 11. Bigger screens ---------- */
 @media (min-width: 768px) {
-  .bs-body { max-width: 720px; margin: 0 auto; padding-left: var(--s6); padding-right: var(--s6); }
-  .bs-floor-img { max-width: 640px; }
-  .menu-link { font-size: 44px; }
-  .menu-inner { gap: var(--s8); }
-  .pill { font-size: 16px; }
+  .bs-body { max-width: var(--sheet-body-max-width-desktop); margin: 0 auto; padding-left: var(--s6); padding-right: var(--s6); }
+  .bs-floor-img { max-width: var(--sheet-image-max-width-desktop); }
+  .menu-link { font-size: var(--menu-link-size-desktop); }
+  .menu-inner { gap: var(--menu-gap-desktop); }
+  .pill { font-size: var(--pill-font-size-desktop); }
 }
 
-/* ---------- 11. Respect "reduce motion" ---------- */
+/* ---------- 12. "Reduce motion" setting ---------- */
 @media (prefers-reduced-motion: reduce) {
   .search-drop, .pill, .pill-bar, .pill-chev, .popup-menu, .menu-link { transition: none !important; animation: none !important; }
   .menu-link { opacity: 1; transform: none; }

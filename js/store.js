@@ -1,50 +1,89 @@
 /**
  * @file js/store.js
- * @summary The app's tiny shared memory (the "single source of truth").
+ * @summary The app's shared memory, and the only place it gets changed.
  *
- * WHAT IT DOES : Remembers what is selected and what is open, and lets any file
- *                (map, sheet, pill, search) react when that changes.
+ * WHAT IT DOES : Remembers which building is selected, whether its sheet is
+ *                open, which floor is showing, and whether search is open.
+ *                Other files change it only through the named actions below
+ *                (selectBuilding, closeSheet, ...), so every rule about what
+ *                changes together lives here. Anything that called
+ *                store.subscribe(fn) is told after every change.
  * DEPENDS ON   : nothing.
- * CONTROLS     : which building is selected, whether the sheet is open,
- *                pill "mode", and the active floor.
- * USED BY      : js/map.js, js/buildingSheet.js, js/pill.js, js/search.js, js/app.js
- *
- * HOW IT WORKS : call store.set({...}) to change something; every function that
- *                called store.subscribe(fn) then runs with the new state.
+ * CONTROLS     : the app state.
+ * USED BY      : js/app.js, js/map.js, js/buildingSheet.js, js/pill.js, js/search.js
  */
 
 const state = {
-  selectedId: null, // id of the building the user tapped, or null
-  sheetOpen: false, // is the bottom info sheet showing?
-  mode: 'idle', // 'idle' | 'solving' | 'searching'  (drives the pill label)
-  activeFloor: null, // which floor is chosen for the selected building
+  selectedId: null, // id of the chosen building, or null
+  sheetOpen: false, // is the building sheet showing?
+  activeFloor: null, // floor shown in the sheet
+  searching: false, // is the search drop-down open?
 };
 
 const subscribers = new Set();
 
+/**
+ * Change some state, then tell every subscriber.
+ * @param {object} changes - fields to update
+ */
+function update(changes) {
+  Object.assign(state, changes);
+  subscribers.forEach((fn) => fn(state));
+}
+
 export const store = {
-  /** @returns {object} the current state (read-only — change it with set()) */
+  /** @returns {object} the current state (read it; change it with the actions below) */
   get() {
     return state;
   },
 
   /**
-   * Change one or more pieces of state, then tell everyone who is listening.
-   * @param {object} patch - the fields to update, e.g. { sheetOpen: true }
-   */
-  set(patch) {
-    Object.assign(state, patch);
-    subscribers.forEach((fn) => fn(state));
-  },
-
-  /**
-   * Listen for state changes. Runs your function once right away, too.
-   * @param {(state: object) => void} fn - what to run when state changes
-   * @returns {() => void} call this to stop listening
+   * Run `fn` now and after every change.
+   * @param {(state: object) => void} fn
    */
   subscribe(fn) {
     subscribers.add(fn);
     fn(state);
-    return () => subscribers.delete(fn);
+  },
+
+  /**
+   * Choose a building: open its sheet on its first floor.
+   * @param {object} building - a record from data/buildings.geojson
+   */
+  selectBuilding(building) {
+    update({ selectedId: building.id, sheetOpen: true, activeFloor: building.floors[0] || null, searching: false });
+  },
+
+  /** Let go of the selected building and close its sheet. */
+  clearSelection() {
+    update({ selectedId: null, sheetOpen: false, activeFloor: null, searching: false });
+  },
+
+  /** Open the selected building's sheet. */
+  openSheet() {
+    update({ sheetOpen: true });
+  },
+
+  /** Close the sheet but keep the building selected. */
+  closeSheet() {
+    update({ sheetOpen: false });
+  },
+
+  /**
+   * Show a different floor.
+   * @param {number} floor
+   */
+  showFloor(floor) {
+    update({ activeFloor: floor });
+  },
+
+  /** Open search: any selected building is let go. */
+  startSearch() {
+    update({ selectedId: null, sheetOpen: false, activeFloor: null, searching: true });
+  },
+
+  /** Close search (does nothing if it's already closed). */
+  endSearch() {
+    if (state.searching) update({ searching: false });
   },
 };

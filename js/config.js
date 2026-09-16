@@ -1,49 +1,58 @@
 /**
  * @file js/config.js
- * @summary One place for every setting you might want to tweak.
+ * @summary Loads config.yml, the one file that holds every changeable value.
  *
- * WHAT IT DOES : Holds the map start position, zoom limits, the basemap style,
- *                and how the campus is highlighted.
- * DEPENDS ON   : nothing.
- * CONTROLS     : how the map in js/map.js looks and where it opens.
- * USED BY      : js/map.js
- *
- * NOTE: campus shapes are NOT in this file. tools/build_campuses.py makes them
- * from NMSU Office of Space Planning data, so nothing here is guessed.
+ * WHAT IT DOES : (1) downloads config.yml (never from cache, so edits show on refresh),
+ *                (2) turns it into the CONFIG object the JavaScript reads,
+ *                (3) turns every value into a CSS variable the stylesheet reads,
+ *                    e.g. pill.height -> --pill-height, theme.textMuted -> --theme-text-muted.
+ * DEPENDS ON   : js-yaml (global `jsyaml`, loaded in index.html), config.yml.
+ * CONTROLS     : CONFIG, and the CSS variables on the <html> element.
+ * USED BY      : every other js/ file (they read CONFIG), styles/app.css (reads the variables).
  */
 
-export const CONFIG = {
-  // [longitude, latitude] — Hardman & Jacobs, from OpenStreetMap.
-  center: [-106.7512196, 32.2824753],
+/** Filled by loadConfig(). Other files import this and read it after start-up. */
+export const CONFIG = {};
 
-  zoom: 16.2,
-  minZoom: 11,
-  maxZoom: 18,
+/**
+ * "textMuted" -> "text-muted" (CSS variable names use dashes).
+ * @param {string} name
+ * @returns {string}
+ */
+function toKebabCase(name) {
+  return name.replace(/[A-Z]/g, (letter) => '-' + letter.toLowerCase());
+}
 
-  // OpenFreeMap "Liberty": a full-COLOR vector basemap. Free, no API key.
-  styleUrl: 'https://tiles.openfreemap.org/styles/liberty',
+/**
+ * Put every plain value from config.yml onto <html> as a CSS variable.
+ * Lists (like map.center) are skipped because CSS can't use them.
+ * @param {object} section - one section of config.yml, or part of one
+ * @param {string} prefix - the variable name so far, e.g. "--pill"
+ */
+function setCssVariables(section, prefix) {
+  Object.entries(section).forEach(([key, value]) => {
+    const name = prefix + '-' + toKebabCase(key);
+    if (Array.isArray(value)) return;
+    if (typeof value === 'object' && value !== null) setCssVariables(value, name);
+    else document.documentElement.style.setProperty(name, String(value));
+  });
+}
 
-  crimson: '#8C0B42',
+/**
+ * Load config.yml and apply it. Call this before starting anything else.
+ * @throws {Error} with the file's line number when config.yml has a typo
+ */
+export async function loadConfig() {
+  // 'no-cache' still uses the browser's copy, but checks with the server first,
+  // so a saved edit shows up on the next refresh.
+  const response = await fetch('config.yml', { cache: 'no-cache' });
+  if (!response.ok) throw new Error('Could not load config.yml (' + response.status + ')');
 
-  // Properties this close to main campus are highlighted on the map and fence
-  // the drag area. Farther ones are listed on the Locations page instead.
-  nearbyKm: 10,
+  // jsyaml.load throws a readable message such as "... at line 12, column 3".
+  Object.assign(CONFIG, jsyaml.load(await response.text()));
 
-  // Which NMSU places are shown (only places where classes can happen) is
-  // decided in tools/build_campuses.py, which writes data/campuses.geojson.
-
-  // Ring colour on the selected building's badge (unselected badges have a white ring).
-  selectedRing: '#000000',
-
-  // How we make campus stand out: a light crimson tint inside the real
-  // boundary, a crimson outline on it, and a white wash over everything
-  // outside so the surroundings fade back.
-  campus: {
-    tintColor: '#8C0B42',
-    tintOpacity: 0.07,
-    outlineColor: '#8C0B42',
-    outlineWidth: 2.5,
-    muteColor: '#ffffff',
-    muteOpacity: 0.6,
-  },
-};
+  Object.entries(CONFIG).forEach(([section, values]) => setCssVariables(values, '--' + toKebabCase(section)));
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  if (themeColor) themeColor.setAttribute('content', CONFIG.theme.crimson);
+  document.documentElement.classList.add('config-ready');
+}

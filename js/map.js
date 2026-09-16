@@ -1,29 +1,30 @@
 /**
  * @file js/map.js
- * @summary Builds the colour campus map, highlights NMSU's class places, and
- *          draws an Apple-style info badge on each building.
+ * @summary The map: NMSU's class places highlighted, a tappable badge on each building.
  *
  * WHAT IT DOES : (1) creates the MapLibre map on the colour OpenFreeMap basemap,
- *                (2) fades everything that isn't an NMSU class place and outlines
- *                    + names the places that are,
+ *                (2) fades everything that isn't an NMSU class place, and tints,
+ *                    outlines and names the places that are,
  *                (3) keeps dragging inside the Las Cruces places,
- *                (4) draws a crimson "i" badge with a white ring on each building;
- *                    the selected one gets a black ring instead,
- *                (5) tells the store when a building or the map is tapped.
+ *                (4) draws a crimson "i" badge on each building (white ring;
+ *                    black ring on the selected one),
+ *                (5) tells the store when a badge or empty map is tapped.
  * DEPENDS ON   : maplibre-gl (global `maplibregl`), ./config.js, ./store.js, and
- *                three files made by tools/build_campuses.py:
- *                data/campuses.geojson, data/campus-labels.geojson,
- *                data/outside-mask.geojson. (All shape math happens in that
- *                script, so this file only draws.)
- * CONTROLS     : the #map element, the campus layers, the building badges.
- * USED BY      : js/app.js, js/locations.js (showProperty)
+ *                the files made by tools/build_campuses.py (all shape math
+ *                happens there; this file only draws).
+ * CONTROLS     : the #map element.
+ * USED BY      : js/app.js, js/locations.js
  *
- * WHY THE BADGE IS A MAP LAYER, NOT AN HTML MARKER: a DOM marker is moved by
- * JavaScript every frame and visibly lags while you drag. A map layer is moved
- * by the GPU together with the map, so it stays welded in place.
+ * WHY BADGES ARE A MAP LAYER, NOT HTML MARKERS: an HTML marker is moved by
+ * JavaScript every frame and lags while you drag. A map layer is moved by the
+ * GPU with the map, so it stays in place.
  */
 
 import { CONFIG } from './config.js';
+import { store } from './store.js';
+
+let map = null; // the live MapLibre map
+let fence = null; // drag limits around the Las Cruces places
 
 /**
  * Every [lng, lat] point in a Polygon or MultiPolygon, as one flat list.
@@ -36,196 +37,226 @@ function pointsOf(geometry) {
 }
 
 /**
- * Rectangle around a list of [lng, lat] points, plus a margin.
+ * Rectangle around some [lng, lat] points, plus a margin.
  * @param {number[][]} points
- * @param {number} pad - degrees added on every side
- * @returns {number[][]} [ [minLng, minLat], [maxLng, maxLat] ]
+ * @param {number} padding - degrees added on every side
+ * @returns {number[][]} [[west, south], [east, north]]
  */
-function boundsOf(points, pad) {
+function boundsOf(points, padding) {
   const lngs = points.map((p) => p[0]);
   const lats = points.map((p) => p[1]);
   return [
-    [Math.min(...lngs) - pad, Math.min(...lats) - pad],
-    [Math.max(...lngs) + pad, Math.max(...lats) + pad],
+    [Math.min(...lngs) - padding, Math.min(...lats) - padding],
+    [Math.max(...lngs) + padding, Math.max(...lats) + padding],
   ];
 }
 
 /**
- * Draw the round "i" badge once, as a picture the map can stamp on buildings.
- * Drawn at 2x so it stays sharp on phone screens. Both badges are the same
- * size, so nothing jumps when you select one; only the ring changes.
- * @param {boolean} selected - true = black ring (chosen), false = white ring
- * @returns {object} {width, height, data} image for map.addImage
+ * Draw the round "i" badge as a picture the map can place on buildings.
+ * Both badges are the same size, so selecting one never makes it jump.
+ * @param {boolean} selected - true = black ring, false = white ring
+ * @returns {object} {width, height, data} for map.addImage
  */
-function drawInfoBadge(selected) {
-  const size = 28;
-  const scale = 2;
+function drawBadge(selected) {
+  const { size, pixelRatio, ringRadius, centerRadius, selectedCenterRadius } = CONFIG.badge;
   const canvas = document.createElement('canvas');
-  canvas.width = canvas.height = size * scale;
-  const g = canvas.getContext('2d');
-  g.scale(scale, scale);
-  const r = size / 2;
+  canvas.width = canvas.height = size * pixelRatio;
+  const pen = canvas.getContext('2d');
+  pen.scale(pixelRatio, pixelRatio);
+  const middle = size / 2;
 
-  // the ring: white normally, black (and a little thicker) when selected
-  g.beginPath();
-  g.arc(r, r, 13, 0, Math.PI * 2);
-  g.fillStyle = selected ? CONFIG.selectedRing : '#ffffff';
-  g.fill();
+  pen.beginPath();
+  pen.arc(middle, middle, ringRadius, 0, Math.PI * 2);
+  pen.fillStyle = selected ? CONFIG.badge.selectedRing : CONFIG.badge.ring;
+  pen.fill();
 
-  // the crimson centre
-  g.beginPath();
-  g.arc(r, r, selected ? 10 : 11, 0, Math.PI * 2);
-  g.fillStyle = CONFIG.crimson;
-  g.fill();
+  pen.beginPath();
+  pen.arc(middle, middle, selected ? selectedCenterRadius : centerRadius, 0, Math.PI * 2);
+  pen.fillStyle = CONFIG.theme.crimson;
+  pen.fill();
 
-  g.fillStyle = '#ffffff';
-  g.font = 'italic 700 15px Georgia, "Times New Roman", serif';
-  g.textAlign = 'center';
-  g.textBaseline = 'middle';
-  g.fillText('i', r, r + 1);
+  pen.fillStyle = CONFIG.theme.white;
+  pen.font = CONFIG.badge.letterFont;
+  pen.textAlign = 'center';
+  pen.textBaseline = 'middle';
+  pen.fillText('i', middle, middle + CONFIG.badge.letterOffset);
 
-  const img = g.getImageData(0, 0, size * scale, size * scale);
-  return { width: img.width, height: img.height, data: img.data };
+  const image = pen.getImageData(0, 0, canvas.width, canvas.height);
+  return { width: image.width, height: image.height, data: image.data };
 }
 
 /**
- * Move the map to show one NMSU place. Far places lift the drag fence;
- * nearby ones put it back.
- * @param {maplibregl.Map} map
- * @param {object} feature - one feature from data/campuses.geojson
+ * MapLibre shows its credits expanded at first; start them folded into the (i).
+ * (MapLibre has no setting for this, so we close its <details> element.)
  */
-export function showProperty(map, feature) {
-  const nearby = feature.properties.km <= CONFIG.nearbyKm;
-  map.setMaxBounds(nearby ? map.__fence : null);
-  map.fitBounds(boundsOf(pointsOf(feature.geometry), 0), { padding: 48, maxZoom: 17, duration: 900 });
+function foldCredits() {
+  const credits = document.querySelector('.maplibregl-ctrl-attrib');
+  if (!credits) return;
+  credits.removeAttribute('open');
+  credits.classList.remove('maplibregl-compact-show');
+}
+
+/** Hide the basemap's business labels: third-party and not checked by us. */
+function hideBasemapBusinesses() {
+  map.getStyle().layers
+    .filter((layer) => layer['source-layer'] === CONFIG.map.hiddenBasemapLayer)
+    .forEach((layer) => map.setLayoutProperty(layer.id, 'visibility', 'none'));
 }
 
 /**
- * Create the map, highlight NMSU, and draw a badge on every building.
- * @param {object} store - shared state from ./store.js
- * @param {Object.<string, object>} byId - buildings keyed by id (each has .center)
+ * Draw NMSU's class places: fade the rest, then tint, outline and name ours.
  * @param {object} campuses - data/campuses.geojson
  * @param {object} labels - data/campus-labels.geojson
  * @param {object} outside - data/outside-mask.geojson
- * @returns {maplibregl.Map} the live map
  */
-export function initMap(store, byId, campuses, labels, outside) {
-  // Drag fence: the Las Cruces places plus a small margin.
-  const nearby = campuses.features.filter((f) => f.properties.km <= CONFIG.nearbyKm);
-  const fence = boundsOf(nearby.flatMap((f) => pointsOf(f.geometry)), 0.01);
+function drawCampuses(campuses, labels, outside) {
+  const settings = CONFIG.map;
+  map.addSource('outside', { type: 'geojson', data: outside });
+  map.addSource('campuses', { type: 'geojson', data: campuses });
+  map.addSource('campus-labels', { type: 'geojson', data: labels });
 
-  const map = new maplibregl.Map({
+  map.addLayer({
+    id: 'outside-mute', type: 'fill', source: 'outside',
+    paint: { 'fill-color': settings.outsideColor, 'fill-opacity': settings.outsideOpacity },
+  });
+  map.addLayer({
+    id: 'campus-tint', type: 'fill', source: 'campuses',
+    paint: { 'fill-color': CONFIG.theme.crimson, 'fill-opacity': settings.campusTintOpacity },
+  });
+  map.addLayer({
+    id: 'campus-edge', type: 'line', source: 'campuses',
+    paint: { 'line-color': CONFIG.theme.crimson, 'line-width': settings.campusEdgeWidth, 'line-opacity': settings.campusEdgeOpacity },
+  });
+  map.addLayer({
+    id: 'campus-name', type: 'symbol', source: 'campus-labels', maxzoom: settings.labelMaxZoom,
+    layout: {
+      'text-field': ['get', 'Name'],
+      'text-font': [settings.labelFont],
+      'text-size': settings.labelSize,
+      'text-max-width': settings.labelMaxWidth,
+    },
+    paint: { 'text-color': CONFIG.theme.crimson, 'text-halo-color': CONFIG.theme.white, 'text-halo-width': settings.labelHaloWidth },
+  });
+}
+
+/**
+ * Draw one badge per building (one layer; the selected one swaps pictures).
+ * @param {Object.<string, object>} buildingsById
+ */
+function drawBadges(buildingsById) {
+  const imageOptions = { pixelRatio: CONFIG.badge.pixelRatio };
+  map.addImage('info-badge', drawBadge(false), imageOptions);
+  map.addImage('info-badge-selected', drawBadge(true), imageOptions);
+  map.addSource('buildings', {
+    type: 'geojson',
+    data: {
+      type: 'FeatureCollection',
+      features: Object.values(buildingsById).map((building) => ({
+        type: 'Feature', properties: { id: building.id }, geometry: { type: 'Point', coordinates: building.center },
+      })),
+    },
+  });
+  map.addLayer({
+    id: 'building-pins', type: 'symbol', source: 'buildings',
+    layout: { 'icon-image': 'info-badge', 'icon-allow-overlap': true },
+  });
+}
+
+/**
+ * Give the selected building the black-ringed badge; every other badge keeps the white ring.
+ * @param {string|null} buildingId
+ */
+function markSelected(buildingId) {
+  if (!map.getLayer('building-pins')) return; // still loading; the load step calls this again
+  map.setLayoutProperty('building-pins', 'icon-image',
+    ['match', ['get', 'id'], buildingId || '', 'info-badge-selected', 'info-badge']);
+}
+
+/**
+ * Tapping a badge selects its building; tapping anywhere else clears the selection.
+ * @param {Object.<string, object>} buildingsById
+ */
+function listenForTaps(buildingsById) {
+  map.on('click', (event) => {
+    const hits = map.queryRenderedFeatures(event.point, { layers: ['building-pins'] });
+    if (hits.length) store.selectBuilding(buildingsById[hits[0].properties.id]);
+    else store.clearSelection();
+  });
+  map.on('mouseenter', 'building-pins', () => (map.getCanvas().style.cursor = 'pointer'));
+  map.on('mouseleave', 'building-pins', () => (map.getCanvas().style.cursor = ''));
+}
+
+/**
+ * Fly to a building whenever a different one is selected.
+ * @param {Object.<string, object>} buildingsById
+ */
+function followSelection(buildingsById) {
+  let lastSelectedId = null;
+  store.subscribe((state) => {
+    if (state.selectedId === lastSelectedId) return;
+    lastSelectedId = state.selectedId;
+    markSelected(state.selectedId);
+    const building = buildingsById[state.selectedId];
+    if (!building) return; // nothing selected
+    map.setMaxBounds(fence);
+    map.flyTo({
+      center: building.center,
+      zoom: Math.max(map.getZoom(), CONFIG.map.selectZoom),
+      speed: CONFIG.map.flySpeed,
+      essential: true,
+    });
+  });
+}
+
+/**
+ * Move the map to one NMSU place. Far places lift the drag fence; nearby ones restore it.
+ * @param {object} place - one feature from data/campuses.geojson
+ */
+export function showPlace(place) {
+  map.setMaxBounds(place.properties.km <= CONFIG.map.nearbyKm ? fence : null);
+  map.fitBounds(boundsOf(pointsOf(place.geometry), 0), {
+    padding: CONFIG.map.fitPadding,
+    maxZoom: CONFIG.map.fitMaxZoom,
+    duration: CONFIG.map.fitDuration,
+  });
+}
+
+/**
+ * Create the map.
+ * @param {Object.<string, object>} buildingsById - buildings keyed by id (each has .center)
+ * @param {object} campuses - data/campuses.geojson
+ * @param {object} labels - data/campus-labels.geojson
+ * @param {object} outside - data/outside-mask.geojson
+ * @returns {maplibregl.Map}
+ */
+export function initMap(buildingsById, campuses, labels, outside) {
+  const settings = CONFIG.map;
+  const nearbyPlaces = campuses.features.filter((place) => place.properties.km <= settings.nearbyKm);
+  fence = boundsOf(nearbyPlaces.flatMap((place) => pointsOf(place.geometry)), settings.fencePadding);
+
+  map = new maplibregl.Map({
     container: 'map',
-    style: CONFIG.styleUrl,
-    center: CONFIG.center,
-    zoom: CONFIG.zoom,
-    minZoom: CONFIG.minZoom,
-    maxZoom: CONFIG.maxZoom,
+    style: settings.styleUrl,
+    center: settings.center,
+    zoom: settings.zoom,
+    minZoom: settings.minZoom,
+    maxZoom: settings.maxZoom,
     maxBounds: fence,
     dragRotate: true,
     attributionControl: { compact: true },
   });
-  map.__fence = fence; // remembered so showProperty() can restore it
   map.touchZoomRotate.enable();
   map.touchPitch.enable();
 
-  /** Select a building (opens its sheet on its first floor). */
-  function select(id) {
-    const b = byId[id];
-    store.set({ selectedId: id, sheetOpen: true, mode: 'solving', activeFloor: (b.floors && b.floors[0]) || null });
-  }
-
-  /** Clear the selection (tapped empty map). */
-  function deselect() {
-    store.set({ selectedId: null, sheetOpen: false, mode: 'idle', activeFloor: null });
-  }
-
-  /**
-   * Give the selected building the black-ringed badge; every other one keeps the white ring.
-   * @param {string|null} id - selected building id
-   */
-  function showSelected(id) {
-    if (!map.getLayer('building-pins')) return; // map still loading
-    map.setLayoutProperty('building-pins', 'icon-image',
-      ['match', ['get', 'id'], id || '', 'info-badge-selected', 'info-badge']);
-  }
-
   map.on('load', () => {
-    // Start with the map credits folded into the small (i) button.
-    const credits = document.querySelector('.maplibregl-ctrl-attrib');
-    if (credits) {
-      credits.removeAttribute('open');
-      credits.classList.remove('maplibregl-compact-show');
-    }
-
-    // Hide the basemap's business/POI labels: third-party and unverified.
-    map.getStyle().layers
-      .filter((l) => l['source-layer'] === 'poi')
-      .forEach((l) => map.setLayoutProperty(l.id, 'visibility', 'none'));
-
-    // --- NMSU places ---
-    map.addSource('outside', { type: 'geojson', data: outside });
-    map.addSource('campuses', { type: 'geojson', data: campuses });
-    map.addSource('campus-labels', { type: 'geojson', data: labels });
-
-    // 1. Fade everything that isn't a class place (the map still shows through).
-    map.addLayer({
-      id: 'outside-mute', type: 'fill', source: 'outside',
-      paint: { 'fill-color': CONFIG.campus.muteColor, 'fill-opacity': CONFIG.campus.muteOpacity },
-    });
-    // 2. A light crimson tint and a crimson edge on our places.
-    map.addLayer({
-      id: 'campus-tint', type: 'fill', source: 'campuses',
-      paint: { 'fill-color': CONFIG.campus.tintColor, 'fill-opacity': CONFIG.campus.tintOpacity },
-    });
-    map.addLayer({
-      id: 'campus-edge', type: 'line', source: 'campuses',
-      paint: { 'line-color': CONFIG.campus.outlineColor, 'line-width': CONFIG.campus.outlineWidth, 'line-opacity': 0.85 },
-    });
-    // 3. One name per place, shown when zoomed out.
-    map.addLayer({
-      id: 'campus-name', type: 'symbol', source: 'campus-labels', maxzoom: 15,
-      layout: { 'text-field': ['get', 'Name'], 'text-font': ['Noto Sans Bold'], 'text-size': 13, 'text-max-width': 8 },
-      paint: { 'text-color': CONFIG.crimson, 'text-halo-color': '#ffffff', 'text-halo-width': 2 },
-    });
-
-    // --- Building badges (one layer; the selected one swaps to the black-ringed picture) ---
-    map.addImage('info-badge', drawInfoBadge(false), { pixelRatio: 2 });
-    map.addImage('info-badge-selected', drawInfoBadge(true), { pixelRatio: 2 });
-    map.addSource('buildings', {
-      type: 'geojson',
-      data: {
-        type: 'FeatureCollection',
-        features: Object.values(byId).map((b) => ({
-          type: 'Feature', properties: { id: b.id }, geometry: { type: 'Point', coordinates: b.center },
-        })),
-      },
-    });
-    map.addLayer({
-      id: 'building-pins', type: 'symbol', source: 'buildings',
-      layout: { 'icon-image': 'info-badge', 'icon-allow-overlap': true },
-    });
-    showSelected(store.get().selectedId);
-
-    map.on('click', (e) => {
-      const hits = map.queryRenderedFeatures(e.point, { layers: ['building-pins'] });
-      if (hits.length) select(hits[0].properties.id);
-      else deselect();
-    });
-    map.on('mouseenter', 'building-pins', () => (map.getCanvas().style.cursor = 'pointer'));
-    map.on('mouseleave', 'building-pins', () => (map.getCanvas().style.cursor = ''));
+    foldCredits();
+    hideBasemapBusinesses();
+    drawCampuses(campuses, labels, outside);
+    drawBadges(buildingsById);
+    markSelected(store.get().selectedId);
+    listenForTaps(buildingsById);
   });
-
-  let lastSelected = null;
-  store.subscribe((s) => {
-    if (s.selectedId === lastSelected) return;
-    lastSelected = s.selectedId;
-    showSelected(s.selectedId);
-    if (s.selectedId) {
-      map.setMaxBounds(fence);
-      map.flyTo({ center: byId[s.selectedId].center, zoom: Math.max(map.getZoom(), 16.8), speed: 0.6, essential: true });
-    }
-  });
+  followSelection(buildingsById);
 
   return map;
 }

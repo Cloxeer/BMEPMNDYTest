@@ -69,5 +69,16 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [ ] Show the entrance door to use
 - [ ] Blue translucent `>>>` chevrons from the door to the room
 
+## Code quality
+- [x] config.yml holds every changeable value; js/config.js turns it into CONFIG + CSS variables
+- [x] Store has named actions (selectBuilding, closeSheet, ...) instead of raw state patches
+- [x] Removed band-aids: global page padding override, !important specificity fights, menu nth-child delays, map.__fence, init-order dependency, orb leftovers
+- [x] tools/build_buildings.py rebuilds data/buildings.geojson (byte-identical to before)
+- [x] Unused raw data moved to data/source/
+- [x] docs/ARCHITECTURE.md and README rewritten to match the real app
+- [x] Refactor verified with a before/after snapshot of computed styles, map layers, badge pixels and flows: 0 differences on mobile and desktop
+- [x] Code review fixes: search open/closed comes only from the store (tapping the map mid-search now closes it); a late "closed" event can no longer shut a re-opened sheet; pill screen-reader label matches the visible text; all data escaped via js/html.js with https-only links; tools run from any folder
+- [ ] Move remaining JavaScript-written texts ("About this building", "Photo:", " km", report dialog) into config.yml
+
 ## Reviews to write (docs/REVIEW.md)
 - [ ] Maps · NMSU campus area · building layout · UI · UX/accessibility (with claims fact-checked)

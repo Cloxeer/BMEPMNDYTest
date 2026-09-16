@@ -1,176 +1,185 @@
 /**
  * @file js/app.js
- * @summary The app's ON switch — loads data, starts everything, wires the menu.
+ * @summary Starts the app.
  *
- * WHAT IT DOES : (1) boots Framework7 (iOS theme),
- *                (2) loads buildings + the NMSU campus files,
- *                (3) starts the map, full-page sheet, pill, and search,
- *                (4) wires the full-screen fade menu + first-visit welcome.
- * DEPENDS ON   : Framework7 (global `Framework7`), all the js/ modules,
- *                data/buildings.geojson, and the campus files made by
- *                tools/build_campuses.py.
- * CONTROLS     : app start-up order and the menu/welcome flows.
- * USED BY      : index.html (loaded as the page's module).
+ * WHAT IT DOES : (1) loads config.yml,
+ *                (2) starts Framework7 (iOS theme),
+ *                (3) loads the building and campus data,
+ *                (4) starts the map, building sheet, pill, search, menu and welcome screen.
+ * DEPENDS ON   : Framework7 (global `Framework7`), every js/ module,
+ *                data/buildings.geojson and the campus files from tools/build_campuses.py.
+ * CONTROLS     : start-up order, the menu, the welcome screen.
+ * USED BY      : index.html
  */
 
+import { CONFIG, loadConfig } from './config.js';
 import { store } from './store.js';
 import { initMap } from './map.js';
-import { initSheet } from './buildingSheet.js';
+import { initBuildingSheet } from './buildingSheet.js';
 import { initPill } from './pill.js';
 import { initSearch } from './search.js';
 import { initLocations } from './locations.js';
 
-const VISITED_KEY = 'bnm_visited';
+/**
+ * Start Framework7. While any full-screen popup is open, the bottom pill hides.
+ * (Registered here, at creation, so no popup can open before we're listening.)
+ * @returns {Framework7}
+ */
+function startFramework7() {
+  const pillBar = document.querySelector('#pill');
+  let openPopups = 0;
+  return new Framework7({
+    el: '#app',
+    name: 'Better NMSU Maps',
+    theme: 'ios',
+    on: {
+      popupOpen() {
+        openPopups += 1;
+        pillBar.classList.add('pill-hidden');
+      },
+      popupClose() {
+        openPopups = Math.max(0, openPopups - 1);
+        if (openPopups === 0) pillBar.classList.remove('pill-hidden');
+      },
+    },
+  });
+}
 
 /**
- * Get a building's [lng, lat] center from its geometry (point or polygon).
- * @param {object} geometry - a GeoJSON geometry
- * @returns {number[]} [lng, lat]
+ * Download one data file from data/.
+ * @param {string} fileName
+ * @returns {Promise<object>}
  */
-function centerOf(geometry) {
-  if (geometry.type === 'Point') return geometry.coordinates;
-  const ring = geometry.coordinates[0].slice(0, -1); // polygon: average the corners
-  let lng = 0;
-  let lat = 0;
-  ring.forEach((p) => {
-    lng += p[0];
-    lat += p[1];
-  });
-  return [lng / ring.length, lat / ring.length];
+async function loadData(fileName) {
+  const response = await fetch('data/' + fileName);
+  if (!response.ok) throw new Error('Could not load data/' + fileName);
+  return response.json();
 }
 
-/** Boot Framework7 (draws the navbar, menu, popups, sheet in iOS style). */
-function startUI() {
-  return new Framework7({ el: '#app', name: 'Better NMSU Maps', theme: 'ios' });
-}
-
-/** Wire the fade menu, underline the current page, and open the sub-pages. */
-function initMenu(app, map, campuses) {
+/**
+ * The full-screen menu: underlines the current page and opens the other pages.
+ * @param {Framework7} app
+ * @param {object} campuses - data/campuses.geojson (for the Locations page)
+ */
+function initMenu(app, campuses) {
   const menu = app.popup.create({ el: '#menu-popup' });
-  const menuEl = document.querySelector('#menu-popup');
-  const schedule = app.popup.create({ el: '#schedule-popup' });
-  const settings = app.popup.create({ el: '#settings-popup' });
-  const locations = app.popup.create({ el: '#locations-popup' });
-  initLocations(app, map, campuses, locations);
+  const menuElement = document.querySelector('#menu-popup');
+  const pages = {
+    locations: app.popup.create({ el: '#locations-popup' }),
+    schedule: app.popup.create({ el: '#schedule-popup' }),
+    settings: app.popup.create({ el: '#settings-popup' }),
+  };
+  initLocations(campuses, pages.locations);
 
-  /** Underline whichever page we're currently on. */
-  function setCurrent(page) {
-    ['map', 'locations', 'schedule', 'settings'].forEach((p) => {
-      document.querySelector('#menu-' + p).classList.toggle('is-current', p === page);
+  /** @param {string} current - 'map', 'locations', 'schedule' or 'settings' */
+  function underline(current) {
+    ['map', ...Object.keys(pages)].forEach((name) => {
+      document.querySelector('#menu-' + name).classList.toggle('is-current', name === current);
     });
   }
-  setCurrent('map');
+  underline('map');
 
-  menu.on('open', () => menuEl.classList.add('menu-open'));
-  menu.on('close', () => menuEl.classList.remove('menu-open'));
-  schedule.on('closed', () => setCurrent('map'));
-  settings.on('closed', () => setCurrent('map'));
-  locations.on('closed', () => setCurrent('map'));
-
+  // The menu's words fade in one after another while this class is on.
+  menu.on('open', () => menuElement.classList.add('menu-open'));
+  menu.on('close', () => menuElement.classList.remove('menu-open'));
   document.querySelector('#menu-btn').addEventListener('click', () => menu.open());
+
   document.querySelector('#menu-map').addEventListener('click', () => {
-    setCurrent('map');
+    underline('map');
     menu.close();
   });
-  document.querySelector('#menu-locations').addEventListener('click', () => {
-    setCurrent('locations');
-    menu.close();
-    locations.open();
-  });
-  document.querySelector('#menu-schedule').addEventListener('click', () => {
-    setCurrent('schedule');
-    menu.close();
-    schedule.open();
-  });
-  document.querySelector('#menu-settings').addEventListener('click', () => {
-    setCurrent('settings');
-    menu.close();
-    settings.open();
+  Object.entries(pages).forEach(([name, page]) => {
+    page.on('closed', () => underline('map'));
+    document.querySelector('#menu-' + name).addEventListener('click', () => {
+      underline(name);
+      menu.close();
+      page.open();
+    });
   });
 }
 
-/** Show the welcome popup only on the first visit this session. */
+/**
+ * Show the welcome screen on the first visit of each browser session.
+ * @param {Framework7} app
+ */
 function initWelcome(app) {
+  const key = CONFIG.welcome.storageKey;
   let seen = false;
   try {
-    seen = sessionStorage.getItem(VISITED_KEY) === '1';
-  } catch (e) {
-    seen = false;
+    seen = sessionStorage.getItem(key) === '1';
+  } catch (error) {
+    // Private browsing can block storage; then just show the welcome.
   }
   if (!seen) app.popup.open('#welcome-popup');
 
   document.querySelector('#enter-map').addEventListener('click', () => {
     try {
-      sessionStorage.setItem(VISITED_KEY, '1');
-    } catch (e) {
-      /* ignore */
+      sessionStorage.setItem(key, '1');
+    } catch (error) {
+      // Not being able to remember is harmless.
     }
   });
 }
 
-/** Hide the bottom pill while any full-screen popup is open. */
-function initPillVisibility(app) {
-  const pill = document.querySelector('#pill');
-  let openCount = 0;
-  app.on('popupOpen', () => {
-    openCount++;
-    pill.classList.add('pill-hidden');
-  });
-  app.on('popupClose', () => {
-    openCount = Math.max(0, openCount - 1);
-    if (openCount === 0) pill.classList.remove('pill-hidden');
-  });
-}
-
-/** Wire the placeholder "Report an issue" button. */
-function wirePlaceholders(app) {
-  document.querySelector('#report-btn').addEventListener('click', (e) => {
-    e.preventDefault();
+/**
+ * "Report a problem" isn't built yet; say so instead of doing nothing.
+ * @param {Framework7} app
+ */
+function initReportButton(app) {
+  document.querySelector('#report-btn').addEventListener('click', (event) => {
+    event.preventDefault();
     app.dialog.alert('Issue reporting arrives later.', 'Coming soon');
   });
 }
 
-/** Load data, then start every part of the app. */
-async function main() {
-  const app = startUI();
-
-  // The buildings, plus the 3 campus files made by tools/build_campuses.py.
-  const load = (file) => fetch('data/' + file).then((r) => r.json());
-  const [geojson, campuses, labels, outside] = await Promise.all([
-    load('buildings.geojson'),
-    load('campuses.geojson'), // NMSU class places, nearest first
-    load('campus-labels.geojson'), // one name label per place
-    load('outside-mask.geojson'), // everything that isn't a class place
-  ]);
-
-  const byId = {};
-  const list = [];
-  geojson.features.forEach((f) => {
-    const record = { ...f.properties, center: centerOf(f.geometry) };
-    byId[record.id] = record;
-    list.push(record);
-  });
-
-  const map = initMap(store, byId, campuses, labels, outside);
-  initSheet(app, store, byId);
-  initPill(store, byId);
-  initSearch(app, store, list, byId);
-  initMenu(app, map, campuses);
-  initPillVisibility(app); // must run BEFORE initWelcome so it catches the popup opening
-  initWelcome(app);
-  wirePlaceholders(app);
-
-  window.app = app;
-  window.map = map;
-  window.store = store;
+/**
+ * Replace the page with a readable message when start-up fails.
+ * @param {Error} error
+ */
+function showStartupError(error) {
+  console.error(error);
+  const box = document.createElement('div');
+  box.className = 'startup-error';
+  // js-yaml gives the reason and the line where it NOTICED the problem (counted from 0),
+  // which can be a line or two after the actual typo.
+  if (error.name === 'YAMLException') {
+    box.textContent = 'config.yml has a mistake near line ' + (error.mark.line + 1) + ': ' + error.reason + '.';
+  } else if (error.name === 'TypeError' && /fetch/i.test(error.message)) {
+    // fetch() could not reach the server at all.
+    box.textContent = 'Could not start the app. Check your internet connection and refresh.';
+  } else {
+    // A missing file or a bug: show what went wrong so it can be fixed.
+    box.textContent = 'Could not start the app: ' + error.message;
+  }
+  document.body.appendChild(box);
 }
 
-// If anything above fails, show a plain message instead of a blank page.
-main().catch((err) => {
-  console.error(err);
-  document.body.insertAdjacentHTML(
-    'beforeend',
-    '<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;font-family:sans-serif;color:#8C0B42;background:#fff;z-index:99999">' +
-      'Could not start the app. Check your internet connection and refresh.</div>'
-  );
-});
+/** Start everything, in order. */
+async function main() {
+  await loadConfig();
+  const app = startFramework7();
+
+  const [buildingData, campuses, labels, outside] = await Promise.all([
+    loadData('buildings.geojson'),
+    loadData('campuses.geojson'), // NMSU class places, nearest first
+    loadData('campus-labels.geojson'), // one name per place
+    loadData('outside-mask.geojson'), // everything that isn't a class place
+  ]);
+
+  // Each building's map position is its point in the data file.
+  const buildings = buildingData.features.map((feature) => ({ ...feature.properties, center: feature.geometry.coordinates }));
+  const buildingsById = Object.fromEntries(buildings.map((building) => [building.id, building]));
+
+  const map = initMap(buildingsById, campuses, labels, outside);
+  initBuildingSheet(app, buildingsById);
+  initPill(buildingsById);
+  initSearch(buildings);
+  initMenu(app, campuses);
+  initWelcome(app);
+  initReportButton(app);
+
+  // Handy in the browser console while developing.
+  Object.assign(window, { app, map, store, CONFIG });
+}
+
+main().catch(showStartupError);

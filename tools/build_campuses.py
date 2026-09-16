@@ -16,10 +16,12 @@ RUN IT       : python tools/build_campuses.py
 
 import json
 import math
+from pathlib import Path
 from shapely.geometry import shape, mapping, box, Polygon
 from shapely.ops import unary_union
 
-DATA = 'data/'
+# Relative to the project folder, so the script works from any folder.
+DATA = Path(__file__).resolve().parent.parent / 'data'
 
 # Official properties that are not places where NMSU classes happen.
 # Each was checked against what is actually on the ground (Sept 2026).
@@ -41,7 +43,7 @@ THIN = 0.0001  # degrees, about 10 m
 
 def load(name):
     """Read a GeoJSON file from data/."""
-    with open(DATA + name, encoding='utf-8') as f:
+    with open(DATA / name, encoding='utf-8') as f:
         return json.load(f)
 
 
@@ -116,7 +118,7 @@ def main():
     outside = area.difference(unary_union([shape(p['geometry']) for p in places]))
 
     def write(name, features):
-        with open(DATA + name, 'w', encoding='utf-8') as f:
+        with open(DATA / name, 'w', encoding='utf-8') as f:
             json.dump({'type': 'FeatureCollection', 'features': features}, f)
 
     write('campuses.geojson', places)

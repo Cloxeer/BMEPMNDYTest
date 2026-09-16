@@ -1,150 +1,135 @@
 /**
  * @file js/search.js
- * @summary The drop-down building search.
+ * @summary The building search that drops down under the navbar.
  *
- * WHAT IT DOES : Tapping the navbar search icon lets go of any selected building
- *                and drops a search field down. Results appear only once you
- *                type (matching name, address, building code or number), in a
- *                stock Framework7 list. Tapping a result flies there and opens
- *                its sheet. Tapping the search icon again closes search.
- * DEPENDS ON   : ./store.js, the #search-drop markup in index.html.
- * CONTROLS     : #search-drop, #search-results, and the pill's "Searching..." label.
+ * WHAT IT DOES : Tapping the search icon lets go of any selected building and
+ *                opens a search field. Results appear only once you type
+ *                (matching name, address, building code or number), with the
+ *                typed letters highlighted. Tapping a result selects that
+ *                building. Tapping the search icon again closes search.
+ * DEPENDS ON   : ./config.js, ./store.js, ./html.js, #search-drop in index.html
+ *                (a Framework7 "media list" for the results).
+ * CONTROLS     : #search-drop and #search-results.
  * USED BY      : js/app.js
  */
 
-/**
- * Does this building match the typed text?
- * @param {object} b - a building record
- * @param {string} q - lowercased search text
- * @returns {boolean}
- */
-function matches(b, q) {
-  const hay = [b.id, b.name, b.address, ...(b.aka || [])].join(' ').toLowerCase();
-  return hay.includes(q);
-}
+import { CONFIG } from './config.js';
+import { store } from './store.js';
+import { escapeHtml } from './html.js';
 
 /**
- * Make text safe to put inside HTML (so a name like "A&M" can't break the page).
- * @param {string} text
- * @returns {string}
+ * Wrap every place the typed letters appear in <mark>, e.g. "hall" in "Science Hall".
+ * @param {string} text - text to show
+ * @param {string} query - lowercased search text
+ * @returns {string} safe HTML
  */
-function escapeHtml(text) {
-  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-/**
- * Highlight every place the typed letters appear, e.g. "hall" in "Science Hall".
- * @param {string} text - the text to show
- * @param {string} q - lowercased search text
- * @returns {string} HTML with <mark> around each match
- */
-function highlight(text, q) {
+function highlight(text, query) {
   const lower = text.toLowerCase();
   let html = '';
   let from = 0;
-  let at = lower.indexOf(q);
+  let at = lower.indexOf(query);
   while (at !== -1) {
-    html += escapeHtml(text.slice(from, at)) + '<mark class="search-hit">' + escapeHtml(text.slice(at, at + q.length)) + '</mark>';
-    from = at + q.length;
-    at = lower.indexOf(q, from);
+    html += escapeHtml(text.slice(from, at)) + '<mark class="search-hit">' + escapeHtml(text.slice(at, at + query.length)) + '</mark>';
+    from = at + query.length;
+    at = lower.indexOf(query, from);
   }
   return html + escapeHtml(text.slice(from));
 }
 
 /**
- * Wire the search drop-down to the store.
- * @param {Framework7} app - the running Framework7 instance
- * @param {object} store - the shared state
- * @param {Array} buildings - the list of building records
- * @param {Object.<string, object>} byId - buildings keyed by id
+ * Does this building match the typed text?
+ * @param {object} building
+ * @param {string} query - lowercased search text
+ * @returns {boolean}
  */
-export function initSearch(app, store, buildings, byId) {
+function matches(building, query) {
+  const searchable = [building.id, building.name, building.address, ...building.aka].join(' ').toLowerCase();
+  return searchable.includes(query);
+}
+
+/**
+ * Wire the search drop-down.
+ * @param {object[]} buildings - every building, in map order
+ */
+export function initSearch(buildings) {
   const drop = document.querySelector('#search-drop');
   const input = document.querySelector('#search-input');
-  const openBtn = document.querySelector('#search-btn');
+  const searchButton = document.querySelector('#search-btn');
   const results = document.querySelector('#search-results');
   const list = results.querySelector('ul');
 
-  const isOpen = () => drop.classList.contains('is-open');
-
-  /** Open search. Any selected building is let go so the map is a clean slate. */
-  function open() {
-    drop.classList.add('is-open');
-    drop.setAttribute('aria-hidden', 'false');
-    store.set({ selectedId: null, sheetOpen: false, activeFloor: null, mode: 'searching' });
-    input.value = '';
-    render('');
-    setTimeout(() => input.focus(), 60);
-  }
-
-  /** Close search and reset it. */
-  function close() {
-    drop.classList.remove('is-open');
-    drop.setAttribute('aria-hidden', 'true');
-    input.value = '';
-    render('');
-    input.blur();
-    if (store.get().mode === 'searching') store.set({ mode: store.get().selectedId ? 'solving' : 'idle' });
-  }
+  let showing = false; // is the drop-down on screen? Always follows state.searching.
 
   /**
-   * Pick a building: close search, select it, open its sheet.
-   * @param {string} id - building id
+   * One result row: bold name, grey "code · address", one chevron.
+   * @param {object} building
+   * @param {string} query
+   * @returns {HTMLLIElement}
    */
-  function pick(id) {
-    close();
-    const b = byId[id];
-    store.set({ selectedId: id, sheetOpen: true, mode: 'solving', activeFloor: (b.floors && b.floors[0]) || null });
-  }
-
-  /**
-   * Show results for the typed text. Nothing typed = no results panel at all.
-   * @param {string} text - what's in the box
-   */
-  function render(text) {
-    const q = text.trim().toLowerCase();
-    list.innerHTML = '';
-    if (!q) {
-      results.hidden = true;
-      return;
-    }
-    const found = buildings.filter((b) => matches(b, q)).slice(0, 8);
-    if (!found.length) {
-      const li = document.createElement('li');
-      li.className = 'search-empty';
-      li.textContent = 'No buildings match "' + text.trim() + '"';
-      list.appendChild(li);
-    }
-    found.forEach((b) => {
-      const li = document.createElement('li');
-      li.innerHTML =
-        // Framework7 "media list" row: bold title, one-line grey subtitle, one chevron.
-        '<a href="#" class="item-link item-content"><div class="item-inner">' +
-        '<div class="item-title-row"><div class="item-title">' + highlight(b.name, q) + '</div></div>' +
-        '<div class="item-subtitle">' + highlight([b.code, b.address].filter(Boolean).join(' · '), q) + '</div>' +
-        '</div></a>';
-      li.querySelector('a').addEventListener('click', (e) => {
-        e.preventDefault();
-        pick(b.id);
-      });
-      list.appendChild(li);
+  function resultRow(building, query) {
+    const row = document.createElement('li');
+    const subtitle = [building.code, building.address].filter(Boolean).join(' · ');
+    row.innerHTML =
+      '<a href="#" class="item-link item-content"><div class="item-inner">' +
+      '<div class="item-title-row"><div class="item-title">' + highlight(building.name, query) + '</div></div>' +
+      '<div class="item-subtitle">' + highlight(subtitle, query) + '</div>' +
+      '</div></a>';
+    row.querySelector('a').addEventListener('click', (event) => {
+      event.preventDefault();
+      store.selectBuilding(building); // this also ends search
     });
-    results.hidden = false;
+    return row;
   }
 
-  // Search icon: open, or close if already open.
-  openBtn.addEventListener('click', () => (isOpen() ? close() : open()));
-  input.addEventListener('input', () => render(input.value));
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') close();
-    if (e.key === 'Enter') {
-      const first = list.querySelector('a');
-      if (first) first.click();
+  /**
+   * Show results for the typed text. Nothing typed = no results panel.
+   * @param {string} typed
+   */
+  function showResults(typed) {
+    const query = typed.trim().toLowerCase();
+    list.innerHTML = '';
+    results.hidden = !query;
+    if (!query) return;
+
+    const found = buildings.filter((building) => matches(building, query)).slice(0, CONFIG.search.maxResults);
+    if (!found.length) {
+      const empty = document.createElement('li');
+      empty.className = 'search-empty';
+      empty.textContent = CONFIG.search.noMatchText + ' "' + typed.trim() + '"';
+      list.appendChild(empty);
+    }
+    found.forEach((building) => list.appendChild(resultRow(building, query)));
+  }
+
+  /** Empty the field and the results. */
+  function clear() {
+    input.value = '';
+    showResults('');
+  }
+
+  searchButton.addEventListener('click', () => {
+    if (store.get().searching) store.endSearch();
+    else store.startSearch();
+  });
+  input.addEventListener('input', () => showResults(input.value));
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') store.endSearch();
+    if (event.key === 'Enter') {
+      const firstResult = list.querySelector('a');
+      if (firstResult) firstResult.click();
     }
   });
 
-  // If a building gets selected some other way (e.g. tapping the map), close search.
-  store.subscribe((s) => {
-    if (isOpen() && s.selectedId) close();
+  // The store decides whether search is open; this only shows or hides it.
+  // Anything that ends search (a result, the map, the icon, Escape) closes the drop-down.
+  store.subscribe((state) => {
+    if (state.searching === showing) return;
+    showing = state.searching;
+    drop.classList.toggle('is-open', showing);
+    drop.setAttribute('aria-hidden', String(!showing));
+    searchButton.setAttribute('aria-expanded', String(showing));
+    clear();
+    if (showing) setTimeout(() => input.focus(), CONFIG.search.focusDelay);
+    else input.blur();
   });
 }
