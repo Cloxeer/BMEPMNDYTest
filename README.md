@@ -36,10 +36,10 @@ index.html               The whole screen (Framework7 markup + #map + pill)
 styles/app.css           Theme color, map sizing, the orb/pill/menu/sheet styles
 js/config.js             Map settings (center, zoom, bounds, basemap style)
 js/store.js              Tiny shared state (what's selected, sheet open, etc.)
-js/map.js                Builds the map + outlines buildings + the pin
-js/buildingSheet.js      The full-page floor viewer
-js/pill.js               The bottom orb pill + floor selector
-js/orb.js                The little animated "thinking orb" icon
+js/map.js                Draws the map, the campus places and the building badges
+js/buildingSheet.js      The full-page building sheet (plan, photos, facts)
+js/pill.js               The one bottom pill: Info, then floor picker
+js/locations.js          The Locations page (every NMSU place)
 js/search.js             The drop-down building search
 js/app.js                Starts everything and wires the menu/welcome
 data/buildings.geojson   The buildings we currently show (+ description, links)
