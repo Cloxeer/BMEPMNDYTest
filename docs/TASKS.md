@@ -25,13 +25,16 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Rule: only NMSU places where classes could happen
 - [x] Excluded **North Campus** (Toucan, McDonald's, Lorenzo's, Speedway, Pan Am Plaza)
 - [x] Excluded **East Campus** (Centennial High School, Farm & Ranch Heritage Museum); golf course drawn on its own from OSM way/50280146
-- [x] Faded NMSU's 22 official **Ground Lease** parcels (Arrowhead Park Early College HS, Medical Academy, Executive Office Center confirmed on them)
+- [x] NMSU's 22 official **Ground Lease** parcels are CUT OUT of the campus shapes (tools/build_campuses.py), so that land shows the real map, muted
 - [x] Hid unverified basemap business labels (e.g. the wrong "Campus Bookstore" pin)
 - [x] Map fence fits the nearby properties; picking a far site lifts it
 - [x] Colour basemap (Liberty), campus highlighted, outside muted
 - [x] Building pin drawn in the map layer, so it doesn't lag
 
 ## UI
+- [x] Search: tapping it lets go of the selected building; results only after typing; one prompt; icon toggles closed
+- [x] Selected building badge gets a red ring
+- [x] Map credits start collapsed; "Open on NMSU's official map" link opens
 - [x] Pill: smaller, cleaner; orb removed; Info has a ^ that flips when open
 - [x] ONE pill that never moves: Info ^ → Floor N ^ while the sheet is open (until X); ^ reveals the other floors stacked above; picking hides them
 - [x] Squircle corners via `corner-shape: squircle` (NOT supported on iPhone Safari yet; falls back to rounded)

@@ -54,17 +54,58 @@
 }
 
 /* ---------- 4. Search drop-down ---------- */
+/* Solid crimson panel under the navbar with one white rounded field, and a
+   white results card that only appears once you type. It slides with a plain
+   ease-out (no bounce), so it never overshoots and flashes a gap. */
 .search-drop {
   position: absolute;
   top: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px));
   left: 0; right: 0; z-index: 500;
   background: var(--f7-theme-color);
-  padding: var(--s2) var(--s2) var(--s3);
-  transform: translateY(-120%);
-  transition: transform 0.32s var(--spring);
+  padding: var(--s1) var(--s3) var(--s3);
+  box-shadow: 0 var(--s2) var(--s4) rgba(0, 0, 0, 0.12);
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.24s ease-out, opacity 0.18s ease-out, visibility 0s linear 0.24s;
 }
-.search-drop.is-open { transform: translateY(0); }
-.search-drop .searchbar { --f7-searchbar-bg-color: transparent; }
+.search-drop.is-open {
+  transform: none;
+  opacity: 1;
+  visibility: visible;
+  transition: transform 0.24s ease-out, opacity 0.18s ease-out;
+}
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  height: 40px;
+  padding: 0 var(--s3);
+  background: #fff;
+  border-radius: var(--s3);
+}
+.search-field .icon { font-size: 18px; color: #8a8690; }
+.search-field input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: none;
+  font-size: 16px; /* 16px stops iPhone Safari zooming in on focus */
+  color: #1b1b1d;
+}
+.search-field:focus-within { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.45); }
+.search-drop .search-results {
+  margin: var(--s2) 0 0;
+  max-height: 50vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: var(--s3);
+}
+.search-drop .search-results ul { background: #fff; }
+.search-drop .search-results .item-subtitle { color: #8a8690; font-size: 13px; }
+.search-empty { padding: var(--s3) var(--s4); color: #8a8690; font-size: 15px; list-style: none; }
 
 /* ---------- 5. The bottom pill ---------- */
 /* The bar is pinned in one spot. The main pill never moves; the floor stack
@@ -140,7 +181,7 @@
    keep the normal rounded corner, so nothing breaks. */
 @supports (corner-shape: squircle) {
   .pill, .floor-option, .bs-floor-img, .bs-zoom, .bs-photo img, .bs-switch,
-  .bs-switch .button, .search-drop .searchbar-input-wrap, .list.inset ul,
+  .bs-switch .button, .search-field, .search-drop .search-results, .list.inset ul,
   .button, .empty-state, .welcome-card .button { corner-shape: squircle; }
 }
 

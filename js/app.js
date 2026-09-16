@@ -3,18 +3,17 @@
  * @summary The app's ON switch — loads data, starts everything, wires the menu.
  *
  * WHAT IT DOES : (1) boots Framework7 (iOS theme),
- *                (2) loads buildings + official NMSU property boundaries,
+ *                (2) loads buildings + the NMSU campus files,
  *                (3) starts the map, full-page sheet, pill, and search,
  *                (4) wires the full-screen fade menu + first-visit welcome.
  * DEPENDS ON   : Framework7 (global `Framework7`), all the js/ modules,
- *                data/buildings.geojson, data/nmsu-campuses.geojson,
- *                data/extra-properties.geojson, data/nmsu-leased-parcels.geojson.
+ *                data/buildings.geojson, and the campus files made by
+ *                tools/build_campuses.py.
  * CONTROLS     : app start-up order and the menu/welcome flows.
  * USED BY      : index.html (loaded as the page's module).
  */
 
 import { store } from './store.js';
-import { CONFIG } from './config.js';
 import { initMap } from './map.js';
 import { initSheet } from './buildingSheet.js';
 import { initPill } from './pill.js';
@@ -135,21 +134,14 @@ function wirePlaceholders(app) {
 async function main() {
   const app = startUI();
 
-  // Buildings we show, NMSU's official property boundaries + parcels
-  // (Office of Space Planning), and the golf course outline (OpenStreetMap).
-  const [geojson, campuses, extra, leased] = await Promise.all([
-    fetch('data/buildings.geojson').then((r) => r.json()),
-    fetch('data/nmsu-campuses.geojson').then((r) => r.json()),
-    fetch('data/extra-properties.geojson').then((r) => r.json()), // golf course
-    fetch('data/nmsu-leased-parcels.geojson').then((r) => r.json()), // land NMSU leases out
+  // The buildings, plus the 3 campus files made by tools/build_campuses.py.
+  const load = (file) => fetch('data/' + file).then((r) => r.json());
+  const [geojson, campuses, labels, outside] = await Promise.all([
+    load('buildings.geojson'),
+    load('campuses.geojson'), // NMSU class places, nearest first
+    load('campus-labels.geojson'), // one name label per place
+    load('outside-mask.geojson'), // everything that isn't a class place
   ]);
-
-  // Drop official properties that aren't school places (see config), add the
-  // golf course, then keep the list nearest-first.
-  campuses.features = campuses.features
-    .filter((f) => !(f.properties.Name in CONFIG.excludedProperties))
-    .concat(extra.features)
-    .sort((a, b) => a.properties.km - b.properties.km);
 
   const byId = {};
   const list = [];
@@ -159,7 +151,7 @@ async function main() {
     list.push(record);
   });
 
-  const map = initMap(store, byId, campuses, leased);
+  const map = initMap(store, byId, campuses, labels, outside);
   initSheet(app, store, byId);
   initPill(store, byId);
   initSearch(app, store, list, byId);

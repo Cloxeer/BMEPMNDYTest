@@ -43,17 +43,14 @@
           </div>
         </div>
 
-        <!-- Drops down under the navbar when the search icon is tapped. -->
-        <div id="search-drop" class="search-drop">
-          <div class="searchbar">
-            <div class="searchbar-inner">
-              <div class="searchbar-input-wrap">
-                <input id="search-input" type="search" placeholder="Search buildings" />
-                <span class="input-clear-button"></span>
-              </div>
-              <span class="searchbar-disable-button" id="search-cancel">Cancel</span>
-            </div>
-          </div>
+        <!-- Drops down under the navbar when the search icon is tapped.
+             Results only appear once you type; tap the search icon again to close. -->
+        <div id="search-drop" class="search-drop" aria-hidden="true">
+          <label class="search-field">
+            <i class="icon f7-icons" aria-hidden="true">search</i>
+            <input id="search-input" type="search" placeholder="Search buildings" autocomplete="off" enterkeyhint="search" aria-label="Search buildings" />
+          </label>
+          <div id="search-results" class="list media-list search-results" hidden><ul></ul></div>
         </div>
 
         <div class="page-content">

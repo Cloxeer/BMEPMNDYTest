@@ -2,7 +2,7 @@
  * @file js/locations.js
  * @summary The "Locations" page: every official NMSU property, nearest first.
  *
- * WHAT IT DOES : Lists all properties from data/nmsu-campuses.geojson in two
+ * WHAT IT DOES : Lists all properties from data/campuses.geojson in two
  *                groups (Las Cruces / Around New Mexico). Tapping one closes
  *                the page and flies the map there.
  * DEPENDS ON   : Framework7 (app), ./map.js (showProperty), ./config.js,
@@ -38,7 +38,7 @@ function row(f) {
  * Fill the Locations page and wire each row.
  * @param {Framework7} app
  * @param {maplibregl.Map} map
- * @param {object} campuses - parsed data/nmsu-campuses.geojson (sorted by km)
+ * @param {object} campuses - data/campuses.geojson (already sorted nearest first)
  * @param {object} page - the Framework7 popup instance for Locations
  */
 export function initLocations(app, map, campuses, page) {

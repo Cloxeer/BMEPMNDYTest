@@ -23,9 +23,11 @@ const NO_OFFICIAL_PLAN =
  * @param {Object.<string, object>} byId - buildings keyed by id
  */
 export function initSheet(app, store, byId) {
-  // swipeToClose is OFF: scrolling or tapping inside must never close it by
-  // accident. The sheet opens from the pill/badge and closes only with X.
-  const sheet = app.sheet.create({ el: '#building-sheet', backdrop: false, swipeToClose: false });
+  // Close with X, or by pulling the crimson header down. Scrolling or tapping
+  // the content never closes it (swipes only count on the header).
+  const sheet = app.sheet.create({
+    el: '#building-sheet', backdrop: false, swipeToClose: true, swipeHandler: '#building-sheet .bs-head',
+  });
   const $ = (sel) => document.querySelector(sel);
   const nameEl = $('#bs-name');
   const img = $('#bs-floor-img');
@@ -93,7 +95,7 @@ export function initSheet(app, store, byId) {
           '" alt="Photo of ' + b.name + '" loading="lazy" /></button>').join('') +
         '</div><p class="bs-credit">' +
         photos.map((p) => 'Photo: ' + (p.author || 'unknown') + ', <a href="' + p.sourceUrl +
-          '" target="_blank" rel="noopener">' + p.license + '</a>').join(' · ') + '</p>'
+          '" class="external" target="_blank" rel="noopener">' + p.license + '</a>').join(' · ') + '</p>'
       : '';
 
     const facts = [
@@ -109,7 +111,7 @@ export function initSheet(app, store, byId) {
       ((b.description || []).map((p) => '<p>' + p + '</p>').join('') ||
         '<p class="muted">A full description for this building is coming soon.</p>') +
       '<dl class="bs-facts">' + facts + '</dl>' +
-      (b.nmsuUrl ? '<a class="bs-link" href="' + b.nmsuUrl + '" target="_blank" rel="noopener">Open on NMSU’s official map ↗</a>' : '') +
+      (b.nmsuUrl ? '<a class="bs-link external" href="' + b.nmsuUrl + '" target="_blank" rel="noopener">Open on NMSU’s official map ↗</a>' : '') +
       '<p class="bs-source">Building facts: NMSU Office of Space Planning' +
       (b.floorsSource && b.floorsSource !== 'NMSU Space Planning' ? ' (floor count: ' + b.floorsSource + ')' : '') +
       '. Floor plans are unofficial, redrawn from the evacuation maps posted in the building.</p>'

@@ -43,7 +43,12 @@ js/orb.js                The little animated "thinking orb" icon
 js/search.js             The drop-down building search
 js/app.js                Starts everything and wires the menu/welcome
 data/buildings.geojson   The buildings we currently show (+ description, links)
-data/campus.geojson      Real NMSU boundary, OSM relation 13399173 (ODbL)
+data/campuses.geojson        NMSU class places (built by tools/build_campuses.py)
+data/campus-labels.geojson   one name label per place (built)
+data/outside-mask.geojson    everything that isn't a class place, faded (built)
+data/source/                 raw inputs: NMSU Space Planning boundaries + ground-lease
+                             parcels, and the golf course outline (OSM way/50280146)
+tools/build_campuses.py      turns data/source/ into the 3 built files above
 data/floors/             Floor plans (SVG, redrawn from posted evacuation maps)
 ```
 
@@ -85,3 +90,14 @@ git push
 
 Then GitHub → **Settings → Pages → Source: Deploy from a branch → `main` / `/root`**.
 Open the shown URL (e.g. `https://cloxeer.github.io/BetterNMSUMapTest/`) on your phone.
+
+## Rebuild the campus shapes
+
+Only needed if the files in `data/source/` change. The script cuts NMSU's leased-out
+parcels out of the campus shapes, drops non-class places (East/North Campus), and
+removes thin leftover strips, so the app itself never does geometry math.
+
+```bash
+python -m pip install --user shapely
+python tools/build_campuses.py
+```

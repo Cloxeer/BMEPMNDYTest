@@ -8,9 +8,8 @@
  * CONTROLS     : how the map in js/map.js looks and where it opens.
  * USED BY      : js/map.js
  *
- * NOTE: property shapes are NOT in this file. They live in
- * data/nmsu-campuses.geojson, downloaded from NMSU's own Office of Space
- * Planning (Campus Boundaries layer), so nothing here is guessed.
+ * NOTE: campus shapes are NOT in this file. tools/build_campuses.py makes them
+ * from NMSU Office of Space Planning data, so nothing here is guessed.
  */
 
 export const CONFIG = {
@@ -30,27 +29,11 @@ export const CONFIG = {
   // the drag area. Farther ones are listed on the Locations page instead.
   nearbyKm: 10,
 
-  // Official NMSU properties we deliberately do NOT show, and why. Each one was
-  // checked against what is actually on the ground.
-  excludedProperties: {
-    'North Campus':
-      'NMSU-owned land leased to a Speedway, a FlixBus stop, and the Campus Suites / ' +
-      'Aggie Oasis apartments. Not a student campus. (Checked against OpenStreetMap, Sept 2026.)',
-    'East Campus':
-      'Contains Centennial High School (Las Cruces Public Schools) and the NM Farm & Ranch ' +
-      'Heritage Museum. The NMSU Golf Course inside it is drawn on its own instead ' +
-      '(data/extra-properties.geojson).',
-  },
+  // Which NMSU places are shown (only places where classes can happen) is
+  // decided in tools/build_campuses.py, which writes data/campuses.geojson.
 
-  // Rule for what we show: NMSU places where classes/teaching could happen.
-  // Land NMSU leases out ("Ground Lease" parcels in NMSU's official parcel
-  // data, e.g. Arrowhead Park's charter high schools and office centre) is
-  // faded out even when it sits inside a campus boundary.
-
-  // Business / point-of-interest labels from the basemap are third-party and
-  // unverified (e.g. a "Campus Bookstore" pin in the University Ave shops), so
-  // we hide them and only show labels we have checked.
-  hideBasemapPOIs: true,
+  // Ring colour on the selected building's badge.
+  selectedRing: '#E0241B',
 
   // How we make campus stand out: a light crimson tint inside the real
   // boundary, a crimson outline on it, and a white wash over everything

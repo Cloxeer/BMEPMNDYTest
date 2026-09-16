@@ -2,13 +2,13 @@
  * @file js/search.js
  * @summary The drop-down building search.
  *
- * WHAT IT DOES : Tapping the navbar search icon drops a search bar down. As you
- *                type, it filters buildings by name, address, acronym, or id
- *                using Framework7's Autocomplete (a proven dropdown component).
- *                Picking a result flies there, drops the pin, and opens the sheet.
- * DEPENDS ON   : Framework7 (the app object), ./store.js, the #search-drop
- *                markup in index.html.
- * CONTROLS     : the #search-drop element and the pill's "Searching…" label.
+ * WHAT IT DOES : Tapping the navbar search icon lets go of any selected building
+ *                and drops a search field down. Results appear only once you
+ *                type (matching name, address, building code or number), in a
+ *                stock Framework7 list. Tapping a result flies there and opens
+ *                its sheet. Tapping the search icon again closes search.
+ * DEPENDS ON   : ./store.js, the #search-drop markup in index.html.
+ * CONTROLS     : #search-drop, #search-results, and the pill's "Searching..." label.
  * USED BY      : js/app.js
  */
 
@@ -34,64 +34,89 @@ export function initSearch(app, store, buildings, byId) {
   const drop = document.querySelector('#search-drop');
   const input = document.querySelector('#search-input');
   const openBtn = document.querySelector('#search-btn');
-  const cancelBtn = document.querySelector('#search-cancel');
+  const results = document.querySelector('#search-results');
+  const list = results.querySelector('ul');
 
-  /** Open the search drop-down and switch the pill to "Searching…". */
+  const isOpen = () => drop.classList.contains('is-open');
+
+  /** Open search. Any selected building is let go so the map is a clean slate. */
   function open() {
     drop.classList.add('is-open');
-    store.set({ mode: 'searching' });
+    drop.setAttribute('aria-hidden', 'false');
+    store.set({ selectedId: null, sheetOpen: false, activeFloor: null, mode: 'searching' });
+    input.value = '';
+    render('');
     setTimeout(() => input.focus(), 60);
   }
 
-  /** Close search and put the pill label back. */
+  /** Close search and reset it. */
   function close() {
     drop.classList.remove('is-open');
+    drop.setAttribute('aria-hidden', 'true');
     input.value = '';
-    store.set({ mode: store.get().selectedId ? 'solving' : 'idle' });
+    render('');
+    input.blur();
+    if (store.get().mode === 'searching') store.set({ mode: store.get().selectedId ? 'solving' : 'idle' });
   }
 
   /**
-   * Pick a building from the results: select it, open its sheet, close search.
+   * Pick a building: close search, select it, open its sheet.
    * @param {string} id - building id
    */
   function pick(id) {
-    const b = byId[id];
-    store.set({
-      selectedId: id,
-      sheetOpen: true,
-      mode: 'solving',
-      activeFloor: (b.floors && b.floors[0]) || null,
-    });
     close();
+    const b = byId[id];
+    store.set({ selectedId: id, sheetOpen: true, mode: 'solving', activeFloor: (b.floors && b.floors[0]) || null });
   }
 
-  // Tapping the search icon opens the drop-down; tapping it again closes it.
-  openBtn.addEventListener('click', () => {
-    if (drop.classList.contains('is-open')) close();
-    else open();
-  });
-  cancelBtn.addEventListener('click', close);
+  /**
+   * Show results for the typed text. Nothing typed = no results panel at all.
+   * @param {string} text - what's in the box
+   */
+  function render(text) {
+    const q = text.trim().toLowerCase();
+    list.innerHTML = '';
+    if (!q) {
+      results.hidden = true;
+      return;
+    }
+    const found = buildings.filter((b) => matches(b, q)).slice(0, 8);
+    if (!found.length) {
+      const li = document.createElement('li');
+      li.className = 'search-empty';
+      li.textContent = 'No buildings match "' + text.trim() + '"';
+      list.appendChild(li);
+    }
+    found.forEach((b) => {
+      const li = document.createElement('li');
+      li.innerHTML =
+        // Framework7 "media list" row: bold title, one-line grey subtitle, one chevron.
+        '<a href="#" class="item-link item-content"><div class="item-inner">' +
+        '<div class="item-title-row"><div class="item-title">' + b.name + '</div></div>' +
+        '<div class="item-subtitle">' + [b.code, b.address].filter(Boolean).join(' · ') + '</div>' +
+        '</div></a>';
+      li.querySelector('a').addEventListener('click', (e) => {
+        e.preventDefault();
+        pick(b.id);
+      });
+      list.appendChild(li);
+    });
+    results.hidden = false;
+  }
 
-  // Framework7 Autocomplete draws + positions the results dropdown for us.
-  app.autocomplete.create({
-    inputEl: '#search-input',
-    openIn: 'dropdown',
-    dropdownPlaceholderText: 'Type a building name…',
-    valueProperty: 'id',
-    textProperty: 'text',
-    source(query, render) {
-      const q = query.trim().toLowerCase();
-      if (!q) return render([]);
-      const list = buildings
-        .filter((b) => matches(b, q))
-        .slice(0, 8)
-        .map((b) => ({ id: b.id, text: b.name }));
-      render(list);
-    },
-    on: {
-      change(value) {
-        if (value[0]) pick(value[0].id);
-      },
-    },
+  // Search icon: open, or close if already open.
+  openBtn.addEventListener('click', () => (isOpen() ? close() : open()));
+  input.addEventListener('input', () => render(input.value));
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+    if (e.key === 'Enter') {
+      const first = list.querySelector('a');
+      if (first) first.click();
+    }
+  });
+
+  // If a building gets selected some other way (e.g. tapping the map), close search.
+  store.subscribe((s) => {
+    if (isOpen() && s.selectedId) close();
   });
 }
