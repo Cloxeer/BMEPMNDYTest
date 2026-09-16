@@ -1,32 +1,73 @@
 /**
  * @file js/map.js
- * @summary Builds the colour campus map, highlights NMSU, and puts an
+ * @summary Builds the colour campus map, highlights NMSU, and draws an
  *          Apple-style info button on each building.
  *
  * WHAT IT DOES : (1) creates the MapLibre map on the colour OpenFreeMap basemap,
  *                (2) tints the REAL NMSU boundary and fades everything outside,
  *                (3) fences dragging to the real campus (plus a margin),
- *                (4) puts a crimson "i" button on each building,
+ *                (4) draws a crimson "i" badge on each building,
  *                (5) tells the store when a building or the map is tapped.
  * DEPENDS ON   : maplibre-gl (global `maplibregl`), ./config.js, ./store.js,
  *                data/campus.geojson (real OpenStreetMap boundary).
- * CONTROLS     : the #map element, the campus highlight layers, the info buttons.
+ * CONTROLS     : the #map element, the campus highlight, the building badges.
  * USED BY      : js/app.js
+ *
+ * WHY THE BADGE IS DRAWN, NOT AN HTML MARKER: an HTML marker is a DOM element
+ * that JavaScript has to re-position every frame, so it visibly lags behind the
+ * map while you drag. Drawing it as a map layer means the GPU moves it together
+ * with the map, so it never slides out of place.
  */
 
 import { CONFIG } from './config.js';
 
 /**
- * Build one Apple-style info button (a crimson circle with a white "i").
- * @returns {HTMLElement}
+ * Turn the buildings into GeoJSON points the map can draw.
+ * @param {Object.<string, object>} byId - buildings keyed by id
+ * @returns {object} a GeoJSON FeatureCollection
  */
-function makeInfoButton() {
-  const el = document.createElement('button');
-  el.className = 'poi';
-  el.type = 'button';
-  el.setAttribute('aria-label', 'Building info');
-  el.innerHTML = '<span class="poi-i">i</span>';
-  return el;
+function buildingsToPoints(byId) {
+  return {
+    type: 'FeatureCollection',
+    features: Object.values(byId).map((b) => ({
+      type: 'Feature',
+      properties: { id: b.id },
+      geometry: { type: 'Point', coordinates: b.center },
+    })),
+  };
+}
+
+/**
+ * Draw the crimson "i" badge once, as a picture the map can stamp on each
+ * building. Drawn at 2x so it stays sharp on phone screens.
+ * @param {number} size - badge width in screen pixels
+ * @returns {object} an image MapLibre can use ({width, height, data})
+ */
+function drawInfoBadge(size) {
+  const scale = 2;
+  const canvas = document.createElement('canvas');
+  canvas.width = size * scale;
+  canvas.height = size * scale;
+  const g = canvas.getContext('2d');
+  g.scale(scale, scale);
+
+  const r = size / 2;
+  g.beginPath();
+  g.arc(r, r, r - 2, 0, Math.PI * 2);
+  g.fillStyle = CONFIG.crimson;
+  g.fill();
+  g.lineWidth = 2;
+  g.strokeStyle = '#ffffff';
+  g.stroke();
+
+  g.fillStyle = '#ffffff';
+  g.font = 'italic 700 15px Georgia, "Times New Roman", serif';
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  g.fillText('i', r, r + 1);
+
+  const img = g.getImageData(0, 0, size * scale, size * scale);
+  return { width: img.width, height: img.height, data: img.data };
 }
 
 /**
@@ -77,7 +118,7 @@ function makeOutsideMask(ring) {
 }
 
 /**
- * Create the map, highlight campus, and drop an info button on every building.
+ * Create the map, highlight campus, and draw a badge on every building.
  * @param {object} store - the shared state from ./store.js
  * @param {Object.<string, object>} byId - buildings keyed by id (each has .center)
  * @param {object} campus - parsed data/campus.geojson (real OSM boundary)
@@ -117,25 +158,22 @@ export function initMap(store, byId, campus) {
   }
 
   map.on('load', () => {
-    // --- Campus highlight, drawn from the real OpenStreetMap boundary. ---
+    // --- Campus highlight, from the real OpenStreetMap boundary. ---
     map.addSource('campus', { type: 'geojson', data: campus });
     map.addSource('outside', { type: 'geojson', data: makeOutsideMask(ring) });
 
-    // 1. Fade everything that is NOT campus.
     map.addLayer({
       id: 'outside-mute',
       type: 'fill',
       source: 'outside',
       paint: { 'fill-color': CONFIG.campus.muteColor, 'fill-opacity': CONFIG.campus.muteOpacity },
     });
-    // 2. A light tint over campus so it reads as "ours".
     map.addLayer({
       id: 'campus-tint',
       type: 'fill',
       source: 'campus',
       paint: { 'fill-color': CONFIG.campus.tintColor, 'fill-opacity': CONFIG.campus.tintOpacity },
     });
-    // 3. A crisp crimson edge on the real boundary.
     map.addLayer({
       id: 'campus-edge',
       type: 'line',
@@ -146,30 +184,54 @@ export function initMap(store, byId, campus) {
         'line-opacity': 0.85,
       },
     });
-  });
 
-  // Place one info button per building, on the building's real location.
-  const buttons = {};
-  Object.values(byId).forEach((b) => {
-    const el = makeInfoButton();
-    el.addEventListener('click', (e) => {
-      e.stopPropagation();
-      select(b.id);
+    // --- Building badges, drawn by the GPU so they never lag. ---
+    map.addImage('info-badge', drawInfoBadge(28), { pixelRatio: 2 });
+    map.addSource('buildings', { type: 'geojson', data: buildingsToPoints(byId) });
+
+    map.addLayer({
+      id: 'building-pins',
+      type: 'symbol',
+      source: 'buildings',
+      layout: { 'icon-image': 'info-badge', 'icon-allow-overlap': true, 'icon-size': 1 },
     });
-    new maplibregl.Marker({ element: el, anchor: 'center' }).setLngLat(b.center).addTo(map);
-    buttons[b.id] = el;
+    // The selected building gets the same badge, just bigger.
+    map.addLayer({
+      id: 'building-pin-selected',
+      type: 'symbol',
+      source: 'buildings',
+      filter: ['==', ['get', 'id'], ''],
+      layout: { 'icon-image': 'info-badge', 'icon-allow-overlap': true, 'icon-size': 1.3 },
+    });
+
+    // Tap a badge to select it; tap empty map to clear.
+    map.on('click', (e) => {
+      const hits = map.queryRenderedFeatures(e.point, { layers: ['building-pins'] });
+      if (hits.length) select(hits[0].properties.id);
+      else deselect();
+    });
+    map.on('mouseenter', 'building-pins', () => (map.getCanvas().style.cursor = 'pointer'));
+    map.on('mouseleave', 'building-pins', () => (map.getCanvas().style.cursor = ''));
+
+    // Show the current selection now that the layers exist.
+    applySelection(store.get().selectedId);
   });
 
-  // Tapping the map (not a button) clears the selection.
-  map.on('click', () => deselect());
+  /**
+   * Make the selected building's badge the big one.
+   * @param {string|null} id - the selected building id
+   */
+  function applySelection(id) {
+    if (!map.getLayer('building-pin-selected')) return;
+    map.setFilter('building-pin-selected', ['==', ['get', 'id'], id || '']);
+  }
 
-  // When the selection changes: highlight the right button + fly to it.
+  // Fly to the building whenever the selection changes.
   let lastSelected = null;
   store.subscribe((s) => {
     if (s.selectedId === lastSelected) return;
     lastSelected = s.selectedId;
-
-    Object.keys(buttons).forEach((id) => buttons[id].classList.toggle('is-selected', id === s.selectedId));
+    applySelection(s.selectedId);
 
     if (s.selectedId) {
       const b = byId[s.selectedId];

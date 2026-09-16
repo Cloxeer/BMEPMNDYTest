@@ -1,127 +1,126 @@
 /*
   app.css — our styles on top of Framework7.
 
-  WHAT IT DOES : recolours Framework7 crimson, sizes the map, and styles the few
-                 bespoke pieces (the bottom pill + its floor drop-up, the orb,
-                 the fade menu, the search drop-down, the building sheet).
+  WHAT IT DOES : recolours Framework7 crimson, sizes the map, and styles our few
+                 bespoke pieces (bottom pill + floor drop-up, orb, fade menu,
+                 search drop-down, building sheet).
   DEPENDS ON   : Framework7 (we override its colour variables).
-  CONTROLS     : the accent colour, the map box, the pill, the orb, the sheet.
-  NOTE         : standard bars/buttons/lists stay stock Framework7.
+  CONTROLS     : accent colour, map box, pill, orb, sheet.
+
+  SPACING RULE : every padding / margin / gap / offset in this file is a
+  multiple of 4px (4, 8, 12, 16, 20, 24, 32, 48...). Nothing in between.
+  Use the --s* variables below so it stays that way.
 */
 
-/* ---------- 1. Brand colour + inverted crimson navbar ---------- */
+/* ---------- 1. Tokens ---------- */
 :root {
   --f7-theme-color: #8c0b42;
   --f7-theme-color-rgb: 140, 11, 66;
   --f7-theme-color-shade: #6f0834;
   --f7-theme-color-tint: #a81050;
   --spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 20px;
+  --s6: 24px;
+  --s8: 32px;
+  --s12: 48px;
 }
 
-/* `hidden` must always win over our display rules below. */
+/* `hidden` must always win over our display rules. */
 [hidden] { display: none !important; }
 
+/* ---------- 2. Inverted crimson navbar ---------- */
 .navbar-crimson .navbar-bg { background: var(--f7-theme-color); }
 .navbar-crimson .navbar-bg::after { display: none; }
 .navbar-crimson,
 .navbar-crimson a,
 .navbar-crimson .title,
 .navbar-crimson .icon { color: #ffffff !important; }
-/* keeps the title centred when there is only a close button on the right */
-.nav-spacer { display: inline-block; width: 28px; }
+/* keeps the title centred when only a close button sits on the right */
+.nav-spacer { display: inline-block; width: var(--s6); }
 
-/* ---------- 2. The map fills the screen ---------- */
+/* ---------- 3. The map fills the screen ---------- */
 .page-content { padding: 0 !important; overflow: hidden; }
 #map { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
-/* normal pages (schedule/settings) should scroll and have padding again */
+/* ordinary pages (schedule / settings) scroll and clear the navbar */
 .page-plain {
-  padding: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px) + 10px) 0 32px !important;
+  padding: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px) + var(--s3)) 0 var(--s8) !important;
   overflow: auto !important;
 }
 
-/* Apple-style building info button (crimson circle with an "i"). */
-.poi {
-  width: 26px; height: 26px; border-radius: 50%;
-  border: 2px solid #fff; background: var(--f7-theme-color); color: #fff;
-  font: italic 700 15px/1 Georgia, "Times New Roman", serif;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; padding: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-  transition: transform 0.18s var(--spring), box-shadow 0.18s ease;
-}
-.poi:hover { transform: scale(1.1); }
-.poi.is-selected { transform: scale(1.25); box-shadow: 0 0 0 4px rgba(140, 11, 66, 0.25), 0 2px 8px rgba(0, 0, 0, 0.4); }
-.poi-i { pointer-events: none; }
-
-/* ---------- 3. Search drop-down ---------- */
+/* ---------- 4. Search drop-down ---------- */
 .search-drop {
   position: absolute;
   top: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px));
   left: 0; right: 0; z-index: 500;
   background: var(--f7-theme-color);
-  padding: 6px 8px 10px;
+  padding: var(--s2) var(--s2) var(--s3);
   transform: translateY(-120%);
   transition: transform 0.32s var(--spring);
 }
 .search-drop.is-open { transform: translateY(0); }
 .search-drop .searchbar { --f7-searchbar-bg-color: transparent; }
 
-/* ---------- 4. Bottom pill (Info + floor drop-up) ---------- */
+/* ---------- 5. Bottom pill (Info + floor drop-up) ---------- */
 .pill {
   position: fixed;
   left: 50%;
-  /* sits ABOVE the map credit line at the bottom */
-  bottom: calc(46px + env(safe-area-inset-bottom, 0px));
+  /* clears the map credit line at the bottom */
+  bottom: calc(var(--s12) + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
   z-index: 15000;
   display: inline-flex;
   align-items: center;
-  max-width: 92vw;
+  max-width: calc(100vw - var(--s8));
   border-radius: 999px;
   background: var(--f7-theme-color);
   color: #fff;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 var(--s1) var(--s6) rgba(0, 0, 0, 0.28);
   font-size: 15px;
   font-weight: 600;
   transition: opacity 0.25s ease, transform 0.3s var(--spring);
 }
-.pill.pill-hidden { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(24px); }
+.pill.pill-hidden { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(var(--s6)); }
 
 .pill-info,
 .pill-floor-btn {
-  display: inline-flex; align-items: center; gap: 9px;
+  display: inline-flex; align-items: center; gap: var(--s2);
   border: none; background: none; color: inherit;
   font: inherit; cursor: pointer;
-  padding: 11px 18px; border-radius: 999px;
+  padding: var(--s3) var(--s5); border-radius: 999px;
 }
-.pill-divider { width: 1px; height: 22px; background: rgba(255, 255, 255, 0.35); }
-.pill-caret { display: inline-block; font-size: 13px; transition: transform 0.2s ease; }
+.pill-divider { width: 1px; height: var(--s6); background: rgba(255, 255, 255, 0.35); }
+.pill-caret { display: inline-block; font-size: 12px; transition: transform 0.2s ease; }
 .pill-floor-btn.is-open .pill-caret { transform: rotate(180deg); }
 .pill-label { white-space: nowrap; }
 
 /* the floor list that pops up above the pill */
 .floor-menu {
   position: absolute;
-  bottom: calc(100% + 10px);
+  bottom: calc(100% + var(--s3));
   left: 50%;
   transform: translateX(-50%);
-  min-width: 150px;
+  min-width: 160px;
   background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+  border-radius: var(--s4);
+  box-shadow: 0 var(--s2) var(--s8) rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  padding: 4px;
+  padding: var(--s1);
 }
 .floor-option {
   display: block; width: 100%;
   border: none; background: none;
   font: inherit; font-weight: 500; font-size: 15px;
   color: #1b1b1d; text-align: left;
-  padding: 11px 14px; border-radius: 10px; cursor: pointer;
+  padding: var(--s3) var(--s4); border-radius: var(--s3); cursor: pointer;
 }
 .floor-option.is-active { background: var(--f7-theme-color); color: #fff; }
 
-/* ---------- 5. The orb ---------- */
+/* ---------- 6. The orb ---------- */
 .pill .orb-dot { background: #fff; }
 .orb { position: relative; display: inline-block; width: var(--orb-size, 20px); height: var(--orb-size, 20px); }
 .orb-dot {
@@ -137,7 +136,7 @@
 @keyframes orb-pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
 @keyframes orb-spin { to { transform: rotate(360deg); } }
 
-/* ---------- 6. Full-screen fade menu ---------- */
+/* ---------- 7. Full-screen fade menu ---------- */
 .popup-menu {
   background: rgba(255, 255, 255, 0.97);
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
@@ -145,14 +144,14 @@
 }
 .popup-menu.menu-open { opacity: 1; }
 .menu-close {
-  position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: 18px;
-  font-size: 30px; line-height: 1; color: var(--f7-theme-color); z-index: 2;
+  position: absolute; top: calc(var(--s4) + env(safe-area-inset-top, 0px)); right: var(--s5);
+  font-size: 32px; line-height: 1; color: var(--f7-theme-color); z-index: 2;
 }
-.menu-inner { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+.menu-inner { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s6); }
 .menu-link {
   font-size: 34px; font-weight: 700; color: var(--f7-theme-color);
-  opacity: 0; transform: translateY(14px);
-  text-decoration: none; text-underline-offset: 10px; text-decoration-thickness: 3px;
+  opacity: 0; transform: translateY(var(--s3));
+  text-decoration: none; text-underline-offset: var(--s3); text-decoration-thickness: 3px;
 }
 .menu-link.is-current { text-decoration: underline; }
 .popup-menu.menu-open .menu-link { animation: menu-in 0.5s var(--spring) forwards; }
@@ -161,15 +160,15 @@
 .popup-menu.menu-open .menu-link:nth-child(3) { animation-delay: 0.45s; }
 @keyframes menu-in { to { opacity: 1; transform: none; } }
 
-/* ---------- 7. Full-page building sheet ---------- */
+/* ---------- 8. Full-page building sheet ---------- */
 .building-sheet { height: 100%; }
 .building-sheet .sheet-modal-inner { height: 100%; display: flex; flex-direction: column; background: #fff; }
 .bs-head {
-  display: flex; align-items: center; gap: 8px;
-  padding: calc(12px + env(safe-area-inset-top, 0px)) 12px 12px;
+  display: flex; align-items: center; gap: var(--s2);
+  padding: calc(var(--s3) + env(safe-area-inset-top, 0px)) var(--s3) var(--s3);
   background: var(--f7-theme-color); color: #fff;
 }
-.bs-side { width: 34px; flex: none; }           /* keeps the title centred */
+.bs-side { width: var(--s8); flex: none; }        /* keeps the title centred */
 .bs-name {
   flex: 1; text-align: center; font-weight: 700; font-size: 16px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -178,38 +177,47 @@
   border: none; background: none; color: #fff;
   font-size: 28px; line-height: 1; cursor: pointer; padding: 0;
 }
-.bs-body { flex: 1; overflow: auto; padding: 12px 16px 120px; text-align: center; }
-.bs-floor-img { max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12); }
-.bs-missing { padding: 40px 16px; color: var(--f7-theme-color); }
-.bs-caption { margin-top: 10px; font-size: 13px; color: #6b6b70; }
+.bs-body { flex: 1; overflow: auto; padding: var(--s3) var(--s4) 120px; text-align: center; }
+.bs-floor-img { max-width: 100%; height: auto; border-radius: var(--s3); box-shadow: 0 2px var(--s3) rgba(0, 0, 0, 0.12); }
+.bs-missing { padding: var(--s12) var(--s4); color: var(--f7-theme-color); }
+.bs-caption { margin-top: var(--s3); font-size: 13px; color: #6b6b70; }
 
-.bs-info { margin-top: 22px; text-align: left; border-top: 1px solid #e6e6ea; padding-top: 18px; }
-.bs-h3 { font-size: 15px; margin: 0 0 10px; color: var(--f7-theme-color); }
-.bs-info p { font-size: 14px; line-height: 1.55; color: #3b3b40; margin: 0 0 12px; }
-.bs-facts { margin: 16px 0; padding: 0; }
-.bs-row { display: flex; gap: 12px; padding: 7px 0; border-bottom: 1px solid #f0f0f3; }
-.bs-row dt { flex: 0 0 82px; font-size: 13px; color: #8a8690; margin: 0; }
+.bs-info { margin-top: var(--s6); text-align: left; border-top: 1px solid #e6e6ea; padding-top: var(--s5); }
+.bs-h3 { font-size: 15px; margin: 0 0 var(--s3); color: var(--f7-theme-color); }
+.bs-info p { font-size: 14px; line-height: 1.55; color: #3b3b40; margin: 0 0 var(--s3); }
+.bs-facts { margin: var(--s4) 0; padding: 0; }
+.bs-row { display: flex; gap: var(--s3); padding: var(--s2) 0; border-bottom: 1px solid #f0f0f3; }
+.bs-row dt { flex: 0 0 80px; font-size: 13px; color: #8a8690; margin: 0; }
 .bs-row dd { flex: 1; font-size: 14px; color: #1b1b1d; margin: 0; }
-.bs-link { display: inline-block; margin-top: 6px; font-size: 14px; font-weight: 600; color: var(--f7-theme-color); }
-.bs-source { font-size: 12px !important; color: #9a96a0 !important; margin-top: 16px !important; }
+.bs-link { display: inline-block; margin-top: var(--s2); font-size: 14px; font-weight: 600; color: var(--f7-theme-color); }
+.bs-source { font-size: 12px !important; color: #9a96a0 !important; margin-top: var(--s4) !important; }
 
-/* ---------- 8. Full-page welcome + simple empty states ---------- */
+/* ---------- 9. Welcome + empty states ---------- */
 #welcome-popup { background: var(--f7-theme-color); }
 #welcome-popup .page, #welcome-popup .page-content { background: transparent; }
 .welcome-card { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff; }
 .welcome-h { margin: 0; line-height: 1.15; color: #fff; }
 .welcome-card .brand { color: #fff; }
-.welcome-card .by { color: rgba(255, 255, 255, 0.85); margin-top: 8px; }
+.welcome-card .by { color: rgba(255, 255, 255, 0.85); margin-top: var(--s2); }
 .welcome-card .button-fill { background: #fff; color: var(--f7-theme-color); }
 
-.empty-state { text-align: center; padding: 18vh 28px 0; }
+.empty-state { text-align: center; padding: 18vh var(--s6) 0; }
 .empty-icon { font-size: 44px; color: var(--f7-theme-color); }
-.empty-state h2 { font-size: 20px; margin: 14px 0 8px; }
-.empty-state p { color: #55525a; margin: 0 0 8px; }
+.empty-state h2 { font-size: 20px; margin: var(--s4) 0 var(--s2); }
+.empty-state p { color: #55525a; margin: 0 0 var(--s2); }
 .muted { color: #8a8690; }
 
-/* ---------- 9. Respect "reduce motion" ---------- */
+/* ---------- 10. Bigger screens ---------- */
+@media (min-width: 768px) {
+  .bs-body { max-width: 720px; margin: 0 auto; padding-left: var(--s6); padding-right: var(--s6); }
+  .bs-floor-img { max-width: 640px; }
+  .menu-link { font-size: 44px; }
+  .menu-inner { gap: var(--s8); }
+  .pill { font-size: 16px; }
+}
+
+/* ---------- 11. Respect "reduce motion" ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .search-drop, .pill, .popup-menu, .menu-link, .orb, .orb-dot, .poi { transition: none !important; animation: none !important; }
+  .search-drop, .pill, .popup-menu, .menu-link, .orb, .orb-dot { transition: none !important; animation: none !important; }
   .menu-link { opacity: 1; transform: none; }
 }
