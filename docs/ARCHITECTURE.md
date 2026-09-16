@@ -16,6 +16,8 @@ flowchart LR
     app --> pill[js/pill.js]
     app --> search[js/search.js]
     app --> locations[js/locations.js]
+    app --> locate[js/locate.js]
+    locate --> map
     map <--> store[js/store.js]
     sheet <--> store
     pill <--> store
@@ -29,7 +31,7 @@ Three rules keep it predictable:
    into `CONFIG` (for JavaScript) and turns every value into a CSS variable
    (`pill.height` becomes `--pill-height`) for `styles/app.css`.
 2. **The store is the only thing that changes app state.** Files call named
-   actions such as `store.selectBuilding(building)` or `store.closeSheet()`, and
+   actions such as `store.selectBuilding(building, 'map')` or `store.closeSheet()`, and
    react to changes with `store.subscribe(fn)`. No file reaches into another
    file's elements.
 3. **Heavy data work happens ahead of time, in `tools/`.** The app never does
@@ -49,6 +51,7 @@ Three rules keep it predictable:
 | `js/map.js` | The map: campus highlight, building badges, taps |
 | `js/buildingSheet.js` | The full-page building sheet |
 | `js/pill.js` | The bottom pill (Info / floors) |
+| `js/locate.js` | The location button left of the pill (MapLibre's GeolocateControl) |
 | `js/search.js` | The search drop-down |
 | `js/locations.js` | The Locations page |
 
@@ -57,13 +60,16 @@ Three rules keep it predictable:
 | Field | Meaning |
 |---|---|
 | `selectedId` | The chosen building, or `null` |
+| `selectedVia` | `'map'` or `'search'`: sets the pause before the sheet opens |
+| `sheetWaiting` | The sheet opens once the map has flown to the building |
 | `sheetOpen` | Is the building sheet showing? |
 | `activeFloor` | Floor shown in the sheet |
 | `searching` | Is search open? |
 
 | Action | What changes |
 |---|---|
-| `selectBuilding(b)` | select `b`, open its sheet on the first floor, end search |
+| `selectBuilding(b, via)` | select `b` on its first floor, end search; the map flies there |
+| `sheetCanOpen(id)` | called by the map after the flight + pause: opens the sheet if still waiting |
 | `clearSelection()` | nothing selected, sheet closed, search ended |
 | `openSheet()` / `closeSheet()` | sheet open / closed (building stays selected) |
 | `showFloor(n)` | show floor `n` |
@@ -91,6 +97,10 @@ and doors from OpenStreetMap, kept for the wayfinding feature that isn't built y
 ## Things that look odd but are on purpose
 
 - **Badges are drawn by the map, not as HTML markers.** HTML markers lag while dragging.
+- **The sheet waits for the map.** Picking a building flies the map there first, pauses
+  (`map.sheetPauseAfterTap` / `sheetPauseAfterSearch`), then opens the sheet, so you see where it is.
+- **Every sheet has the same layout** (in `index.html`); empty fields show a message.
+  `tools/build_buildings.py` gives every building the same fields.
 - **The pill sits outside `#app`** with a high `z-index` so it floats above Framework7's sheet.
 - **The page stays hidden until `config.yml` loads**, so nothing flashes unstyled.
 - **Leased NMSU land is cut out of the campus shapes** (not painted over), so

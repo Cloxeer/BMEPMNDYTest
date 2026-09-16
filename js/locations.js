@@ -23,12 +23,13 @@ import { showPlace } from './map.js';
  */
 function placeRow(place) {
   const { Name, City, Acres, km } = place.properties;
-  const where = [City, Acres ? Acres + ' acres' : ''].filter(Boolean).join(' · ');
+  const words = CONFIG.locations;
+  const where = [City, Acres ? Acres + ' ' + words.acresText : ''].filter(Boolean).join(' · ');
   const row = document.createElement('li');
   row.innerHTML =
     '<a href="#" class="item-link item-content"><div class="item-inner"><div class="item-title">' + escapeHtml(Name) +
     '<div class="item-footer">' + escapeHtml(where) + '</div></div>' +
-    '<div class="item-after">' + escapeHtml(km) + ' km</div></div></a>';
+    '<div class="item-after">' + escapeHtml(km + ' ' + words.kmText) + '</div></div></a>';
   return row;
 }
 

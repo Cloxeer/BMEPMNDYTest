@@ -79,7 +79,7 @@ function drawBadge(selected) {
   pen.font = CONFIG.badge.letterFont;
   pen.textAlign = 'center';
   pen.textBaseline = 'middle';
-  pen.fillText('i', middle, middle + CONFIG.badge.letterOffset);
+  pen.fillText(CONFIG.badge.letter, middle, middle + CONFIG.badge.letterOffset);
 
   const image = pen.getImageData(0, 0, canvas.width, canvas.height);
   return { width: image.width, height: image.height, data: image.data };
@@ -179,7 +179,7 @@ function markSelected(buildingId) {
 function listenForTaps(buildingsById) {
   map.on('click', (event) => {
     const hits = map.queryRenderedFeatures(event.point, { layers: ['building-pins'] });
-    if (hits.length) store.selectBuilding(buildingsById[hits[0].properties.id]);
+    if (hits.length) store.selectBuilding(buildingsById[hits[0].properties.id], 'map');
     else store.clearSelection();
   });
   map.on('mouseenter', 'building-pins', () => (map.getCanvas().style.cursor = 'pointer'));
@@ -187,10 +187,19 @@ function listenForTaps(buildingsById) {
 }
 
 /**
- * Fly to a building whenever a different one is selected.
+ * Fly to a building whenever a different one is selected. When the flight
+ * ends, pause a moment (so you see where it is), then let the sheet open.
  * @param {Object.<string, object>} buildingsById
  */
 function followSelection(buildingsById) {
+  // flyTo passes { flightTo: id } on to its 'moveend' event, so we know which flight ended.
+  // A flight cut short by the user dragging has no flightTo, so the sheet waits for the Info pill.
+  map.on('moveend', (event) => {
+    if (!event.flightTo) return;
+    const pause = event.via === 'search' ? CONFIG.map.sheetPauseAfterSearch : CONFIG.map.sheetPauseAfterTap;
+    setTimeout(() => store.sheetCanOpen(event.flightTo), pause);
+  });
+
   let lastSelectedId = null;
   store.subscribe((state) => {
     if (state.selectedId === lastSelectedId) return;
@@ -204,7 +213,7 @@ function followSelection(buildingsById) {
       zoom: Math.max(map.getZoom(), CONFIG.map.selectZoom),
       speed: CONFIG.map.flySpeed,
       essential: true,
-    });
+    }, { flightTo: building.id, via: state.selectedVia });
   });
 }
 

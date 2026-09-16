@@ -68,8 +68,10 @@
           <span id="bs-name" class="bs-name"></span>
           <button class="bs-side bs-x sheet-close" type="button" aria-label="Close">&times;</button>
         </div>
+        <!-- Every building uses this same layout. js/buildingSheet.js fills in each
+             field; a field with nothing to show gets a short message instead. -->
         <div class="bs-body">
-          <!-- Switch between our redrawn plan and the photo of the map posted in the building -->
+          <!-- 1. Floor plan: our redrawn plan, or the photo of the map posted in the building -->
           <div class="segmented segmented-strong bs-switch" role="tablist">
             <button class="button button-active" id="bs-tab-plan" type="button" role="tab" aria-selected="true">Our plan</button>
             <button class="button" id="bs-tab-posted" type="button" role="tab" aria-selected="false">Posted map</button>
@@ -78,11 +80,26 @@
           <button id="bs-zoom" class="bs-zoom" type="button" aria-label="Open floor plan full screen">
             <img id="bs-floor-img" class="bs-floor-img" alt="" hidden />
           </button>
-          <div id="bs-missing" class="bs-missing" hidden>
-            <p id="bs-missing-text"></p>
-          </div>
-          <div id="bs-caption" class="bs-caption"></div>
-          <div id="bs-info" class="bs-info"></div>
+          <p id="bs-missing" class="bs-missing" hidden></p>
+          <p id="bs-caption" class="bs-caption"></p>
+
+          <!-- 2. Photos -->
+          <section class="bs-section">
+            <h3 class="bs-h3">Photos</h3>
+            <div id="bs-photos" class="bs-photos"></div>
+            <p id="bs-photos-empty" class="bs-photos-empty" hidden></p>
+            <p id="bs-credit" class="bs-credit"></p>
+          </section>
+
+          <!-- 3. About -->
+          <section class="bs-section">
+            <h3 class="bs-h3">About this building</h3>
+            <div id="bs-description"></div>
+            <dl id="bs-facts" class="bs-facts"></dl>
+            <!-- "external" tells Framework7 to leave this link alone so the browser opens it -->
+            <a id="bs-link" class="bs-link external" href="#" target="_blank" rel="noopener">Open on NMSU’s official map ↗</a>
+            <p id="bs-source" class="bs-source"></p>
+          </section>
         </div>
       </div>
     </div>
@@ -182,9 +199,13 @@
 
   <!-- The bottom pill. It never moves: "Info ^" opens the sheet, then the same
        pill becomes "Floor 1 ^" until the sheet is closed with X. Tapping it
-       reveals the other floors stacked above it.
+       reveals the other floors stacked above it. The round button on its
+       left shows your location (js/locate.js).
        Kept outside #app so it floats above the map and the sheet. -->
   <div id="pill" class="pill-bar">
+    <button id="locate-btn" class="pill pill--locate" type="button" aria-label="Show my location" aria-pressed="false">
+      <i class="icon f7-icons pill-locate-icon" aria-hidden="true">location</i>
+    </button>
     <div id="pill-choose" class="pill-stack" role="group" aria-label="Other floors"></div>
     <button id="pill-main" class="pill pill--main" type="button" aria-expanded="false">
       <span id="pill-label"></span><i class="icon f7-icons pill-chev" aria-hidden="true">chevron_up</i>

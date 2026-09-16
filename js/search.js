@@ -76,7 +76,7 @@ export function initSearch(buildings) {
       '</div></a>';
     row.querySelector('a').addEventListener('click', (event) => {
       event.preventDefault();
-      store.selectBuilding(building); // this also ends search
+      store.selectBuilding(building, 'search'); // this also ends search
     });
     return row;
   }

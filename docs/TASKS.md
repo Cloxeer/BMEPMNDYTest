@@ -78,7 +78,12 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] docs/ARCHITECTURE.md and README rewritten to match the real app
 - [x] Refactor verified with a before/after snapshot of computed styles, map layers, badge pixels and flows: 0 differences on mobile and desktop
 - [x] Code review fixes: search open/closed comes only from the store (tapping the map mid-search now closes it); a late "closed" event can no longer shut a re-opened sheet; pill screen-reader label matches the visible text; all data escaped via js/html.js with https-only links; tools run from any folder
-- [ ] Move remaining JavaScript-written texts ("About this building", "Photo:", " km", report dialog) into config.yml
+- [x] Move remaining JavaScript-written texts into config.yml
+- [x] Pill 12px lower; location button left of the pill
+- [x] Sheet opens after the map focuses on the building (0.2s after a tap, 0.3s after search)
+- [x] One sheet layout for every building; floor pill for every multi-floor building
+- [x] Floor pills glide out of / back into the main pill; label fades between words
+- [x] Full-screen floor plan viewer: opens above the sheet, one at a time
 
 ## Reviews to write (docs/REVIEW.md)
 - [ ] Maps · NMSU campus area · building layout · UI · UX/accessibility (with claims fact-checked)

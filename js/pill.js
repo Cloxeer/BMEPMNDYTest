@@ -4,12 +4,13 @@
  *
  * WHAT IT DOES : Nothing selected          -> "Tap a building"
  *                Building selected          -> "Info ^"  (tap: open the sheet)
- *                Sheet open, has floor plan -> "Floor 1 ^" until the sheet is closed.
- *                                              Tap it: the other floors appear
- *                                              stacked above; pick one to switch.
+ *                Sheet open                 -> "Floor 1 ^" until the sheet is closed.
+ *                                              Tap it: the other floors glide up
+ *                                              out of the pill; pick one to switch.
  *                Search open                -> "Searching…"
  * DEPENDS ON   : ./config.js (texts), ./store.js, #pill in index.html, styles/app.css.
- * CONTROLS     : #pill-main and the #pill-choose floor stack.
+ * CONTROLS     : #pill-main and the #pill-choose floor stack (the location
+ *                button next to it is js/locate.js).
  * USED BY      : js/app.js
  */
 
@@ -26,8 +27,29 @@ export function initPill(buildingsById) {
   const stack = document.querySelector('#pill-choose');
   const labels = CONFIG.pill;
 
-  /** @param {number} floor  @returns {string} e.g. "Floor 2" */
-  const floorName = (floor) => labels.floorText + ' ' + floor;
+  /**
+   * @param {number} floor
+   * @returns {string} e.g. "Floor 2"
+   */
+  function floorName(floor) {
+    return labels.floorText + ' ' + floor;
+  }
+
+  /**
+   * Change the pill's words with a quick fade, so "Info" morphs into "Floor 1".
+   * @param {string} words
+   */
+  function setLabel(words) {
+    if (label.textContent === words) return;
+    const wasEmpty = label.textContent === '';
+    label.textContent = words;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (wasEmpty || reduceMotion) return; // no fade on first draw
+    label.animate(
+      [{ opacity: 0, transform: 'scale(0.92)' }, { opacity: 1, transform: 'none' }],
+      { duration: labels.labelSwapTime, easing: CONFIG.theme.smooth },
+    );
+  }
 
   /** @param {boolean} open - show or hide the stack of other floors */
   function setStackOpen(open) {
@@ -70,9 +92,14 @@ export function initPill(buildingsById) {
 
     if (!state.sheetOpen) {
       store.openSheet();
-    } else if (building.floorImages && building.floors.length > 1) {
+    } else if (building.floors.length > 1) {
       const open = !stack.classList.contains('is-open');
-      if (open) buildStack(building, state.activeFloor);
+      if (open) {
+        buildStack(building, state.activeFloor);
+        // Make the browser lay out the new pills in their closed spot first;
+        // otherwise they'd appear already open, with no glide.
+        void stack.offsetHeight;
+      }
       setStackOpen(open);
     }
   });
@@ -83,23 +110,22 @@ export function initPill(buildingsById) {
   store.subscribe((state) => {
     const building = buildingsById[state.selectedId];
     const sheetShowing = Boolean(building && state.sheetOpen);
-    const hasPlans = Boolean(building && building.floorImages); // only drawn plans get floor buttons
-    const hasOtherFloors = hasPlans && building.floors.length > 1;
+    const hasOtherFloors = Boolean(building && building.floors.length > 1);
 
     // Screen readers hear the same words as the label, plus what tapping does.
     let words = labels.infoText;
-    let spoken = 'Building info';
+    let spoken = labels.infoSpokenText;
     if (state.searching) {
       words = labels.searchingText;
       spoken = words;
     } else if (!building) {
       words = labels.idleText;
       spoken = words;
-    } else if (sheetShowing && hasPlans) {
-      words = floorName(state.activeFloor || 1);
-      spoken = hasOtherFloors ? words + ', choose another floor' : words;
+    } else if (sheetShowing && state.activeFloor) {
+      words = floorName(state.activeFloor);
+      spoken = hasOtherFloors ? words + ', ' + labels.chooseFloorSpokenText : words;
     }
-    label.textContent = words;
+    setLabel(words);
     pill.setAttribute('aria-label', spoken);
 
     // The ^ only appears when tapping will reveal something.

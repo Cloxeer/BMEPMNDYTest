@@ -5,10 +5,11 @@
  * WHAT IT DOES : (1) loads config.yml,
  *                (2) starts Framework7 (iOS theme),
  *                (3) loads the building and campus data,
- *                (4) starts the map, building sheet, pill, search, menu and welcome screen.
+ *                (4) starts the map, building sheet, pill, location button, search,
+ *                    menu and welcome screen.
  * DEPENDS ON   : Framework7 (global `Framework7`), every js/ module,
  *                data/buildings.geojson and the campus files from tools/build_campuses.py.
- * CONTROLS     : start-up order, the menu, the welcome screen.
+ * CONTROLS     : start-up order, the menu, the welcome screen, the "Report a problem" button.
  * USED BY      : index.html
  */
 
@@ -19,6 +20,7 @@ import { initBuildingSheet } from './buildingSheet.js';
 import { initPill } from './pill.js';
 import { initSearch } from './search.js';
 import { initLocations } from './locations.js';
+import { initLocate } from './locate.js';
 
 /**
  * Start Framework7. While any full-screen popup is open, the bottom pill hides.
@@ -30,7 +32,7 @@ function startFramework7() {
   let openPopups = 0;
   return new Framework7({
     el: '#app',
-    name: 'Better NMSU Maps',
+    name: CONFIG.app.name,
     theme: 'ios',
     on: {
       popupOpen() {
@@ -128,7 +130,7 @@ function initWelcome(app) {
 function initReportButton(app) {
   document.querySelector('#report-btn').addEventListener('click', (event) => {
     event.preventDefault();
-    app.dialog.alert('Issue reporting arrives later.', 'Coming soon');
+    app.dialog.alert(CONFIG.app.reportText, CONFIG.app.reportTitle);
   });
 }
 
@@ -146,7 +148,8 @@ function showStartupError(error) {
     box.textContent = 'config.yml has a mistake near line ' + (error.mark.line + 1) + ': ' + error.reason + '.';
   } else if (error.name === 'TypeError' && /fetch/i.test(error.message)) {
     // fetch() could not reach the server at all.
-    box.textContent = 'Could not start the app. Check your internet connection and refresh.';
+    // (CONFIG may be empty if config.yml itself didn't load, so keep a fallback.)
+    box.textContent = CONFIG.app ? CONFIG.app.startupErrorText : 'Could not start the app. Check your internet connection and refresh.';
   } else {
     // A missing file or a bug: show what went wrong so it can be fixed.
     box.textContent = 'Could not start the app: ' + error.message;
@@ -173,6 +176,7 @@ async function main() {
   const map = initMap(buildingsById, campuses, labels, outside);
   initBuildingSheet(app, buildingsById);
   initPill(buildingsById);
+  initLocate(app, map);
   initSearch(buildings);
   initMenu(app, campuses);
   initWelcome(app);

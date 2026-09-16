@@ -1,15 +1,17 @@
 /**
  * @file js/buildingSheet.js
- * @summary The full-page building sheet.
+ * @summary The full-page building sheet. Every building uses the same layout.
  *
- * WHAT IT DOES : Top: a switch between "Our plan" (our redrawn SVG) and "Posted
- *                map" (a photo of the evacuation map in the building). Tapping
- *                the plan opens it full screen with pinch-zoom.
- *                Below: photos with credits, description, facts, official link.
- *                Close it with X or by pulling the crimson header down; the
- *                building stays selected.
- * DEPENDS ON   : Framework7 (sheet + photo browser), ./config.js, ./store.js, ./html.js,
- *                #building-sheet in index.html, data/floors/, data/photos/.
+ * WHAT IT DOES : The layout lives in index.html (#building-sheet): floor plan,
+ *                photos, about. This file fills in each field for the selected
+ *                building. A field with nothing to show yet gets a short message
+ *                from config.yml, so no building's sheet looks different.
+ *                Tapping the floor plan or a photo opens ONE full-screen viewer
+ *                with pinch-zoom; tapping again while it's open does nothing.
+ *                Close the sheet with X or by pulling the crimson header down;
+ *                the building stays selected.
+ * DEPENDS ON   : Framework7 (sheet + photo browser), ./config.js, ./store.js,
+ *                ./html.js, #building-sheet in index.html, data/floors/, data/photos/.
  * CONTROLS     : #building-sheet.
  * USED BY      : js/app.js
  */
@@ -19,156 +21,190 @@ import { store } from './store.js';
 import { escapeHtml, safeUrl } from './html.js';
 
 /**
- * Photo strip plus credits, or nothing if the building has no photos.
- * @param {object} building
- * @returns {string} HTML
- */
-function photosHtml(building) {
-  const photos = building.photos;
-  if (!photos.length) return '';
-  const strip = photos
-    .map((photo, index) => '<button class="bs-photo" type="button" data-index="' + index + '">' +
-      '<img src="' + escapeHtml(photo.file) + '" alt="Photo of ' + escapeHtml(building.name) + '" loading="lazy" /></button>')
-    .join('');
-  const credits = photos
-    .map((photo) => 'Photo: ' + escapeHtml(photo.author || 'unknown') + ', <a href="' + safeUrl(photo.sourceUrl) +
-      '" class="external" target="_blank" rel="noopener">' + escapeHtml(photo.license) + '</a>')
-    .join(' · ');
-  return '<div class="bs-photos">' + strip + '</div><p class="bs-credit">' + credits + '</p>';
-}
-
-/**
- * The "About this building" section.
- * @param {object} building
- * @returns {string} HTML
- */
-function aboutHtml(building) {
-  const facts = [
-    ['Address', building.address],
-    ['Building', building.code + ' · No. ' + building.propertyNumber],
-    ['Built', building.built],
-    ['Floors', building.floors.length],
-  ]
-    .filter(([, value]) => value)
-    .map(([name, value]) => '<div class="bs-row"><dt>' + name + '</dt><dd>' + escapeHtml(value) + '</dd></div>')
-    .join('');
-
-  const description = building.description
-    ? building.description.map((paragraph) => '<p>' + escapeHtml(paragraph) + '</p>').join('')
-    : '<p class="muted">' + CONFIG.sheet.noDescriptionText + '</p>';
-
-  // "Other facts" names the floor-count source only when it isn't NMSU's own data.
-  const floorsNote = building.floorsSource !== 'NMSU Space Planning' ? ' (floor count: ' + escapeHtml(building.floorsSource) + ')' : '';
-
-  // "external" tells Framework7 to leave this link alone so the browser opens it.
-  return '<h3 class="bs-h3">About this building</h3>' +
-    description +
-    '<dl class="bs-facts">' + facts + '</dl>' +
-    '<a class="bs-link external" href="' + safeUrl(building.nmsuUrl) + '" target="_blank" rel="noopener">Open on NMSU’s official map ↗</a>' +
-    '<p class="bs-source">Building code: ' + escapeHtml(building.codeSource) + '. Other facts: NMSU Office of Space Planning' +
-    floorsNote + '. Floor plans are unofficial, redrawn from the evacuation maps posted in the building.</p>';
-}
-
-/**
  * Wire the building sheet to the store.
  * @param {Framework7} app
  * @param {Object.<string, object>} buildingsById
  */
 export function initBuildingSheet(app, buildingsById) {
+  const words = CONFIG.sheet;
+
   // Pulling the header down closes the sheet; scrolling the content never does.
   const sheet = app.sheet.create({
     el: '#building-sheet', backdrop: false, swipeToClose: true, swipeHandler: '#building-sheet .bs-head',
   });
-  const find = (selector) => document.querySelector(selector);
-  const title = find('#bs-name');
-  const switcher = find('.bs-switch');
-  const planTab = find('#bs-tab-plan');
-  const postedTab = find('#bs-tab-posted');
-  const zoomButton = find('#bs-zoom');
-  const image = find('#bs-floor-img');
-  const message = find('#bs-missing');
-  const messageText = find('#bs-missing-text');
-  const caption = find('#bs-caption');
-  const infoSection = find('#bs-info');
 
-  let view = 'plan'; // 'plan' = our SVG, 'posted' = photo of the posted map
+  // Every field in the sheet, by name.
+  const field = {
+    title: document.querySelector('#bs-name'),
+    planTab: document.querySelector('#bs-tab-plan'),
+    postedTab: document.querySelector('#bs-tab-posted'),
+    zoomButton: document.querySelector('#bs-zoom'),
+    image: document.querySelector('#bs-floor-img'),
+    missing: document.querySelector('#bs-missing'),
+    caption: document.querySelector('#bs-caption'),
+    photos: document.querySelector('#bs-photos'),
+    photosEmpty: document.querySelector('#bs-photos-empty'),
+    credit: document.querySelector('#bs-credit'),
+    description: document.querySelector('#bs-description'),
+    facts: document.querySelector('#bs-facts'),
+    link: document.querySelector('#bs-link'),
+    source: document.querySelector('#bs-source'),
+  };
+
+  let view = 'plan'; // 'plan' = our redrawn SVG, 'posted' = photo of the posted map
   let shownKey = ''; // "buildingId|floor" currently on screen
   let sheetIsOpen = false; // what Framework7 is showing right now
+  let viewer = null; // the full-screen picture viewer while it's open, otherwise null
 
-  /** @param {string} text - show this instead of an image */
-  function showMessage(text) {
-    image.onerror = null;
-    image.hidden = true;
-    zoomButton.disabled = true;
-    messageText.textContent = text;
-    message.hidden = false;
+  /* ---------- Section 1: floor plan ---------- */
+
+  /**
+   * Replace the floor picture with a message.
+   * @param {string} floorName - e.g. "Floor 2"
+   * @param {string} text
+   */
+  function showFloorMessage(floorName, text) {
+    field.image.onerror = null;
+    field.image.removeAttribute('src');
+    field.image.hidden = true;
+    field.zoomButton.disabled = true;
+    field.missing.textContent = text;
+    field.missing.hidden = false;
+    field.caption.textContent = floorName;
   }
 
   /**
-   * Show the right image for this floor: our plan or the posted photo.
+   * Show the plan (or posted map) for one floor, or a message if there isn't one yet.
    * @param {object} building
    * @param {number} floor
    */
-  function showFloorImage(building, floor) {
-    switcher.hidden = !building.floorImages;
-    if (!building.floorImages) {
-      caption.textContent = '';
-      showMessage(CONFIG.sheet.noFloorPlanText);
-      return;
-    }
-
+  function fillFloorPlan(building, floor) {
     const images = view === 'plan' ? building.floorImages : building.postedImages;
-    const source = images && images[String(floor)];
-    const missingText = view === 'plan' ? CONFIG.sheet.planMissingText : CONFIG.sheet.noOfficialPlanText;
-    planTab.classList.toggle('button-active', view === 'plan');
-    postedTab.classList.toggle('button-active', view === 'posted');
-    planTab.setAttribute('aria-selected', String(view === 'plan'));
-    postedTab.setAttribute('aria-selected', String(view === 'posted'));
-    caption.textContent = CONFIG.pill.floorText + ' ' + floor + (source ? ' · tap to zoom' : '');
+    const source = images[String(floor)];
+    const missingText = view === 'plan' ? words.planMissingText : words.noOfficialPlanText;
+    const floorName = CONFIG.pill.floorText + ' ' + floor;
+
+    field.planTab.classList.toggle('button-active', view === 'plan');
+    field.postedTab.classList.toggle('button-active', view === 'posted');
+    field.planTab.setAttribute('aria-selected', String(view === 'plan'));
+    field.postedTab.setAttribute('aria-selected', String(view === 'posted'));
 
     if (!source) {
-      showMessage(missingText);
+      showFloorMessage(floorName, missingText);
       return;
     }
-    image.onerror = () => showMessage(missingText);
-    image.src = source;
-    image.alt = building.name + ', floor ' + floor + (view === 'plan' ? ' plan' : ' posted evacuation map');
-    image.hidden = false;
-    zoomButton.disabled = false;
-    message.hidden = true;
+    field.caption.textContent = floorName + ' · ' + words.tapToZoomText;
+    field.image.onerror = () => showFloorMessage(floorName, missingText); // listed, but the file is missing
+    field.image.src = source;
+    field.image.alt = building.name + ', ' + floorName + ' ' + (view === 'plan' ? words.planAltText : words.postedAltText);
+    field.image.hidden = false;
+    field.zoomButton.disabled = false;
+    field.missing.hidden = true;
   }
 
+  /* ---------- Section 2: photos ---------- */
+
   /**
-   * Open pictures full screen with pinch-zoom.
+   * Photo strip with credits, or a "no photos yet" message.
+   * @param {object} building
+   */
+  function fillPhotos(building) {
+    const photos = building.photos;
+    field.photos.hidden = photos.length === 0;
+    field.photosEmpty.hidden = photos.length > 0;
+    field.photosEmpty.textContent = words.noPhotosText;
+
+    field.photos.innerHTML = photos
+      .map((photo, index) => '<button class="bs-photo" type="button" data-index="' + index + '">' +
+        '<img src="' + escapeHtml(photo.file) + '" alt="' + escapeHtml(words.photoAltText + ' ' + building.name) +
+        '" loading="lazy" /></button>')
+      .join('');
+    field.credit.innerHTML = photos
+      .map((photo) => escapeHtml(words.photoCreditText + ' ' + (photo.author || words.unknownText)) +
+        ', <a href="' + safeUrl(photo.sourceUrl) + '" class="external" target="_blank" rel="noopener">' +
+        escapeHtml(photo.license) + '</a>')
+      .join(' · ');
+  }
+
+  /* ---------- Section 3: about ---------- */
+
+  /**
+   * Description, facts, official link and where the facts come from.
+   * @param {object} building
+   */
+  function fillAbout(building) {
+    const hasDescription = building.description.length > 0;
+    const paragraphs = hasDescription ? building.description : [words.noDescriptionText];
+    field.description.innerHTML = paragraphs.map((text) => '<p>' + escapeHtml(text) + '</p>').join('');
+    field.description.classList.toggle('muted', !hasDescription);
+
+    const facts = [
+      [words.addressLabel, building.address],
+      [words.buildingLabel, building.code + ' · ' + words.numberText + ' ' + building.propertyNumber],
+      [words.builtLabel, building.built],
+      [words.floorsLabel, building.floors.length],
+    ];
+    field.facts.innerHTML = facts
+      .map(([name, value]) => '<div class="bs-row"><dt>' + escapeHtml(name) + '</dt><dd>' +
+        escapeHtml(value || words.unknownText) + '</dd></div>')
+      .join('');
+
+    field.link.href = safeUrl(building.nmsuUrl);
+
+    // Name the floor-count source only when it isn't NMSU's own data.
+    const floorsNote = building.floorsSource === 'NMSU Space Planning'
+      ? ''
+      : ' (' + words.floorCountText + ': ' + building.floorsSource + ')';
+    field.source.textContent = words.codeSourceText + ': ' + building.codeSource + '. ' +
+      words.factsSourceText + floorsNote + '. ' + words.plansNoteText;
+  }
+
+  /* ---------- Full-screen viewer ---------- */
+
+  /**
+   * Open pictures full screen with pinch-zoom. Only one viewer at a time.
    * @param {string[]} urls
    * @param {number} startAt - index of the first picture to show
    */
   function openViewer(urls, startAt) {
-    app.photoBrowser.create({
-      photos: urls, type: 'standalone', theme: CONFIG.sheet.photoViewerTheme, toolbar: urls.length > 1,
-    }).open(startAt);
+    if (viewer) return; // already open
+    viewer = app.photoBrowser.create({
+      photos: urls, type: 'standalone', theme: words.photoViewerTheme, toolbar: urls.length > 1,
+    });
+    // Throw it away once it has closed, so the next tap starts fresh.
+    viewer.on('closed', () => {
+      viewer.destroy();
+      viewer = null;
+    });
+    viewer.open(startAt);
   }
 
-  /** @param {'plan'|'posted'} nextView */
+  /* ---------- Taps ---------- */
+
+  /**
+   * Switch between "Our plan" and "Posted map".
+   * @param {'plan'|'posted'} nextView
+   */
   function switchView(nextView) {
     view = nextView;
     const state = store.get();
     const building = buildingsById[state.selectedId];
-    if (building) showFloorImage(building, state.activeFloor);
+    if (building) fillFloorPlan(building, state.activeFloor);
   }
 
-  planTab.addEventListener('click', () => switchView('plan'));
-  postedTab.addEventListener('click', () => switchView('posted'));
-  zoomButton.addEventListener('click', () => {
-    if (!image.hidden) openViewer([image.src], 0);
+  field.planTab.addEventListener('click', () => switchView('plan'));
+  field.postedTab.addEventListener('click', () => switchView('posted'));
+  field.zoomButton.addEventListener('click', () => {
+    if (!field.image.hidden) openViewer([field.image.src], 0);
   });
-  infoSection.addEventListener('click', (event) => {
+  field.photos.addEventListener('click', (event) => {
     const photoButton = event.target.closest('.bs-photo');
-    if (!photoButton) return;
     const building = buildingsById[store.get().selectedId];
-    if (!building) return;
+    if (!photoButton || !building) return;
     openViewer(building.photos.map((photo) => photo.file), Number(photoButton.dataset.index));
   });
+
+  /* ---------- Follow the store ---------- */
 
   store.subscribe((state) => {
     const building = buildingsById[state.selectedId];
@@ -177,11 +213,13 @@ export function initBuildingSheet(app, buildingsById) {
       if (key !== shownKey) {
         const differentBuilding = !shownKey.startsWith(state.selectedId + '|');
         if (differentBuilding) {
-          title.textContent = building.name;
-          infoSection.innerHTML = photosHtml(building) + aboutHtml(building);
+          view = 'plan'; // every building starts on "Our plan"
+          field.title.textContent = building.name;
+          fillPhotos(building);
+          fillAbout(building);
         }
         shownKey = key;
-        showFloorImage(building, state.activeFloor);
+        fillFloorPlan(building, state.activeFloor);
       }
     }
 

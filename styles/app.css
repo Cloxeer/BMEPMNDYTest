@@ -134,6 +134,7 @@ html:not(.config-ready) body { visibility: hidden; }
 /* The bar is pinned in one spot; the floor stack opens above it, so nothing shifts. */
 .pill-bar {
   position: fixed;
+  display: flex; /* so the bar is exactly as big as the main pill */
   left: 50%;
   bottom: calc(var(--pill-bottom-offset) + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
@@ -165,16 +166,19 @@ html:not(.config-ready) body { visibility: hidden; }
 .pill::after { content: ""; position: absolute; inset: calc(-1 * var(--pill-tap-area)); } /* bigger tap target */
 .pill:active { transform: scale(var(--pill-press-scale)); }
 .pill:focus-visible { outline: var(--theme-focus-ring-width) solid var(--theme-focus); outline-offset: var(--theme-focus-ring-offset); }
-.pill--main { min-width: var(--pill-min-width); } /* same width for every label: no jump */
+.pill--main { min-width: var(--pill-min-width); z-index: 1; } /* same width for every label: no jump; above the floor pills */
 .pill--main[aria-disabled="true"] { opacity: var(--pill-disabled-opacity); cursor: default; }
 
 /* The ^ shows only when tapping reveals something, and flips while the stack is open.
    ".pill .pill-chev" is needed to beat Framework7's "i.icon" rule. */
-.pill .pill-chev { display: none; font-size: var(--pill-chevron-size); font-weight: 700; transition: transform var(--pill-chevron-time) var(--theme-spring); }
+.pill .pill-chev { display: none; font-size: var(--pill-chevron-size); font-weight: 700; transition: transform var(--pill-chevron-time) var(--theme-smooth); }
 .pill.has-chev .pill-chev { display: inline-block; }
 .pill.is-stack-open .pill-chev { transform: rotate(180deg); }
 
-/* Other floors, stacked above the pill. --i (set in pill.js) staggers them. */
+/* Other floors, stacked above the pill. Closed, every floor pill sits hidden
+   BEHIND the main pill; opening glides each one up into its own slot, so they
+   look like they grow out of the main pill. Closing reverses it.
+   --i (set in pill.js) is the slot: 0 is closest to the main pill. */
 .pill-stack {
   position: absolute;
   left: 50%;
@@ -194,11 +198,31 @@ html:not(.config-ready) body { visibility: hidden; }
   box-shadow: inset 0 0 0 var(--pill-floor-ring) var(--f7-theme-color),
     0 var(--pill-shadow-y) var(--pill-shadow-blur) var(--theme-shadow-strong);
   opacity: 0;
-  transform: translateY(var(--pill-floor-rise)) scale(var(--pill-floor-start-scale));
-  transition: opacity var(--pill-floor-fade-time) ease calc(var(--i) * var(--pill-floor-stagger)),
-    transform var(--pill-floor-move-time) var(--theme-spring) calc(var(--i) * var(--pill-floor-stagger));
+  /* Down by (slot + 1) pill heights + gaps = exactly where the main pill is. */
+  transform: translateY(calc((var(--i) + 1) * (var(--pill-height) + var(--pill-floor-gap)))) scale(var(--pill-floor-start-scale));
+  /* Closing: all together, straight back into the main pill. */
+  transition: opacity var(--pill-floor-fade-time) ease-in, transform var(--pill-floor-move-time) var(--theme-smooth);
 }
-.pill-stack.is-open .pill--floor { opacity: 1; transform: none; }
+.pill-stack.is-open .pill--floor {
+  opacity: 1;
+  transform: none;
+  /* Opening: one after another, nearest floor first. */
+  transition: opacity var(--pill-floor-fade-time) ease-out calc(var(--i) * var(--pill-floor-stagger)),
+    transform var(--pill-floor-move-time) var(--theme-smooth) calc(var(--i) * var(--pill-floor-stagger));
+}
+
+/* Location button: a round pill just left of the main pill. It's positioned
+   against the bar, so the main pill stays exactly where it was. */
+.pill--locate {
+  position: absolute;
+  right: calc(100% + var(--pill-floor-gap));
+  bottom: 0;
+  width: var(--pill-height);
+  padding: 0;
+}
+.pill .pill-locate-icon { font-size: var(--pill-locate-icon-size); }
+/* MapLibre's own location button stays hidden; #locate-btn presses it (see js/locate.js). */
+.maplibregl-ctrl-group:has(.maplibregl-ctrl-geolocate) { display: none; }
 
 /* ---------- 6. Apple-style squircle corners ----------
    Chrome, Edge and Samsung Internet draw them; iPhone Safari doesn't yet and
@@ -282,8 +306,21 @@ html:not(.config-ready) body { visibility: hidden; }
   border-radius: var(--sheet-image-radius);
   box-shadow: 0 var(--sheet-image-shadow-y) var(--sheet-image-shadow-blur) var(--theme-shadow-soft);
 }
-.bs-missing { padding: var(--s12) var(--s4); color: var(--f7-theme-color); }
-.bs-caption { margin-top: var(--s3); font-size: var(--sheet-caption-size); color: var(--theme-text-caption); }
+.bs-caption { margin: var(--s3) 0 0; font-size: var(--sheet-caption-size); color: var(--theme-text-caption); }
+
+/* "Nothing to show yet" box: the same for a missing floor plan and missing photos,
+   so every building's sheet has the same shape. */
+.bs-missing,
+.bs-photos-empty {
+  margin: 0;
+  padding: var(--s8) var(--s4);
+  border-radius: var(--sheet-image-radius);
+  background: var(--theme-line-soft);
+  color: var(--theme-text-muted);
+  font-size: var(--sheet-body-size);
+  line-height: var(--sheet-body-line-height);
+  text-align: center;
+}
 
 .bs-photos {
   display: flex;
@@ -293,21 +330,27 @@ html:not(.config-ready) body { visibility: hidden; }
   margin: 0 calc(-1 * var(--s4)) var(--s2);
   padding: 0 var(--s4);
 }
+.bs-photos[hidden] { display: none; }
 .bs-photo { flex: 0 0 var(--sheet-photo-width); padding: 0; border: none; background: none; scroll-snap-align: center; cursor: zoom-in; }
 .bs-photo img { display: block; width: 100%; aspect-ratio: var(--sheet-photo-ratio); object-fit: cover; border-radius: var(--sheet-image-radius); }
 
-.bs-info { margin-top: var(--s6); text-align: left; border-top: 1px solid var(--theme-line-strong); padding-top: var(--s5); }
+.bs-section { margin-top: var(--s6); text-align: left; border-top: var(--sheet-divider-width) solid var(--theme-line-strong); padding-top: var(--s5); }
 .bs-h3 { font-size: var(--sheet-heading-size); margin: 0 0 var(--s3); color: var(--f7-theme-color); }
-.bs-info p { font-size: var(--sheet-body-size); line-height: var(--sheet-body-line-height); color: var(--theme-text-body); margin: 0 0 var(--s3); }
-/* ".bs-info .bs-credit" is more specific than ".bs-info p", so it wins without !important. */
-.bs-info .bs-credit { font-size: var(--sheet-credit-size); color: var(--theme-text-muted); margin: 0 0 var(--s5); }
+.bs-section p { font-size: var(--sheet-body-size); line-height: var(--sheet-body-line-height); color: var(--theme-text-body); margin: 0 0 var(--s3); }
+/* ".bs-section .bs-credit" is more specific than ".bs-section p", so it wins without !important. */
+.bs-section .bs-credit { font-size: var(--sheet-credit-size); color: var(--theme-text-muted); margin: 0 0 var(--s5); }
 .bs-credit a { color: inherit; }
+.bs-section .bs-credit:empty { display: none; }
+.bs-section .bs-photos-empty { margin: 0 0 var(--s5); }
 .bs-facts { margin: var(--s4) 0; padding: 0; }
-.bs-row { display: flex; gap: var(--s3); padding: var(--s2) 0; border-bottom: 1px solid var(--theme-line-soft); }
+.bs-row { display: flex; gap: var(--s3); padding: var(--s2) 0; border-bottom: var(--sheet-divider-width) solid var(--theme-line-soft); }
 .bs-row dt { flex: 0 0 var(--sheet-label-width); font-size: var(--sheet-label-size); color: var(--theme-text-muted); margin: 0; }
 .bs-row dd { flex: 1; font-size: var(--sheet-body-size); color: var(--theme-text-strong); margin: 0; }
 .bs-link { display: inline-block; margin-top: var(--s2); font-size: var(--sheet-link-size); font-weight: var(--sheet-link-weight); color: var(--f7-theme-color); }
-.bs-info .bs-source { font-size: var(--sheet-source-size); color: var(--theme-text-faint); margin-top: var(--s4); }
+.bs-section .bs-source { font-size: var(--sheet-source-size); color: var(--theme-text-faint); margin-top: var(--s4); }
+
+/* Full-screen picture viewer (a Framework7 popup) must cover the sheet. */
+.photo-browser-popup { z-index: var(--sheet-viewer-layer); }
 
 /* ---------- 9. Welcome screen ---------- */
 #welcome-popup { background: var(--f7-theme-color); }

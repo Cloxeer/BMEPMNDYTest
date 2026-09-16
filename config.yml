@@ -9,6 +9,12 @@
 # Every value also becomes a CSS variable (map.zoom -> --map-zoom,
 # pill.height -> --pill-height), even ones only JavaScript uses; that's harmless.
 
+app:
+  name: "Better NMSU Maps"
+  reportTitle: "Coming soon"
+  reportText: "Issue reporting arrives later."
+  startupErrorText: "Could not start the app. Check your internet connection and refresh."
+
 theme:
   crimson: "#8C0B42"
   crimsonRgb: "140, 11, 66"
@@ -28,7 +34,8 @@ theme:
   shadowStrong: "rgba(0, 0, 0, 0.22)"
   font: '-apple-system, "SF Pro Text", system-ui, sans-serif'
   spacingUnit: "4px"
-  spring: "cubic-bezier(0.34, 1.4, 0.5, 1)"
+  spring: "cubic-bezier(0.34, 1.4, 0.5, 1)" # bouncy: slight overshoot
+  smooth: "cubic-bezier(0.32, 0.72, 0, 1)" # iOS-style glide: fast start, soft landing
   focusRingWidth: "3px"
   focusRingOffset: "2px"
 
@@ -43,6 +50,8 @@ map:
   fencePadding: 0.01
   selectZoom: 16.8
   flySpeed: 0.6
+  sheetPauseAfterTap: 200 # ms between the map arriving at a tapped building and its sheet opening
+  sheetPauseAfterSearch: 300 # same, for a building picked in search
   fitPadding: 48
   fitMaxZoom: 17
   fitDuration: 900
@@ -67,6 +76,7 @@ badge:
   selectedRing: "#000000"
   letterFont: 'italic 700 15px Georgia, "Times New Roman", serif'
   letterOffset: 1
+  letter: "i"
 
 search:
   maxResults: 8
@@ -92,6 +102,8 @@ pill:
   infoText: "Info"
   floorText: "Floor"
   searchingText: "Searching…"
+  infoSpokenText: "Building info" # what screen readers say for "Info"
+  chooseFloorSpokenText: "choose another floor"
   height: "40px"
   minWidth: "112px"
   radius: "20px"
@@ -99,7 +111,7 @@ pill:
   fontSizeDesktop: "16px"
   fontWeight: 600
   letterSpacing: "-0.2px"
-  bottomOffset: "64px"
+  bottomOffset: "52px"
   shadowY: "4px"
   shadowBlur: "16px"
   hideTime: "0.25s"
@@ -108,14 +120,15 @@ pill:
   tapArea: "2px"
   disabledOpacity: 0.8
   chevronSize: "14px"
-  chevronTime: "0.3s"
+  chevronTime: "0.4s"
+  locateIconSize: "18px"
+  labelSwapTime: 240 # ms for the label to fade into its new words
   floorRing: "2px"
   floorGap: "8px"
-  floorRise: "12px"
-  floorStartScale: 0.9
+  floorStartScale: 0.85 # floor pills grow out of the main pill from this size
   floorFadeTime: "0.2s"
-  floorMoveTime: "0.35s"
-  floorStagger: "50ms"
+  floorMoveTime: "0.45s"
+  floorStagger: "40ms"
   layer: 15000
 
 menu:
@@ -136,10 +149,25 @@ menu:
   delayStep: "0.2s"
 
 sheet:
-  noFloorPlanText: "Indoor floor plan coming soon."
   planMissingText: "Floor plan not available yet."
   noOfficialPlanText: "NMSU does not publish floor plans online. “Our plan” is redrawn from the evacuation map posted inside the building."
   noDescriptionText: "A full description for this building is coming soon."
+  noPhotosText: "No photos of this building yet."
+  tapToZoomText: "tap to zoom"
+  planAltText: "plan"
+  postedAltText: "posted evacuation map"
+  photoAltText: "Photo of"
+  photoCreditText: "Photo:"
+  unknownText: "Unknown"
+  addressLabel: "Address"
+  buildingLabel: "Building"
+  numberText: "No."
+  builtLabel: "Built"
+  floorsLabel: "Floors"
+  floorCountText: "floor count"
+  codeSourceText: "Building code"
+  factsSourceText: "Other facts: NMSU Office of Space Planning"
+  plansNoteText: "Floor plans are unofficial, redrawn from the evacuation maps posted in the building."
   photoViewerTheme: "light"
   titleSize: "16px"
   closeSize: "28px"
@@ -162,6 +190,18 @@ sheet:
   sourceSize: "12px"
   bodyMaxWidthDesktop: "720px"
   imageMaxWidthDesktop: "640px"
+  dividerWidth: "1px"
+  viewerLayer: 13000 # full-screen picture viewer: above the sheet (12500), below the pill (15000)
+
+locate:
+  zoom: 17 # how close the map zooms in on your location
+  noLocationTitle: "Location unavailable"
+  noLocationText: "Allow location access for this site in your browser settings, then try again."
+  outsideText: "You're outside the NMSU campus map."
+
+locations:
+  acresText: "acres"
+  kmText: "km"
 
 welcome:
   storageKey: "bnm_visited"

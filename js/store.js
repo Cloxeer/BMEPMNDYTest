@@ -15,6 +15,8 @@
 
 const state = {
   selectedId: null, // id of the chosen building, or null
+  selectedVia: null, // how it was chosen: 'map' (tapped a badge) or 'search'
+  sheetWaiting: false, // true = open the sheet once the map has flown to the building
   sheetOpen: false, // is the building sheet showing?
   activeFloor: null, // floor shown in the sheet
   searching: false, // is the search drop-down open?
@@ -47,26 +49,49 @@ export const store = {
   },
 
   /**
-   * Choose a building: open its sheet on its first floor.
+   * Choose a building. The map flies to it first; when it arrives it calls
+   * sheetCanOpen(), which opens the sheet on the first floor.
+   * Choosing the building that's already selected just opens its sheet.
    * @param {object} building - a record from data/buildings.geojson
+   * @param {'map'|'search'} via - where it was chosen (sets the pause before the sheet opens)
    */
-  selectBuilding(building) {
-    update({ selectedId: building.id, sheetOpen: true, activeFloor: building.floors[0] || null, searching: false });
+  selectBuilding(building, via) {
+    if (building.id === state.selectedId) {
+      update({ sheetOpen: true, sheetWaiting: false, searching: false });
+      return;
+    }
+    update({
+      selectedId: building.id,
+      selectedVia: via,
+      sheetOpen: false,
+      sheetWaiting: true,
+      activeFloor: building.floors[0] ?? null,
+      searching: false,
+    });
+  },
+
+  /**
+   * The map has finished flying to a building: open its sheet, unless the
+   * user has since picked something else or already opened/closed the sheet.
+   * @param {string} buildingId - the building the map flew to
+   */
+  sheetCanOpen(buildingId) {
+    if (state.sheetWaiting && state.selectedId === buildingId) update({ sheetOpen: true, sheetWaiting: false });
   },
 
   /** Let go of the selected building and close its sheet. */
   clearSelection() {
-    update({ selectedId: null, sheetOpen: false, activeFloor: null, searching: false });
+    update({ selectedId: null, selectedVia: null, sheetOpen: false, sheetWaiting: false, activeFloor: null, searching: false });
   },
 
-  /** Open the selected building's sheet. */
+  /** Open the selected building's sheet now (the Info pill). */
   openSheet() {
-    update({ sheetOpen: true });
+    update({ sheetOpen: true, sheetWaiting: false });
   },
 
   /** Close the sheet but keep the building selected. */
   closeSheet() {
-    update({ sheetOpen: false });
+    update({ sheetOpen: false, sheetWaiting: false });
   },
 
   /**
@@ -79,7 +104,7 @@ export const store = {
 
   /** Open search: any selected building is let go. */
   startSearch() {
-    update({ selectedId: null, sheetOpen: false, activeFloor: null, searching: true });
+    update({ selectedId: null, selectedVia: null, sheetOpen: false, sheetWaiting: false, activeFloor: null, searching: true });
   },
 
   /** Close search (does nothing if it's already closed). */

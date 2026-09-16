@@ -81,6 +81,8 @@ def main():
         record = official[number]
         extra = extras.get(number, {})
         floors, floors_source = floor_count(record, osm.get(osm_name, {}))
+        if floors == 0:
+            print('WARNING: no floor count for', number, name)
 
         building = {
             'id': number,
@@ -95,10 +97,12 @@ def main():
             'nmsuUrl': 'https://map.nmsu.edu/?id=1888#!m/' + str(map_id),
             'photos': [p for p in photos.get(photo_key, []) if p.get('file')] if photo_key else [],
             'source': 'NMSU Office of Space Planning, Buildings layer (property ' + number + ')',
+            # Every building has the same fields, so every sheet looks the same.
+            # Empty means "not added yet"; the app shows a message instead.
+            'floorImages': extra.get('floorImages', {}),  # floor number -> our redrawn plan
+            'postedImages': extra.get('postedImages', {}),  # floor number -> photo of the posted map
+            'description': extra.get('description', []),  # paragraphs
         }
-        for key in ('floorImages', 'postedImages', 'description'):
-            if key in extra:
-                building[key] = extra[key]
         building['codeSource'] = ('NMSU Space Planning (not on the Registrar list)'
                                   if number in NOT_ON_REGISTRAR_LIST else REGISTRAR)
 
