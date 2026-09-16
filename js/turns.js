@@ -52,7 +52,7 @@ function wayLabel(way) {
 
 /**
  * Split the route into legs (stretches on one way without a sharp bend).
- * @param {number[][]} path - route points on the walkways
+ * @param {number[][]} path - route points on the network
  * @param {(a: number[], b: number[]) => object} wayBetween - the way a segment is on
  * @returns {object[]} [{ label, startBearing, endBearing, turn, metres }]
  */
@@ -123,19 +123,20 @@ export function formatDistance(metres) {
 /**
  * Everything the directions card shows for a route from where you are now.
  * @param {number} connectorMetres - straight walk from you to the first walkway point
- * @param {number[][]} path - route points on the walkways
+ * @param {number[][]} path - route points on the network
  * @param {(a: number[], b: number[]) => object} wayBetween
  * @param {string} destination - e.g. "Hardman and Jacobs Undergraduate Learning Center"
+ * @param {'walk'|'bike'|'drive'} mode - sets the travel speed for the time estimate
  * @returns {{ instruction: string, icon: string, summary: string, steps: object[] }}
  *   instruction/icon: the next turn, e.g. "590 ft · Turn right onto the path"
  *   summary: "11 min · 0.6 mi · arrive 12:07 PM"
  *   steps: every step in order, [{ icon, text, distance }], ending with "Arrive at …"
  */
-export function planTrip(connectorMetres, path, wayBetween, destination) {
+export function planTrip(connectorMetres, path, wayBetween, destination, mode) {
   const words = CONFIG.directions;
   const legs = legsOf(path, wayBetween);
   const totalMetres = connectorMetres + legs.reduce((sum, leg) => sum + leg.metres, 0);
-  const minutes = Math.max(1, Math.round(totalMetres / words.walkingSpeed / 60));
+  const minutes = Math.max(1, Math.round(totalMetres / words.speeds[mode] / 60));
   const arrival = new Date(Date.now() + minutes * 60000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
   const summary = minutes + ' ' + words.minText + ' · ' + formatDistance(totalMetres) + ' · ' + words.arrivalTimeText + ' ' + arrival;
   const arrive = { icon: 'flag_fill', text: words.arriveText + ' ' + destination, distance: '' };

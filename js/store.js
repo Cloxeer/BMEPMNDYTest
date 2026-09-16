@@ -24,6 +24,7 @@ const state = {
   selectedRoom: null, // the room chosen in search (a record from data/rooms.json), or null
   directionsTo: null, // { buildingId, room } while directions are on, otherwise null
   arrived: false, // true after directions brought you inside the selected building
+  travelMode: 'walk', // how directions travel: 'walk', 'bike' or 'drive'
   searching: false, // is the search drop-down open?
 };
 
@@ -139,6 +140,14 @@ export const store = {
   startDirections() {
     if (!state.selectedId) return;
     update({ directionsTo: { buildingId: state.selectedId, room: state.selectedRoom }, sheetOpen: false, sheetWaiting: false, arrived: false });
+  },
+
+  /**
+   * Choose how to travel (walking, biking or driving). Directions re-route straight away.
+   * @param {'walk'|'bike'|'drive'} mode
+   */
+  setTravelMode(mode) {
+    if (mode !== state.travelMode) update({ travelMode: mode });
   },
 
   /** Stop directions. */

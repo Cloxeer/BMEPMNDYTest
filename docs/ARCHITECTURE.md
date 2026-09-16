@@ -107,7 +107,7 @@ Three rules keep it predictable:
 | `data/campuses.geojson`, `campus-labels.geojson`, `outside-mask.geojson` | `tools/build_campuses.py` | NMSU Space Planning campus boundaries + ground-lease parcels, OpenStreetMap golf course |
 | `data/floors/*.svg` | Hand-drawn | Evacuation maps posted in each building |
 | `data/rooms.json` | `tools/build_rooms.py` (+ `tools/indoor_routes.py`) | Rooms on our floor plans (with outlines and an indoor route from the nearest outside door / stairs) + rooms in NMSU's public class schedule (Banner; no floor or outline) |
-| `data/walkways.geojson` | `tools/build_walkways.py` | OpenStreetMap footpaths and streets (NMSU publishes no walkway data) |
+| `data/routes/walk.geojson`, `bike.geojson`, `drive.geojson` | `tools/build_routes.py` | OpenStreetMap paths and roads, sorted by OSM access tags; one-way streets kept for bikes and cars (NMSU publishes no path or road data) |
 | `data/building-shapes.geojson` | `tools/build_buildings.py` | NMSU Space Planning building outlines |
 | `data/photos/*.jpg` | Downloaded | Wikimedia Commons (licences in `data/source/photos.json`) |
 

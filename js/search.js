@@ -8,8 +8,10 @@
  *                "118A"), then buildings. Tapping a result flies to the
  *                building and opens its sheet (on the room's floor, with the
  *                room highlighted). Tapping the search icon again closes search.
+ *                What you type is remembered on this device until you delete it
+ *                (so "sh" is still there next time); the round x clears it.
  *                What counts as a match is decided in ./searchMatch.js.
- * DEPENDS ON   : ./config.js, ./store.js, ./html.js, ./searchMatch.js,
+ * DEPENDS ON   : ./config.js, ./store.js, ./html.js, ./searchMatch.js, localStorage,
  *                #search-drop in index.html (a Framework7 "media list" for the results).
  * CONTROLS     : #search-drop and #search-results.
  * USED BY      : js/app.js
@@ -56,6 +58,7 @@ export function initSearch(buildings, rooms, buildingsById) {
   const searchButton = document.querySelector('#search-btn');
   const results = document.querySelector('#search-results');
   const list = results.querySelector('ul');
+  const clearButton = document.querySelector('#search-clear');
   const words = CONFIG.search;
 
   // Work out each building's words once, not on every key press.
@@ -141,17 +144,49 @@ export function initSearch(buildings, rooms, buildingsById) {
     rows.forEach((row) => list.appendChild(row));
   }
 
-  /** Empty the field and the results. */
-  function clear() {
-    input.value = '';
-    showResults('');
+  /* ---------- Remembering what was typed ---------- */
+
+  /** @returns {string} the text saved last time, or '' */
+  function savedText() {
+    try {
+      return localStorage.getItem(words.storageKey) || '';
+    } catch (error) {
+      return ''; // private browsing can block storage
+    }
+  }
+
+  /** @param {string} text - remember it; an empty field forgets */
+  function saveText(text) {
+    try {
+      if (text) localStorage.setItem(words.storageKey, text);
+      else localStorage.removeItem(words.storageKey);
+    } catch (error) {
+      // Not being able to remember is harmless.
+    }
+  }
+
+  /** @param {string} text - put text in the field and show its results */
+  function fill(text) {
+    input.value = text;
+    clearButton.hidden = !text;
+    showResults(text);
   }
 
   searchButton.addEventListener('click', () => {
     if (store.get().searching) store.endSearch();
     else store.startSearch();
   });
-  input.addEventListener('input', () => showResults(input.value));
+  input.addEventListener('input', () => {
+    saveText(input.value);
+    clearButton.hidden = !input.value;
+    showResults(input.value);
+  });
+  clearButton.addEventListener('click', (event) => {
+    event.preventDefault(); // it sits inside the field's <label>
+    saveText('');
+    fill('');
+    input.focus();
+  });
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') store.endSearch();
     if (event.key === 'Enter') {
@@ -168,8 +203,14 @@ export function initSearch(buildings, rooms, buildingsById) {
     drop.classList.toggle('is-open', showing);
     drop.setAttribute('aria-hidden', String(!showing));
     searchButton.setAttribute('aria-expanded', String(showing));
-    clear();
-    if (showing) setTimeout(() => input.focus(), CONFIG.search.focusDelay);
+    // Opening brings back what was typed last time; closing just hides the results.
+    fill(showing ? savedText() : '');
+    if (showing) {
+      setTimeout(() => {
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length); // cursor after remembered text
+      }, CONFIG.search.focusDelay);
+    }
     else input.blur();
   });
 }

@@ -5,12 +5,13 @@
  * WHAT IT DOES : Shows the next turn ("590 ft · Turn right onto the path") with
  *                its arrow, and a walking figure with the time, distance and
  *                arrival time.
- *                  - Tap the card: it grows to list every step (like Apple Maps);
- *                    tap again to fold it back.
+ *                  - Tap the card: it grows to show a Walk / Bike / Drive switch
+ *                    and every step (like Apple Maps); tap again to fold it back.
+ *                    The last travel mode is remembered on this device.
  *                  - X asks "Are you sure you want to end your trip?" first.
  *                It only shows while you're looking at the map (not over the
  *                sheet or search); the pill hides while it's up (js/pill.js).
- * DEPENDS ON   : Framework7 (confirm dialog), ./config.js, ./store.js, ./html.js,
+ * DEPENDS ON   : Framework7 (confirm dialog, segmented switch), ./config.js, ./store.js, ./html.js, localStorage,
  *                #route-card in index.html.
  * CONTROLS     : #route-card.
  * USED BY      : js/app.js (made there, handed to js/directions.js)
@@ -34,6 +35,36 @@ export function initRouteCard(app) {
   const summary = document.querySelector('#route-summary');
   const stepList = document.querySelector('#route-steps');
   let hasTrip = false; // nothing to show until the first route is worked out
+  const modeIcon = document.querySelector('#route-mode-icon');
+  const modeSwitch = document.querySelector('#route-modes');
+
+  /* ---------- Walk / Bike / Drive ---------- */
+
+  // One button per mode in config.yml, plus Framework7's sliding highlight.
+  modeSwitch.innerHTML = Object.entries(words.modes)
+    .map(([mode, look]) => '<button class="button" type="button" role="radio" data-mode="' + escapeHtml(mode) + '">' +
+      '<span class="material-symbols-rounded" aria-hidden="true">' + escapeHtml(look.icon) + '</span>' +
+      '<span>' + escapeHtml(look.label) + '</span></button>')
+    .join('') + '<span class="segmented-highlight"></span>';
+
+  modeSwitch.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-mode]');
+    if (!button) return;
+    try {
+      localStorage.setItem(words.modeStorageKey, button.dataset.mode);
+    } catch (error) {
+      // Not being able to remember is harmless.
+    }
+    store.setTravelMode(button.dataset.mode);
+  });
+
+  // Start with the mode used last time on this device.
+  try {
+    const saved = localStorage.getItem(words.modeStorageKey);
+    if (saved && words.modes[saved]) store.setTravelMode(saved);
+  } catch (error) {
+    // Storage blocked: walking it is.
+  }
 
   /** Show the card only with a trip to show, directions on, and the map in view. */
   function updateVisibility() {
@@ -64,6 +95,14 @@ export function initRouteCard(app) {
   document.querySelector('#route-end').addEventListener('click', confirmEnd);
 
   store.subscribe((state) => {
+    // Show the chosen mode: highlighted in the switch, and its figure next to the time.
+    modeSwitch.querySelectorAll('[data-mode]').forEach((button) => {
+      const chosen = button.dataset.mode === state.travelMode;
+      button.classList.toggle('button-active', chosen);
+      button.setAttribute('aria-checked', String(chosen));
+    });
+    modeIcon.textContent = words.modes[state.travelMode].icon;
+
     if (!state.directionsTo) {
       hasTrip = false; // the next trip starts with a fresh, folded card
       setExpanded(false);

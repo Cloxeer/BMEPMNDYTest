@@ -20,8 +20,8 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7-icons@5/css/framework7-icons.css" />
-  <!-- Google's Material Symbols, only the walking figure (Framework7's icons have none) -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,1,0&icon_names=directions_walk" />
+  <!-- Google's Material Symbols: only the walk / bike / car figures (Framework7's icons have none) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,1,0&icon_names=directions_bike,directions_car,directions_walk" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
   <link rel="stylesheet" href="styles/app.css" />
 </head>
@@ -51,6 +51,10 @@
           <label class="search-field">
             <i class="icon f7-icons" aria-hidden="true">search</i>
             <input id="search-input" type="search" placeholder="Search buildings or rooms" autocomplete="off" enterkeyhint="search" aria-label="Search buildings or rooms" />
+            <!-- Clears what you typed (shown only when there's text) -->
+            <button id="search-clear" class="search-clear" type="button" aria-label="Clear search" hidden>
+              <i class="icon f7-icons" aria-hidden="true">xmark_circle_fill</i>
+            </button>
           </label>
           <div id="search-results" class="list media-list search-results" hidden><ul></ul></div>
         </div>
@@ -251,7 +255,7 @@
       <span class="route-text">
         <span id="route-instruction" class="route-instruction" aria-live="polite"></span>
         <span class="route-summary">
-          <span class="material-symbols-rounded route-walk" aria-hidden="true">directions_walk</span>
+          <span id="route-mode-icon" class="material-symbols-rounded route-mode-icon" aria-hidden="true">directions_walk</span>
           <span id="route-summary"></span>
         </span>
       </span>
@@ -259,8 +263,10 @@
     <button id="route-end" class="route-end" type="button" aria-label="End trip">
       <i class="icon f7-icons" aria-hidden="true">xmark</i>
     </button>
-    <!-- Every step, shown when the card is expanded -->
+    <!-- Shown when the card is expanded: how to travel (walk / bike / drive, buttons
+         made by js/routeCard.js from config.yml), then every step -->
     <div class="route-steps-wrap">
+      <div id="route-modes" class="segmented segmented-strong route-modes" role="radiogroup" aria-label="Travel mode"></div>
       <ol id="route-steps" class="route-steps"></ol>
     </div>
   </div>

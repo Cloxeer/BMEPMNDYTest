@@ -95,6 +95,8 @@ search:
   focusDelay: 60
   noMatchText: "No buildings or rooms match"
   roomText: "Room"
+  storageKey: "bnm_search_text" # where this device remembers what was typed
+  clearIconSize: "18px"
   panelShadowY: "8px"
   panelShadowBlur: "16px"
   slideTime: "0.24s"
@@ -163,7 +165,7 @@ menu:
 
 sheet:
   planMissingText: "Floor plan not available yet."
-  noOfficialPlanText: "NMSU does not publish floor plans online. “Our plan” is redrawn from the evacuation map posted inside the building."
+  noOfficialPlanText: "If you don't see it here, we haven't taken a photo yet."
   noDescriptionText: "A full description for this building is coming soon."
   noPhotosText: "No photos of this building yet."
   roomFloorUnknownText: "floor not published by NMSU"
@@ -223,7 +225,15 @@ sheet:
 
 directions:
   title: "Directions"
-  walkingSpeed: 1.4 # metres per second: a typical walking pace, used for the time estimate
+  speeds: # metres per second, for the time estimate
+    walk: 1.4 # a typical walking pace
+    bike: 4.2 # about 15 km/h (9 mph), relaxed city riding
+    drive: 8.9 # about 32 km/h (20 mph), campus and nearby streets
+  modes: # the travel switch on the directions card
+    walk: { label: "Walk", icon: "directions_walk" }
+    bike: { label: "Bike", icon: "directions_bike" }
+    drive: { label: "Drive", icon: "directions_car" }
+  modeStorageKey: "bnm_travel_mode" # this device remembers the last travel mode
   units: "imperial" # "imperial" (ft, mi) or "metric" (m, km)
   arrivedCardText: "Arrived"
   turnLeftText: "Turn left"
@@ -267,6 +277,11 @@ directions:
   endTripText: "Are you sure you want to end your trip?"
   endTripYes: "End trip"
   endTripNo: "Keep going"
+  switchTitle: "Change destination?"
+  switchFromText: "You're on your way to"
+  switchToText: "Get directions to"
+  switchYes: "Switch"
+  switchNo: "Keep current"
   toText: "To" # the navbar title during directions: "To Zuhl Library"
   arrivedBackground: "rgba(52, 199, 89, 0.14)" # Apple system green, light
   arrivedColor: "#1d7a3a"
@@ -287,7 +302,10 @@ directions:
   arrowSpacing: 24 # px between arrows
   rerouteMetres: 8 # only redraw the route after you've walked this far
   arrivalMetres: 5 # this close to a building's wall counts as arrived (GPS drifts near walls)
-  maxDistanceToWalkway: 400 # metres; farther than this from any campus path = not on campus
+  startCandidates: 6 # try this many nearby starting points and keep the shortest trip
+  startSearchMetres: 40 # ...within this much farther than the closest one
+  startSpacingMetres: 5 # ...at least this far apart
+  maxDistanceToNetwork: 400 # metres; farther than this from any path or road = not near campus
   searchRadius: 250 # metres around a building to look for its nearest walkway
   roomColor: "rgba(10, 132, 255, 0.28)" # the highlighted room on a floor plan (light blue)
   roomEdge: "#0a84ff"

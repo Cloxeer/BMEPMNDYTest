@@ -130,6 +130,23 @@ html:not(.config-ready) body { visibility: hidden; }
   border-radius: var(--s1);
   padding: 0;
 }
+/* The round x that clears the search field (like iOS). */
+.search-clear {
+  display: inline-flex;
+  width: auto; /* Framework7 makes buttons full width; this one only needs its icon */
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--theme-text-faint);
+  cursor: pointer;
+}
+.search-clear[hidden] { display: none; }
+.search-clear .icon { font-size: var(--search-clear-icon-size); }
+/* We draw our own clear button, so hide the browser's. */
+#search-input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
 .search-empty { padding: var(--s3) var(--s4); color: var(--theme-text-muted); font-size: var(--search-empty-size); list-style: none; }
 
 /* ---------- 5. Bottom pill ---------- */
@@ -314,7 +331,19 @@ html:not(.config-ready) body { visibility: hidden; }
 .route-text { flex: 1; min-width: 0; }
 .route-instruction { display: block; font-size: var(--directions-instruction-size); font-weight: 700; line-height: 1.25; }
 .route-summary { display: flex; align-items: center; gap: var(--s1); margin-top: var(--s1); font-size: var(--directions-summary-size); opacity: 0.9; }
-.route-walk { font-size: var(--directions-walk-icon-size); }
+.route-mode-icon { font-size: var(--directions-walk-icon-size); }
+
+/* Walk / Bike / Drive switch at the top of the expanded card (Framework7 segmented,
+   recoloured for the crimson card). */
+.route-modes {
+  margin: var(--s3) 0 0;
+  --f7-segmented-strong-bg-color: var(--sheet-round-button-background);
+  --f7-segmented-strong-button-text-color: var(--theme-white);
+  --f7-segmented-strong-button-active-bg-color: var(--theme-white);
+  --f7-segmented-strong-button-active-text-color: var(--f7-theme-color);
+}
+.route-modes .button { gap: var(--s1); font-size: var(--directions-summary-size); font-weight: 600; }
+.route-modes .material-symbols-rounded { font-size: var(--directions-walk-icon-size); }
 .route-end {
   display: inline-flex;
   align-items: center;

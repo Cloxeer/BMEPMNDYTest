@@ -7,8 +7,9 @@
  *                building; a field with nothing to show yet gets a short message
  *                from config.yml, so no building's sheet looks different.
  *                  - Floor plan slides, room taps and indoor arrows: js/floorPlan.js
- *                  - The round button left of the title starts walking directions
- *                    to the building (and the chosen room, if any).
+ *                  - The round button left of the title starts directions to the
+ *                    building (and the chosen room, if any). If directions are
+ *                    already on to somewhere else, it asks before switching.
  *                  - After directions bring you inside, a green "You've arrived"
  *                    banner shows at the top.
  *                Photos and plans open in ONE full-screen viewer with pinch-zoom.
@@ -163,9 +164,45 @@ export function initBuildingSheet(app, buildingsById, rooms) {
     field.arrivedText.textContent = text;
   }
 
+  /* ---------- Directions button ---------- */
+
+  /**
+   * How a destination is named in the "switch?" question.
+   * @param {string} buildingId
+   * @param {object|null} room
+   * @returns {string} e.g. "Room 228, Hardman and Jacobs Undergraduate Learning Center"
+   */
+  function placeName(buildingId, room) {
+    const name = buildingsById[buildingId].name;
+    return room ? CONFIG.search.roomText + ' ' + room.number + ', ' + name : name;
+  }
+
+  /** Start directions here, asking first if they're already leading somewhere else. */
+  function startOrSwitch() {
+    const state = store.get();
+    const current = state.directionsTo;
+    const roomNumber = (room) => (room ? room.number : '');
+    const sameTrip = current && current.buildingId === state.selectedId &&
+      roomNumber(current.room) === roomNumber(state.selectedRoom);
+    if (!current || sameTrip) {
+      store.startDirections();
+      return;
+    }
+    const directions = CONFIG.directions;
+    app.dialog.create({
+      title: directions.switchTitle,
+      text: directions.switchFromText + ' ' + placeName(current.buildingId, current.room) + '. ' +
+        directions.switchToText + ' ' + placeName(state.selectedId, state.selectedRoom) + '?',
+      buttons: [
+        { text: directions.switchNo },
+        { text: directions.switchYes, bold: true, onClick: () => store.startDirections() },
+      ],
+    }).open();
+  }
+
   /* ---------- Taps ---------- */
 
-  field.directionsButton.addEventListener('click', () => store.startDirections());
+  field.directionsButton.addEventListener('click', startOrSwitch);
   field.photos.addEventListener('click', (event) => {
     const photoButton = event.target.closest('.bs-photo');
     const building = buildingsById[store.get().selectedId];

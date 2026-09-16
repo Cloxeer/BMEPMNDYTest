@@ -95,6 +95,11 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Plan / posted map rebuilt on Framework7's Swiper (switch follows the swipe, no flicker)
 - [x] Compass beam on the location dot; "To {place}" navbar title; step list; "end your trip?" confirm
 - [x] Faster, ease-out flight to a building (650 ms); building names above badges with a Settings switch; 2x pixel-ratio cap for smooth cheaper phones
+- [x] Walk / Bike / Drive switch on the directions card (OSM networks, one-way streets respected)
+- [x] Search remembers what was typed on this device until cleared
+- [x] "Change destination?" prompt when directions are already on
+- [x] Posted evacuation-map photos for Hardman and Jacobs floors 1-2
+- [ ] Building photos: no freely licensed photos of the 8 remaining buildings exist online (Commons, Flickr CC checked); needs our own photos
 - [ ] Room-level arrival (phones can't detect floor or room indoors; would need indoor positioning hardware)
 - [ ] Driving directions (would need parking data and a road router; walking only for now)
 

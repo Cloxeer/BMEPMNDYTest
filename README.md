@@ -101,7 +101,7 @@ python tools/build_campuses.py
 python tools/build_rooms.py
 
 # Walking paths for directions (OpenStreetMap)
-python tools/build_walkways.py
+python tools/build_routes.py
 ```
 
 **Add a building:** add a row to `BUILDINGS` at the top of `tools/build_buildings.py`
