@@ -15,7 +15,8 @@
  *                (3) draws it as a see-through blue line with > > > arrows,
  *                    redrawing as you walk, and shows the next turn, time and
  *                    distance on the card at the bottom (js/turns.js, js/routeCard.js),
- *                (4) when you step inside NMSU's outline of the building, ends
+ *                (4) when you step inside NMSU's outline of the building (or are
+ *                    within a few metres of its wall), ends
  *                    directions and opens the building's sheet on the room's floor.
  *                Inside buildings there are no arrows: NMSU publishes no hallway
  *                data, so the highlighted room on the floor plan takes over.
@@ -32,6 +33,7 @@ import { CONFIG } from './config.js';
 import { store } from './store.js';
 import { metresBetween, pointInShape, metresToEdge } from './geo.js';
 import { nextStep } from './turns.js';
+import { mapReady } from './map.js';
 
 const PATH_FINDER_URL = 'https://cdn.jsdelivr.net/npm/geojson-path-finder@2.1.0/+esm';
 
@@ -176,9 +178,7 @@ export function initDirections(app, map, locate, card, buildingsById) {
     }
     map.addImage('route-arrow', drawArrow(settings), { pixelRatio: CONFIG.badge.pixelRatio });
     map.addSource('route', { type: 'geojson', data });
-    // Under the building badges so they stay tappable (if the badges are drawn yet;
-    // badges added later go on top anyway).
-    const below = map.getLayer('building-pins') ? 'building-pins' : undefined;
+    const below = 'building-pins'; // under the badges, so they stay tappable
     map.addLayer({
       id: 'route-hops',
       type: 'line',
@@ -230,7 +230,9 @@ export function initDirections(app, map, locate, card, buildingsById) {
     const building = buildingsById[target.buildingId];
     const here = [position.coords.longitude, position.coords.latitude];
 
-    if (pointInShape(here, network.shapes[building.id])) {
+    // Arrived: inside NMSU's outline, or right at its wall (GPS is often a few metres off near buildings).
+    const outline = network.shapes[building.id];
+    if (pointInShape(here, outline) || metresToEdge(here, outline) <= settings.arrivalMetres) {
       store.arrived(building);
       return;
     }
@@ -250,7 +252,6 @@ export function initDirections(app, map, locate, card, buildingsById) {
       giveUp(settings.noRouteText);
       return;
     }
-    if (!map.getSource('route') && !map.isStyleLoaded()) return; // map still starting; the next position tries again
     routedFrom = here;
     const hops = [[here, start.point]];
     if (end.door) hops.push([end.walkway, end.door]);
@@ -267,7 +268,7 @@ export function initDirections(app, map, locate, card, buildingsById) {
     }
     locate.showMyLocation(); // the blue dot, following you
     try {
-      await loadNetwork();
+      await Promise.all([loadNetwork(), mapReady]); // walkway data, and a map to draw on
     } catch (error) {
       console.error(error);
       giveUp(settings.loadFailedText);

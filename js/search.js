@@ -86,7 +86,7 @@ export function initSearch(buildings, rooms, buildingsById) {
   }
 
   /**
-   * A row for a room: "Room 205" / "Classroom · Hardman and Jacobs … · HJLC · Floor 2".
+   * A row for a room: "Room 225" / "Floor 2 · Classroom · HJLC · Hardman and Jacobs …".
    * @param {object} room
    * @param {string[]} typed
    * @returns {HTMLLIElement}
@@ -94,7 +94,8 @@ export function initSearch(buildings, rooms, buildingsById) {
   function roomRow(room, typed) {
     const building = buildingsById[room.building];
     const floor = room.floor ? CONFIG.pill.floorText + ' ' + room.floor : '';
-    const subtitle = [room.name, building.name, building.code, floor].filter(Boolean).join(' · ');
+    // Floor first, so it isn't the part cut off on a narrow screen.
+    const subtitle = [floor, room.name, building.code, building.name].filter(Boolean).join(' · ');
     return resultRow(words.roomText + ' ' + room.number, subtitle, typed,
       () => store.selectRoom(building, room, 'search'));
   }

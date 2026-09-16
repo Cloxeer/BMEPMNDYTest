@@ -5,19 +5,23 @@
  * WHAT IT DOES : Lists the places from data/campuses.geojson in two groups,
  *                "Las Cruces" and "Around New Mexico". Tapping one closes the
  *                page and moves the map there.
- * DEPENDS ON   : ./config.js, ./html.js, ./map.js (showPlace), #locations-popup in index.html.
+ * DEPENDS ON   : ./config.js, ./html.js, ./turns.js (formatDistance), ./map.js (showPlace),
+ *                #locations-popup in index.html.
  * CONTROLS     : the #loc-near and #loc-far lists.
  * USED BY      : js/app.js
  */
 
 import { CONFIG } from './config.js';
 import { escapeHtml } from './html.js';
+import { formatDistance } from './turns.js';
 // The Locations page moves the map directly: picking a place isn't app state
 // (nothing is selected), so it doesn't go through the store.
 import { showPlace } from './map.js';
 
 /**
- * One tappable row: name, "city · acres", distance.
+ * One tappable row: name and distance on top, "city · acres" below
+ * (Framework7's media-list layout: item-title-row, then item-subtitle).
+ * Distances use the same units as directions (config.yml directions.units).
  * @param {object} place - a feature from data/campuses.geojson
  * @returns {HTMLLIElement}
  */
@@ -27,9 +31,10 @@ function placeRow(place) {
   const where = [City, Acres ? Acres + ' ' + words.acresText : ''].filter(Boolean).join(' · ');
   const row = document.createElement('li');
   row.innerHTML =
-    '<a href="#" class="item-link item-content"><div class="item-inner"><div class="item-title">' + escapeHtml(Name) +
-    '<div class="item-footer">' + escapeHtml(where) + '</div></div>' +
-    '<div class="item-after">' + escapeHtml(km + ' ' + words.kmText) + '</div></div></a>';
+    '<a href="#" class="item-link item-content"><div class="item-inner">' +
+    '<div class="item-title-row"><div class="item-title">' + escapeHtml(Name) + '</div>' +
+    '<div class="item-after">' + escapeHtml(formatDistance(km * 1000)) + '</div></div>' +
+    '<div class="item-subtitle">' + escapeHtml(where) + '</div></div></a>';
   return row;
 }
 

@@ -95,6 +95,17 @@ def metres_to_outline(point, geometry):
     return best * METRES_PER_DEGREE
 
 
+def existing_pictures(pictures, number):
+    """Keep only floor pictures whose file is really in the project (a missing one is reported, not listed)."""
+    kept = {}
+    for floor, file in pictures.items():
+        if (PROJECT / file).exists():
+            kept[floor] = file
+        else:
+            print('  not listed (file not added yet):', file, 'for building', number)
+    return kept
+
+
 def floor_count(record, osm_building):
     """Stories from NMSU (e.g. 'ACAD-3 STORY'); if NMSU has none, use OpenStreetMap."""
     match = re.search(r'(\d+)\s*STORY', record['Property_C'] or '')
@@ -135,8 +146,8 @@ def main():
             'source': 'NMSU Office of Space Planning, Buildings layer (property ' + number + ')',
             # Every building has the same fields, so every sheet looks the same.
             # Empty means "not added yet"; the app shows a message instead.
-            'floorImages': extra.get('floorImages', {}),  # floor number -> our redrawn plan
-            'postedImages': extra.get('postedImages', {}),  # floor number -> photo of the posted map
+            'floorImages': existing_pictures(extra.get('floorImages', {}), number),  # floor -> our redrawn plan
+            'postedImages': existing_pictures(extra.get('postedImages', {}), number),  # floor -> photo of the posted map
             'description': extra.get('description', []),  # paragraphs
             # Where directions lead: mapped doors on this building (empty = walk to its centre).
             'doors': [d for d in doors if metres_to_outline(d, outlines[number]) <= DOOR_DISTANCE_M],

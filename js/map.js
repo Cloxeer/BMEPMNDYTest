@@ -13,7 +13,7 @@
  *                the files made by tools/build_campuses.py (all shape math
  *                happens there; this file only draws).
  * CONTROLS     : the #map element.
- * USED BY      : js/app.js, js/locations.js
+ * USED BY      : js/app.js, js/locations.js, js/directions.js (mapReady)
  *
  * WHY BADGES ARE A MAP LAYER, NOT HTML MARKERS: an HTML marker is moved by
  * JavaScript every frame and lags while you drag. A map layer is moved by the
@@ -25,6 +25,12 @@ import { store } from './store.js';
 
 let map = null; // the live MapLibre map
 let fence = null; // drag limits around the Las Cruces places
+let markReady = null; // called once the map has loaded and drawn its layers
+
+/** Resolves once the map has loaded and the badges are drawn (js/directions.js waits for it). */
+export const mapReady = new Promise((resolve) => {
+  markReady = resolve;
+});
 
 /**
  * Every [lng, lat] point in a Polygon or MultiPolygon, as one flat list.
@@ -264,6 +270,7 @@ export function initMap(buildingsById, campuses, labels, outside) {
     drawBadges(buildingsById);
     markSelected(store.get().selectedId);
     listenForTaps(buildingsById);
+    markReady();
   });
   followSelection(buildingsById);
 

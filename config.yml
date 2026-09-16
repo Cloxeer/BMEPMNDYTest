@@ -156,9 +156,10 @@ sheet:
   noPhotosText: "No photos of this building yet."
   roomFloorUnknownText: "floor not published by NMSU"
   tapRoomText: "tap a room to choose it"
-  arrivedTitleText: "You've arrived"
+  arrivedTitleText: "You've arrived at"
   arrivedRoomText: "Follow the arrows on the plan to Room"
   arrivedBuildingText: "Choose a room on the plan for directions to it."
+  arrivedNoRoomPlanText: "not on a floor plan yet."
   indoorFromDoorText: "from the nearest outside door"
   indoorFromStairsText: "from the nearest stairs"
   tapToZoomText: "tap to zoom"
@@ -260,6 +261,7 @@ directions:
   arrowSize: 18 # px
   arrowSpacing: 24 # px between arrows
   rerouteMetres: 8 # only redraw the route after you've walked this far
+  arrivalMetres: 5 # this close to a building's wall counts as arrived (GPS drifts near walls)
   maxDistanceToWalkway: 400 # metres; farther than this from any campus path = not on campus
   searchRadius: 250 # metres around a building to look for its nearest walkway
   roomColor: "rgba(10, 132, 255, 0.28)" # the highlighted room on a floor plan (light blue)
@@ -274,7 +276,6 @@ locate:
 
 locations:
   acresText: "acres"
-  kmText: "km"
 
 welcome:
   storageKey: "bnm_visited"

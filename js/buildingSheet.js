@@ -150,10 +150,17 @@ export function initBuildingSheet(app, buildingsById, rooms) {
     field.arrived.hidden = !state.arrived;
     if (!state.arrived) return;
     const room = state.selectedRoom;
-    field.arrivedTitle.textContent = words.arrivedTitleText;
-    field.arrivedText.textContent = room && room.indoorRoute
-      ? words.arrivedRoomText + ' ' + room.number + '.'
-      : words.arrivedBuildingText;
+    const building = buildingsById[state.selectedId];
+    const hasPlans = Object.keys(building.floorImages).length > 0;
+
+    // Only point to things that are really on the sheet.
+    let text = ''; // no plan and no room: the title says it all
+    if (room && room.indoorRoute) text = words.arrivedRoomText + ' ' + room.number + '.';
+    else if (room) text = CONFIG.search.roomText + ' ' + room.number + ': ' + words.arrivedNoRoomPlanText;
+    else if (hasPlans) text = words.arrivedBuildingText;
+
+    field.arrivedTitle.textContent = words.arrivedTitleText + ' ' + building.name;
+    field.arrivedText.textContent = text;
   }
 
   /* ---------- Taps ---------- */
