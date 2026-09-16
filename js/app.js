@@ -22,6 +22,7 @@ import { initSearch } from './search.js';
 import { initLocations } from './locations.js';
 import { initLocate } from './locate.js';
 import { initDirections } from './directions.js';
+import { initRouteCard } from './routeCard.js';
 
 /**
  * Start Framework7. While any full-screen popup is open, the bottom pill hides.
@@ -176,10 +177,10 @@ async function main() {
   const buildingsById = Object.fromEntries(buildings.map((building) => [building.id, building]));
 
   const map = initMap(buildingsById, campuses, labels, outside);
-  initBuildingSheet(app, buildingsById);
+  initBuildingSheet(app, buildingsById, rooms);
   initPill(buildingsById);
   const locate = initLocate(app, map);
-  initDirections(app, map, locate, buildingsById);
+  initDirections(app, map, locate, initRouteCard(), buildingsById);
   initSearch(buildings, rooms, buildingsById);
   initMenu(app, campuses);
   initWelcome(app);

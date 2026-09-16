@@ -23,6 +23,7 @@ const state = {
   activeFloor: null, // floor shown in the sheet
   selectedRoom: null, // the room chosen in search (a record from data/rooms.json), or null
   directionsTo: null, // { buildingId, room } while directions are on, otherwise null
+  arrived: false, // true after directions brought you inside the selected building
   searching: false, // is the search drop-down open?
 };
 
@@ -74,7 +75,7 @@ export const store = {
     const floor = room && room.floor ? room.floor : building.floors[0] ?? null;
     if (building.id === state.selectedId) {
       // Already there: no flight, so open straight away.
-      update({ selectedRoom: room, activeFloor: floor, sheetOpen: true, sheetWaiting: false, searching: false });
+      update({ selectedRoom: room, activeFloor: floor, sheetOpen: true, sheetWaiting: false, searching: false, arrived: false });
       return;
     }
     update({
@@ -85,7 +86,16 @@ export const store = {
       sheetWaiting: true,
       activeFloor: floor,
       searching: false,
+      arrived: false,
     });
+  },
+
+  /**
+   * Choose a room by tapping it on the floor plan in the open sheet.
+   * @param {object} room - a record from data/rooms.json, on the selected building
+   */
+  pickRoom(room) {
+    update({ selectedRoom: room, activeFloor: room.floor });
   },
 
   /**
@@ -99,7 +109,7 @@ export const store = {
 
   /** Let go of the selected building and close its sheet. */
   clearSelection() {
-    update({ selectedId: null, selectedVia: null, selectedRoom: null, sheetOpen: false, sheetWaiting: false, activeFloor: null, searching: false });
+    update({ selectedId: null, selectedVia: null, selectedRoom: null, sheetOpen: false, sheetWaiting: false, activeFloor: null, searching: false, arrived: false });
   },
 
   /** Open the selected building's sheet now (the Info pill). */
@@ -109,7 +119,7 @@ export const store = {
 
   /** Close the sheet but keep the building selected. */
   closeSheet() {
-    update({ sheetOpen: false, sheetWaiting: false });
+    update({ sheetOpen: false, sheetWaiting: false, arrived: false });
   },
 
   /**
@@ -122,13 +132,13 @@ export const store = {
 
   /** Open search: any selected building is let go. */
   startSearch() {
-    update({ selectedId: null, selectedVia: null, selectedRoom: null, sheetOpen: false, sheetWaiting: false, activeFloor: null, searching: true });
+    update({ selectedId: null, selectedVia: null, selectedRoom: null, sheetOpen: false, sheetWaiting: false, activeFloor: null, searching: true, arrived: false });
   },
 
   /** Start directions to the selected building (and room). The sheet closes so the map shows. */
   startDirections() {
     if (!state.selectedId) return;
-    update({ directionsTo: { buildingId: state.selectedId, room: state.selectedRoom }, sheetOpen: false, sheetWaiting: false });
+    update({ directionsTo: { buildingId: state.selectedId, room: state.selectedRoom }, sheetOpen: false, sheetWaiting: false, arrived: false });
   },
 
   /** Stop directions. */
@@ -150,6 +160,7 @@ export const store = {
       sheetOpen: true,
       sheetWaiting: false,
       searching: false,
+      arrived: true,
     });
   },
 

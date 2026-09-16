@@ -155,6 +155,12 @@ sheet:
   noDescriptionText: "A full description for this building is coming soon."
   noPhotosText: "No photos of this building yet."
   roomFloorUnknownText: "floor not published by NMSU"
+  tapRoomText: "tap a room to choose it"
+  arrivedTitleText: "You've arrived"
+  arrivedRoomText: "Follow the arrows on the plan to Room"
+  arrivedBuildingText: "Choose a room on the plan for directions to it."
+  indoorFromDoorText: "from the nearest outside door"
+  indoorFromStairsText: "from the nearest stairs"
   tapToZoomText: "tap to zoom"
   planAltText: "plan"
   postedAltText: "posted evacuation map"
@@ -172,10 +178,13 @@ sheet:
   plansNoteText: "Floor plans are unofficial, redrawn from the evacuation maps posted in the building."
   photoViewerTheme: "light"
   titleSize: "16px"
-  sideWidth: "96px" # room on each side of the title: "Get directions" left, X right
-  directionsSize: "13px"
-  directionsWeight: 600
+  sideWidth: "40px" # room on each side of the title: directions button left, X right
+  roundButtonSize: "32px"
+  roundButtonBackground: "rgba(255, 255, 255, 0.2)"
   directionsIconSize: "18px"
+  zoomBackground: "rgba(255, 255, 255, 0.92)"
+  zoomIconSize: "16px"
+  arrivedIconSize: "28px"
   closeSize: "28px"
   bottomSpace: "120px"
   switchMaxWidth: "320px"
@@ -201,7 +210,44 @@ sheet:
 
 directions:
   title: "Directions"
-  endText: "End route" # the pill while directions are on; tap it to stop
+  walkingSpeed: 1.4 # metres per second: a typical walking pace, used for the time estimate
+  units: "imperial" # "imperial" (ft, mi) or "metric" (m, km)
+  arrivedCardText: "Arrived"
+  turnLeftText: "Turn left"
+  turnRightText: "Turn right"
+  slightLeftText: "Slight left"
+  slightRightText: "Slight right"
+  continueText: "Continue"
+  arriveText: "Arrive at"
+  ontoText: "onto"
+  minText: "min"
+  arrivalTimeText: "arrive"
+  slightTurnDegrees: 30 # a bend sharper than this is a "slight" turn
+  turnDegrees: 60 # sharper than this is a full turn
+  unnamedWays: # what to call a path that has no name
+    footway: "the path"
+    path: "the path"
+    pedestrian: "the walkway"
+    steps: "the steps"
+    corridor: "the corridor"
+    cycleway: "the path"
+    service: "the service road"
+    default: "the street"
+  cardMaxWidth: "420px"
+  cardRadius: "20px"
+  turnSize: "44px"
+  turnRadius: "12px"
+  turnIconSize: "24px"
+  instructionSize: "16px"
+  summarySize: "13px"
+  walkIconSize: "18px"
+  endIconSize: "14px"
+  arrivedBackground: "rgba(52, 199, 89, 0.14)" # Apple system green, light
+  arrivedColor: "#1d7a3a"
+  indoorLineWidth: 10 # floor-plan units
+  indoorArrowSize: 16 # floor-plan units
+  indoorArrowSpacing: 44 # floor-plan units between arrows
+  indoorStartRadius: 11 # the dot where you come in
   noLocationText: "Directions need your location. Allow location access for this site in your browser settings, then try again."
   tooFarText: "Directions work on the NMSU Las Cruces campus. Get closer to campus and try again."
   noRouteText: "No walking route was found to this building."
@@ -209,8 +255,9 @@ directions:
   lineColor: "#0a84ff" # Apple system blue
   lineOpacity: 0.35
   lineWidth: 10 # px
+  hopWidth: 4 # px, the dotted bits off the walkways
   arrowColor: "#0a84ff"
-  arrowSize: 14 # px
+  arrowSize: 18 # px
   arrowSpacing: 24 # px between arrows
   rerouteMetres: 8 # only redraw the route after you've walked this far
   maxDistanceToWalkway: 400 # metres; farther than this from any campus path = not on campus

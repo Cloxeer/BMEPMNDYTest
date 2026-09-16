@@ -141,7 +141,8 @@ html:not(.config-ready) body { visibility: hidden; }
   z-index: var(--pill-layer); /* above Framework7's sheet, which is why #pill sits outside #app */
   transition: opacity var(--pill-hide-time) ease;
 }
-.pill-bar.pill-hidden { opacity: 0; pointer-events: none; }
+.pill-bar.pill-hidden,
+.pill-bar.is-routing { opacity: 0; pointer-events: none; } /* a popup is open / the route card is up */
 
 .pill {
   position: relative;
@@ -226,11 +227,64 @@ html:not(.config-ready) body { visibility: hidden; }
 /* MapLibre's own location button stays hidden; #locate-btn presses it (see js/locate.js). */
 .maplibregl-ctrl-group:has(.maplibregl-ctrl-geolocate) { display: none; }
 
+/* Turn-by-turn card: takes the pill's spot while directions are on. */
+.route-card {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--pill-bottom-offset) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--pill-layer);
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  width: calc(100% - 2 * var(--s4));
+  max-width: var(--directions-card-max-width);
+  padding: var(--s3);
+  border-radius: var(--directions-card-radius);
+  background: var(--f7-theme-color);
+  color: var(--theme-white);
+  box-shadow: 0 var(--pill-shadow-y) var(--pill-shadow-blur) var(--theme-shadow-strong);
+  transform: translateX(-50%);
+  animation: card-in var(--pill-floor-move-time) var(--theme-smooth);
+}
+.route-card[hidden] { display: none; }
+@keyframes card-in { from { opacity: 0; transform: translate(-50%, var(--s4)) scale(0.96); } }
+.route-turn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--directions-turn-size);
+  height: var(--directions-turn-size);
+  border-radius: var(--directions-turn-radius);
+  background: var(--sheet-round-button-background);
+}
+.route-turn .icon { font-size: var(--directions-turn-icon-size); }
+.route-text { flex: 1; min-width: 0; text-align: left; }
+.route-instruction { margin: 0; font-size: var(--directions-instruction-size); font-weight: 700; line-height: 1.25; }
+.route-summary { display: flex; align-items: center; gap: var(--s1); margin: var(--s1) 0 0; font-size: var(--directions-summary-size); opacity: 0.9; }
+.route-walk { font-size: var(--directions-walk-icon-size); }
+.route-end {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--sheet-round-button-size);
+  height: var(--sheet-round-button-size);
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--sheet-round-button-background);
+  color: var(--theme-white);
+  cursor: pointer;
+}
+.route-end .icon { font-size: var(--directions-end-icon-size); }
+.route-end:focus-visible { outline: var(--theme-focus-ring-width) solid var(--theme-white); outline-offset: var(--theme-focus-ring-offset); }
+
 /* ---------- 6. Apple-style squircle corners ----------
    Chrome, Edge and Samsung Internet draw them; iPhone Safari doesn't yet and
    keeps normal rounded corners, so nothing breaks. */
 @supports (corner-shape: squircle) {
-  .pill, .bs-floor-img, .bs-zoom, .bs-photo img, .bs-switch, .bs-switch .button,
+  .pill, .bs-floor-img, .bs-photo img, .bs-switch, .bs-switch .button,
   .search-field, .search-drop .search-results, .list.inset ul, .button, .empty-state,
   .welcome-card .button { corner-shape: squircle; }
 }
@@ -285,19 +339,25 @@ html:not(.config-ready) body { visibility: hidden; }
   color: var(--theme-white);
 }
 .bs-side { width: var(--sheet-side-width); flex: none; } /* equal space on both sides keeps the title centred */
+.bs-side { display: flex; align-items: center; }
+/* Directions: a round, see-through white button with Apple's turn-diamond icon. */
 .bs-directions {
   display: inline-flex;
   align-items: center;
-  gap: var(--s1);
+  justify-content: center;
+  width: var(--sheet-round-button-size);
+  height: var(--sheet-round-button-size);
   padding: 0;
   border: none;
-  background: none;
+  border-radius: 50%;
+  background: var(--sheet-round-button-background);
   color: var(--theme-white);
-  font: var(--sheet-directions-weight) var(--sheet-directions-size)/1.2 var(--theme-font);
-  text-align: left;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--pill-press-time) ease;
 }
-.bs-directions .icon { font-size: var(--sheet-directions-icon-size); flex: none; }
+.bs-directions:active { transform: scale(var(--pill-press-scale)); }
+.bs-directions .icon { font-size: var(--sheet-directions-icon-size); }
 .bs-directions:focus-visible { outline: var(--theme-focus-ring-width) solid var(--theme-white); outline-offset: var(--theme-focus-ring-offset); }
 .bs-name {
   flex: 1;
@@ -311,12 +371,66 @@ html:not(.config-ready) body { visibility: hidden; }
   line-clamp: 2;
   overflow: hidden;
 }
-.bs-x { border: none; background: none; color: var(--theme-white); font-size: var(--sheet-close-size); line-height: 1; cursor: pointer; padding: 0; text-align: right; }
+.bs-x { border: none; background: none; color: var(--theme-white); font-size: var(--sheet-close-size); line-height: 1; cursor: pointer; padding: 0; justify-content: flex-end; }
 .bs-body { flex: 1; overflow: auto; padding: var(--s3) var(--s4) var(--sheet-bottom-space); text-align: center; }
 .bs-switch { margin: 0 auto var(--s3); max-width: var(--sheet-switch-max-width); }
-.bs-zoom { display: block; width: 100%; padding: 0; border: none; background: none; cursor: zoom-in; border-radius: var(--sheet-image-radius); }
-.bs-zoom:disabled { cursor: default; }
+
+/* The two floor-plan slides sit side by side; swiping scrolls between them and
+   snaps, so mid-swipe you see part of each. */
+.bs-slides {
+  position: relative; /* so each slide's offsetLeft is measured from here (js/floorPlan.js) */
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  gap: var(--s4);
+}
+.bs-slides::-webkit-scrollbar { display: none; }
+.bs-slide { flex: 0 0 100%; scroll-snap-align: center; scroll-snap-stop: always; }
+.bs-frame { position: relative; }
+/* Full-screen button, top-right corner of the picture. */
+.bs-zoom {
+  position: absolute;
+  top: var(--s2);
+  right: var(--s2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--sheet-round-button-size);
+  height: var(--sheet-round-button-size);
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--sheet-zoom-background);
+  color: var(--theme-text-strong);
+  box-shadow: 0 var(--sheet-image-shadow-y) var(--sheet-image-shadow-blur) var(--theme-shadow-soft);
+  cursor: zoom-in;
+}
+.bs-zoom .icon { font-size: var(--sheet-zoom-icon-size); }
 .bs-zoom:focus-visible { outline: var(--theme-focus-ring-width) solid var(--theme-focus); outline-offset: var(--theme-focus-ring-offset); }
+.bs-floor-img[hidden] + .bs-zoom { display: none; } /* nothing to zoom */
+.bs-slide[data-rooms] .bs-floor-img { cursor: pointer; } /* rooms can be tapped */
+
+/* "You've arrived" banner at the top of the sheet. */
+.bs-arrived {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  margin: 0 0 var(--s3);
+  padding: var(--s3) var(--s4);
+  border-radius: var(--sheet-image-radius);
+  background: var(--directions-arrived-background);
+  color: var(--directions-arrived-color);
+  text-align: left;
+  animation: arrived-in var(--pill-floor-move-time) var(--theme-smooth);
+}
+.bs-arrived[hidden] { display: none; }
+.bs-arrived .icon { font-size: var(--sheet-arrived-icon-size); flex: none; }
+.bs-arrived p { margin: 0; font-size: var(--sheet-body-size); line-height: var(--sheet-body-line-height); }
+.bs-arrived strong { display: block; }
+@keyframes arrived-in { from { opacity: 0; transform: translateY(calc(-1 * var(--s2))); } }
 .bs-floor-img {
   display: block;
   width: 100%;
@@ -399,6 +513,7 @@ html:not(.config-ready) body { visibility: hidden; }
 
 /* ---------- 12. "Reduce motion" setting ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .search-drop, .pill, .pill-bar, .pill-chev, .popup-menu, .menu-link { transition: none !important; animation: none !important; }
+  .search-drop, .pill, .pill-bar, .pill-chev, .popup-menu, .menu-link, .route-card, .bs-arrived { transition: none !important; animation: none !important; }
+  .bs-slides { scroll-behavior: auto; }
   .menu-link { opacity: 1; transform: none; }
 }

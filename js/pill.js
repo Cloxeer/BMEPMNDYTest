@@ -7,7 +7,8 @@
  *                Sheet open                 -> "Floor 1 ^" until the sheet is closed.
  *                                              Tap it: the other floors glide up
  *                                              out of the pill; pick one to switch.
- *                Directions on (map showing)-> "End route" (tap: stop directions)
+ *                Directions on (map showing)-> the whole bar steps aside for the
+ *                                              turn-by-turn card (js/routeCard.js)
  *                Search open                -> "Searching…"
  * DEPENDS ON   : ./config.js (texts), ./store.js, #pill in index.html, styles/app.css.
  * CONTROLS     : #pill-main and the #pill-choose floor stack (the location
@@ -23,6 +24,7 @@ import { store } from './store.js';
  * @param {Object.<string, object>} buildingsById
  */
 export function initPill(buildingsById) {
+  const bar = document.querySelector('#pill');
   const pill = document.querySelector('#pill-main');
   const label = document.querySelector('#pill-label');
   const stack = document.querySelector('#pill-choose');
@@ -86,7 +88,7 @@ export function initPill(buildingsById) {
   }
 
   /**
-   * Is the pill showing "End route"? (Directions on, and you're looking at the map.)
+   * Is the turn-by-turn card up instead of the pill? (Directions on, and you're looking at the map.)
    * @param {object} state
    * @returns {boolean}
    */
@@ -97,10 +99,6 @@ export function initPill(buildingsById) {
   pill.addEventListener('click', (event) => {
     event.stopPropagation();
     const state = store.get();
-    if (routeShowing(state)) {
-      store.endDirections();
-      return;
-    }
     const building = buildingsById[state.selectedId];
     if (!building) return; // nothing selected: nothing to open
 
@@ -132,9 +130,6 @@ export function initPill(buildingsById) {
     if (state.searching) {
       words = labels.searchingText;
       spoken = words;
-    } else if (routeShowing(state)) {
-      words = CONFIG.directions.endText;
-      spoken = words;
     } else if (!building) {
       words = labels.idleText;
       spoken = words;
@@ -148,9 +143,9 @@ export function initPill(buildingsById) {
     // The ^ only appears when tapping will reveal something.
     let showChevron = Boolean(building); // "Info ^"
     if (sheetShowing) showChevron = hasOtherFloors; // "Floor 1 ^" only if there are other floors
-    if (routeShowing(state)) showChevron = false; // "End route"
     pill.classList.toggle('has-chev', showChevron);
-    pill.setAttribute('aria-disabled', String(!building && !routeShowing(state)));
+    pill.setAttribute('aria-disabled', String(!building));
+    bar.classList.toggle('is-routing', routeShowing(state)); // the card takes this spot
 
     if (!sheetShowing) setStackOpen(false);
   });

@@ -6,24 +6,32 @@
  *                (1) follows your GPS position,
  *                (2) finds the shortest walk along campus paths and streets to
  *                    the building's nearest door (or its nearest walkway if no
- *                    door is mapped),
+ *                    door is mapped). geojson-path-finder runs Dijkstra's
+ *                    algorithm, the classic shortest-path search map apps are
+ *                    built on, so the result is the shortest walk that exists
+ *                    in the walkway data. Only mapped walkways are used; the
+ *                    two short hops off them (you -> path, path -> door) are
+ *                    drawn dotted so they don't look like real paths,
  *                (3) draws it as a see-through blue line with > > > arrows,
- *                    redrawing as you walk,
+ *                    redrawing as you walk, and shows the next turn, time and
+ *                    distance on the card at the bottom (js/turns.js, js/routeCard.js),
  *                (4) when you step inside NMSU's outline of the building, ends
  *                    directions and opens the building's sheet on the room's floor.
  *                Inside buildings there are no arrows: NMSU publishes no hallway
  *                data, so the highlighted room on the floor plan takes over.
  * DEPENDS ON   : geojson-path-finder (loaded from the CDN the first time it's
- *                needed), maplibre map, ./config.js, ./store.js, ./geo.js,
+ *                needed), maplibre map, ./config.js, ./store.js, ./geo.js, ./turns.js,
  *                data/walkways.geojson (tools/build_walkways.py),
  *                data/building-shapes.geojson (tools/build_buildings.py).
- * CONTROLS     : the 'route' map source and its 'route-line' / 'route-arrows' layers.
+ * CONTROLS     : the 'route' map source and its 'route-line' / 'route-arrows' /
+ *                'route-hops' layers.
  * USED BY      : js/app.js
  */
 
 import { CONFIG } from './config.js';
 import { store } from './store.js';
 import { metresBetween, pointInShape, metresToEdge } from './geo.js';
+import { nextStep } from './turns.js';
 
 const PATH_FINDER_URL = 'https://cdn.jsdelivr.net/npm/geojson-path-finder@2.1.0/+esm';
 
@@ -56,11 +64,12 @@ function drawArrow(settings) {
  * @param {Framework7} app - for messages
  * @param {maplibregl.Map} map
  * @param {{ showMyLocation: () => void }} locate - from js/locate.js
+ * @param {{ show: (step: object) => void }} card - from js/routeCard.js
  * @param {Object.<string, object>} buildingsById
  */
-export function initDirections(app, map, locate, buildingsById) {
+export function initDirections(app, map, locate, card, buildingsById) {
   const settings = CONFIG.directions;
-  let network = null; // { finder, points, shapes } once the walkway data has loaded
+  let network = null; // { finder, points, ways, shapes } once the walkway data has loaded
   let watchId = null; // the GPS watch while directions are on
   let routedFrom = null; // where the current route starts
 
@@ -80,9 +89,37 @@ export function initDirections(app, map, locate, buildingsById) {
       finder: new PathFinder(walkways),
       // Every point where the route can start or end.
       points: walkways.features.flatMap((feature) => feature.geometry.coordinates),
+      ways: waysBySegment(walkways),
       shapes: Object.fromEntries(shapes.features.map((feature) => [feature.properties.id, feature.geometry])),
     };
     return network;
+  }
+
+  /**
+   * Remember which way (name + kind) every little segment belongs to, for turn names.
+   * @param {object} walkways - data/walkways.geojson
+   * @returns {Map<string, object>} "lng,lat|lng,lat" (both directions) -> way properties
+   */
+  function waysBySegment(walkways) {
+    const ways = new Map();
+    walkways.features.forEach((feature) => {
+      const points = feature.geometry.coordinates;
+      for (let i = 1; i < points.length; i += 1) {
+        ways.set(points[i - 1] + '|' + points[i], feature.properties);
+        ways.set(points[i] + '|' + points[i - 1], feature.properties);
+      }
+    });
+    return ways;
+  }
+
+  /**
+   * The way a route segment is on (unknown segments count as a plain path).
+   * @param {number[]} a
+   * @param {number[]} b
+   * @returns {{ name: string, highway: string }}
+   */
+  function wayBetween(a, b) {
+    return network.ways.get(a + '|' + b) || { name: '', highway: 'path' };
   }
 
   /**
@@ -126,29 +163,43 @@ export function initDirections(app, map, locate, buildingsById) {
   }
 
   /**
-   * Put the route line and its arrows on the map (adds the layers the first time).
-   * @param {number[][]} coordinates
+   * Put the route on the map (adds the layers the first time).
+   * @param {number[][]} walk - the route along mapped walkways: solid line with arrows
+   * @param {number[][][]} hops - short straight bits off the walkways: dotted
    */
-  function drawRoute(coordinates) {
-    const line = { type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates } };
+  function drawRoute(walk, hops) {
+    const line = (kind, coordinates) => ({ type: 'Feature', properties: { kind }, geometry: { type: 'LineString', coordinates } });
+    const data = { type: 'FeatureCollection', features: [line('walk', walk), ...hops.map((hop) => line('hop', hop))] };
     if (map.getSource('route')) {
-      map.getSource('route').setData(line);
+      map.getSource('route').setData(data);
       return;
     }
     map.addImage('route-arrow', drawArrow(settings), { pixelRatio: CONFIG.badge.pixelRatio });
-    map.addSource('route', { type: 'geojson', data: line });
-    // Both go under the building badges so the badges stay tappable.
+    map.addSource('route', { type: 'geojson', data });
+    // Under the building badges so they stay tappable (if the badges are drawn yet;
+    // badges added later go on top anyway).
+    const below = map.getLayer('building-pins') ? 'building-pins' : undefined;
+    map.addLayer({
+      id: 'route-hops',
+      type: 'line',
+      source: 'route',
+      filter: ['==', ['get', 'kind'], 'hop'],
+      layout: { 'line-cap': 'round' },
+      paint: { 'line-color': settings.lineColor, 'line-width': settings.hopWidth, 'line-dasharray': [0, 2] },
+    }, below);
     map.addLayer({
       id: 'route-line',
       type: 'line',
       source: 'route',
+      filter: ['==', ['get', 'kind'], 'walk'],
       layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: { 'line-color': settings.lineColor, 'line-opacity': settings.lineOpacity, 'line-width': settings.lineWidth },
-    }, 'building-pins');
+    }, below);
     map.addLayer({
       id: 'route-arrows',
       type: 'symbol',
       source: 'route',
+      filter: ['==', ['get', 'kind'], 'walk'],
       layout: {
         'symbol-placement': 'line',
         'symbol-spacing': settings.arrowSpacing,
@@ -157,7 +208,7 @@ export function initDirections(app, map, locate, buildingsById) {
         'icon-allow-overlap': true,
         'icon-ignore-placement': true,
       },
-    }, 'building-pins');
+    }, below);
   }
 
   /**
@@ -199,8 +250,13 @@ export function initDirections(app, map, locate, buildingsById) {
       giveUp(settings.noRouteText);
       return;
     }
+    if (!map.getSource('route') && !map.isStyleLoaded()) return; // map still starting; the next position tries again
     routedFrom = here;
-    drawRoute([here, ...found.path, ...(end.door ? [end.door] : [])]);
+    const hops = [[here, start.point]];
+    if (end.door) hops.push([end.walkway, end.door]);
+    drawRoute(found.path, hops);
+    const room = target.room ? ' · ' + CONFIG.search.roomText + ' ' + target.room.number : '';
+    card.show(nextStep(start.metres, found.path, wayBetween, building.name + room));
   }
 
   /** Turn directions on: load data, then follow GPS. */

@@ -19,7 +19,8 @@ What's done and what's next: [docs/TASKS.md](docs/TASKS.md).
 - Hardman & Jacobs has floor plans for floors 1–2 (tap to zoom)
 - Search by name, address, building code or number, or a room ("SH 118A", "hjlc 225")
 - Rooms on our floor plans are highlighted in light blue
-- Get directions: blue arrows along campus paths; the sheet opens when you walk in
+- Tap a room on a floor plan to choose it; arrows show the way in from the nearest door or stairs
+- Get directions: blue arrows along campus paths, a turn-by-turn card with time and distance; the sheet opens with "You've arrived" when you walk in
 - Locations page: every NMSU place, nearest first
 
 ## Change how it looks or behaves
@@ -66,6 +67,10 @@ js/locate.js            location button next to the pill
 js/search.js            search (buildings and rooms)
 js/searchMatch.js       what counts as a search match
 js/directions.js        walking directions
+js/turns.js             next turn, distance and time
+js/routeCard.js         turn-by-turn card
+js/floorPlan.js         plan / posted-map slides, tap a room
+js/planArt.js           room highlight + indoor arrows on the plan
 js/geo.js               distance / inside-outline maths
 js/locations.js         Locations page
 data/                   files the app reads (don't edit the built ones by hand)

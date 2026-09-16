@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7-icons@5/css/framework7-icons.css" />
+  <!-- Google's Material Symbols, only the walking figure (Framework7's icons have none) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,1,0&icon_names=directions_walk" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
   <link rel="stylesheet" href="styles/app.css" />
 </head>
@@ -65,25 +67,51 @@
       <div class="sheet-modal-inner">
         <div class="bs-head">
           <!-- Left: directions to this building (js/directions.js draws the route) -->
-          <button id="bs-directions" class="bs-side bs-directions" type="button">
-            <i class="icon f7-icons" aria-hidden="true">arrow_turn_up_right</i><span>Get directions</span>
-          </button>
+          <div class="bs-side">
+            <button id="bs-directions" class="bs-directions" type="button" aria-label="Get directions">
+              <i class="icon f7-icons" aria-hidden="true">arrow_up_right_diamond_fill</i>
+            </button>
+          </div>
           <span id="bs-name" class="bs-name"></span>
           <button class="bs-side bs-x sheet-close" type="button" aria-label="Close">&times;</button>
         </div>
         <!-- Every building uses this same layout. js/buildingSheet.js fills in each
              field; a field with nothing to show gets a short message instead. -->
         <div class="bs-body">
-          <!-- 1. Floor plan: our redrawn plan, or the photo of the map posted in the building -->
+          <!-- Shown after directions bring you inside the building -->
+          <div id="bs-arrived" class="bs-arrived" role="status" hidden>
+            <i class="icon f7-icons" aria-hidden="true">checkmark_circle_fill</i>
+            <p><strong id="bs-arrived-title"></strong><span id="bs-arrived-text"></span></p>
+          </div>
+
+          <!-- 1. Floor plan. Two slides you can swipe between (or pick with the switch):
+               our redrawn plan, and the photo of the map posted in the building. -->
           <div class="segmented segmented-strong bs-switch" role="tablist">
-            <button class="button button-active" id="bs-tab-plan" type="button" role="tab" aria-selected="true">Our plan</button>
-            <button class="button" id="bs-tab-posted" type="button" role="tab" aria-selected="false">Posted map</button>
+            <button class="button button-active" id="bs-tab-plan" type="button" role="tab" aria-selected="true" aria-controls="bs-slide-plan">Our plan</button>
+            <button class="button" id="bs-tab-posted" type="button" role="tab" aria-selected="false" aria-controls="bs-slide-posted">Posted map</button>
             <span class="segmented-highlight"></span>
           </div>
-          <button id="bs-zoom" class="bs-zoom" type="button" aria-label="Open floor plan full screen">
-            <img id="bs-floor-img" class="bs-floor-img" alt="" hidden />
-          </button>
-          <p id="bs-missing" class="bs-missing" hidden></p>
+          <div id="bs-slides" class="bs-slides">
+            <div id="bs-slide-plan" class="bs-slide" role="tabpanel">
+              <div class="bs-frame">
+                <!-- Tap a room on the plan to choose it -->
+                <img id="bs-plan-img" class="bs-floor-img" alt="" hidden />
+                <button class="bs-zoom" type="button" data-view="plan" aria-label="Open floor plan full screen">
+                  <i class="icon f7-icons" aria-hidden="true">arrow_up_left_arrow_down_right</i>
+                </button>
+              </div>
+              <p id="bs-plan-missing" class="bs-missing" hidden></p>
+            </div>
+            <div id="bs-slide-posted" class="bs-slide" role="tabpanel">
+              <div class="bs-frame">
+                <img id="bs-posted-img" class="bs-floor-img" alt="" hidden />
+                <button class="bs-zoom" type="button" data-view="posted" aria-label="Open posted map full screen">
+                  <i class="icon f7-icons" aria-hidden="true">arrow_up_left_arrow_down_right</i>
+                </button>
+              </div>
+              <p id="bs-posted-missing" class="bs-missing" hidden></p>
+            </div>
+          </div>
           <p id="bs-caption" class="bs-caption"></p>
 
           <!-- 2. Photos -->
@@ -205,6 +233,22 @@
        reveals the other floors stacked above it. The round button on its
        left shows your location (js/locate.js).
        Kept outside #app so it floats above the map and the sheet. -->
+  <!-- Turn-by-turn card while directions are on (js/routeCard.js). It takes the
+       pill's place at the bottom; X ends the route. -->
+  <div id="route-card" class="route-card" role="region" aria-label="Directions" hidden>
+    <div class="route-turn"><i id="route-turn-icon" class="icon f7-icons" aria-hidden="true">arrow_up</i></div>
+    <div class="route-text">
+      <p id="route-instruction" class="route-instruction" aria-live="polite"></p>
+      <p class="route-summary">
+        <span class="material-symbols-rounded route-walk" aria-hidden="true">directions_walk</span>
+        <span id="route-summary"></span>
+      </p>
+    </div>
+    <button id="route-end" class="route-end" type="button" aria-label="End route">
+      <i class="icon f7-icons" aria-hidden="true">xmark</i>
+    </button>
+  </div>
+
   <div id="pill" class="pill-bar">
     <button id="locate-btn" class="pill pill--locate" type="button" aria-label="Show my location" aria-pressed="false">
       <i class="icon f7-icons pill-locate-icon" aria-hidden="true">location</i>

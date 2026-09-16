@@ -20,6 +20,10 @@ flowchart LR
     locate --> map
     app --> directions[js/directions.js]
     directions <--> store
+    directions --> turns[js/turns.js]
+    directions --> card[js/routeCard.js]
+    sheet --> floorplan[js/floorPlan.js]
+    floorplan --> art[js/planArt.js]
     search --> match[js/searchMatch.js]
     map <--> store[js/store.js]
     sheet <--> store
@@ -57,7 +61,11 @@ Three rules keep it predictable:
 | `js/locate.js` | The location button left of the pill (MapLibre's GeolocateControl) |
 | `js/search.js` | The search drop-down (buildings and rooms) |
 | `js/searchMatch.js` | What counts as a match: room numbers, codes, small typos |
-| `js/directions.js` | Walking route with blue arrows; opens the sheet when you walk in |
+| `js/directions.js` | Walking route with blue arrows (Dijkstra shortest path via geojson-path-finder); opens the sheet when you walk in |
+| `js/turns.js` | Route -> next turn, distance, time ("590 ft · Turn right onto the path") |
+| `js/routeCard.js` | The turn-by-turn card that replaces the pill during directions |
+| `js/floorPlan.js` | Plan / posted-map slides, tap a room to choose it |
+| `js/planArt.js` | Draws the chosen room and the indoor arrows onto our plan |
 | `js/geo.js` | Distances and point-inside-outline maths |
 | `js/locations.js` | The Locations page |
 
@@ -70,6 +78,7 @@ Three rules keep it predictable:
 | `sheetWaiting` | The sheet opens once the map has flown to the building |
 | `selectedRoom` | The room picked in search (highlighted on its floor plan), or `null` |
 | `directionsTo` | `{ buildingId, room }` while directions are on |
+| `arrived` | directions brought you inside: the sheet shows "You've arrived" |
 | `sheetOpen` | Is the building sheet showing? |
 | `activeFloor` | Floor shown in the sheet |
 | `searching` | Is search open? |
@@ -78,6 +87,7 @@ Three rules keep it predictable:
 |---|---|
 | `selectBuilding(b, via)` | select `b` on its first floor, end search; the map flies there |
 | `selectRoom(b, room, via)` | like `selectBuilding`, on the room's floor |
+| `pickRoom(room)` | a room tapped on the plan in the sheet |
 | `startDirections()` / `endDirections()` | directions on / off |
 | `arrived(b)` | you walked in: directions off, sheet opens on the room's floor |
 | `sheetCanOpen(id)` | called by the map after the flight + pause: opens the sheet if still waiting |
@@ -94,7 +104,7 @@ Three rules keep it predictable:
 | `data/buildings.geojson` | `tools/build_buildings.py` | NMSU Space Planning buildings layer, NMSU Registrar codes, `data/source/photos.json`, `data/source/building-extras.json` |
 | `data/campuses.geojson`, `campus-labels.geojson`, `outside-mask.geojson` | `tools/build_campuses.py` | NMSU Space Planning campus boundaries + ground-lease parcels, OpenStreetMap golf course |
 | `data/floors/*.svg` | Hand-drawn | Evacuation maps posted in each building |
-| `data/rooms.json` | `tools/build_rooms.py` | Rooms on our floor plans (with outlines) + rooms in NMSU's public class schedule (Banner; no floor or outline) |
+| `data/rooms.json` | `tools/build_rooms.py` (+ `tools/indoor_routes.py`) | Rooms on our floor plans (with outlines and an indoor route from the nearest outside door / stairs) + rooms in NMSU's public class schedule (Banner; no floor or outline) |
 | `data/walkways.geojson` | `tools/build_walkways.py` | OpenStreetMap footpaths and streets (NMSU publishes no walkway data) |
 | `data/building-shapes.geojson` | `tools/build_buildings.py` | NMSU Space Planning building outlines |
 | `data/photos/*.jpg` | Downloaded | Wikimedia Commons (licences in `data/source/photos.json`) |
@@ -115,7 +125,7 @@ and doors from OpenStreetMap, kept for the wayfinding feature that isn't built y
   (`map.sheetPauseAfterTap` / `sheetPauseAfterSearch`), then opens the sheet, so you see where it is.
 - **Every sheet has the same layout** (in `index.html`); empty fields show a message.
   `tools/build_buildings.py` gives every building the same fields.
-- **No arrows inside buildings.** NMSU publishes no hallway data; inside, the highlighted room on the floor plan takes over.
+- **Indoor arrows come from our plans, not GPS.** Phones can't tell which room or floor you're in, so arrival is detected at the building (NMSU's outline); the plan then shows arrows from the nearest outside door (floor 1) or stairs (upper floors) through open floor to the room's edge. Room doors aren't on the posted maps, so arrows stop at the room.
 - **Some rooms have no highlight.** Rooms from the class schedule have no published floor or outline, so the app goes to the building and says so.
 - **The pill sits outside `#app`** with a high `z-index` so it floats above Framework7's sheet.
 - **The page stays hidden until `config.yml` loads**, so nothing flashes unstyled.

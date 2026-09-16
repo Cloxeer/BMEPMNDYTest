@@ -88,7 +88,12 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Chosen room highlighted light blue on its floor plan
 - [x] Get directions: walking route with arrows (OpenStreetMap paths), sheet opens on arrival
 - [ ] Floors/outlines for schedule-only rooms (needs posted evacuation maps for each building)
-- [ ] Indoor arrows (needs hallway data; NMSU publishes none)
+- [x] Icon-only directions button; tap a room on the plan; directions to that room
+- [x] Turn-by-turn card (next turn, walking time, distance, arrival time)
+- [x] Swipeable plan / posted-map slides
+- [x] Indoor arrows on our plans from the nearest outside door / stairs (tools/indoor_routes.py)
+- [ ] Room-level arrival (phones can't detect floor or room indoors; would need indoor positioning hardware)
+- [ ] Driving directions (would need parking data and a road router; walking only for now)
 
 ## Reviews to write (docs/REVIEW.md)
 - [ ] Maps · NMSU campus area · building layout · UI · UX/accessibility (with claims fact-checked)

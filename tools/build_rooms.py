@@ -11,6 +11,9 @@ WHAT IT DOES : Collects rooms from two sources; nothing is typed in by hand.
                   no floor or outline (NMSU doesn't publish them), so the app
                   takes you to the building without highlighting a room.
                A room found in both is kept once, with its outline.
+               Rooms on our plans also get an indoor route (tools/indoor_routes.py):
+               the shortest walk from the nearest outside door (floor 1) or
+               stairs (other floors) to the room, drawn as arrows in the app.
                Re-run each semester and update TERMS so the schedule rooms stay current.
 DEPENDS ON   : Python 3 and internet. data/source/building-extras.json, data/floors/*.svg
 WRITES       : data/rooms.json
@@ -22,6 +25,8 @@ import re
 import urllib.request
 import xml.etree.ElementTree as ElementTree
 from pathlib import Path
+
+from indoor_routes import routes_for_floor, BLOCKING_CLASSES
 
 PROJECT = Path(__file__).resolve().parent.parent
 EXTRAS = PROJECT / 'data' / 'source' / 'building-extras.json'
@@ -75,8 +80,24 @@ def area(points):
     return abs(sum(x1 * y2 - x2 * y1 for (x1, y1), (x2, y2) in zip(points, points[1:] + points[:1]))) / 2
 
 
-def rooms_on_plan(svg_file):
-    """Every (number, name, points) on one floor plan, plus the plan's viewBox."""
+def entrances_on_plan(root, floor):
+    """Where you come onto this floor: outside doors on floor 1, stairs on the others."""
+    if floor == 1:
+        doors = [e for e in root.iter(SVG + 'line') if e.get('class') == 'door']
+        return [((float(d.get('x1')) + float(d.get('x2'))) / 2, (float(d.get('y1')) + float(d.get('y2'))) / 2)
+                for d in doors]
+    entrances = []
+    for group in root.iter(SVG + 'g'):
+        if group.get('class') != 'stair':
+            continue
+        xs = [float(line.get(k)) for line in group.iter(SVG + 'line') for k in ('x1', 'x2')]
+        ys = [float(line.get(k)) for line in group.iter(SVG + 'line') for k in ('y1', 'y2')]
+        entrances.append(((min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2))
+    return entrances
+
+
+def rooms_on_plan(svg_file, floor):
+    """Every room (number, name, points, indoor route) on one floor plan, plus the plan's viewBox."""
     root = ElementTree.parse(svg_file).getroot()
     shapes = [shape_points(e) for e in root.iter()
               if e.tag in (SVG + 'rect', SVG + 'polygon') and e.get('class') in ROOM_CLASSES]
@@ -99,6 +120,16 @@ def rooms_on_plan(svg_file):
         words_before = text[:match.start(1)].strip()
         name = ' '.join(names) or words_before
         rooms.append({'number': match.group(1), 'name': name, 'points': points})
+
+    # Indoor routes: the building outline is walkable; rooms, cores and voids are walls.
+    shapes_by_class = [(e.get('class'), shape_points(e)) for e in root.iter()
+                       if e.tag in (SVG + 'rect', SVG + 'polygon')]
+    outlines = [points for css_class, points in shapes_by_class if css_class == 'floor']
+    blockers = [points for css_class, points in shapes_by_class if css_class in BLOCKING_CLASSES]
+    routes = routes_for_floor(outlines, blockers, entrances_on_plan(root, floor), rooms)
+    for room in rooms:
+        room['indoorRoute'] = routes.get(room['number'])  # None = no route found
+        room['indoorFrom'] = 'door' if floor == 1 else 'stairs'
     return root.get('viewBox'), rooms
 
 
@@ -121,7 +152,7 @@ def main():
     for building_id, extra in extras.items():
         for floor, plan in extra.get('floorImages', {}).items():
             print(building_id, 'floor', floor, plan)
-            view_box, rooms = rooms_on_plan(PROJECT / plan)
+            view_box, rooms = rooms_on_plan(PROJECT / plan, int(floor))
             for room in rooms:
                 output.append({'building': building_id, 'floor': int(floor), 'plan': plan,
                                'viewBox': view_box, **room, 'source': 'floor plan'})
@@ -129,7 +160,8 @@ def main():
     on_plans = {(room['building'], room['number']) for room in output}
     for building_id, number in sorted(rooms_on_schedule() - on_plans):
         output.append({'building': building_id, 'floor': None, 'plan': None, 'viewBox': None,
-                       'number': number, 'name': '', 'points': None, 'source': 'NMSU class schedule'})
+                       'number': number, 'name': '', 'points': None, 'indoorRoute': None, 'indoorFrom': None,
+                       'source': 'NMSU class schedule'})
 
     OUTPUT.write_text(json.dumps(output, indent=1), encoding='utf-8')
     print(len(output), 'rooms written to', OUTPUT)

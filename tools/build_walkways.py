@@ -37,12 +37,13 @@ QUERY = (
 
 
 def download_ways():
-    """Every walkable way in AREA, each as a list of (lng, lat) points."""
+    """Every walkable way in AREA: ((highway kind, street name), [(lng, lat), ...])."""
     body = urllib.parse.urlencode({'data': QUERY}).encode()
     request = urllib.request.Request(OVERPASS, data=body, headers={'User-Agent': 'BetterNMSUMaps-build/1.0'})
     with urllib.request.urlopen(request, timeout=150) as response:
         elements = json.load(response)['elements']
-    return [(way['tags'].get('highway'), [(round(p['lon'], 7), round(p['lat'], 7)) for p in way['geometry']])
+    return [((way['tags'].get('highway'), way['tags'].get('name', '')),
+             [(round(p['lon'], 7), round(p['lat'], 7)) for p in way['geometry']])
             for way in elements]
 
 
@@ -72,9 +73,10 @@ def biggest_connected_piece(ways):
 def main():
     ways = download_ways()
     kept = biggest_connected_piece(ways)
-    features = [{'type': 'Feature', 'properties': {'highway': kind},
+    # name is used for turn-by-turn directions ("Turn left onto Williams Avenue").
+    features = [{'type': 'Feature', 'properties': {'highway': kind, 'name': name},
                  'geometry': {'type': 'LineString', 'coordinates': points}}
-                for kind, points in kept]
+                for (kind, name), points in kept]
     OUTPUT.write_text(json.dumps({'type': 'FeatureCollection', 'features': features}, separators=(',', ':')),
                       encoding='utf-8')
     print(len(kept), 'of', len(ways), 'ways kept (biggest connected piece) ->', OUTPUT)
