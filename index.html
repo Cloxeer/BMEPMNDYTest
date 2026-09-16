@@ -3,14 +3,13 @@
   index.html — the whole app screen.
 
   WHAT IT DOES : Lays out the UI from Framework7's iOS components (navbar, menu,
-                 sheet, popups) plus our own map box, bottom pill, and search drop.
+                 sheet, popups) plus our map, bottom pill, and search drop-down.
   DEPENDS ON   : Framework7 + Framework7 Icons (CDN), MapLibre (CDN),
                  styles/app.css, js/app.js
   CONTROLS     : everything on screen.
 
-  Rule: we do NOT hand-build standard UI. Bars/menus/sheets/popups are stock
-  Framework7. Our only custom pieces are the map (MapLibre) and two small
-  bespoke bits the design needs: the bottom orb pill and the campus focus.
+  Rule: bars/menus/sheets/popups are stock Framework7. Our own pieces are the
+  map (MapLibre), the bottom orb pill, and the campus highlight.
 -->
 <html lang="en">
 <head>
@@ -30,7 +29,7 @@
     <div class="view view-main view-init safe-areas">
       <div class="page">
 
-        <!-- iOS navbar, inverted to crimson (see styles/app.css). -->
+        <!-- iOS navbar, inverted to crimson. Title is centred. -->
         <div class="navbar navbar-crimson">
           <div class="navbar-bg"></div>
           <div class="navbar-inner">
@@ -57,7 +56,6 @@
           </div>
         </div>
 
-        <!-- The map fills this page. -->
         <div class="page-content">
           <div id="map"></div>
         </div>
@@ -69,21 +67,22 @@
     <div class="sheet-modal building-sheet" id="building-sheet">
       <div class="sheet-modal-inner">
         <div class="bs-head">
+          <span class="bs-side"></span>
           <span id="bs-name" class="bs-name"></span>
-          <a class="link sheet-close" href="#">Close</a>
+          <button class="bs-side bs-x sheet-close" type="button" aria-label="Close">&times;</button>
         </div>
         <div class="bs-body">
           <img id="bs-floor-img" class="bs-floor-img" alt="" hidden />
           <div id="bs-missing" class="bs-missing" hidden>
-            <p>Floor plan photo not added yet.</p>
-            <p class="text-color-gray">Add it to <code>data/floors/</code> (see README).</p>
+            <p>Floor plan not available yet.</p>
           </div>
           <div id="bs-caption" class="bs-caption"></div>
+          <div id="bs-info" class="bs-info"></div>
         </div>
       </div>
     </div>
 
-    <!-- Full-screen fade menu (Map / Schedule / Settings), centered + staggered. -->
+    <!-- Full-screen fade menu (Map / Schedule / Settings). -->
     <div class="popup popup-menu popup-tablet-fullscreen" id="menu-popup">
       <a href="#" class="menu-close popup-close" aria-label="Close">&times;</a>
       <div class="menu-inner">
@@ -93,38 +92,46 @@
       </div>
     </div>
 
-    <!-- Schedule popup (placeholder). -->
-    <div class="popup" id="schedule-popup">
+    <!-- Schedule page (full screen, centred title, X to close). -->
+    <div class="popup popup-tablet-fullscreen" id="schedule-popup">
       <div class="view"><div class="page">
         <div class="navbar navbar-crimson"><div class="navbar-bg"></div><div class="navbar-inner">
+          <div class="left"><span class="nav-spacer"></span></div>
           <div class="title">Schedule</div>
-          <div class="right"><a class="link popup-close" href="#">Close</a></div>
+          <div class="right"><a class="link icon-only popup-close" aria-label="Close"><i class="icon f7-icons">xmark</i></a></div>
         </div></div>
-        <div class="page-content"><div class="block">
-          <p>Schedule view &mdash; coming soon.</p>
-          <p class="text-color-gray">Needs a data source for class times (import an .ics file &mdash; see project notes).</p>
-        </div></div>
+        <div class="page-content page-plain">
+          <div class="empty-state">
+            <i class="icon f7-icons empty-icon">calendar</i>
+            <h2>Your class schedule</h2>
+            <p>Import your schedule and the map will pin each class for you.</p>
+            <p class="muted">Not built yet &mdash; it needs a class-time data source.</p>
+          </div>
+        </div>
       </div></div>
     </div>
 
-    <!-- Settings popup (placeholder). -->
-    <div class="popup" id="settings-popup">
+    <!-- Settings page (full screen, centred title, X to close). -->
+    <div class="popup popup-tablet-fullscreen" id="settings-popup">
       <div class="view"><div class="page">
         <div class="navbar navbar-crimson"><div class="navbar-bg"></div><div class="navbar-inner">
+          <div class="left"><span class="nav-spacer"></span></div>
           <div class="title">Settings</div>
-          <div class="right"><a class="link popup-close" href="#">Close</a></div>
+          <div class="right"><a class="link icon-only popup-close" aria-label="Close"><i class="icon f7-icons">xmark</i></a></div>
         </div></div>
-        <div class="page-content">
-          <div class="block-title">Map view</div>
-          <div class="block"><div class="segmented segmented-strong">
-            <button class="button button-active">Standard</button>
-            <button class="button">Satellite</button>
-            <button class="button">Dark</button>
-            <span class="segmented-highlight"></span>
-          </div></div>
-          <div class="block-title">Is there a problem?</div>
+        <div class="page-content page-plain">
+          <div class="block-title">Map</div>
+          <div class="list simple-list"><ul>
+            <li><span>Basemap</span><span class="muted">Colour (Liberty)</span></li>
+            <li><span>Campus highlight</span><span class="muted">On</span></li>
+          </ul></div>
+          <div class="block-title">Data</div>
+          <div class="list simple-list"><ul>
+            <li><span>Buildings</span><span class="muted">OpenStreetMap</span></li>
+            <li><span>Floor plans</span><span class="muted">Posted evacuation maps</span></li>
+          </ul></div>
           <div class="block">
-            <a class="button button-fill" id="report-btn" href="#">Report an issue</a>
+            <a class="button button-fill" id="report-btn" href="#">Report a problem</a>
           </div>
         </div>
       </div></div>
@@ -148,12 +155,19 @@
 
   </div>
 
-  <!-- Always-visible bottom pill: orb + text, morphs into a floor selector.
-       Kept OUTSIDE #app so it floats above the map (and the sheet) cleanly. -->
+  <!-- Bottom pill: Info button + floor drop-up. Kept outside #app so it floats
+       above the map and the sheet. -->
   <div id="pill" class="pill">
-    <span id="pill-orb" class="pill-orb"></span>
-    <span id="pill-label" class="pill-label">Tap a building</span>
-    <span id="pill-floors" class="pill-floors"></span>
+    <div id="floor-menu" class="floor-menu" hidden></div>
+    <button id="pill-info" class="pill-info" type="button">
+      <span id="pill-orb" class="pill-orb"></span>
+      <span id="pill-label" class="pill-label">Info</span>
+    </button>
+    <span id="pill-divider" class="pill-divider" hidden></span>
+    <button id="pill-floor" class="pill-floor-btn" type="button" hidden>
+      <span id="pill-floor-label">Floor 1</span>
+      <span class="pill-caret">&#94;</span>
+    </button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.js"></script>

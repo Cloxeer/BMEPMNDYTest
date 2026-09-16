@@ -4,7 +4,8 @@ A fast, no-login, Apple-style interactive map of the NMSU Las Cruces campus.
 Built by **The Brainy Bunch** for CS 371.
 
 - **Map engine:** [MapLibre GL](https://maplibre.org/) (drag, pinch-zoom)
-- **Basemap:** [OpenFreeMap](https://openfreemap.org/) Positron — clean vector tiles, **free, no API key**
+- **Basemap:** [OpenFreeMap](https://openfreemap.org/) **Liberty** — full-colour vector tiles, **free, no API key**
+- **Campus highlight:** the **real** NMSU boundary (93 points) from OpenStreetMap relation 13399173 — campus keeps full colour, everything outside is washed back. No hand-drawn shapes anywhere.
 - **UI kit:** [Framework7](https://framework7.io/) iOS theme (navbar, menu, popups, sheet)
 - **No build step.** Plain HTML + CSS + JavaScript modules, loaded from a CDN.
 
@@ -41,8 +42,18 @@ js/pill.js               The bottom orb pill + floor selector
 js/orb.js                The little animated "thinking orb" icon
 js/search.js             The drop-down building search
 js/app.js                Starts everything and wires the menu/welcome
-data/buildings.geojson   Building shapes + info (the one data file)
-data/floors/             Floor-plan photos go here
+data/buildings.geojson   The buildings we currently show (+ description, links)
+data/campus.geojson      Real NMSU boundary, OSM relation 13399173 (ODbL)
+data/floors/             Floor plans (SVG, redrawn from posted evacuation maps)
+```
+
+Gathered from OpenStreetMap, ready for the next phase (not wired up yet):
+
+```
+data/buildings-osm.geojson  15 real building footprints (12 ids from OSM `ref`)
+data/paths.geojson          708 walking ways — the campus footpath network
+data/entrances.geojson      49 entrance nodes (all plain `entrance=yes`;
+                            OSM has NO wheelchair or door-ref data here)
 ```
 
 Every file starts with a comment (what it does / depends on / controls) and every

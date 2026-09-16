@@ -125,7 +125,13 @@ async function main() {
   const app = startUI();
 
   // Build quick lookups from the one data file.
-  const geojson = await fetch('data/buildings.geojson').then((r) => r.json());
+  // Two data files: the buildings we show, and the REAL NMSU boundary from
+  // OpenStreetMap that we use to highlight campus.
+  const [geojson, campus] = await Promise.all([
+    fetch('data/buildings.geojson').then((r) => r.json()),
+    fetch('data/campus.geojson').then((r) => r.json()),
+  ]);
+
   const byId = {};
   const list = [];
   geojson.features.forEach((f) => {
@@ -134,7 +140,7 @@ async function main() {
     list.push(record);
   });
 
-  const map = initMap(store, byId);
+  const map = initMap(store, byId, campus);
   initSheet(app, store, byId);
   initPill(store, byId);
   initSearch(app, store, list, byId);
