@@ -24,6 +24,7 @@ import { initLocations } from './locations.js';
 import { initLocate } from './locate.js';
 import { initDirections } from './directions.js';
 import { initRouteCard } from './routeCard.js';
+import { initSettings } from './settings.js';
 
 /**
  * Start Framework7. While any full-screen popup is open, the bottom pill hides.
@@ -214,6 +215,7 @@ async function main() {
   initWelcome(app);
   initReportButton(app);
   initTitle(buildingsById);
+  initSettings();
 
   // Handy in the browser console while developing.
   Object.assign(window, { app, map, store, CONFIG });

@@ -94,6 +94,7 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Indoor arrows on our plans from the nearest outside door / stairs (tools/indoor_routes.py)
 - [x] Plan / posted map rebuilt on Framework7's Swiper (switch follows the swipe, no flicker)
 - [x] Compass beam on the location dot; "To {place}" navbar title; step list; "end your trip?" confirm
+- [x] Faster, ease-out flight to a building (650 ms); building names above badges with a Settings switch; 2x pixel-ratio cap for smooth cheaper phones
 - [ ] Room-level arrival (phones can't detect floor or room indoors; would need indoor positioning hardware)
 - [ ] Driving directions (would need parking data and a road router; walking only for now)
 

@@ -49,7 +49,19 @@ map:
   nearbyKm: 10
   fencePadding: 0.01
   selectZoom: 16.8
-  flySpeed: 0.6
+  flyDuration: 650 # ms to fly to a chosen building: quick, with a soft landing
+  flyCurve: 1.2 # how much the flight zooms out on the way (1 = barely)
+  maxPixelRatio: 2 # sharp phones draw at most 2x, so cheaper phones stay smooth
+  buildingNames: true # names above the info badges (people can switch this in Settings)
+  namesMinZoom: 15.5 # names appear from this zoom in
+  nameSizeSmall: 11 # px at namesMinZoom
+  nameSizeLarge: 14 # px at maxZoom
+  nameMaxWidth: 7 # ems before a long name wraps
+  nameOffset: -1.9 # ems above the badge's centre: far enough to clear its own badge (names never cover badges)
+  namePadding: 2 # px of space kept around each name when deciding overlaps
+  nameColor: "#1b1b1d"
+  nameHalo: "#ffffff"
+  nameHaloWidth: 1.5
   sheetPauseAfterTap: 200 # ms between the map arriving at a tapped building and its sheet opening
   sheetPauseAfterSearch: 300 # same, for a building picked in search
   fitPadding: 48
@@ -292,6 +304,9 @@ locate:
 
 locations:
   acresText: "acres"
+
+settings:
+  buildingNamesKey: "bnm_building_names" # where this device remembers the Building names switch
 
 welcome:
   storageKey: "bnm_visited"

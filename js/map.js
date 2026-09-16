@@ -7,7 +7,8 @@
  *                    outlines and names the places that are,
  *                (3) keeps dragging inside the Las Cruces places,
  *                (4) draws a crimson "i" badge on each building (white ring;
- *                    black ring on the selected one),
+ *                    black ring on the selected one), with the building's name
+ *                    above it (can be turned off in Settings: setBuildingNames),
  *                (5) tells the store when a badge or empty map is tapped.
  * DEPENDS ON   : maplibre-gl (global `maplibregl`), ./config.js, ./store.js, and
  *                the files made by tools/build_campuses.py (all shape math
@@ -26,6 +27,7 @@ import { store } from './store.js';
 let map = null; // the live MapLibre map
 let fence = null; // drag limits around the Las Cruces places
 let markReady = null; // called once the map has loaded and drawn its layers
+let namesVisible = true; // building names above the badges (Settings can turn them off)
 
 /** Resolves once the map has loaded and the badges are drawn (js/directions.js waits for it). */
 export const mapReady = new Promise((resolve) => {
@@ -158,7 +160,7 @@ function drawBadges(buildingsById) {
     data: {
       type: 'FeatureCollection',
       features: Object.values(buildingsById).map((building) => ({
-        type: 'Feature', properties: { id: building.id }, geometry: { type: 'Point', coordinates: building.center },
+        type: 'Feature', properties: { id: building.id, name: building.name }, geometry: { type: 'Point', coordinates: building.center },
       })),
     },
   });
@@ -166,6 +168,42 @@ function drawBadges(buildingsById) {
     id: 'building-pins', type: 'symbol', source: 'buildings',
     layout: { 'icon-image': 'info-badge', 'icon-allow-overlap': true },
   });
+
+  // Names sit just above the badges. Drawn by the GPU like the badges, so they
+  // move with the map at full frame rate. When a name would overlap another name
+  // or a badge, the map hides it and fades it back in when there's room (zooming in).
+  const names = CONFIG.map;
+  map.addLayer({
+    id: 'building-names', type: 'symbol', source: 'buildings',
+    minzoom: names.namesMinZoom,
+    layout: {
+      visibility: namesVisible ? 'visible' : 'none',
+      'text-field': ['get', 'name'],
+      'text-font': [names.labelFont],
+      // Grows a little as you zoom in, so it stays readable without crowding.
+      'text-size': ['interpolate', ['linear'], ['zoom'], names.namesMinZoom, names.nameSizeSmall, names.maxZoom, names.nameSizeLarge],
+      'text-max-width': names.nameMaxWidth,
+      'text-anchor': 'bottom',
+      'text-offset': [0, names.nameOffset],
+      'text-padding': names.namePadding,
+    },
+    paint: {
+      'text-color': names.nameColor,
+      'text-halo-color': names.nameHalo,
+      'text-halo-width': names.nameHaloWidth,
+    },
+  }, 'building-pins'); // listed under the badges, so badges are placed first and names keep clear of them
+}
+
+/**
+ * Show or hide the building names above the badges (the Settings switch).
+ * @param {boolean} visible
+ */
+export function setBuildingNames(visible) {
+  namesVisible = visible;
+  if (map && map.getLayer('building-names')) {
+    map.setLayoutProperty('building-names', 'visibility', visible ? 'visible' : 'none');
+  }
 }
 
 /**
@@ -176,6 +214,9 @@ function markSelected(buildingId) {
   if (!map.getLayer('building-pins')) return; // still loading; the load step calls this again
   map.setLayoutProperty('building-pins', 'icon-image',
     ['match', ['get', 'id'], buildingId || '', 'info-badge-selected', 'info-badge']);
+  // The selected building's name turns crimson.
+  map.setPaintProperty('building-names', 'text-color',
+    ['match', ['get', 'id'], buildingId || '', CONFIG.theme.crimson, CONFIG.map.nameColor]);
 }
 
 /**
@@ -184,12 +225,14 @@ function markSelected(buildingId) {
  */
 function listenForTaps(buildingsById) {
   map.on('click', (event) => {
-    const hits = map.queryRenderedFeatures(event.point, { layers: ['building-pins'] });
+    const hits = map.queryRenderedFeatures(event.point, { layers: ['building-pins', 'building-names'] });
     if (hits.length) store.selectBuilding(buildingsById[hits[0].properties.id], 'map');
     else store.clearSelection();
   });
-  map.on('mouseenter', 'building-pins', () => (map.getCanvas().style.cursor = 'pointer'));
-  map.on('mouseleave', 'building-pins', () => (map.getCanvas().style.cursor = ''));
+  ['building-pins', 'building-names'].forEach((layer) => {
+    map.on('mouseenter', layer, () => (map.getCanvas().style.cursor = 'pointer'));
+    map.on('mouseleave', layer, () => (map.getCanvas().style.cursor = ''));
+  });
 }
 
 /**
@@ -214,10 +257,14 @@ function followSelection(buildingsById) {
     const building = buildingsById[state.selectedId];
     if (!building) return; // nothing selected
     map.setMaxBounds(fence);
+    // A short, fixed-length flight that starts quick and settles softly (ease-out),
+    // instead of MapLibre's slower default that eases in and out.
     map.flyTo({
       center: building.center,
       zoom: Math.max(map.getZoom(), CONFIG.map.selectZoom),
-      speed: CONFIG.map.flySpeed,
+      duration: CONFIG.map.flyDuration,
+      curve: CONFIG.map.flyCurve,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
       essential: true,
     }, { flightTo: building.id, via: state.selectedVia });
   });
@@ -257,6 +304,9 @@ export function initMap(buildingsById, campuses, labels, outside) {
     minZoom: settings.minZoom,
     maxZoom: settings.maxZoom,
     maxBounds: fence,
+    // Phones with very sharp screens draw at most 2x: looks the same, and cheaper
+    // phones keep a smooth frame rate.
+    pixelRatio: Math.min(window.devicePixelRatio || 1, settings.maxPixelRatio),
     dragRotate: true,
     attributionControl: { compact: true },
   });
