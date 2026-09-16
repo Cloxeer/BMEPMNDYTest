@@ -24,6 +24,34 @@ function matches(b, q) {
 }
 
 /**
+ * Make text safe to put inside HTML (so a name like "A&M" can't break the page).
+ * @param {string} text
+ * @returns {string}
+ */
+function escapeHtml(text) {
+  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/**
+ * Highlight every place the typed letters appear, e.g. "hall" in "Science Hall".
+ * @param {string} text - the text to show
+ * @param {string} q - lowercased search text
+ * @returns {string} HTML with <mark> around each match
+ */
+function highlight(text, q) {
+  const lower = text.toLowerCase();
+  let html = '';
+  let from = 0;
+  let at = lower.indexOf(q);
+  while (at !== -1) {
+    html += escapeHtml(text.slice(from, at)) + '<mark class="search-hit">' + escapeHtml(text.slice(at, at + q.length)) + '</mark>';
+    from = at + q.length;
+    at = lower.indexOf(q, from);
+  }
+  return html + escapeHtml(text.slice(from));
+}
+
+/**
  * Wire the search drop-down to the store.
  * @param {Framework7} app - the running Framework7 instance
  * @param {object} store - the shared state
@@ -92,8 +120,8 @@ export function initSearch(app, store, buildings, byId) {
       li.innerHTML =
         // Framework7 "media list" row: bold title, one-line grey subtitle, one chevron.
         '<a href="#" class="item-link item-content"><div class="item-inner">' +
-        '<div class="item-title-row"><div class="item-title">' + b.name + '</div></div>' +
-        '<div class="item-subtitle">' + [b.code, b.address].filter(Boolean).join(' · ') + '</div>' +
+        '<div class="item-title-row"><div class="item-title">' + highlight(b.name, q) + '</div></div>' +
+        '<div class="item-subtitle">' + highlight([b.code, b.address].filter(Boolean).join(' · '), q) + '</div>' +
         '</div></a>';
       li.querySelector('a').addEventListener('click', (e) => {
         e.preventDefault();

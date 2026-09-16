@@ -2,7 +2,8 @@
  * @file js/pill.js
  * @summary The one pill at the bottom of the screen. It never moves.
  *
- * WHAT IT DOES : Sheet closed  → the pill says "Info ^". Tap it to open the
+ * WHAT IT DOES : Nothing chosen → the pill says "Tap a building".
+ *                Building chosen, sheet closed → "Info ^". Tap it to open the
  *                               building sheet.
  *                Sheet open    → the SAME pill says "Floor 1 ^" and stays that
  *                               way until the user closes the sheet with X.
@@ -80,6 +81,7 @@ export function initPill(store, byId) {
     const manyFloors = hasPlans && b.floors.length > 1;
 
     if (s.mode === 'searching') label.textContent = 'Searching…';
+    else if (!b) label.textContent = 'Tap a building'; // nothing chosen yet
     else label.textContent = floorMode && hasPlans ? 'Floor ' + (s.activeFloor || 1) : 'Info';
 
     // The ^ only appears when tapping will actually reveal something.

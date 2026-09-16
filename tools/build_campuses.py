@@ -16,7 +16,7 @@ RUN IT       : python tools/build_campuses.py
 
 import json
 import math
-from shapely.geometry import shape, mapping, box
+from shapely.geometry import shape, mapping, box, Polygon
 from shapely.ops import unary_union
 
 DATA = 'data/'
@@ -30,12 +30,13 @@ EXCLUDE = {
 }
 
 MAIN_CAMPUS = (-106.7494, 32.2744)  # used for the "km from main campus" number
-SLIVER = 1e-8  # square degrees (~0.1 acre): leftover crumbs smaller than this are dropped
+ACRE = 4046.86 / (94200 * 110900)  # one acre in square degrees at Las Cruces' latitude
+MIN_PIECE_ACRES = 3  # detached bits / holes smaller than this are noise on a map
 # NMSU's parcel lines and campus lines don't line up exactly, so cutting one out
 # of the other leaves long strips only a few metres wide. Shrinking a shape by
 # THIN and growing it back by THIN erases anything narrower than 2 x THIN
-# (~10 m) and leaves real shapes unchanged ("mitre" keeps corners sharp).
-THIN = 0.00005  # degrees, about 5 m
+# (~20 m) and leaves real shapes unchanged ("mitre" keeps corners sharp).
+THIN = 0.0001  # degrees, about 10 m
 
 
 def load(name):
@@ -52,14 +53,22 @@ def km_from_main(point):
     return round(6371 * math.acos(min(1, math.sin(a) * math.sin(b) + math.cos(a) * math.cos(b) * math.cos(d))), 1)
 
 
-def drop_slivers(geom):
-    """Remove thin strips and tiny leftover pieces created by cutting shapes apart."""
-    geom = geom.buffer(-THIN, join_style='mitre').buffer(THIN, join_style='mitre')
-    if geom.is_empty:
-        return None
+def clean_up(geom):
+    """Tidy a shape after cutting leased land out of it:
+    1. erase strips narrower than ~20 m,
+    2. fill small holes,
+    3. drop small detached pieces (the biggest piece is always kept, so tiny
+       stand-alone sites like Hillsboro don't disappear)."""
+    thin_free = geom.buffer(-THIN, join_style='mitre').buffer(THIN, join_style='mitre')
+    # Safety net: only accept the result if it didn't grow. (Shrink-then-grow
+    # can misbehave on very small or oddly shaped sites; those keep their outline.)
+    if not thin_free.is_empty and thin_free.area <= geom.area * 1.0001:
+        geom = thin_free
     parts = list(geom.geoms) if geom.geom_type == 'MultiPolygon' else [geom]
-    kept = [p for p in parts if p.area >= SLIVER]
-    return unary_union(kept) if kept else None
+    min_area = MIN_PIECE_ACRES * ACRE
+    parts = [Polygon(p.exterior, [h for h in p.interiors if Polygon(h).area >= min_area]) for p in parts]
+    biggest = max(parts, key=lambda p: p.area)
+    return unary_union([p for p in parts if p is biggest or p.area >= min_area])
 
 
 def main():
@@ -75,10 +84,11 @@ def main():
             continue
 
         # Cut out any land NMSU leases to others (charter schools, offices...).
-        geom = drop_slivers(shape(f['geometry']).buffer(0).difference(leased))
-        if geom is None:
+        geom = shape(f['geometry']).buffer(0).difference(leased)
+        if geom.is_empty:
             print('empty after removing leased land:', name)
             continue
+        geom = clean_up(geom)
 
         # One label, placed inside the biggest piece of the place.
         biggest = max(geom.geoms, key=lambda p: p.area) if geom.geom_type == 'MultiPolygon' else geom

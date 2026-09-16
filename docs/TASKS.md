@@ -18,6 +18,7 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 5. **Wayfinding.** Get from A to B across campus, to the right door, then blue `>>>` chevrons to the room.
 
 ## Map / bounds
+- [x] No stray bits: detached pieces and holes under 3 acres dropped, strips under ~20 m removed (tools/build_campuses.py)
 - [x] Main campus boundary: official NMSU Space Planning layer (replaced the OSM version)
 - [x] NMSU Golf Course boundary: inside official **East Campus** (verified against OSM way/50280146)
 - [x] Horse Farm boundary: official NMSU Space Planning layer (OSM has none)
@@ -32,6 +33,8 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Building pin drawn in the map layer, so it doesn't lag
 
 ## UI
+- [x] Pill says "Tap a building" when nothing is chosen; "Info" only when a building is chosen
+- [x] Search highlights the typed letters in results
 - [x] Search: tapping it lets go of the selected building; results only after typing; one prompt; icon toggles closed
 - [x] Selected building badge gets a red ring
 - [x] Map credits start collapsed; "Open on NMSU's official map" link opens
