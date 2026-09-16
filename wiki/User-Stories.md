@@ -2,13 +2,15 @@
 
 [← Back to Home](Home)
 
-These stories describe what **users** will be able to do with Better NMSU Maps. Each one follows the format:
+These are the things our **users** should be able to do with Better NMSU Maps, not what we as developers want. Every story follows the same format:
 
 > **As a** [type of user], **I want** [to do something] **so that** [the real reason it matters to them].
 
-**Effort estimates** use Fibonacci numbers (1, 2, 3, 5, 8, 13, 21, 34…). They're relative: bigger means more work. We're treating the whole project as roughly **233** points.
+**How we estimated effort:** Fibonacci numbers (1, 2, 3, 5, 8, 13, 21, 34…). They're relative, so a 21 is a lot more work than an 8, not "21 hours." We're treating the whole project as about **233** points. These are our best guesses right now, and we'll adjust them once we see how our first sprint actually goes.
 
-**Numbering:** a top-level story is a big feature (like `4`). A dotted number (like `4.2`) is a smaller piece inside it.
+**How the numbering works:** a top-level story is a big feature (like `4`). A dotted number (like `4.2`) is a smaller piece of that feature.
+
+**How we'll test them:** every story has an acceptance test. Wax (Design & QA) runs them on real phones, and our Fact & Number Checker confirms that any rooms, codes, distances, or times shown are correct.
 
 ## Summary
 

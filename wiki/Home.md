@@ -1,41 +1,50 @@
 # Better NMSU Maps
 
-**A fast, simple campus map for New Mexico State University students. No login, no app store, just open it on your phone and find your class.**
+**A fast, clean, no-login campus map for NMSU. Open it on your phone, type what's on your schedule, and get to your class.**
 
-We're **The Brainy Bunch**, a CS 371 team at NMSU. Our project is a map website made for the way students actually get around campus: on a phone, in a hurry, usually with only a building code and a room number from their class schedule.
+We're **The Brainy Bunch**, a CS 371 team at New Mexico State University.
 
-## The idea in one paragraph
+## What we're building
 
-When you're new at NMSU, your schedule says something like **"SH 118A"** and you have about ten minutes to find it. Most campus maps can show you where a building is, but they can't take you from that code to the right room. Better NMSU Maps will let you type what's on your schedule, see the building on a clean map, open its floor plan with your room highlighted, and get step-by-step directions there, walking, biking, or driving.
+If you're new at NMSU, your schedule says something like **"SH 118A"** and that's pretty much all you get. You don't know what SH is, you don't know where it is, and once you find the building you still have to find the room. We want to fix that.
+
+Better NMSU Maps is going to be a map website that feels like Apple Maps but is made just for NMSU, and it goes all the way to the room, not just the building:
+
+- Type what's on your schedule (`SH 118A`) and it finds it
+- See the building's floor plan with your room highlighted
+- Get walking, biking, or driving directions there
+- No account, no app download, nothing to set up
+
+One rule we care about a lot: **we don't make anything up.** Every building, room, and number has to come from a real source like NMSU's records or a photo we took of the posted evacuation map. A map that sends someone to the wrong room is worse than no map.
 
 ## Team
 
 | Name | Role | What they're responsible for |
 |---|---|---|
-| Sebastian Salgado | **Technical Lead** | Overall architecture and how the pieces fit together; walks the team through building each part step by step and reviews everyone's code before it's merged |
-| Matthew Holets | **Map & UI Developer** | The map screen: building buttons and names, the building page, the search box, and the directions card |
-| Brock Patten | **Campus Data** | Collecting and checking campus data: building outlines, codes, room lists, and photos of each building's posted evacuation maps |
-| Wax Sahm | **Design & QA Tester** | How the app looks and feels (colors, spacing, animations), and testing every screen on real phones against our acceptance tests |
-| *(name to be added)* | **QA: Fact & Number Checker** | Making sure every fact and number the app shows is correct and comes from a real source (details below) |
+| Sebastian Salgado | **Technical Lead** | Plans how all the pieces fit together, and walks the team through building each part step by step so everyone understands it. Reviews code before it gets merged. |
+| Matthew Holets | **Map & UI** | The map screen: building buttons and names, the building page, search, and the directions card |
+| Brock Patten | **Campus Data** | Gathering and checking the data: building outlines, building codes, room lists, and photos of each building's posted evacuation maps |
+| Wax Sahm | **Design & QA Tester** | How the app looks and feels, and testing every screen on real phones against our acceptance tests |
+| *(name to be added)* | **QA: Fact & Number Checker** | Making sure every fact and number the app shows is correct and actually measures what it says it measures (details below) |
 
-*(Scrum master will rotate each sprint and be listed on the Sprints page.)*
+*The Scrum Master will rotate each sprint and will be listed on the Sprints page.*
 
 ### What the Fact & Number Checker checks
 
-A map that shows a wrong room or building is worse than no map, so one person's job is to catch wrong information before users see it. For every release they will check:
+This role exists because wrong info is the one thing we can't ship. Before anything goes out, they check:
 
-- **Building codes** (e.g., "SH", "HJLC") match the **NMSU Registrar's** building abbreviation list.
-- **Building facts** (address, year built, number of floors) match **NMSU Space Planning's** records.
-- **Room numbers** shown in search exist in **NMSU's public class schedule** or on the building's posted evacuation map. Rooms that don't exist (like "SH 205") must *not* show up.
-- **Floor plans** match the photo of the posted map: same rooms, same labels, on the same floor.
-- **Distances and times** make sense for what's being measured: a walk across campus should be minutes, not hours; feet and miles are labeled correctly; driving is faster than walking for the same trip.
-- **Our own goals** (like "under 10 seconds") are actually timed with a stopwatch on a real phone before we claim we met them, and written down with the date and phone used.
+- **Building codes** ("SH", "HJLC") match the **NMSU Registrar's** building abbreviation list.
+- **Building facts** (address, year built, number of floors) match **NMSU Office of Space Planning** records.
+- **Room numbers** exist in **NMSU's public class schedule** or on the building's posted evacuation map. A room that doesn't exist (for example "SH 205") should **not** show up in search.
+- **Floor plans** match the photo of the posted map: same rooms, same labels, same floor.
+- **Distances and times** make sense for what they're measuring. A walk across campus should be minutes, not hours. Feet and miles are labeled right. A time estimate has to match the route's distance and the travel speed we say we use.
+- **Our metrics** (like "under 10 seconds") get timed on a real phone, written down with the date and phone model, before we say we hit them.
 
-If a number can't be traced to a source or a real measurement, it gets fixed or removed.
+If a number can't be traced back to a source or a real measurement, it gets fixed or taken out.
 
 ## Wiki pages
 
-- [Problem Statement](Problem-Statement): what we're building and why, who it's for (End User Profile), the value it creates, and our product core
-- [User Stories](User-Stories): what users will be able to do, written as user stories
+- [Problem Statement](Problem-Statement): the problem, what we plan to build, who it's for (End User Profile), the value it creates (Quantified Value Proposition), and our Product Core
+- [User Stories](User-Stories): what users will be able to do, as user stories
 
 **Coming in later assignments:** Domain Model, Sprints, Non-functional Requirements, Software Design, Verification and Validation.
