@@ -1,67 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1360" font-family="Arial, Helvetica, sans-serif">
-  <!-- Hardman & Jacobs Undergraduate Learning Center — Floor 2 (schematic, traced
-       from the building's emergency evacuation map). -->
-  <rect x="0" y="0" width="1000" height="1360" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="330 30 980 1500" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif">
+  <!--
+    Hardman & Jacobs Undergraduate Learning Center (bldg 323) - FLOOR 2
+    Traced from the posted "Emergency Evacuation Plan" photo, using the photo's
+    own pixel positions so every shape can be checked against it.
+  -->
+  <style>
+    .floor { fill: #ffffff; stroke: #3a3d42; stroke-width: 6; stroke-linejoin: round; }
+    .room  { fill: #eef1f4; stroke: #8f959c; stroke-width: 2; }
+    .big   { fill: #e6ecf5; stroke: #8f959c; stroke-width: 2; }
+    .ours  { fill: #f5e3ea; stroke: #8f959c; stroke-width: 2; }
+    .core  { fill: #dfe3e8; stroke: #8f959c; stroke-width: 2; }
+    .void  { fill: #f7f7f8; stroke: #b5bac0; stroke-width: 2; stroke-dasharray: 10 8; }
+    .stair { stroke: #8f959c; stroke-width: 2; }
+    .lbl   { fill: #2b2e33; font-size: 24px; text-anchor: middle; dominant-baseline: middle; }
+    .lblS  { fill: #2b2e33; font-size: 19px; text-anchor: middle; dominant-baseline: middle; }
+    .dim   { fill: #8a8f96; font-size: 19px; text-anchor: middle; dominant-baseline: middle; }
+    .name  { fill: #1d1f23; font-size: 30px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; }
+    .exit  { fill: #1a7f37; font-size: 20px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; }
+  </style>
 
-  <!-- title bar -->
-  <rect x="0" y="0" width="1000" height="86" fill="#8C0B42"/>
-  <text x="30" y="54" fill="#ffffff" font-size="34" font-weight="700">Floor 2</text>
-  <text x="970" y="52" fill="#ffffff" font-size="20" text-anchor="end">Hardman &amp; Jacobs ULC</text>
+  <!-- OUTSIDE WALLS: the real footprint of floor 2 -->
+  <polygon class="floor" points="440,60 1115,60 1112,445 960,445 960,710 1230,710 1230,1225 1278,1225 1278,1505 555,1505 555,1140 605,1140 605,785 360,785 360,685 530,685 530,265 440,265"/>
 
-  <!-- outer walls -->
-  <rect x="40" y="110" width="920" height="1210" fill="#f7f8f9" stroke="#5f6368" stroke-width="3"/>
+  <!-- NORTH ROW -->
+  <rect class="room" x="447" y="68" width="80" height="132"/><text class="lbl" x="487" y="134">R206</text>
+  <rect class="room" x="530" y="68" width="75" height="132"/><text class="lbl" x="567" y="134">R208</text>
+  <rect class="void" x="607" y="100" width="58" height="82"/><text class="dim" x="636" y="130" font-size="15">Open to</text><text class="dim" x="636" y="152" font-size="15">below</text>
+  <rect class="core" x="667" y="100" width="95" height="95"/>
+  <g class="stair"><line x1="677" y1="118" x2="752" y2="118"/><line x1="677" y1="138" x2="752" y2="138"/><line x1="677" y1="158" x2="752" y2="158"/><line x1="677" y1="178" x2="752" y2="178"/></g>
+  <rect class="room" x="765" y="68" width="47" height="127"/><text class="lblS" x="788" y="134">M214</text>
+  <rect class="room" x="812" y="68" width="66" height="127"/><text class="lbl" x="845" y="134">216</text>
+  <rect class="room" x="880" y="68" width="55" height="127"/><text class="lblS" x="907" y="134">S218</text>
+  <rect class="room" x="935" y="68" width="115" height="127"/><text class="lbl" x="992" y="134">220</text>
+  <rect class="room" x="1050" y="68" width="60" height="127"/><text class="lbl" x="1080" y="134">222</text>
+  <rect class="room" x="450" y="205" width="52" height="57"/><text class="lblS" x="476" y="234">R207</text>
 
-  <g stroke="#9aa0a6" stroke-width="2" fill="#eceff1">
-    <!-- top small rooms row (R206/R208 + M214/216/S218/220/222) -->
-    <rect x="60" y="120" width="110" height="90"/><rect x="175" y="120" width="110" height="90"/>
-    <rect x="470" y="120" width="80" height="90"/><rect x="552" y="120" width="80" height="90"/>
-    <rect x="634" y="120" width="80" height="90"/><rect x="716" y="120" width="80" height="90"/>
-    <rect x="798" y="120" width="110" height="90"/>
-    <!-- ICT Training Lab 206 + 219 cluster -->
-    <rect x="470" y="230" width="230" height="180" fill="#f3e0e6"/>
-    <rect x="720" y="230" width="190" height="120"/>
-    <rect x="720" y="360" width="190" height="80"/>
-    <rect x="60" y="230" width="110" height="120"/>
-    <!-- open to below (light) -->
-    <rect x="470" y="430" width="230" height="150" fill="#f2f2f2" stroke-dasharray="6 5"/>
-    <!-- Classroom 210 / 225 -->
-    <rect x="430" y="620" width="230" height="260" fill="#e8eef5"/>
-    <rect x="670" y="620" width="240" height="260" fill="#e8eef5"/>
-    <!-- Classroom 230 / 228 -->
-    <rect x="430" y="1010" width="230" height="230" fill="#e8eef5"/>
-    <rect x="670" y="1010" width="240" height="230" fill="#e8eef5"/>
-    <!-- open to below lower -->
-    <rect x="150" y="1010" width="150" height="120" fill="#f2f2f2" stroke-dasharray="6 5"/>
-    <!-- left rooms J218/T232/M234/R217/R216 -->
-    <rect x="90" y="1150" width="90" height="150"/>
-    <rect x="185" y="1150" width="90" height="150"/>
-    <rect x="90" y="1300" width="90" height="30"/>
-  </g>
+  <!-- ICT TRAINING LAB + 219 SUITE -->
+  <rect class="ours" x="670" y="255" width="192" height="180"/>
+  <text class="name" x="766" y="318">ICT Training</text><text class="name" x="766" y="352">Lab</text><text class="lbl" x="766" y="392">206</text>
+  <rect class="core" x="862" y="255" width="28" height="75"/>
+  <rect class="room" x="890" y="255" width="158" height="185"/><text class="lbl" x="969" y="347">219</text>
+  <rect class="room" x="1048" y="255" width="60" height="72"/><text class="lblS" x="1078" y="291">219A</text>
+  <rect class="room" x="1048" y="330" width="60" height="110"/><text class="lblS" x="1078" y="385">219B</text>
 
-  <!-- room labels -->
-  <g fill="#33363b" font-size="17" text-anchor="middle">
-    <text x="115" y="170">R206</text><text x="230" y="170">R208</text>
-    <text x="510" y="170">M214</text><text x="592" y="170">216</text>
-    <text x="674" y="170">S218</text><text x="756" y="170">220</text><text x="853" y="170">222</text>
-    <text x="585" y="315" font-size="20" font-weight="700" fill="#8C0B42">ICT Training</text>
-    <text x="585" y="342" font-size="20" font-weight="700" fill="#8C0B42">Lab</text>
-    <text x="585" y="372">206</text>
-    <text x="815" y="298">219</text><text x="815" y="405">219A / 219B</text>
-    <text x="115" y="295">R207</text>
-    <text x="585" y="510" font-size="16" fill="#8a8f96">Open to Below</text>
-    <text x="545" y="745" font-size="22" font-weight="700">Classroom</text>
-    <text x="545" y="770" font-size="18">210</text>
-    <text x="790" y="745" font-size="22" font-weight="700">Classroom</text>
-    <text x="790" y="770" font-size="18">225</text>
-    <text x="545" y="1130" font-size="22" font-weight="700">Classroom</text>
-    <text x="545" y="1155" font-size="18">230</text>
-    <text x="790" y="1130" font-size="22" font-weight="700">Classroom</text>
-    <text x="790" y="1155" font-size="18">228</text>
-    <text x="225" y="1075" font-size="16" fill="#8a8f96">Open to Below</text>
-    <text x="135" y="1230">J218</text><text x="230" y="1230">T232 / M234</text>
-  </g>
+  <!-- WEST HALL 200 + core -->
+  <text class="lbl" x="567" y="457">200</text>
+  <rect class="void" x="680" y="445" width="278" height="265"/><text class="dim" x="819" y="577">Open to below</text>
+  <rect class="core" x="540" y="655" width="60" height="60"/><text class="lblS" x="570" y="685">Elev</text>
+  <rect class="core" x="362" y="690" width="92" height="90"/>
+  <g class="stair"><line x1="380" y1="700" x2="380" y2="772"/><line x1="400" y1="700" x2="400" y2="772"/><line x1="420" y1="700" x2="420" y2="772"/><line x1="440" y1="700" x2="440" y2="772"/></g>
 
-  <!-- north arrow -->
-  <g transform="translate(905,150)"><line x1="0" y1="26" x2="0" y2="0" stroke="#5f6368" stroke-width="3"/>
-    <polygon points="0,-6 -7,8 7,8" fill="#5f6368"/><text x="0" y="42" fill="#5f6368" font-size="16" text-anchor="middle">N</text></g>
+  <!-- CLASSROOMS -->
+  <rect class="big" x="680" y="788" width="195" height="310"/>
+  <text class="name" x="777" y="930">Classroom</text><text class="lbl" x="777" y="966">210</text>
+  <rect class="room" x="680" y="1100" width="113" height="36"/>
+  <rect class="room" x="795" y="1100" width="80" height="36"/>
+  <rect class="big" x="885" y="788" width="260" height="347"/>
+  <text class="name" x="1015" y="945">Classroom</text><text class="lbl" x="1015" y="981">225</text>
+  <rect class="void" x="720" y="1148" width="405" height="38"/><text class="dim" x="922" y="1167">Open to below</text>
+
+  <rect class="void" x="557" y="1147" width="60" height="78"/><text class="dim" x="587" y="1176" font-size="15">Open to</text><text class="dim" x="587" y="1198" font-size="15">below</text>
+  <rect class="room" x="563" y="1265" width="57" height="95"/><text class="lblS" x="591" y="1312">J218</text>
+  <rect class="room" x="655" y="1230" width="53" height="62"/><text class="lblS" x="681" y="1261">T232</text>
+  <rect class="room" x="655" y="1295" width="53" height="65"/><text class="lblS" x="681" y="1327">M234</text>
+  <rect class="room" x="563" y="1390" width="67" height="110"/><text class="lblS" x="596" y="1445">R217</text>
+  <rect class="room" x="637" y="1390" width="71" height="110"/><text class="lblS" x="672" y="1445">R216</text>
+  <rect class="big" x="710" y="1230" width="240" height="270"/>
+  <text class="name" x="830" y="1350">Classroom</text><text class="lbl" x="830" y="1386">230</text>
+  <rect class="big" x="952" y="1230" width="323" height="270"/>
+  <text class="name" x="1113" y="1350">Classroom</text><text class="lbl" x="1113" y="1386">228</text>
+
+  <!-- SE stair -->
+  <rect class="core" x="1192" y="1190" width="36" height="35"/>
+
+  <!-- STAIR EXITS shown on the posted plan (floor 2 exits are via stairs) -->
+  <text class="exit" x="714" y="215">EXIT ↓</text>
+  <text class="exit" x="408" y="805">EXIT ↓</text>
+  <text class="exit" x="1160" y="1172">EXIT ↓</text>
 </svg>

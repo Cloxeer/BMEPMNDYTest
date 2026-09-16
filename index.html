@@ -9,7 +9,7 @@
   CONTROLS     : everything on screen.
 
   Rule: bars/menus/sheets/popups are stock Framework7. Our own pieces are the
-  map (MapLibre), the bottom orb pill, and the campus highlight.
+  map (MapLibre), the bottom pills, and the NMSU property highlight.
 -->
 <html lang="en">
 <head>
@@ -72,9 +72,17 @@
           <button class="bs-side bs-x sheet-close" type="button" aria-label="Close">&times;</button>
         </div>
         <div class="bs-body">
-          <img id="bs-floor-img" class="bs-floor-img" alt="" hidden />
+          <!-- Switch between our redrawn plan and the photo of the map posted in the building -->
+          <div class="segmented segmented-strong bs-switch" role="tablist">
+            <button class="button button-active" id="bs-tab-plan" type="button" role="tab" aria-selected="true">Our plan</button>
+            <button class="button" id="bs-tab-posted" type="button" role="tab" aria-selected="false">Posted map</button>
+            <span class="segmented-highlight"></span>
+          </div>
+          <button id="bs-zoom" class="bs-zoom" type="button" aria-label="Open floor plan full screen">
+            <img id="bs-floor-img" class="bs-floor-img" alt="" hidden />
+          </button>
           <div id="bs-missing" class="bs-missing" hidden>
-            <p>Floor plan not available yet.</p>
+            <p id="bs-missing-text">Floor plan not available yet.</p>
           </div>
           <div id="bs-caption" class="bs-caption"></div>
           <div id="bs-info" class="bs-info"></div>
@@ -87,9 +95,28 @@
       <a href="#" class="menu-close popup-close" aria-label="Close">&times;</a>
       <div class="menu-inner">
         <a href="#" id="menu-map" class="menu-link">Map</a>
+        <a href="#" id="menu-locations" class="menu-link">Locations</a>
         <a href="#" id="menu-schedule" class="menu-link">Schedule</a>
         <a href="#" id="menu-settings" class="menu-link">Settings</a>
       </div>
+    </div>
+
+    <!-- Locations page: every official NMSU property, nearest first. -->
+    <div class="popup popup-tablet-fullscreen" id="locations-popup">
+      <div class="view"><div class="page">
+        <div class="navbar navbar-crimson"><div class="navbar-bg"></div><div class="navbar-inner">
+          <div class="left"><span class="nav-spacer"></span></div>
+          <div class="title">Locations</div>
+          <div class="right"><a class="link icon-only popup-close" aria-label="Close"><i class="icon f7-icons">xmark</i></a></div>
+        </div></div>
+        <div class="page-content page-plain">
+          <div class="block-title">Las Cruces</div>
+          <div class="list media-list inset"><ul id="loc-near"></ul></div>
+          <div class="block-title">Around New Mexico</div>
+          <div class="list media-list inset"><ul id="loc-far"></ul></div>
+          <div class="block-footer">Boundaries: NMSU Office of Space Planning.</div>
+        </div>
+      </div></div>
     </div>
 
     <!-- Schedule page (full screen, centred title, X to close). -->
@@ -127,6 +154,7 @@
           </ul></div>
           <div class="block-title">Data</div>
           <div class="list simple-list"><ul>
+            <li><span>Boundaries</span><span class="muted">NMSU Space Planning</span></li>
             <li><span>Buildings</span><span class="muted">OpenStreetMap</span></li>
             <li><span>Floor plans</span><span class="muted">Posted evacuation maps</span></li>
           </ul></div>
@@ -155,19 +183,16 @@
 
   </div>
 
-  <!-- Bottom pill: Info button + floor drop-up. Kept outside #app so it floats
-       above the map and the sheet. -->
-  <div id="pill" class="pill">
-    <div id="floor-menu" class="floor-menu" hidden></div>
-    <button id="pill-info" class="pill-info" type="button">
-      <span id="pill-orb" class="pill-orb"></span>
-      <span id="pill-label" class="pill-label">Info</span>
-    </button>
-    <span id="pill-divider" class="pill-divider" hidden></span>
-    <button id="pill-floor" class="pill-floor-btn" type="button" hidden>
-      <span id="pill-floor-label">Floor 1</span>
-      <span class="pill-caret">&#94;</span>
-    </button>
+  <!-- Bottom pills. [Info ^] opens the building sheet. While the sheet is open a
+       [Floor 1] pill appears; tap it and it splits into one pill per floor,
+       stacked like the building (Floor 2 above Floor 1); pick one to switch.
+       Kept outside #app so it floats above the map and the sheet. -->
+  <div id="pill" class="pill-bar">
+    <div class="pill-set pill-set--main">
+      <button id="pill-info" class="pill" type="button" aria-expanded="false"><span id="pill-info-label">Info</span><i class="icon f7-icons pill-chev" aria-hidden="true">chevron_up</i></button>
+      <button id="pill-floor" class="pill" type="button" aria-haspopup="true" hidden>Floor 1</button>
+    </div>
+    <div id="pill-choose" class="pill-set pill-set--choose" role="group" aria-label="Choose a floor"></div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.js"></script>

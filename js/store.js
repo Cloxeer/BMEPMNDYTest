@@ -5,8 +5,8 @@
  * WHAT IT DOES : Remembers what is selected and what is open, and lets any file
  *                (map, sheet, pill, search) react when that changes.
  * DEPENDS ON   : nothing.
- * CONTROLS     : which building is selected, whether the sheet is open, the
- *                orb "mode", and the active floor.
+ * CONTROLS     : which building is selected, whether the sheet is open,
+ *                pill "mode", and the active floor.
  * USED BY      : js/map.js, js/buildingSheet.js, js/pill.js, js/search.js, js/app.js
  *
  * HOW IT WORKS : call store.set({...}) to change something; every function that
@@ -16,7 +16,7 @@
 const state = {
   selectedId: null, // id of the building the user tapped, or null
   sheetOpen: false, // is the bottom info sheet showing?
-  mode: 'idle', // 'idle' | 'solving' | 'searching'  (drives the orb)
+  mode: 'idle', // 'idle' | 'solving' | 'searching'  (drives the pill label)
   activeFloor: null, // which floor is chosen for the selected building
 };
 

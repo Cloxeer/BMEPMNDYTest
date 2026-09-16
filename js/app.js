@@ -3,20 +3,22 @@
  * @summary The app's ON switch — loads data, starts everything, wires the menu.
  *
  * WHAT IT DOES : (1) boots Framework7 (iOS theme),
- *                (2) loads data/buildings.geojson,
+ *                (2) loads buildings + official NMSU property boundaries,
  *                (3) starts the map, full-page sheet, pill, and search,
  *                (4) wires the full-screen fade menu + first-visit welcome.
  * DEPENDS ON   : Framework7 (global `Framework7`), all the js/ modules,
- *                data/buildings.geojson.
+ *                data/buildings.geojson, data/nmsu-campuses.geojson.
  * CONTROLS     : app start-up order and the menu/welcome flows.
  * USED BY      : index.html (loaded as the page's module).
  */
 
 import { store } from './store.js';
+import { CONFIG } from './config.js';
 import { initMap } from './map.js';
 import { initSheet } from './buildingSheet.js';
 import { initPill } from './pill.js';
 import { initSearch } from './search.js';
+import { initLocations } from './locations.js';
 
 const VISITED_KEY = 'bnm_visited';
 
@@ -43,15 +45,17 @@ function startUI() {
 }
 
 /** Wire the fade menu, underline the current page, and open the sub-pages. */
-function initMenu(app) {
+function initMenu(app, map, campuses) {
   const menu = app.popup.create({ el: '#menu-popup' });
   const menuEl = document.querySelector('#menu-popup');
   const schedule = app.popup.create({ el: '#schedule-popup' });
   const settings = app.popup.create({ el: '#settings-popup' });
+  const locations = app.popup.create({ el: '#locations-popup' });
+  initLocations(app, map, campuses, locations);
 
   /** Underline whichever page we're currently on. */
   function setCurrent(page) {
-    ['map', 'schedule', 'settings'].forEach((p) => {
+    ['map', 'locations', 'schedule', 'settings'].forEach((p) => {
       document.querySelector('#menu-' + p).classList.toggle('is-current', p === page);
     });
   }
@@ -61,11 +65,17 @@ function initMenu(app) {
   menu.on('close', () => menuEl.classList.remove('menu-open'));
   schedule.on('closed', () => setCurrent('map'));
   settings.on('closed', () => setCurrent('map'));
+  locations.on('closed', () => setCurrent('map'));
 
   document.querySelector('#menu-btn').addEventListener('click', () => menu.open());
   document.querySelector('#menu-map').addEventListener('click', () => {
     setCurrent('map');
     menu.close();
+  });
+  document.querySelector('#menu-locations').addEventListener('click', () => {
+    setCurrent('locations');
+    menu.close();
+    locations.open();
   });
   document.querySelector('#menu-schedule').addEventListener('click', () => {
     setCurrent('schedule');
@@ -124,13 +134,15 @@ function wirePlaceholders(app) {
 async function main() {
   const app = startUI();
 
-  // Build quick lookups from the one data file.
-  // Two data files: the buildings we show, and the REAL NMSU boundary from
-  // OpenStreetMap that we use to highlight campus.
-  const [geojson, campus] = await Promise.all([
+  // Two data files: the buildings we show, and NMSU's official property
+  // boundaries (Office of Space Planning) that we highlight on the map.
+  const [geojson, campuses] = await Promise.all([
     fetch('data/buildings.geojson').then((r) => r.json()),
-    fetch('data/campus.geojson').then((r) => r.json()),
+    fetch('data/nmsu-campuses.geojson').then((r) => r.json()),
   ]);
+
+  // Drop official properties we've confirmed aren't student campus (see config).
+  campuses.features = campuses.features.filter((f) => !(f.properties.Name in CONFIG.excludedProperties));
 
   const byId = {};
   const list = [];
@@ -140,11 +152,11 @@ async function main() {
     list.push(record);
   });
 
-  const map = initMap(store, byId, campus);
+  const map = initMap(store, byId, campuses);
   initSheet(app, store, byId);
   initPill(store, byId);
   initSearch(app, store, list, byId);
-  initMenu(app);
+  initMenu(app, map, campuses);
   initPillVisibility(app); // must run BEFORE initWelcome so it catches the popup opening
   initWelcome(app);
   wirePlaceholders(app);

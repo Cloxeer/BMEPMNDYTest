@@ -2,10 +2,10 @@
   app.css — our styles on top of Framework7.
 
   WHAT IT DOES : recolours Framework7 crimson, sizes the map, and styles our few
-                 bespoke pieces (bottom pill + floor drop-up, orb, fade menu,
+                 bespoke pieces (bottom pills, fade menu,
                  search drop-down, building sheet).
   DEPENDS ON   : Framework7 (we override its colour variables).
-  CONTROLS     : accent colour, map box, pill, orb, sheet.
+  CONTROLS     : accent colour, map box, pills, sheet, squircle corners.
 
   SPACING RULE : every padding / margin / gap / offset in this file is a
   multiple of 4px (4, 8, 12, 16, 20, 24, 32, 48...). Nothing in between.
@@ -28,6 +28,7 @@
   --s6: 24px;
   --s8: 32px;
   --s12: 48px;
+  --s16: 64px;
 }
 
 /* `hidden` must always win over our display rules. */
@@ -65,76 +66,77 @@
 .search-drop.is-open { transform: translateY(0); }
 .search-drop .searchbar { --f7-searchbar-bg-color: transparent; }
 
-/* ---------- 5. Bottom pill (Info + floor drop-up) ---------- */
-.pill {
+/* ---------- 5. Bottom pills ---------- */
+/* The bar is just an anchor; the two pill sets sit on top of each other inside
+   it and cross-fade, so switching never makes anything jump. */
+.pill-bar {
   position: fixed;
   left: 50%;
-  /* clears the map credit line at the bottom */
-  bottom: calc(var(--s12) + env(safe-area-inset-bottom, 0px));
-  transform: translateX(-50%);
+  bottom: calc(var(--s16) + env(safe-area-inset-bottom, 0px)); /* clears the 2-line map credits */
+  width: 0;
+  height: 40px;
   z-index: 15000;
-  display: inline-flex;
-  align-items: center;
-  max-width: calc(100vw - var(--s8));
-  border-radius: 999px;
-  background: var(--f7-theme-color);
-  color: #fff;
-  box-shadow: 0 var(--s1) var(--s6) rgba(0, 0, 0, 0.28);
-  font-size: 15px;
-  font-weight: 600;
   transition: opacity 0.25s ease, transform 0.3s var(--spring);
 }
-.pill.pill-hidden { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(var(--s6)); }
+.pill-bar.pill-hidden { opacity: 0; pointer-events: none; transform: translateY(var(--s6)); }
 
-.pill-info,
-.pill-floor-btn {
-  display: inline-flex; align-items: center; gap: var(--s2);
-  border: none; background: none; color: inherit;
-  font: inherit; cursor: pointer;
-  padding: var(--s3) var(--s5); border-radius: 999px;
-}
-.pill-divider { width: 1px; height: var(--s6); background: rgba(255, 255, 255, 0.35); }
-.pill-caret { display: inline-block; font-size: 12px; transition: transform 0.2s ease; }
-.pill-floor-btn.is-open .pill-caret { transform: rotate(180deg); }
-.pill-label { white-space: nowrap; }
-
-/* the floor list that pops up above the pill */
-.floor-menu {
+.pill-set {
   position: absolute;
-  bottom: calc(100% + var(--s3));
-  left: 50%;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  gap: var(--s2);
+  white-space: nowrap;
   transform: translateX(-50%);
-  min-width: 160px;
-  background: #fff;
-  border-radius: var(--s4);
-  box-shadow: 0 var(--s2) var(--s8) rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-  padding: var(--s1);
+  transition: opacity 0.2s ease, transform 0.35s var(--spring);
 }
-.floor-option {
-  display: block; width: 100%;
-  border: none; background: none;
-  font: inherit; font-weight: 500; font-size: 15px;
-  color: #1b1b1d; text-align: left;
-  padding: var(--s3) var(--s4); border-radius: var(--s3); cursor: pointer;
-}
-.floor-option.is-active { background: var(--f7-theme-color); color: #fff; }
+/* floor pills stack upward: Floor 1 at the bottom, higher floors above it */
+.pill-set--choose { flex-direction: column-reverse; align-items: stretch; opacity: 0; pointer-events: none; }
+.is-choosing .pill-set--main { opacity: 0; transform: translateX(-50%) scale(0.92); pointer-events: none; }
+.is-choosing .pill-set--choose { opacity: 1; pointer-events: auto; }
 
-/* ---------- 6. The orb ---------- */
-.pill .orb-dot { background: #fff; }
-.orb { position: relative; display: inline-block; width: var(--orb-size, 20px); height: var(--orb-size, 20px); }
-.orb-dot {
-  position: absolute; top: 50%; left: 50%;
-  width: 15%; height: 15%; margin: -7.5% 0 0 -7.5%;
-  border-radius: 50%; background: var(--f7-theme-color);
-  transform: rotate(calc(var(--i) * 360deg / var(--n))) translateY(-160%);
+.pill {
+  position: relative;
+  height: 40px;
+  padding: 0 var(--s4);
+  border: none;
+  border-radius: var(--s5);
+  background: var(--f7-theme-color);
+  color: #fff;
+  font: 600 15px/1 -apple-system, "SF Pro Text", system-ui, sans-serif;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  box-shadow: 0 var(--s1) var(--s4) rgba(0, 0, 0, 0.22);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s1);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s ease, background-color 0.2s ease, color 0.2s ease;
 }
-.orb[data-state='idle'] .orb-dot { opacity: 0.5; animation: orb-pulse 2.4s ease-in-out infinite; animation-delay: calc(var(--i) * 0.1s); }
-.orb[data-state='solving'] .orb-dot { animation: orb-pulse 1.1s ease-in-out infinite; animation-delay: calc(var(--i) * 0.11s); }
-.orb[data-state='searching'] { animation: orb-spin 1.2s linear infinite; }
-.orb[data-state='searching'] .orb-dot { opacity: calc(0.25 + var(--i) / var(--n) * 0.75); }
-@keyframes orb-pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
-@keyframes orb-spin { to { transform: rotate(360deg); } }
+.pill::after { content: ""; position: absolute; inset: -2px; } /* 44px tap target */
+.pill:active { transform: scale(0.96); }
+.pill[aria-disabled="true"] { opacity: 0.8; }
+/* The ^ on Info: only when a building is selected; flips when the sheet is open. */
+.pill-chev { display: none; font-size: 14px; font-weight: 700; transition: transform 0.3s var(--spring); }
+.pill.has-target .pill-chev { display: inline-block; }
+.pill.is-open .pill-chev { transform: rotate(180deg); }
+.pill.is-active { background: #fff; color: var(--f7-theme-color); box-shadow: inset 0 0 0 2px var(--f7-theme-color), 0 var(--s1) var(--s4) rgba(0, 0, 0, 0.22); }
+.pill:focus-visible { outline: 3px solid #1a73e8; outline-offset: 2px; }
+
+/* The floor pills split out one after another. */
+.pill-set--choose .pill { opacity: 0; transform: translateY(var(--s2)) scale(0.9); transition: opacity 0.2s ease calc(var(--i) * 45ms), transform 0.35s var(--spring) calc(var(--i) * 45ms); }
+.is-choosing .pill-set--choose .pill { opacity: 1; transform: none; }
+
+/* ---------- 6. Apple-style squircle corners ----------
+   corner-shape ships in Chrome/Edge/Samsung but NOT yet in Safari on iPhone
+   (as of Sept 2026: Safari Technology Preview only). Browsers without it just
+   keep the normal rounded corner, so nothing breaks. */
+@supports (corner-shape: squircle) {
+  .pill, .floor-option, .bs-floor-img, .bs-zoom, .bs-photo img, .bs-switch,
+  .bs-switch .button, .search-drop .searchbar-input-wrap, .list.inset ul,
+  .button, .empty-state, .welcome-card .button { corner-shape: squircle; }
+}
 
 /* ---------- 7. Full-screen fade menu ---------- */
 .popup-menu {
@@ -158,6 +160,7 @@
 .popup-menu.menu-open .menu-link:nth-child(1) { animation-delay: 0.05s; }
 .popup-menu.menu-open .menu-link:nth-child(2) { animation-delay: 0.25s; }
 .popup-menu.menu-open .menu-link:nth-child(3) { animation-delay: 0.45s; }
+.popup-menu.menu-open .menu-link:nth-child(4) { animation-delay: 0.65s; }
 @keyframes menu-in { to { opacity: 1; transform: none; } }
 
 /* ---------- 8. Full-page building sheet ---------- */
@@ -178,7 +181,16 @@
   font-size: 28px; line-height: 1; cursor: pointer; padding: 0;
 }
 .bs-body { flex: 1; overflow: auto; padding: var(--s3) var(--s4) 120px; text-align: center; }
-.bs-floor-img { max-width: 100%; height: auto; border-radius: var(--s3); box-shadow: 0 2px var(--s3) rgba(0, 0, 0, 0.12); }
+.bs-switch { margin: 0 auto var(--s3); max-width: 320px; }
+.bs-zoom { display: block; width: 100%; padding: 0; border: none; background: none; cursor: zoom-in; border-radius: var(--s3); }
+.bs-zoom:disabled { cursor: default; }
+.bs-zoom:focus-visible { outline: 3px solid #1a73e8; outline-offset: 2px; }
+.bs-floor-img { display: block; width: 100%; height: auto; background: #fff; border-radius: var(--s3); box-shadow: 0 1px var(--s2) rgba(0, 0, 0, 0.12); }
+.bs-photos { display: flex; gap: var(--s2); overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 calc(-1 * var(--s4)) var(--s2); padding: 0 var(--s4); }
+.bs-photo { flex: 0 0 82%; padding: 0; border: none; background: none; scroll-snap-align: center; cursor: zoom-in; }
+.bs-photo img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--s3); }
+.bs-credit { font-size: 12px !important; color: #8a8690 !important; margin: 0 0 var(--s5) !important; }
+.bs-credit a { color: inherit; }
 .bs-missing { padding: var(--s12) var(--s4); color: var(--f7-theme-color); }
 .bs-caption { margin-top: var(--s3); font-size: 13px; color: #6b6b70; }
 
@@ -218,6 +230,6 @@
 
 /* ---------- 11. Respect "reduce motion" ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .search-drop, .pill, .popup-menu, .menu-link, .orb, .orb-dot { transition: none !important; animation: none !important; }
+  .search-drop, .pill, .pill-set, .pill-bar, .popup-menu, .menu-link { transition: none !important; animation: none !important; }
   .menu-link { opacity: 1; transform: none; }
 }

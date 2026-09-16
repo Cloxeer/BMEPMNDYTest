@@ -2,103 +2,141 @@
  * @file js/buildingSheet.js
  * @summary The FULL-PAGE building view that slides up when a building is picked.
  *
- * WHAT IT DOES : Shows the floor plan for the active floor at the top, then the
- *                building's description, address and official links underneath.
+ * WHAT IT DOES : Top: a switch between "Our plan" (our redrawn SVG) and
+ *                "Posted map" (a photo of the evacuation map in the building).
+ *                Tap the plan to open it full screen with pinch-zoom.
+ *                Below: building photos (with credits), description, facts, links.
  *                Closing it keeps the building selected.
- * DEPENDS ON   : Framework7 (the app object), ./store.js, the #building-sheet
- *                markup in index.html, and the plans in data/floors/.
- * CONTROLS     : the #building-sheet element's content + open/close.
+ * DEPENDS ON   : Framework7 (sheet + photoBrowser), ./store.js, the
+ *                #building-sheet markup in index.html, data/floors/, data/photos/.
+ * CONTROLS     : the #building-sheet contents + open/close.
  * USED BY      : js/app.js
  */
 
+const NO_OFFICIAL_PLAN =
+  'NMSU does not publish floor plans online. “Our plan” is redrawn from the evacuation map posted inside the building.';
+
 /**
  * Wire the full-page sheet to the store.
- * @param {Framework7} app - the running Framework7 instance
- * @param {object} store - the shared state
+ * @param {Framework7} app - running Framework7 instance
+ * @param {object} store - shared state
  * @param {Object.<string, object>} byId - buildings keyed by id
  */
 export function initSheet(app, store, byId) {
   const sheet = app.sheet.create({ el: '#building-sheet', backdrop: false, swipeToClose: true });
+  const $ = (sel) => document.querySelector(sel);
+  const nameEl = $('#bs-name');
+  const img = $('#bs-floor-img');
+  const zoomBtn = $('#bs-zoom');
+  const missing = $('#bs-missing');
+  const missingText = $('#bs-missing-text');
+  const cap = $('#bs-caption');
+  const info = $('#bs-info');
+  const tabPlan = $('#bs-tab-plan');
+  const tabPosted = $('#bs-tab-posted');
 
-  const nameEl = document.querySelector('#bs-name');
-  const img = document.querySelector('#bs-floor-img');
-  const missing = document.querySelector('#bs-missing');
-  const cap = document.querySelector('#bs-caption');
-  const info = document.querySelector('#bs-info');
-
+  let view = 'plan'; // 'plan' = our SVG, 'posted' = photo of the posted map
+  let lastKey = '';
   let syncing = false;
-  let lastKey = ''; // so we only rebuild when something actually changed
+
+  /** Show a message instead of an image. */
+  function showMissing(text) {
+    img.hidden = true;
+    zoomBtn.disabled = true;
+    missingText.textContent = text;
+    missing.hidden = false;
+  }
 
   /**
-   * Build the "about this building" block shown under the floor plan.
-   * @param {object} b - the selected building
+   * Put the right image (ours or the posted photo) for this floor on screen.
+   * @param {object} b - selected building
+   * @param {number} floor - active floor
+   */
+  function showPlan(b, floor) {
+    const list = view === 'plan' ? b.floorImages : b.postedImages;
+    const src = list && list[String(floor)];
+    tabPlan.classList.toggle('button-active', view === 'plan');
+    tabPosted.classList.toggle('button-active', view === 'posted');
+    tabPlan.setAttribute('aria-selected', String(view === 'plan'));
+    tabPosted.setAttribute('aria-selected', String(view === 'posted'));
+    cap.textContent = 'Floor ' + floor + (src ? ' · tap to zoom' : '');
+
+    if (!src) return showMissing(view === 'plan' ? 'Floor plan not available yet.' : NO_OFFICIAL_PLAN);
+    img.onerror = () => showMissing(view === 'plan' ? 'Floor plan not available yet.' : NO_OFFICIAL_PLAN);
+    img.src = src;
+    img.alt = b.name + ', floor ' + floor + (view === 'plan' ? ' plan' : ' posted evacuation map');
+    img.hidden = false;
+    zoomBtn.disabled = false;
+    missing.hidden = true;
+  }
+
+  /**
+   * Build the photos + "About" part under the plan.
+   * @param {object} b - selected building
    * @returns {string} HTML
    */
   function infoHtml(b) {
-    const paras = (b.description || []).map((p) => '<p>' + p + '</p>').join('');
-    const rows = [];
-    if (b.address) rows.push('<div class="bs-row"><dt>Address</dt><dd>' + b.address + '</dd></div>');
-    if (b.propertyNumber) rows.push('<div class="bs-row"><dt>Property</dt><dd>' + b.propertyNumber + '</dd></div>');
-    if (b.floors) rows.push('<div class="bs-row"><dt>Floors</dt><dd>' + b.floors.join(', ') + '</dd></div>');
-
-    const link = b.nmsuUrl
-      ? '<a class="bs-link" href="' + b.nmsuUrl + '" target="_blank" rel="noopener">' +
-        'Official NMSU page &amp; floor plans ↗</a>'
+    const photos = (b.photos || []).filter((p) => p.file);
+    const gallery = photos.length
+      ? '<div class="bs-photos">' +
+        photos.map((p, i) => '<button class="bs-photo" type="button" data-i="' + i + '"><img src="' + p.file +
+          '" alt="Photo of ' + b.name + '" loading="lazy" /></button>').join('') +
+        '</div><p class="bs-credit">' +
+        photos.map((p) => 'Photo: ' + (p.author || 'unknown') + ', <a href="' + p.sourceUrl +
+          '" target="_blank" rel="noopener">' + p.license + '</a>').join(' · ') + '</p>'
       : '';
 
+    const facts = [
+      ['Address', b.address],
+      ['Property', b.propertyNumber],
+      ['Floors', b.floors && b.floors.join(', ')],
+    ].filter((r) => r[1]).map((r) => '<div class="bs-row"><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>').join('');
+
     return (
+      gallery +
       '<h3 class="bs-h3">About this building</h3>' +
-      paras +
-      '<dl class="bs-facts">' + rows.join('') + '</dl>' +
-      link +
-      '<p class="bs-source">Floor plans redrawn from the building’s posted evacuation maps. ' +
+      (b.description || []).map((p) => '<p>' + p + '</p>').join('') +
+      '<dl class="bs-facts">' + facts + '</dl>' +
+      (b.nmsuUrl ? '<a class="bs-link" href="' + b.nmsuUrl + '" target="_blank" rel="noopener">Open on NMSU’s official map ↗</a>' : '') +
+      '<p class="bs-source">Our floor plans are unofficial, redrawn from the evacuation maps posted in the building. ' +
       'Building location from OpenStreetMap.</p>'
     );
   }
 
-  /**
-   * Show one floor's plan plus the building info.
-   * @param {object} b - the selected building
-   * @param {number|null} floor - the active floor
-   */
-  function fill(b, floor) {
-    nameEl.textContent = b.name;
-    cap.textContent = 'Floor ' + floor;
-
-    const src = b.floorImages && b.floorImages[String(floor)];
-    if (src) {
-      img.src = src;
-      img.alt = b.name + ' floor ' + floor + ' plan';
-      img.hidden = false;
-      missing.hidden = true;
-      img.onerror = () => {
-        img.hidden = true;
-        missing.hidden = false;
-      };
-    } else {
-      img.hidden = true;
-      missing.hidden = false;
-    }
-
-    info.innerHTML = infoHtml(b);
+  /** Open images full screen with pinch-zoom (Framework7 Photo Browser). */
+  function openZoom(urls, index) {
+    app.photoBrowser.create({ photos: urls, type: 'standalone', theme: 'light', toolbar: urls.length > 1 }).open(index || 0);
   }
+
+  tabPlan.addEventListener('click', () => { view = 'plan'; const s = store.get(); showPlan(byId[s.selectedId], s.activeFloor); });
+  tabPosted.addEventListener('click', () => { view = 'posted'; const s = store.get(); showPlan(byId[s.selectedId], s.activeFloor); });
+  zoomBtn.addEventListener('click', () => { if (!img.hidden) openZoom([img.src]); });
+  info.addEventListener('click', (e) => {
+    const btn = e.target.closest('.bs-photo');
+    if (!btn) return;
+    const b = byId[store.get().selectedId];
+    openZoom(b.photos.filter((p) => p.file).map((p) => p.file), Number(btn.dataset.i));
+  });
 
   store.subscribe((s) => {
     if (s.selectedId) {
       const key = s.selectedId + '|' + s.activeFloor;
       if (key !== lastKey) {
+        const b = byId[s.selectedId];
+        if (!lastKey.startsWith(s.selectedId + '|')) {
+          nameEl.textContent = b.name;
+          info.innerHTML = infoHtml(b);
+        }
         lastKey = key;
-        fill(byId[s.selectedId], s.activeFloor);
+        showPlan(b, s.activeFloor);
       }
     }
-
     syncing = true;
     if (s.sheetOpen) sheet.open();
     else sheet.close();
     syncing = false;
   });
 
-  // If the user swipes/taps it closed, remember that (but stay selected).
   sheet.on('closed', () => {
     if (!syncing) store.set({ sheetOpen: false });
   });

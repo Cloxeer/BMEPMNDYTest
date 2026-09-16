@@ -1,106 +1,91 @@
 /**
  * @file js/pill.js
- * @summary The bottom pill: an "Info" button plus a floor drop-up.
+ * @summary The small pills at the bottom of the screen.
  *
- * WHAT IT DOES : Keeps one small pill at the bottom of the screen. The left half
- *                is an Info button that opens/closes the building sheet. When a
- *                building with more than one floor is selected, a "Floor 1 ^"
- *                button appears; tapping it opens a small list of floors instead
- *                of showing them all at once. It always starts on Floor 1.
- * DEPENDS ON   : ./orb.js, ./store.js, styles/app.css (.pill rules),
- *                the #pill markup in index.html.
- * CONTROLS     : the #pill element and its floor menu.
+ * WHAT IT DOES : [Info ^] opens/closes the building sheet (the ^ flips when it
+ *                is open). While the sheet is open, buildings with several floors
+ *                also get a [Floor 1] pill. Tapping it splits it into one pill
+ *                per floor, stacked like the building (top floor on top); tapping
+ *                one picks that floor and the pills join back up.
+ * DEPENDS ON   : ./store.js, the #pill markup in index.html, styles/app.css.
+ * CONTROLS     : the #pill bar.
  * USED BY      : js/app.js
  */
 
-import { createOrb } from './orb.js';
-
 /**
- * Build the pill and keep it in sync with the store.
- * @param {object} store - the shared state
+ * Wire the pills to the store.
+ * @param {object} store - shared state
  * @param {Object.<string, object>} byId - buildings keyed by id
  */
 export function initPill(store, byId) {
-  const pill = document.querySelector('#pill');
-  const infoBtn = document.querySelector('#pill-info');
-  const orbSlot = document.querySelector('#pill-orb');
-  const labelEl = document.querySelector('#pill-label');
-  const divider = document.querySelector('#pill-divider');
-  const floorBtn = document.querySelector('#pill-floor');
-  const floorLabel = document.querySelector('#pill-floor-label');
-  const floorMenu = document.querySelector('#floor-menu');
+  const bar = document.querySelector('#pill');
+  const info = document.querySelector('#pill-info');
+  const infoLabel = document.querySelector('#pill-info-label');
+  const floorPill = document.querySelector('#pill-floor');
+  const choose = document.querySelector('#pill-choose');
 
-  const orb = createOrb(20);
-  orbSlot.appendChild(orb.el);
-
-  /** Close the floor drop-up. */
-  function closeMenu() {
-    floorMenu.hidden = true;
-    floorBtn.classList.remove('is-open');
+  /** Switch between the normal pills and the one-pill-per-floor view. */
+  function setChoosing(on) {
+    bar.classList.toggle('is-choosing', on);
+    floorPill.setAttribute('aria-expanded', String(on));
   }
 
   /**
-   * Fill the drop-up with one row per floor.
+   * Make one pill per floor. The current floor is shown filled in.
    * @param {object} b - the selected building
-   * @param {number} active - the floor currently showing
+   * @param {number} active - the floor on screen now
    */
-  function buildMenu(b, active) {
-    floorMenu.innerHTML = '';
-    b.floors.forEach((f) => {
-      const row = document.createElement('button');
-      row.type = 'button';
-      row.className = 'floor-option' + (f === active ? ' is-active' : '');
-      row.textContent = 'Floor ' + f;
-      row.addEventListener('click', (e) => {
+  function buildFloorPills(b, active) {
+    choose.innerHTML = '';
+    b.floors.forEach((f, i) => {
+      const p = document.createElement('button');
+      p.type = 'button';
+      p.className = 'pill' + (f === active ? ' is-active' : '');
+      p.style.setProperty('--i', i); // used to stagger the animation
+      p.textContent = 'Floor ' + f;
+      p.setAttribute('aria-pressed', String(f === active));
+      p.addEventListener('click', (e) => {
         e.stopPropagation();
         store.set({ activeFloor: f });
-        closeMenu();
+        setChoosing(false);
       });
-      floorMenu.appendChild(row);
+      choose.appendChild(p);
     });
   }
 
-  // Left half: open/close the building sheet.
-  infoBtn.addEventListener('click', (e) => {
+  info.addEventListener('click', (e) => {
     e.stopPropagation();
     const s = store.get();
-    if (s.selectedId) store.set({ sheetOpen: !s.sheetOpen, mode: 'solving' });
+    if (s.selectedId) store.set({ sheetOpen: !s.sheetOpen });
   });
 
-  // Right half: show the list of floors.
-  floorBtn.addEventListener('click', (e) => {
+  floorPill.addEventListener('click', (e) => {
     e.stopPropagation();
     const s = store.get();
-    if (!s.selectedId) return;
-    if (floorMenu.hidden) {
-      buildMenu(byId[s.selectedId], s.activeFloor);
-      floorMenu.hidden = false;
-      floorBtn.classList.add('is-open');
-    } else {
-      closeMenu();
-    }
+    buildFloorPills(byId[s.selectedId], s.activeFloor);
+    setChoosing(true);
   });
 
-  // Tapping anywhere else closes the drop-up.
-  document.addEventListener('click', closeMenu);
+  // Tapping anywhere else puts the pills back together.
+  document.addEventListener('click', () => setChoosing(false));
 
+  let lastId = null;
   store.subscribe((s) => {
     const b = s.selectedId ? byId[s.selectedId] : null;
     const manyFloors = !!(b && b.floors && b.floors.length > 1);
 
-    // The orb's mood + the short label.
-    if (s.mode === 'searching') {
-      orb.setState('searching');
-      labelEl.textContent = 'Searching';
-    } else {
-      orb.setState(b ? 'solving' : 'idle');
-      labelEl.textContent = 'Info';
-    }
+    infoLabel.textContent = s.mode === 'searching' ? 'Searching…' : 'Info';
+    info.setAttribute('aria-disabled', String(!b));
+    info.classList.toggle('has-target', !!b); // shows the ^ only when there is something to open
+    info.classList.toggle('is-open', !!(b && s.sheetOpen));
+    info.setAttribute('aria-expanded', String(!!(b && s.sheetOpen)));
 
-    // The floor button only exists when there is more than one floor.
-    divider.hidden = !manyFloors;
-    floorBtn.hidden = !manyFloors;
-    if (manyFloors) floorLabel.textContent = 'Floor ' + s.activeFloor;
-    else closeMenu();
+    // The floor pill only makes sense while you're looking at the floor plan.
+    const showFloor = manyFloors && s.sheetOpen;
+    floorPill.hidden = !showFloor;
+    if (showFloor) floorPill.textContent = 'Floor ' + s.activeFloor;
+
+    if (s.selectedId !== lastId || !showFloor) setChoosing(false); // start fresh
+    lastId = s.selectedId;
   });
 }

@@ -8,7 +8,7 @@
  *                Picking a result flies there, drops the pin, and opens the sheet.
  * DEPENDS ON   : Framework7 (the app object), ./store.js, the #search-drop
  *                markup in index.html.
- * CONTROLS     : the #search-drop element and the orb "searching" mode.
+ * CONTROLS     : the #search-drop element and the pill's "Searching…" label.
  * USED BY      : js/app.js
  */
 
@@ -36,14 +36,14 @@ export function initSearch(app, store, buildings, byId) {
   const openBtn = document.querySelector('#search-btn');
   const cancelBtn = document.querySelector('#search-cancel');
 
-  /** Open the search drop-down and switch the orb to "searching". */
+  /** Open the search drop-down and switch the pill to "Searching…". */
   function open() {
     drop.classList.add('is-open');
     store.set({ mode: 'searching' });
     setTimeout(() => input.focus(), 60);
   }
 
-  /** Close search and put the orb back to solving (if selected) or idle. */
+  /** Close search and put the pill label back. */
   function close() {
     drop.classList.remove('is-open');
     input.value = '';
