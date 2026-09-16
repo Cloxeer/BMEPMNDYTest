@@ -5,7 +5,8 @@
  * WHAT IT DOES : Tap it: the map asks for your precise (GPS) location, shows
  *                you as a blue dot and follows you. Tap again to stop.
  *                If location is blocked, or you're off the campus map, it says so.
- * DEPENDS ON   : maplibre-gl's GeolocateControl (does the GPS work and draws
+ *                It only shows while you're looking at the map (hidden while a sheet is open).
+ * DEPENDS ON   : ./store.js (is a sheet open?), maplibre-gl's GeolocateControl (does the GPS work and draws
  *                the dot), ./config.js, #locate-btn in index.html.
  *                Browsers only share location on https or localhost.
  * CONTROLS     : #locate-btn.
@@ -17,6 +18,7 @@
  */
 
 import { CONFIG } from './config.js';
+import { store } from './store.js';
 
 /**
  * Wire the location button.
@@ -57,4 +59,10 @@ export function initLocate(app, map) {
   locator.on('trackuserlocationend', () => setActive(false));
   locator.on('error', () => explain(settings.noLocationText));
   locator.on('outofmaxbounds', () => explain(settings.outsideText));
+
+  // Only on the map: fade out while the building sheet covers it.
+  store.subscribe((state) => {
+    button.classList.toggle('is-hidden', state.sheetOpen);
+    button.inert = state.sheetOpen; // can't be tapped or tabbed to while hidden
+  });
 }
