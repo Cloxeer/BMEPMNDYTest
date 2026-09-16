@@ -1,28 +1,222 @@
 /*
-  app.css — the ONLY custom CSS in the project, and it stays tiny.
+  app.css — our styles on top of Framework7.
 
-  WHAT IT DOES : (1) recolors Framework7 to NMSU crimson, and
-                 (2) makes the MapLibre map fill the screen behind the navbar.
-  DEPENDS ON   : Framework7 (we only override its color variables).
-  CONTROLS     : the app's accent color and the map box size.
-  NOTE         : We do NOT style buttons/bars/panels here — those are stock
-                 Framework7 components. Keep this file small on purpose.
+  WHAT IT DOES : recolors Framework7 crimson, sizes the map, and styles the few
+                 bespoke pieces the design needs (bottom orb pill, the orb
+                 itself, the full-screen fade menu, and the search drop-down).
+  DEPENDS ON   : Framework7 (we override its color variables).
+  CONTROLS     : the app's accent color, the map box, the pill, the orb, and the
+                 custom animations.
+  NOTE         : standard bars/buttons/sheets are still stock Framework7 — we do
+                 not restyle those here.
 */
 
-/* 1) Paint every Framework7 accent in NMSU crimson. */
+/* ---------- 1. Brand color + inverted crimson navbar ---------- */
 :root {
-  --f7-theme-color: #8C0B42;
+  --f7-theme-color: #8c0b42;
   --f7-theme-color-rgb: 140, 11, 66;
   --f7-theme-color-shade: #6f0834;
   --f7-theme-color-tint: #a81050;
+  --spring: cubic-bezier(0.34, 1.4, 0.5, 1); /* soft Apple-like overshoot */
 }
 
-/* 2) Let the map fill the page (the iOS navbar floats over it). */
+/* Invert the navbar: SOLID crimson background, white text + icons. */
+.navbar-crimson .navbar-bg { background: var(--f7-theme-color); }
+.navbar-crimson .navbar-bg::after { display: none; } /* remove the hairline line */
+.navbar-crimson,
+.navbar-crimson a,
+.navbar-crimson .title,
+.navbar-crimson .icon { color: #ffffff !important; }
+
+/* ---------- 2. The map fills the screen ---------- */
 .page-content { padding: 0 !important; overflow: hidden; }
 #map { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
 
-/* 3) A little breathing room for the welcome screen text (content only). */
-.welcome-card { text-align: center; margin-top: 20vh; }
-.welcome-h { margin: 0; line-height: 1.15; }
-.welcome-card .brand { color: var(--f7-theme-color); }
-.welcome-card .by { color: var(--f7-color-gray); margin-top: 6px; }
+/* The selected-building pin (crimson teardrop from js/map.js). */
+.map-pin { line-height: 0; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35)); }
+
+/* ---------- 3. Search drop-down ---------- */
+.search-drop {
+  position: absolute;
+  top: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px));
+  left: 0; right: 0;
+  z-index: 500;
+  background: var(--f7-theme-color);
+  padding: 6px 8px 10px;
+  transform: translateY(-120%);
+  transition: transform 0.32s var(--spring);
+}
+.search-drop.is-open { transform: translateY(0); }
+.search-drop .searchbar { --f7-searchbar-bg-color: transparent; }
+
+/* ---------- 4. Bottom orb pill ---------- */
+.pill {
+  position: fixed;
+  left: 50%;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 15000; /* above the map AND the sheet, so it always floats */
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 86vw;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  backdrop-filter: saturate(180%) blur(14px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+  color: #1b1b1d;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: padding 0.3s var(--spring), opacity 0.25s ease, transform 0.3s var(--spring);
+}
+/* Hidden while a full-screen popup (welcome / menu / schedule / settings) is open. */
+.pill.pill-hidden { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(24px); }
+.pill-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60vw;
+}
+.pill-floors { display: none; gap: 6px; }
+.pill--floors .pill-orb,
+.pill--floors .pill-label { display: none; }
+.pill--floors .pill-floors { display: inline-flex; }
+
+.pill-floor {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--f7-theme-color);
+  background: rgba(140, 11, 66, 0.1);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.pill-floor.is-active { background: var(--f7-theme-color); color: #fff; }
+
+/* ---------- 5. The orb (our vanilla thinking-orb) ---------- */
+.orb {
+  position: relative;
+  display: inline-block;
+  width: var(--orb-size, 20px);
+  height: var(--orb-size, 20px);
+}
+.orb-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15%;
+  height: 15%;
+  margin: -7.5% 0 0 -7.5%;
+  border-radius: 50%;
+  background: var(--f7-theme-color);
+  /* place each dot around the circle */
+  transform: rotate(calc(var(--i) * 360deg / var(--n))) translateY(-160%);
+}
+/* idle: slow soft breathing */
+.orb[data-state='idle'] .orb-dot {
+  opacity: 0.5;
+  animation: orb-pulse 2.4s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.1s);
+}
+/* solving: brighter, quicker twinkle */
+.orb[data-state='solving'] .orb-dot {
+  animation: orb-pulse 1.1s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.11s);
+}
+/* searching: the whole ring sweeps around */
+.orb[data-state='searching'] {
+  animation: orb-spin 1.2s linear infinite;
+}
+.orb[data-state='searching'] .orb-dot {
+  opacity: calc(0.25 + var(--i) / var(--n) * 0.75);
+}
+@keyframes orb-pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+@keyframes orb-spin { to { transform: rotate(360deg); } }
+
+/* ---------- 6. Full-screen fade menu ---------- */
+.popup-menu {
+  background: rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  /* fade instead of Framework7's default slide */
+  transform: none !important;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.popup-menu.menu-open { opacity: 1; }
+.menu-close {
+  position: absolute;
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  right: 18px;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--f7-theme-color);
+  z-index: 2;
+}
+.menu-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+.menu-link {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--f7-theme-color);
+  opacity: 0;
+  transform: translateY(14px);
+}
+/* each line fades in 0.2s after the one before it */
+.popup-menu.menu-open .menu-link { animation: menu-in 0.5s var(--spring) forwards; }
+.popup-menu.menu-open .menu-link:nth-child(1) { animation-delay: 0.05s; }
+.popup-menu.menu-open .menu-link:nth-child(2) { animation-delay: 0.25s; }
+.popup-menu.menu-open .menu-link:nth-child(3) { animation-delay: 0.45s; }
+@keyframes menu-in { to { opacity: 1; transform: none; } }
+
+/* ---------- 7. Full-page building sheet (floor viewer) ---------- */
+.building-sheet { height: 100%; } /* slide up to fill the whole screen */
+.building-sheet .sheet-modal-inner { height: 100%; display: flex; flex-direction: column; background: #fff; }
+.bs-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px;
+  background: var(--f7-theme-color);
+  color: #fff;
+}
+.bs-head .bs-name { font-weight: 700; font-size: 16px; margin-right: 12px; }
+.bs-head .link { color: #fff; }
+.bs-body { flex: 1; overflow: auto; padding: 12px; text-align: center; }
+.bs-floor-img { max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12); }
+.bs-missing { padding: 40px 16px; color: var(--f7-theme-color); }
+.bs-caption { margin-top: 10px; font-size: 13px; color: #6b6b70; padding-bottom: 90px; }
+
+/* ---------- 8. Full-page crimson welcome ---------- */
+#welcome-popup { background: var(--f7-theme-color); }
+#welcome-popup .page, #welcome-popup .page-content { background: transparent; }
+.welcome-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+.welcome-h { margin: 0; line-height: 1.15; color: #fff; }
+.welcome-card .brand { color: #fff; }
+.welcome-card .by { color: rgba(255, 255, 255, 0.85); margin-top: 8px; }
+.welcome-card .button-fill { background: #fff; color: var(--f7-theme-color); }
+
+/* ---------- 8. Respect "reduce motion" ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .search-drop, .pill, .popup-menu, .menu-link, .orb, .orb-dot { transition: none !important; animation: none !important; }
+  .menu-link { opacity: 1; transform: none; }
+}

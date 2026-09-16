@@ -2,70 +2,58 @@
 <!--
   index.html — the whole app screen.
 
-  WHAT IT DOES : Lays out the UI using Framework7's iOS components (navbar,
-                 side menu panel, popups, searchbar) and a full-screen map box.
+  WHAT IT DOES : Lays out the UI from Framework7's iOS components (navbar, menu,
+                 sheet, popups) plus our own map box, bottom pill, and search drop.
   DEPENDS ON   : Framework7 + Framework7 Icons (CDN), MapLibre (CDN),
                  styles/app.css, js/app.js
-  CONTROLS     : everything you see. Framework7 styles the chrome; MapLibre
-                 fills #map; js/app.js turns it all on.
+  CONTROLS     : everything on screen.
 
-  Rule for this project: we DO NOT hand-build UI. Every button, bar, and panel
-  below is a stock Framework7 component (just HTML classes). We only supply the
-  map (MapLibre) and the wiring (js/).
+  Rule: we do NOT hand-build standard UI. Bars/menus/sheets/popups are stock
+  Framework7. Our only custom pieces are the map (MapLibre) and two small
+  bespoke bits the design needs: the bottom orb pill and the campus focus.
 -->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <!-- viewport-fit=cover uses the full phone screen; user-scalable=no makes
-       pinch zoom the MAP, not the web page. -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#8C0B42" />
   <title>Better NMSU Maps</title>
 
-  <!-- Framework7: the iOS-style component library (styles the whole UI). -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.css" />
-  <!-- Framework7 Icons: the little hamburger / search glyphs. -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7-icons@5/css/framework7-icons.css" />
-  <!-- MapLibre GL: the map engine (adds the global `maplibregl`). -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
-
-  <!-- Our only stylesheet: a few lines to color Framework7 crimson + size the map. -->
   <link rel="stylesheet" href="styles/app.css" />
 </head>
 <body>
 
-  <!-- Framework7 lives inside #app. -->
   <div id="app">
-
-    <!-- ===== MAIN VIEW: the map page ===== -->
     <div class="view view-main view-init safe-areas">
       <div class="page">
 
-        <!-- iOS navbar: [hamburger]   Campus   [search] + an expandable searchbar -->
-        <div class="navbar">
+        <!-- iOS navbar, inverted to crimson (see styles/app.css). -->
+        <div class="navbar navbar-crimson">
           <div class="navbar-bg"></div>
           <div class="navbar-inner">
             <div class="left">
-              <a class="link icon-only panel-open" data-panel="left" aria-label="Menu">
-                <i class="icon f7-icons">menu</i>
-              </a>
+              <a class="link icon-only" id="menu-btn" aria-label="Menu"><i class="icon f7-icons">menu</i></a>
             </div>
             <div class="title">Campus</div>
             <div class="right">
-              <a class="link icon-only searchbar-enable" data-searchbar=".searchbar" aria-label="Search">
-                <i class="icon f7-icons">search</i>
-              </a>
+              <a class="link icon-only" id="search-btn" aria-label="Search"><i class="icon f7-icons">search</i></a>
             </div>
-            <!-- Expandable search that slides over the navbar (the "morphing" search). -->
-            <form class="searchbar searchbar-expandable">
-              <div class="searchbar-inner">
-                <div class="searchbar-input-wrap">
-                  <input type="search" placeholder="Search buildings" />
-                  <span class="input-clear-button"></span>
-                </div>
-                <span class="searchbar-disable-button">Cancel</span>
+          </div>
+        </div>
+
+        <!-- Drops down under the navbar when the search icon is tapped. -->
+        <div id="search-drop" class="search-drop">
+          <div class="searchbar">
+            <div class="searchbar-inner">
+              <div class="searchbar-input-wrap">
+                <input id="search-input" type="search" placeholder="Search buildings" />
+                <span class="input-clear-button"></span>
               </div>
-            </form>
+              <span class="searchbar-disable-button" id="search-cancel">Cancel</span>
+            </div>
           </div>
         </div>
 
@@ -77,100 +65,99 @@
       </div>
     </div>
 
-    <!-- ===== LEFT PANEL: the slide-in menu (Map / Schedule / Settings) ===== -->
-    <div class="panel panel-left panel-cover panel-init">
-      <div class="view">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner"><div class="title">Menu</div></div>
+    <!-- Full-page building view (Framework7 sheet sized to full screen). -->
+    <div class="sheet-modal building-sheet" id="building-sheet">
+      <div class="sheet-modal-inner">
+        <div class="bs-head">
+          <span id="bs-name" class="bs-name"></span>
+          <a class="link sheet-close" href="#">Close</a>
+        </div>
+        <div class="bs-body">
+          <img id="bs-floor-img" class="bs-floor-img" alt="" hidden />
+          <div id="bs-missing" class="bs-missing" hidden>
+            <p>Floor plan photo not added yet.</p>
+            <p class="text-color-gray">Add it to <code>data/floors/</code> (see README).</p>
           </div>
-          <div class="page-content">
-            <div class="list links-list">
-              <ul>
-                <li><a class="panel-close" href="#">Map</a></li>
-                <li><a class="popup-open panel-close" data-popup="#schedule-popup" href="#">Schedule</a></li>
-                <li><a class="popup-open panel-close" data-popup="#settings-popup" href="#">Settings</a></li>
-              </ul>
-            </div>
-          </div>
+          <div id="bs-caption" class="bs-caption"></div>
         </div>
       </div>
     </div>
 
-    <!-- ===== SCHEDULE POPUP (placeholder page) ===== -->
+    <!-- Full-screen fade menu (Map / Schedule / Settings), centered + staggered. -->
+    <div class="popup popup-menu popup-tablet-fullscreen" id="menu-popup">
+      <a href="#" class="menu-close popup-close" aria-label="Close">&times;</a>
+      <div class="menu-inner">
+        <a href="#" id="menu-map" class="menu-link">Map</a>
+        <a href="#" id="menu-schedule" class="menu-link">Schedule</a>
+        <a href="#" id="menu-settings" class="menu-link">Settings</a>
+      </div>
+    </div>
+
+    <!-- Schedule popup (placeholder). -->
     <div class="popup" id="schedule-popup">
       <div class="view"><div class="page">
-        <div class="navbar">
-          <div class="navbar-bg"></div>
-          <div class="navbar-inner">
-            <div class="title">Schedule</div>
-            <div class="right"><a class="link popup-close" href="#">Close</a></div>
-          </div>
-        </div>
-        <div class="page-content">
-          <div class="block">
-            <p>Schedule view &mdash; coming soon.</p>
-            <p class="text-color-gray">Needs a data source for class times (import an .ics file &mdash; see project notes).</p>
-          </div>
-        </div>
+        <div class="navbar navbar-crimson"><div class="navbar-bg"></div><div class="navbar-inner">
+          <div class="title">Schedule</div>
+          <div class="right"><a class="link popup-close" href="#">Close</a></div>
+        </div></div>
+        <div class="page-content"><div class="block">
+          <p>Schedule view &mdash; coming soon.</p>
+          <p class="text-color-gray">Needs a data source for class times (import an .ics file &mdash; see project notes).</p>
+        </div></div>
       </div></div>
     </div>
 
-    <!-- ===== SETTINGS POPUP (placeholder page) ===== -->
+    <!-- Settings popup (placeholder). -->
     <div class="popup" id="settings-popup">
       <div class="view"><div class="page">
-        <div class="navbar">
-          <div class="navbar-bg"></div>
-          <div class="navbar-inner">
-            <div class="title">Settings</div>
-            <div class="right"><a class="link popup-close" href="#">Close</a></div>
-          </div>
-        </div>
+        <div class="navbar navbar-crimson"><div class="navbar-bg"></div><div class="navbar-inner">
+          <div class="title">Settings</div>
+          <div class="right"><a class="link popup-close" href="#">Close</a></div>
+        </div></div>
         <div class="page-content">
           <div class="block-title">Map view</div>
-          <div class="block">
-            <div class="segmented segmented-strong">
-              <button class="button button-active">Standard</button>
-              <button class="button">Satellite</button>
-              <button class="button">Dark</button>
-              <span class="segmented-highlight"></span>
-            </div>
-          </div>
+          <div class="block"><div class="segmented segmented-strong">
+            <button class="button button-active">Standard</button>
+            <button class="button">Satellite</button>
+            <button class="button">Dark</button>
+            <span class="segmented-highlight"></span>
+          </div></div>
           <div class="block-title">Is there a problem?</div>
           <div class="block">
             <a class="button button-fill" id="report-btn" href="#">Report an issue</a>
-            <p class="text-color-gray">Reporting will be wired up with the building dataset.</p>
           </div>
         </div>
       </div></div>
     </div>
 
-    <!-- ===== WELCOME POPUP (first visit only) ===== -->
-    <div class="popup" id="welcome-popup">
-      <div class="view"><div class="page">
-        <div class="page-content">
-          <div class="welcome-card">
-            <div class="block">
-              <h1 class="welcome-h">Welcome to</h1>
-              <h1 class="welcome-h brand">Better NMSU Maps</h1>
-              <p class="by">by The Brainy Bunch</p>
-            </div>
-            <div class="block">
-              <a id="enter-map" class="button button-large button-fill popup-close" href="#">Enter Map &rarr;</a>
-            </div>
+    <!-- Welcome popup (first visit only). -->
+    <div class="popup popup-tablet-fullscreen" id="welcome-popup">
+      <div class="view"><div class="page"><div class="page-content">
+        <div class="welcome-card">
+          <div class="block">
+            <h1 class="welcome-h">Welcome to</h1>
+            <h1 class="welcome-h brand">Better NMSU Maps</h1>
+            <p class="by">by The Brainy Bunch</p>
+          </div>
+          <div class="block">
+            <a id="enter-map" class="button button-large button-fill popup-close" href="#">Enter Map &rarr;</a>
           </div>
         </div>
-      </div></div>
+      </div></div></div>
     </div>
 
   </div>
 
-  <!-- Framework7 engine (adds the global `Framework7`). Loaded before our module. -->
+  <!-- Always-visible bottom pill: orb + text, morphs into a floor selector.
+       Kept OUTSIDE #app so it floats above the map (and the sheet) cleanly. -->
+  <div id="pill" class="pill">
+    <span id="pill-orb" class="pill-orb"></span>
+    <span id="pill-label" class="pill-label">Tap a building</span>
+    <span id="pill-floors" class="pill-floors"></span>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.js"></script>
-  <!-- MapLibre engine (adds the global `maplibregl`). -->
   <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
-  <!-- Our app entry point. type="module" lets js/ files import each other. -->
   <script type="module" src="js/app.js"></script>
 </body>
 </html>

@@ -3,55 +3,78 @@
 A fast, no-login, Apple-style interactive map of the NMSU Las Cruces campus.
 Built by **The Brainy Bunch** for CS 371.
 
-- **Map engine:** [MapLibre GL](https://maplibre.org/) (GPU, draggable, pinch-zoom)
-- **UI kit:** [Framework7](https://framework7.io/) in its iOS theme (navbar, side menu, popups, searchbar)
-- **No build step.** Plain HTML + CSS + JavaScript modules. Everything loads from a CDN.
+- **Map engine:** [MapLibre GL](https://maplibre.org/) (drag, pinch-zoom)
+- **Basemap:** [OpenFreeMap](https://openfreemap.org/) Positron — clean vector tiles, **free, no API key**
+- **UI kit:** [Framework7](https://framework7.io/) iOS theme (navbar, menu, popups, sheet)
+- **No build step.** Plain HTML + CSS + JavaScript modules, loaded from a CDN.
 
-## What works right now (v1 — the map shell)
+## What works now
 
-- Draggable, pinch-zoomable campus map
-- iOS navbar: hamburger menu · **Campus** title · search
-- Slide-in menu: **Map / Schedule / Settings**
-- First-visit **welcome screen** (remembered per session, so it won't nag you)
+- Full-page crimson **welcome** screen (shown once per browser session)
+- Clean, draggable, pinch-zoom campus map
+- Solid crimson iOS navbar: hamburger menu · **Campus** · search
+- Full-screen fade **menu** (Map / Schedule / Settings)
+- **One building wired end-to-end:** Hardman & Jacobs (HJLC) is outlined in
+  crimson. Tap it → a crimson pin drops, the map flies in, and a **full-page
+  floor viewer** slides up. The bottom pill morphs into a **Floor 1 / Floor 2**
+  selector. Closing keeps the building selected; tap the pill to reopen.
 
-Coming next: building pins → info sheet, and live search over `data/buildings.json`.
+## ⚠️ Add the two floor-plan photos (one manual step)
+
+The code looks for these two files — just drop your photos in with these exact names:
+
+```
+data/floors/hjlc-1.jpg   ← Hardman & Jacobs, Floor 1
+data/floors/hjlc-2.jpg   ← Hardman & Jacobs, Floor 2
+```
+
+Until they exist you'll see a "Floor plan photo not added yet" placeholder (that's
+normal). Any image format works if you also change the filename in
+`data/buildings.geojson` (the `floorImages` field).
 
 ## File guide
 
 ```
-index.html          The whole screen (Framework7 markup + the #map box)
-styles/app.css      Tiny: NMSU crimson theme + map sizing (no hand-built UI)
-js/config.js        All tweakable settings (map center, zoom, campus bounds, tiles)
-js/map.js           Builds the MapLibre map
-js/app.js           Starts Framework7 + the map, runs the welcome flow
-data/buildings.json Building data (used for pins + search in the next step)
+index.html               The whole screen (Framework7 markup + #map + pill)
+styles/app.css           Theme color, map sizing, the orb/pill/menu/sheet styles
+js/config.js             Map settings (center, zoom, bounds, basemap style)
+js/store.js              Tiny shared state (what's selected, sheet open, etc.)
+js/map.js                Builds the map + outlines buildings + the pin
+js/buildingSheet.js      The full-page floor viewer
+js/pill.js               The bottom orb pill + floor selector
+js/orb.js                The little animated "thinking orb" icon
+js/search.js             The drop-down building search
+js/app.js                Starts everything and wires the menu/welcome
+data/buildings.geojson   Building shapes + info (the one data file)
+data/floors/             Floor-plan photos go here
 ```
 
-Every file starts with a comment saying what it does, what it depends on, and
-what it controls. Every function has a comment above it.
+Every file starts with a comment (what it does / depends on / controls) and every
+function has a comment above it.
 
-> **Note:** building coordinates in `buildings.json` are approximate placeholders
-> (`"verified": false`). Fix them by dropping a pin in Google Maps and pasting the
-> real `lng`/`lat` — no code changes needed.
+## Add another building
 
-## Run it locally
+Copy the HJLC feature in `data/buildings.geojson`, then change: `id`, `name`,
+`aka`, `address`, the polygon `coordinates` (draw it at <https://geojson.io>),
+`floors`, and the `floorImages` paths. No code changes needed.
 
-ES modules need a web server (opening the file directly won't work). From this folder:
+## Run locally
+
+ES modules need a web server (opening the file directly won't work):
 
 ```bash
 python -m http.server 8000
 ```
 
-Then open <http://localhost:8000> in your browser.
+Open <http://localhost:8000>.
 
 ## Put it on your phone (GitHub Pages)
 
-1. Push this folder to the repo (see commands your teammate ran, or below).
-2. On GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, pick **main** / **/ (root)**, Save.
-3. Wait ~1 minute, then open the shown URL (e.g. `https://cloxeer.github.io/BetterNMSUMapTest/`) on your phone.
-
 ```bash
 git add .
-git commit -m "Add v1 map shell"
+git commit -m "Update map"
 git push
 ```
+
+Then GitHub → **Settings → Pages → Source: Deploy from a branch → `main` / `/root`**.
+Open the shown URL (e.g. `https://cloxeer.github.io/BetterNMSUMapTest/`) on your phone.

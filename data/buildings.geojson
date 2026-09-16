@@ -1,0 +1,31 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "HJLC",
+        "name": "Hardman and Jacobs Undergraduate Learning Center",
+        "aka": ["HJLC", "Hardman", "Jacobs", "Learning Center", "323"],
+        "address": "2902 McFie Circle, Las Cruces, NM 88003",
+        "floors": [1, 2],
+        "floorImages": {
+          "1": "data/floors/hjlc-1.jpg",
+          "2": "data/floors/hjlc-2.jpg"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-106.74895, 32.28055],
+            [-106.74795, 32.28055],
+            [-106.74795, 32.27985],
+            [-106.74895, 32.27985],
+            [-106.74895, 32.28055]
+          ]
+        ]
+      }
+    }
+  ]
+}
