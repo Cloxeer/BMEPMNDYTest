@@ -17,7 +17,9 @@ What's done and what's next: [docs/TASKS.md](docs/TASKS.md).
 - Colour map with NMSU's class places highlighted; everything else faded
 - 10 buildings with official facts; tap a badge to open its sheet
 - Hardman & Jacobs has floor plans for floors 1–2 (tap to zoom)
-- Search by name, address, building code or number
+- Search by name, address, building code or number, or a room ("SH 118A", "hjlc 225")
+- Rooms on our floor plans are highlighted in light blue
+- Get directions: blue arrows along campus paths; the sheet opens when you walk in
 - Locations page: every NMSU place, nearest first
 
 ## Change how it looks or behaves
@@ -61,7 +63,10 @@ js/map.js               map, campus highlight, building badges
 js/buildingSheet.js     building sheet
 js/pill.js              bottom pill
 js/locate.js            location button next to the pill
-js/search.js            search
+js/search.js            search (buildings and rooms)
+js/searchMatch.js       what counts as a search match
+js/directions.js        walking directions
+js/geo.js               distance / inside-outline maths
 js/locations.js         Locations page
 data/                   files the app reads (don't edit the built ones by hand)
 data/floors/            floor plans (SVG, redrawn from posted evacuation maps)
@@ -84,6 +89,12 @@ python tools/build_buildings.py
 # Campus shapes: needs the shapely package once
 python -m pip install --user shapely
 python tools/build_campuses.py
+
+# Rooms: floor plans + NMSU class schedule (update TERMS each semester)
+python tools/build_rooms.py
+
+# Walking paths for directions (OpenStreetMap)
+python tools/build_walkways.py
 ```
 
 **Add a building:** add a row to `BUILDINGS` at the top of `tools/build_buildings.py`

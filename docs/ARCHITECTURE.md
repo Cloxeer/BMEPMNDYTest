@@ -18,6 +18,9 @@ flowchart LR
     app --> locations[js/locations.js]
     app --> locate[js/locate.js]
     locate --> map
+    app --> directions[js/directions.js]
+    directions <--> store
+    search --> match[js/searchMatch.js]
     map <--> store[js/store.js]
     sheet <--> store
     pill <--> store
@@ -52,7 +55,10 @@ Three rules keep it predictable:
 | `js/buildingSheet.js` | The full-page building sheet |
 | `js/pill.js` | The bottom pill (Info / floors) |
 | `js/locate.js` | The location button left of the pill (MapLibre's GeolocateControl) |
-| `js/search.js` | The search drop-down |
+| `js/search.js` | The search drop-down (buildings and rooms) |
+| `js/searchMatch.js` | What counts as a match: room numbers, codes, small typos |
+| `js/directions.js` | Walking route with blue arrows; opens the sheet when you walk in |
+| `js/geo.js` | Distances and point-inside-outline maths |
 | `js/locations.js` | The Locations page |
 
 ## App state
@@ -62,6 +68,8 @@ Three rules keep it predictable:
 | `selectedId` | The chosen building, or `null` |
 | `selectedVia` | `'map'` or `'search'`: sets the pause before the sheet opens |
 | `sheetWaiting` | The sheet opens once the map has flown to the building |
+| `selectedRoom` | The room picked in search (highlighted on its floor plan), or `null` |
+| `directionsTo` | `{ buildingId, room }` while directions are on |
 | `sheetOpen` | Is the building sheet showing? |
 | `activeFloor` | Floor shown in the sheet |
 | `searching` | Is search open? |
@@ -69,6 +77,9 @@ Three rules keep it predictable:
 | Action | What changes |
 |---|---|
 | `selectBuilding(b, via)` | select `b` on its first floor, end search; the map flies there |
+| `selectRoom(b, room, via)` | like `selectBuilding`, on the room's floor |
+| `startDirections()` / `endDirections()` | directions on / off |
+| `arrived(b)` | you walked in: directions off, sheet opens on the room's floor |
 | `sheetCanOpen(id)` | called by the map after the flight + pause: opens the sheet if still waiting |
 | `clearSelection()` | nothing selected, sheet closed, search ended |
 | `openSheet()` / `closeSheet()` | sheet open / closed (building stays selected) |
@@ -83,6 +94,9 @@ Three rules keep it predictable:
 | `data/buildings.geojson` | `tools/build_buildings.py` | NMSU Space Planning buildings layer, NMSU Registrar codes, `data/source/photos.json`, `data/source/building-extras.json` |
 | `data/campuses.geojson`, `campus-labels.geojson`, `outside-mask.geojson` | `tools/build_campuses.py` | NMSU Space Planning campus boundaries + ground-lease parcels, OpenStreetMap golf course |
 | `data/floors/*.svg` | Hand-drawn | Evacuation maps posted in each building |
+| `data/rooms.json` | `tools/build_rooms.py` | Rooms on our floor plans (with outlines) + rooms in NMSU's public class schedule (Banner; no floor or outline) |
+| `data/walkways.geojson` | `tools/build_walkways.py` | OpenStreetMap footpaths and streets (NMSU publishes no walkway data) |
+| `data/building-shapes.geojson` | `tools/build_buildings.py` | NMSU Space Planning building outlines |
 | `data/photos/*.jpg` | Downloaded | Wikimedia Commons (licences in `data/source/photos.json`) |
 
 Which source wins when they disagree:
@@ -101,6 +115,8 @@ and doors from OpenStreetMap, kept for the wayfinding feature that isn't built y
   (`map.sheetPauseAfterTap` / `sheetPauseAfterSearch`), then opens the sheet, so you see where it is.
 - **Every sheet has the same layout** (in `index.html`); empty fields show a message.
   `tools/build_buildings.py` gives every building the same fields.
+- **No arrows inside buildings.** NMSU publishes no hallway data; inside, the highlighted room on the floor plan takes over.
+- **Some rooms have no highlight.** Rooms from the class schedule have no published floor or outline, so the app goes to the building and says so.
 - **The pill sits outside `#app`** with a high `z-index` so it floats above Framework7's sheet.
 - **The page stays hidden until `config.yml` loads**, so nothing flashes unstyled.
 - **Leased NMSU land is cut out of the campus shapes** (not painted over), so

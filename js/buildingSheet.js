@@ -6,6 +6,8 @@
  *                photos, about. This file fills in each field for the selected
  *                building. A field with nothing to show yet gets a short message
  *                from config.yml, so no building's sheet looks different.
+ *                A room chosen in search is filled light blue on its floor plan.
+ *                "Get directions" (left of the title) starts walking directions.
  *                Tapping the floor plan or a photo opens ONE full-screen viewer
  *                with pinch-zoom; tapping again while it's open does nothing.
  *                Close the sheet with X or by pulling the crimson header down;
@@ -36,6 +38,7 @@ export function initBuildingSheet(app, buildingsById) {
   // Every field in the sheet, by name.
   const field = {
     title: document.querySelector('#bs-name'),
+    directionsButton: document.querySelector('#bs-directions'),
     planTab: document.querySelector('#bs-tab-plan'),
     postedTab: document.querySelector('#bs-tab-posted'),
     zoomButton: document.querySelector('#bs-zoom'),
@@ -52,9 +55,11 @@ export function initBuildingSheet(app, buildingsById) {
   };
 
   let view = 'plan'; // 'plan' = our redrawn SVG, 'posted' = photo of the posted map
-  let shownKey = ''; // "buildingId|floor" currently on screen
+  let shownKey = ''; // "buildingId|floor|room" currently on screen
   let sheetIsOpen = false; // what Framework7 is showing right now
   let viewer = null; // the full-screen picture viewer while it's open, otherwise null
+  let highlightedPlanUrl = null; // the plan-with-blue-room picture made last, so it can be freed
+  let planRequest = 0; // counts plan loads, so a slow old one can't replace a newer one
 
   /* ---------- Section 1: floor plan ---------- */
 
@@ -74,15 +79,45 @@ export function initBuildingSheet(app, buildingsById) {
   }
 
   /**
+   * Our floor plan with one room filled light blue, as a picture URL an <img> can show.
+   * (The room's outline comes from the same plan, via tools/build_rooms.py.)
+   * @param {string} planFile - e.g. "data/floors/hjlc-1.svg"
+   * @param {object} room - a record from data/rooms.json
+   * @returns {Promise<string>}
+   */
+  async function planWithRoom(planFile, room) {
+    const response = await fetch(planFile);
+    if (!response.ok) throw new Error('Could not load ' + planFile);
+    const plan = await response.text();
+    const style = CONFIG.directions;
+    const shape = '<polygon points="' + room.points.map((point) => point.join(',')).join(' ') +
+      '" fill="' + style.roomColor + '" stroke="' + style.roomEdge + '" stroke-width="' + style.roomEdgeWidth + '"/>';
+    // Drawn last, so it sits on top; see-through, so the room number still shows.
+    const highlighted = plan.replace('</svg>', shape + '</svg>');
+    if (highlightedPlanUrl) URL.revokeObjectURL(highlightedPlanUrl);
+    highlightedPlanUrl = URL.createObjectURL(new Blob([highlighted], { type: 'image/svg+xml' }));
+    return highlightedPlanUrl;
+  }
+
+  /**
    * Show the plan (or posted map) for one floor, or a message if there isn't one yet.
    * @param {object} building
    * @param {number} floor
+   * @param {object|null} room - the chosen room, highlighted if it's on this plan
    */
-  function fillFloorPlan(building, floor) {
+  async function fillFloorPlan(building, floor, room) {
+    const request = ++planRequest;
     const images = view === 'plan' ? building.floorImages : building.postedImages;
     const source = images[String(floor)];
     const missingText = view === 'plan' ? words.planMissingText : words.noOfficialPlanText;
-    const floorName = CONFIG.pill.floorText + ' ' + floor;
+    // The caption names the chosen room: on this floor, or (from the class schedule) floor unknown.
+    const roomInBuilding = room && room.building === building.id;
+    const roomHere = roomInBuilding && room.floor === floor;
+    let floorName = CONFIG.pill.floorText + ' ' + floor;
+    if (roomHere) floorName = CONFIG.search.roomText + ' ' + room.number + ' · ' + floorName;
+    if (roomInBuilding && !room.floor) {
+      floorName = CONFIG.search.roomText + ' ' + room.number + ' (' + words.roomFloorUnknownText + ') · ' + floorName;
+    }
 
     field.planTab.classList.toggle('button-active', view === 'plan');
     field.postedTab.classList.toggle('button-active', view === 'posted');
@@ -93,9 +128,18 @@ export function initBuildingSheet(app, buildingsById) {
       showFloorMessage(floorName, missingText);
       return;
     }
+    let picture = source;
+    if (roomHere && view === 'plan' && room.plan === source) {
+      try {
+        picture = await planWithRoom(source, room);
+      } catch (error) {
+        console.error(error); // show the plain plan instead
+      }
+      if (request !== planRequest) return; // something newer is already showing
+    }
     field.caption.textContent = floorName + ' · ' + words.tapToZoomText;
     field.image.onerror = () => showFloorMessage(floorName, missingText); // listed, but the file is missing
-    field.image.src = source;
+    field.image.src = picture;
     field.image.alt = building.name + ', ' + floorName + ' ' + (view === 'plan' ? words.planAltText : words.postedAltText);
     field.image.hidden = false;
     field.zoomButton.disabled = false;
@@ -189,9 +233,10 @@ export function initBuildingSheet(app, buildingsById) {
     view = nextView;
     const state = store.get();
     const building = buildingsById[state.selectedId];
-    if (building) fillFloorPlan(building, state.activeFloor);
+    if (building) fillFloorPlan(building, state.activeFloor, state.selectedRoom);
   }
 
+  field.directionsButton.addEventListener('click', () => store.startDirections());
   field.planTab.addEventListener('click', () => switchView('plan'));
   field.postedTab.addEventListener('click', () => switchView('posted'));
   field.zoomButton.addEventListener('click', () => {
@@ -209,7 +254,8 @@ export function initBuildingSheet(app, buildingsById) {
   store.subscribe((state) => {
     const building = buildingsById[state.selectedId];
     if (building) {
-      const key = state.selectedId + '|' + state.activeFloor;
+      const roomNumber = state.selectedRoom ? state.selectedRoom.number : '';
+      const key = state.selectedId + '|' + state.activeFloor + '|' + roomNumber;
       if (key !== shownKey) {
         const differentBuilding = !shownKey.startsWith(state.selectedId + '|');
         if (differentBuilding) {
@@ -219,7 +265,7 @@ export function initBuildingSheet(app, buildingsById) {
           fillAbout(building);
         }
         shownKey = key;
-        fillFloorPlan(building, state.activeFloor);
+        fillFloorPlan(building, state.activeFloor, state.selectedRoom);
       }
     }
 

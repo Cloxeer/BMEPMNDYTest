@@ -40,6 +40,7 @@
      "Hardman and Jacobs Undergraduate Learning Center houses classrooms of various sizes that are centrally scheduled and used for many of the university's core curriculum classes and larger classes. Most undergraduates will take at least some courses in the undergraduate learning center during their student careers. The center also houses the Student Success Center, which includes TRiO Student Support Services and TRiO Upward Bound, and Information & Communications Technology, which includes a Help Desk, computer labs, a drop-in computer center, computer rentals and computer offices and workshops.",
      "This building is a LEED Gold certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste."
     ],
+    "doors": [],
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -92,6 +93,7 @@
     "floorImages": {},
     "postedImages": {},
     "description": [],
+    "doors": [],
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -128,6 +130,16 @@
     "floorImages": {},
     "postedImages": {},
     "description": [],
+    "doors": [
+     [
+      -106.747025,
+      32.283071
+     ],
+     [
+      -106.747038,
+      32.283129
+     ]
+    ],
     "codeSource": "NMSU Space Planning (not on the Registrar list)"
    },
    "geometry": {
@@ -180,6 +192,7 @@
     "floorImages": {},
     "postedImages": {},
     "description": [],
+    "doors": [],
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -216,6 +229,16 @@
     "floorImages": {},
     "postedImages": {},
     "description": [],
+    "doors": [
+     [
+      -106.752813,
+      32.280587
+     ],
+     [
+      -106.752816,
+      32.2806
+     ]
+    ],
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -253,6 +276,7 @@
     "floorImages": {},
     "postedImages": {},
     "description": [],
+    "doors": [],
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -288,6 +312,7 @@
     "floorImages": {},
     "postedImages": {},
     "description": [],
+    "doors": [],
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -324,6 +349,12 @@
     "floorImages": {},
     "postedImages": {},
     "description": [],
+    "doors": [
+     [
+      -106.747768,
+      32.280974
+     ]
+    ],
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -359,6 +390,7 @@
     "floorImages": {},
     "postedImages": {},
     "description": [],
+    "doors": [],
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -394,6 +426,7 @@
     "floorImages": {},
     "postedImages": {},
     "description": [],
+    "doors": [],
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {

@@ -10,7 +10,7 @@
  *                the dot), ./config.js, #locate-btn in index.html.
  *                Browsers only share location on https or localhost.
  * CONTROLS     : #locate-btn.
- * USED BY      : js/app.js
+ * USED BY      : js/app.js (which hands showMyLocation to js/directions.js)
  *
  * WHY A HIDDEN CONTROL: MapLibre's GeolocateControl already handles
  * permissions, accuracy and the blue dot. We keep its own button hidden
@@ -24,6 +24,7 @@ import { store } from './store.js';
  * Wire the location button.
  * @param {Framework7} app - for the "location unavailable" message
  * @param {maplibregl.Map} map
+ * @returns {{ showMyLocation: () => void }} for js/directions.js
  */
 export function initLocate(app, map) {
   const button = document.querySelector('#locate-btn');
@@ -65,4 +66,11 @@ export function initLocate(app, map) {
     button.classList.toggle('is-hidden', state.sheetOpen);
     button.inert = state.sheetOpen; // can't be tapped or tabbed to while hidden
   });
+
+  return {
+    /** Show and follow your location, unless it's already on (pressing again would turn it off). */
+    showMyLocation() {
+      if (!button.classList.contains('is-active')) locator.trigger();
+    },
+  };
 }

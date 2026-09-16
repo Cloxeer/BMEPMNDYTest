@@ -21,6 +21,7 @@ import { initPill } from './pill.js';
 import { initSearch } from './search.js';
 import { initLocations } from './locations.js';
 import { initLocate } from './locate.js';
+import { initDirections } from './directions.js';
 
 /**
  * Start Framework7. While any full-screen popup is open, the bottom pill hides.
@@ -162,11 +163,12 @@ async function main() {
   await loadConfig();
   const app = startFramework7();
 
-  const [buildingData, campuses, labels, outside] = await Promise.all([
+  const [buildingData, campuses, labels, outside, rooms] = await Promise.all([
     loadData('buildings.geojson'),
     loadData('campuses.geojson'), // NMSU class places, nearest first
     loadData('campus-labels.geojson'), // one name per place
     loadData('outside-mask.geojson'), // everything that isn't a class place
+    loadData('rooms.json'), // rooms found on our floor plans (tools/build_rooms.py)
   ]);
 
   // Each building's map position is its point in the data file.
@@ -176,8 +178,9 @@ async function main() {
   const map = initMap(buildingsById, campuses, labels, outside);
   initBuildingSheet(app, buildingsById);
   initPill(buildingsById);
-  initLocate(app, map);
-  initSearch(buildings);
+  const locate = initLocate(app, map);
+  initDirections(app, map, locate, buildingsById);
+  initSearch(buildings, rooms, buildingsById);
   initMenu(app, campuses);
   initWelcome(app);
   initReportButton(app);

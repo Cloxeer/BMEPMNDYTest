@@ -1,14 +1,16 @@
 /**
  * @file js/search.js
- * @summary The building search that drops down under the navbar.
+ * @summary The building and room search that drops down under the navbar.
  *
  * WHAT IT DOES : Tapping the search icon lets go of any selected building and
- *                opens a search field. Results appear only once you type
- *                (matching name, address, building code or number), with the
- *                typed letters highlighted. Tapping a result selects that
- *                building. Tapping the search icon again closes search.
- * DEPENDS ON   : ./config.js, ./store.js, ./html.js, #search-drop in index.html
- *                (a Framework7 "media list" for the results).
+ *                opens a search field. Results appear only once you type, with
+ *                the typed letters highlighted. Rooms come first ("SH 205",
+ *                "118A"), then buildings. Tapping a result flies to the
+ *                building and opens its sheet (on the room's floor, with the
+ *                room highlighted). Tapping the search icon again closes search.
+ *                What counts as a match is decided in ./searchMatch.js.
+ * DEPENDS ON   : ./config.js, ./store.js, ./html.js, ./searchMatch.js,
+ *                #search-drop in index.html (a Framework7 "media list" for the results).
  * CONTROLS     : #search-drop and #search-results.
  * USED BY      : js/app.js
  */
@@ -16,89 +18,126 @@
 import { CONFIG } from './config.js';
 import { store } from './store.js';
 import { escapeHtml } from './html.js';
+import { buildingWords, typedWords, buildingMatches, roomScore } from './searchMatch.js';
 
 /**
- * Wrap every place the typed letters appear in <mark>, e.g. "hall" in "Science Hall".
+ * Wrap every place a typed word appears in <mark>, e.g. "hall" in "Science Hall".
  * @param {string} text - text to show
- * @param {string} query - lowercased search text
+ * @param {string[]} words - typed words, lowercase
  * @returns {string} safe HTML
  */
-function highlight(text, query) {
+function highlight(text, words) {
   const lower = text.toLowerCase();
-  let html = '';
-  let from = 0;
-  let at = lower.indexOf(query);
-  while (at !== -1) {
-    html += escapeHtml(text.slice(from, at)) + '<mark class="search-hit">' + escapeHtml(text.slice(at, at + query.length)) + '</mark>';
-    from = at + query.length;
-    at = lower.indexOf(query, from);
-  }
-  return html + escapeHtml(text.slice(from));
-}
+  const marked = new Array(text.length).fill(false);
+  words.forEach((word) => {
+    for (let at = lower.indexOf(word); at !== -1; at = lower.indexOf(word, at + 1)) {
+      marked.fill(true, at, at + word.length);
+    }
+  });
 
-/**
- * Does this building match the typed text?
- * @param {object} building
- * @param {string} query - lowercased search text
- * @returns {boolean}
- */
-function matches(building, query) {
-  const searchable = [building.id, building.name, building.address, ...building.aka].join(' ').toLowerCase();
-  return searchable.includes(query);
+  let html = '';
+  for (let i = 0; i < text.length; i += 1) {
+    const opens = marked[i] && !marked[i - 1];
+    const closes = marked[i] && !marked[i + 1];
+    html += (opens ? '<mark class="search-hit">' : '') + escapeHtml(text[i]) + (closes ? '</mark>' : '');
+  }
+  return html;
 }
 
 /**
  * Wire the search drop-down.
  * @param {object[]} buildings - every building, in map order
+ * @param {object[]} rooms - every room, from data/rooms.json
+ * @param {Object.<string, object>} buildingsById
  */
-export function initSearch(buildings) {
+export function initSearch(buildings, rooms, buildingsById) {
   const drop = document.querySelector('#search-drop');
   const input = document.querySelector('#search-input');
   const searchButton = document.querySelector('#search-btn');
   const results = document.querySelector('#search-results');
   const list = results.querySelector('ul');
+  const words = CONFIG.search;
+
+  // Work out each building's words once, not on every key press.
+  const wordsOf = Object.fromEntries(buildings.map((building) => [building.id, buildingWords(building)]));
 
   let showing = false; // is the drop-down on screen? Always follows state.searching.
 
   /**
-   * One result row: bold name, grey "code · address", one chevron.
-   * @param {object} building
-   * @param {string} query
+   * One result row: bold title, grey subtitle, one chevron.
+   * @param {string} title
+   * @param {string} subtitle
+   * @param {string[]} typed - typed words, for highlighting
+   * @param {() => void} onPick
    * @returns {HTMLLIElement}
    */
-  function resultRow(building, query) {
+  function resultRow(title, subtitle, typed, onPick) {
     const row = document.createElement('li');
-    const subtitle = [building.code, building.address].filter(Boolean).join(' · ');
     row.innerHTML =
       '<a href="#" class="item-link item-content"><div class="item-inner">' +
-      '<div class="item-title-row"><div class="item-title">' + highlight(building.name, query) + '</div></div>' +
-      '<div class="item-subtitle">' + highlight(subtitle, query) + '</div>' +
+      '<div class="item-title-row"><div class="item-title">' + highlight(title, typed) + '</div></div>' +
+      '<div class="item-subtitle">' + highlight(subtitle, typed) + '</div>' +
       '</div></a>';
     row.querySelector('a').addEventListener('click', (event) => {
       event.preventDefault();
-      store.selectBuilding(building, 'search'); // this also ends search
+      onPick(); // selecting also ends search
     });
     return row;
   }
 
   /**
-   * Show results for the typed text. Nothing typed = no results panel.
-   * @param {string} typed
+   * A row for a room: "Room 205" / "Classroom · Hardman and Jacobs … · HJLC · Floor 2".
+   * @param {object} room
+   * @param {string[]} typed
+   * @returns {HTMLLIElement}
    */
-  function showResults(typed) {
-    const query = typed.trim().toLowerCase();
-    list.innerHTML = '';
-    results.hidden = !query;
-    if (!query) return;
+  function roomRow(room, typed) {
+    const building = buildingsById[room.building];
+    const floor = room.floor ? CONFIG.pill.floorText + ' ' + room.floor : '';
+    const subtitle = [room.name, building.name, building.code, floor].filter(Boolean).join(' · ');
+    return resultRow(words.roomText + ' ' + room.number, subtitle, typed,
+      () => store.selectRoom(building, room, 'search'));
+  }
 
-    const found = buildings.filter((building) => matches(building, query)).slice(0, CONFIG.search.maxResults);
-    if (!found.length) {
+  /**
+   * A row for a building: name / "code · address".
+   * @param {object} building
+   * @param {string[]} typed
+   * @returns {HTMLLIElement}
+   */
+  function buildingRow(building, typed) {
+    const subtitle = [building.code, building.address].filter(Boolean).join(' · ');
+    return resultRow(building.name, subtitle, typed, () => store.selectBuilding(building, 'search'));
+  }
+
+  /**
+   * Show results for the typed text. Nothing typed = no results panel.
+   * @param {string} text
+   */
+  function showResults(text) {
+    const typed = typedWords(text);
+    list.innerHTML = '';
+    results.hidden = typed.length === 0;
+    if (!typed.length) return;
+
+    // Rooms: exact room numbers first.
+    const roomHits = rooms
+      .map((room) => ({ room, score: roomScore(typed, room, buildingsById[room.building], wordsOf[room.building]) }))
+      .filter((hit) => hit.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map((hit) => roomRow(hit.room, typed));
+    const buildingHits = buildings
+      .filter((building) => buildingMatches(typed, wordsOf[building.id]))
+      .map((building) => buildingRow(building, typed));
+
+    const rows = [...roomHits, ...buildingHits].slice(0, words.maxResults);
+    if (!rows.length) {
       const empty = document.createElement('li');
       empty.className = 'search-empty';
-      empty.textContent = CONFIG.search.noMatchText + ' "' + typed.trim() + '"';
+      empty.textContent = words.noMatchText + ' "' + text.trim() + '"';
       list.appendChild(empty);
     }
-    found.forEach((building) => list.appendChild(resultRow(building, query)));
+    rows.forEach((row) => list.appendChild(row));
   }
 
   /** Empty the field and the results. */

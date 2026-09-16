@@ -81,7 +81,8 @@ badge:
 search:
   maxResults: 8
   focusDelay: 60
-  noMatchText: "No buildings match"
+  noMatchText: "No buildings or rooms match"
+  roomText: "Room"
   panelShadowY: "8px"
   panelShadowBlur: "16px"
   slideTime: "0.24s"
@@ -153,6 +154,7 @@ sheet:
   noOfficialPlanText: "NMSU does not publish floor plans online. “Our plan” is redrawn from the evacuation map posted inside the building."
   noDescriptionText: "A full description for this building is coming soon."
   noPhotosText: "No photos of this building yet."
+  roomFloorUnknownText: "floor not published by NMSU"
   tapToZoomText: "tap to zoom"
   planAltText: "plan"
   postedAltText: "posted evacuation map"
@@ -170,6 +172,10 @@ sheet:
   plansNoteText: "Floor plans are unofficial, redrawn from the evacuation maps posted in the building."
   photoViewerTheme: "light"
   titleSize: "16px"
+  sideWidth: "96px" # room on each side of the title: "Get directions" left, X right
+  directionsSize: "13px"
+  directionsWeight: 600
+  directionsIconSize: "18px"
   closeSize: "28px"
   bottomSpace: "120px"
   switchMaxWidth: "320px"
@@ -192,6 +198,26 @@ sheet:
   imageMaxWidthDesktop: "640px"
   dividerWidth: "1px"
   viewerLayer: 13000 # full-screen picture viewer: above the sheet (12500), below the pill (15000)
+
+directions:
+  title: "Directions"
+  endText: "End route" # the pill while directions are on; tap it to stop
+  noLocationText: "Directions need your location. Allow location access for this site in your browser settings, then try again."
+  tooFarText: "Directions work on the NMSU Las Cruces campus. Get closer to campus and try again."
+  noRouteText: "No walking route was found to this building."
+  loadFailedText: "Could not load the walking paths. Check your internet connection and try again."
+  lineColor: "#0a84ff" # Apple system blue
+  lineOpacity: 0.35
+  lineWidth: 10 # px
+  arrowColor: "#0a84ff"
+  arrowSize: 14 # px
+  arrowSpacing: 24 # px between arrows
+  rerouteMetres: 8 # only redraw the route after you've walked this far
+  maxDistanceToWalkway: 400 # metres; farther than this from any campus path = not on campus
+  searchRadius: 250 # metres around a building to look for its nearest walkway
+  roomColor: "rgba(10, 132, 255, 0.28)" # the highlighted room on a floor plan (light blue)
+  roomEdge: "#0a84ff"
+  roomEdgeWidth: 6 # in floor-plan units
 
 locate:
   zoom: 17 # how close the map zooms in on your location

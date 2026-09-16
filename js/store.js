@@ -2,15 +2,17 @@
  * @file js/store.js
  * @summary The app's shared memory, and the only place it gets changed.
  *
- * WHAT IT DOES : Remembers which building is selected, whether its sheet is
- *                open, which floor is showing, and whether search is open.
+ * WHAT IT DOES : Remembers which building (and room) is selected, whether its
+ *                sheet is open, which floor is showing, whether search is open,
+ *                and where directions are leading.
  *                Other files change it only through the named actions below
  *                (selectBuilding, closeSheet, ...), so every rule about what
  *                changes together lives here. Anything that called
  *                store.subscribe(fn) is told after every change.
  * DEPENDS ON   : nothing.
  * CONTROLS     : the app state.
- * USED BY      : js/app.js, js/map.js, js/buildingSheet.js, js/pill.js, js/search.js
+ * USED BY      : js/app.js, js/map.js, js/buildingSheet.js, js/pill.js, js/search.js,
+ *                js/directions.js
  */
 
 const state = {
@@ -19,6 +21,8 @@ const state = {
   sheetWaiting: false, // true = open the sheet once the map has flown to the building
   sheetOpen: false, // is the building sheet showing?
   activeFloor: null, // floor shown in the sheet
+  selectedRoom: null, // the room chosen in search (a record from data/rooms.json), or null
+  directionsTo: null, // { buildingId, room } while directions are on, otherwise null
   searching: false, // is the search drop-down open?
 };
 
@@ -56,16 +60,30 @@ export const store = {
    * @param {'map'|'search'} via - where it was chosen (sets the pause before the sheet opens)
    */
   selectBuilding(building, via) {
+    this.selectRoom(building, null, via);
+  },
+
+  /**
+   * Choose a room: like selectBuilding, but the sheet opens on the room's floor
+   * with the room highlighted.
+   * @param {object} building
+   * @param {object|null} room - a record from data/rooms.json (null = just the building)
+   * @param {'map'|'search'} via
+   */
+  selectRoom(building, room, via) {
+    const floor = room && room.floor ? room.floor : building.floors[0] ?? null;
     if (building.id === state.selectedId) {
-      update({ sheetOpen: true, sheetWaiting: false, searching: false });
+      // Already there: no flight, so open straight away.
+      update({ selectedRoom: room, activeFloor: floor, sheetOpen: true, sheetWaiting: false, searching: false });
       return;
     }
     update({
       selectedId: building.id,
       selectedVia: via,
+      selectedRoom: room,
       sheetOpen: false,
       sheetWaiting: true,
-      activeFloor: building.floors[0] ?? null,
+      activeFloor: floor,
       searching: false,
     });
   },
@@ -81,7 +99,7 @@ export const store = {
 
   /** Let go of the selected building and close its sheet. */
   clearSelection() {
-    update({ selectedId: null, selectedVia: null, sheetOpen: false, sheetWaiting: false, activeFloor: null, searching: false });
+    update({ selectedId: null, selectedVia: null, selectedRoom: null, sheetOpen: false, sheetWaiting: false, activeFloor: null, searching: false });
   },
 
   /** Open the selected building's sheet now (the Info pill). */
@@ -104,7 +122,35 @@ export const store = {
 
   /** Open search: any selected building is let go. */
   startSearch() {
-    update({ selectedId: null, selectedVia: null, sheetOpen: false, sheetWaiting: false, activeFloor: null, searching: true });
+    update({ selectedId: null, selectedVia: null, selectedRoom: null, sheetOpen: false, sheetWaiting: false, activeFloor: null, searching: true });
+  },
+
+  /** Start directions to the selected building (and room). The sheet closes so the map shows. */
+  startDirections() {
+    if (!state.selectedId) return;
+    update({ directionsTo: { buildingId: state.selectedId, room: state.selectedRoom }, sheetOpen: false, sheetWaiting: false });
+  },
+
+  /** Stop directions. */
+  endDirections() {
+    if (state.directionsTo) update({ directionsTo: null });
+  },
+
+  /**
+   * You walked into the building: directions end and its sheet opens on the room's floor.
+   * @param {object} building - the building directions led to
+   */
+  arrived(building) {
+    const room = state.directionsTo ? state.directionsTo.room : null;
+    update({
+      directionsTo: null,
+      selectedId: building.id,
+      selectedRoom: room,
+      activeFloor: room && room.floor ? room.floor : building.floors[0] ?? null,
+      sheetOpen: true,
+      sheetWaiting: false,
+      searching: false,
+    });
   },
 
   /** Close search (does nothing if it's already closed). */

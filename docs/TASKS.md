@@ -84,6 +84,11 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] One sheet layout for every building; floor pill for every multi-floor building
 - [x] Floor pills glide out of / back into the main pill; label fades between words
 - [x] Full-screen floor plan viewer: opens above the sheet, one at a time
+- [x] Room search ("SH 118A", "hjlc 225", small typos) from our floor plans + NMSU class schedule
+- [x] Chosen room highlighted light blue on its floor plan
+- [x] Get directions: walking route with arrows (OpenStreetMap paths), sheet opens on arrival
+- [ ] Floors/outlines for schedule-only rooms (needs posted evacuation maps for each building)
+- [ ] Indoor arrows (needs hallway data; NMSU publishes none)
 
 ## Reviews to write (docs/REVIEW.md)
 - [ ] Maps · NMSU campus area · building layout · UI · UX/accessibility (with claims fact-checked)

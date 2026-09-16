@@ -48,7 +48,7 @@
         <div id="search-drop" class="search-drop" aria-hidden="true">
           <label class="search-field">
             <i class="icon f7-icons" aria-hidden="true">search</i>
-            <input id="search-input" type="search" placeholder="Search buildings" autocomplete="off" enterkeyhint="search" aria-label="Search buildings" />
+            <input id="search-input" type="search" placeholder="Search buildings or rooms" autocomplete="off" enterkeyhint="search" aria-label="Search buildings or rooms" />
           </label>
           <div id="search-results" class="list media-list search-results" hidden><ul></ul></div>
         </div>
@@ -64,7 +64,10 @@
     <div class="sheet-modal building-sheet" id="building-sheet">
       <div class="sheet-modal-inner">
         <div class="bs-head">
-          <span class="bs-side"></span>
+          <!-- Left: directions to this building (js/directions.js draws the route) -->
+          <button id="bs-directions" class="bs-side bs-directions" type="button">
+            <i class="icon f7-icons" aria-hidden="true">arrow_turn_up_right</i><span>Get directions</span>
+          </button>
           <span id="bs-name" class="bs-name"></span>
           <button class="bs-side bs-x sheet-close" type="button" aria-label="Close">&times;</button>
         </div>

@@ -13,10 +13,15 @@ SOURCES      : NMSU Office of Space Planning "Buildings" layer: name, code,
                data/source/buildings-osm.geojson: floor count when NMSU lists none
                data/source/photos.json: freely licensed photos
                data/source/building-extras.json: floor plans + descriptions
+               data/source/entrances.geojson: doors mapped in OpenStreetMap
+WRITES       : data/buildings.geojson (one point per building, with its facts)
+               data/building-shapes.geojson (NMSU's official outline of each
+                 building: used to tell when you've walked inside)
 RUN IT       : python tools/build_buildings.py
 """
 
 import json
+import math
 import re
 import urllib.request
 from pathlib import Path
@@ -25,6 +30,9 @@ from pathlib import Path
 PROJECT = Path(__file__).resolve().parent.parent
 SOURCE = PROJECT / 'data' / 'source'
 OUTPUT = PROJECT / 'data' / 'buildings.geojson'
+SHAPES_OUTPUT = PROJECT / 'data' / 'building-shapes.geojson'
+DOOR_DISTANCE_M = 4  # an OpenStreetMap door within this many metres of NMSU's outline belongs to the building
+METRES_PER_DEGREE = 111320
 NMSU_BUILDINGS = ('https://services6.arcgis.com/r7ZUBDL24w5VsBnN/arcgis/rest/services/'
                   'buildings_642026_WFL1/FeatureServer/9/query')
 REGISTRAR = 'NMSU Registrar building abbreviations (records.nmsu.edu)'
@@ -62,6 +70,31 @@ def download_official_records():
     return {row['attributes']['Property']: row['attributes'] for row in rows}
 
 
+def download_outlines():
+    """NMSU's official outline (polygon) of every building in BUILDINGS, keyed by property number."""
+    numbers = ','.join("'" + b[0] + "'" for b in BUILDINGS)
+    url = (NMSU_BUILDINGS + '?where=Property+IN+(' + numbers + ')&outFields=Property'
+           '&returnGeometry=true&outSR=4326&f=geojson')
+    with urllib.request.urlopen(url, timeout=90) as response:
+        features = json.load(response)['features']
+    return {f['properties']['Property']: f['geometry'] for f in features}
+
+
+def metres_to_outline(point, geometry):
+    """Shortest distance in metres from a [lng, lat] point to a building outline's edges."""
+    rings = geometry['coordinates'] if geometry['type'] == 'Polygon' else [r for p in geometry['coordinates'] for r in p]
+    shrink = math.cos(math.radians(point[1]))  # a degree of longitude is shorter away from the equator
+    px, py = point[0] * shrink, point[1]
+    best = float('inf')
+    for ring in rings:
+        for (ax, ay), (bx, by) in zip(ring, ring[1:]):
+            ax, bx = ax * shrink, bx * shrink
+            dx, dy = bx - ax, by - ay
+            t = max(0, min(1, ((px - ax) * dx + (py - ay) * dy) / ((dx * dx + dy * dy) or 1)))
+            best = min(best, math.hypot(px - (ax + t * dx), py - (ay + t * dy)))
+    return best * METRES_PER_DEGREE
+
+
 def floor_count(record, osm_building):
     """Stories from NMSU (e.g. 'ACAD-3 STORY'); if NMSU has none, use OpenStreetMap."""
     match = re.search(r'(\d+)\s*STORY', record['Property_C'] or '')
@@ -75,6 +108,9 @@ def main():
     osm = {f['properties'].get('name'): f['properties'] for f in read_json('buildings-osm.geojson')['features']}
     photos = read_json('photos.json')
     extras = read_json('building-extras.json')
+    outlines = download_outlines()
+    doors = [f['geometry']['coordinates'] for f in read_json('entrances.geojson')['features']]
+    shapes = []
 
     features = []
     for number, name, osm_name, map_id, photo_key in BUILDINGS:
@@ -102,18 +138,24 @@ def main():
             'floorImages': extra.get('floorImages', {}),  # floor number -> our redrawn plan
             'postedImages': extra.get('postedImages', {}),  # floor number -> photo of the posted map
             'description': extra.get('description', []),  # paragraphs
+            # Where directions lead: mapped doors on this building (empty = walk to its centre).
+            'doors': [d for d in doors if metres_to_outline(d, outlines[number]) <= DOOR_DISTANCE_M],
         }
         building['codeSource'] = ('NMSU Space Planning (not on the Registrar list)'
                                   if number in NOT_ON_REGISTRAR_LIST else REGISTRAR)
 
+        shapes.append({'type': 'Feature', 'properties': {'id': number}, 'geometry': outlines[number]})
         position = [round(record['Longitude'], 7), round(record['Latitude'], 7)]
         features.append({'type': 'Feature', 'properties': building,
                          'geometry': {'type': 'Point', 'coordinates': position}})
-        print(f"{number} {building['code']:5} {name} ({floors} floors)")
+        print(f"{number} {building['code']:5} {name} ({floors} floors, {len(building['doors'])} doors)")
 
     with open(OUTPUT, 'w', encoding='utf-8') as f:
         json.dump({'type': 'FeatureCollection', 'features': features}, f, indent=1, ensure_ascii=False)
     print(len(features), 'buildings written to', OUTPUT)
+    with open(SHAPES_OUTPUT, 'w', encoding='utf-8') as f:
+        json.dump({'type': 'FeatureCollection', 'features': shapes}, f, separators=(',', ':'))
+    print(len(shapes), 'outlines written to', SHAPES_OUTPUT)
 
 
 if __name__ == '__main__':

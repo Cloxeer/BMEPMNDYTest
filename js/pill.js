@@ -7,6 +7,7 @@
  *                Sheet open                 -> "Floor 1 ^" until the sheet is closed.
  *                                              Tap it: the other floors glide up
  *                                              out of the pill; pick one to switch.
+ *                Directions on (map showing)-> "End route" (tap: stop directions)
  *                Search open                -> "Searching…"
  * DEPENDS ON   : ./config.js (texts), ./store.js, #pill in index.html, styles/app.css.
  * CONTROLS     : #pill-main and the #pill-choose floor stack (the location
@@ -84,9 +85,22 @@ export function initPill(buildingsById) {
       });
   }
 
+  /**
+   * Is the pill showing "End route"? (Directions on, and you're looking at the map.)
+   * @param {object} state
+   * @returns {boolean}
+   */
+  function routeShowing(state) {
+    return Boolean(state.directionsTo && !state.sheetOpen && !state.searching);
+  }
+
   pill.addEventListener('click', (event) => {
     event.stopPropagation();
     const state = store.get();
+    if (routeShowing(state)) {
+      store.endDirections();
+      return;
+    }
     const building = buildingsById[state.selectedId];
     if (!building) return; // nothing selected: nothing to open
 
@@ -118,6 +132,9 @@ export function initPill(buildingsById) {
     if (state.searching) {
       words = labels.searchingText;
       spoken = words;
+    } else if (routeShowing(state)) {
+      words = CONFIG.directions.endText;
+      spoken = words;
     } else if (!building) {
       words = labels.idleText;
       spoken = words;
@@ -129,8 +146,11 @@ export function initPill(buildingsById) {
     pill.setAttribute('aria-label', spoken);
 
     // The ^ only appears when tapping will reveal something.
-    pill.classList.toggle('has-chev', sheetShowing ? hasOtherFloors : Boolean(building));
-    pill.setAttribute('aria-disabled', String(!building));
+    let showChevron = Boolean(building); // "Info ^"
+    if (sheetShowing) showChevron = hasOtherFloors; // "Floor 1 ^" only if there are other floors
+    if (routeShowing(state)) showChevron = false; // "End route"
+    pill.classList.toggle('has-chev', showChevron);
+    pill.setAttribute('aria-disabled', String(!building && !routeShowing(state)));
 
     if (!sheetShowing) setStackOpen(false);
   });
