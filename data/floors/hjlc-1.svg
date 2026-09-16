@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1360" font-family="Arial, Helvetica, sans-serif">
+  <!-- Hardman & Jacobs Undergraduate Learning Center — Floor 1 (schematic, traced
+       from the building's emergency evacuation map). Room fills are light gray,
+       walls gray, labels dark; the crimson bar is the app theme color. -->
+  <rect x="0" y="0" width="1000" height="1360" fill="#ffffff"/>
+
+  <!-- title bar -->
+  <rect x="0" y="0" width="1000" height="86" fill="#8C0B42"/>
+  <text x="30" y="54" fill="#ffffff" font-size="34" font-weight="700">Floor 1</text>
+  <text x="970" y="52" fill="#ffffff" font-size="20" text-anchor="end">Hardman &amp; Jacobs ULC</text>
+
+  <!-- outer walls -->
+  <rect x="40" y="110" width="920" height="1210" fill="#f7f8f9" stroke="#5f6368" stroke-width="3"/>
+
+  <g stroke="#9aa0a6" stroke-width="2" fill="#eceff1">
+    <!-- top small rooms row (128 series + R134/R133) -->
+    <rect x="300" y="120" width="70" height="70"/><rect x="370" y="120" width="70" height="70"/>
+    <rect x="440" y="120" width="70" height="70"/><rect x="510" y="120" width="70" height="70"/>
+    <rect x="580" y="120" width="70" height="70"/><rect x="650" y="120" width="70" height="70"/>
+    <rect x="720" y="120" width="70" height="70"/><rect x="790" y="120" width="80" height="70"/>
+    <rect x="870" y="120" width="80" height="70"/>
+    <!-- Student Success / Upward Bound (128R) -->
+    <rect x="300" y="200" width="500" height="180" fill="#f3e0e6"/>
+    <!-- left column 128 / 128A -->
+    <rect x="50" y="120" width="240" height="130"/>
+    <rect x="50" y="260" width="240" height="120"/>
+    <!-- right rooms 128N/128D/R131 + M132 area -->
+    <rect x="810" y="200" width="140" height="90"/>
+    <rect x="810" y="300" width="140" height="80"/>
+    <!-- Lecture Hall 125 + Classroom 126 -->
+    <rect x="300" y="410" width="360" height="240" fill="#e8eef5"/>
+    <rect x="700" y="410" width="250" height="300" fill="#e8eef5"/>
+    <!-- M127 / M123 / S122 -->
+    <rect x="50" y="410" width="230" height="120"/>
+    <rect x="50" y="545" width="150" height="105"/>
+    <rect x="210" y="560" width="90" height="90"/>
+    <!-- Computer Lab 101 -->
+    <rect x="300" y="700" width="360" height="230" fill="#e8eef5"/>
+    <rect x="700" y="730" width="120" height="120"/>
+    <!-- bottom room band -->
+    <rect x="60" y="980" width="150" height="150"/><rect x="215" y="980" width="150" height="150"/>
+    <rect x="380" y="1000" width="120" height="130"/><rect x="505" y="1000" width="120" height="130"/>
+    <rect x="640" y="1000" width="120" height="130"/><rect x="765" y="1000" width="180" height="130"/>
+    <rect x="60" y="1140" width="150" height="150"/><rect x="215" y="1140" width="150" height="150"/>
+    <rect x="380" y="1140" width="245" height="150"/>
+    <rect x="640" y="1140" width="120" height="150"/><rect x="765" y="1140" width="180" height="150"/>
+  </g>
+
+  <!-- room labels -->
+  <g fill="#33363b" font-size="17" text-anchor="middle">
+    <text x="170" y="190">128</text>
+    <text x="170" y="325">128A</text>
+    <text x="550" y="285" font-size="20" font-weight="700" fill="#8C0B42">Student Success /</text>
+    <text x="550" y="312" font-size="20" font-weight="700" fill="#8C0B42">Upward Bound</text>
+    <text x="550" y="340">128R</text>
+    <text x="880" y="250">R131</text>
+    <text x="880" y="345">M132</text>
+    <text x="480" y="525" font-size="24" font-weight="700">Lecture Hall</text>
+    <text x="480" y="552" font-size="18">125</text>
+    <text x="825" y="555" font-size="22" font-weight="700">Classroom</text>
+    <text x="825" y="580" font-size="18">126</text>
+    <text x="165" y="475">M127</text>
+    <text x="125" y="602">M123</text>
+    <text x="255" y="610">S122</text>
+    <text x="480" y="820" font-size="24" font-weight="700">Computer Lab</text>
+    <text x="480" y="847" font-size="18">101</text>
+    <text x="760" y="795">101A</text>
+    <text x="135" y="1060">121</text><text x="290" y="1060">119</text>
+    <text x="440" y="1070">S117</text><text x="565" y="1070">S115</text>
+    <text x="700" y="1070">102 / 104</text><text x="855" y="1070">Help Desk 105</text>
+    <text x="135" y="1220">120</text><text x="290" y="1220">118</text>
+    <text x="500" y="1220">ICT</text>
+    <text x="700" y="1220">R108</text><text x="855" y="1220">R106</text>
+  </g>
+
+  <!-- north arrow -->
+  <g transform="translate(905,150)"><line x1="0" y1="26" x2="0" y2="0" stroke="#5f6368" stroke-width="3"/>
+    <polygon points="0,-6 -7,8 7,8" fill="#5f6368"/><text x="0" y="42" fill="#5f6368" font-size="16" text-anchor="middle">N</text></g>
+</svg>

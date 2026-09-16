@@ -10,21 +10,13 @@
         "address": "2902 McFie Circle, Las Cruces, NM 88003",
         "floors": [1, 2],
         "floorImages": {
-          "1": "data/floors/hjlc-1.jpg",
-          "2": "data/floors/hjlc-2.jpg"
+          "1": "data/floors/hjlc-1.svg",
+          "2": "data/floors/hjlc-2.svg"
         }
       },
       "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [-106.74895, 32.28055],
-            [-106.74795, 32.28055],
-            [-106.74795, 32.27985],
-            [-106.74895, 32.27985],
-            [-106.74895, 32.28055]
-          ]
-        ]
+        "type": "Point",
+        "coordinates": [-106.7512196, 32.2824753]
       }
     }
   ]

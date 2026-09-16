@@ -65,7 +65,11 @@ export function initSearch(app, store, buildings, byId) {
     close();
   }
 
-  openBtn.addEventListener('click', open);
+  // Tapping the search icon opens the drop-down; tapping it again closes it.
+  openBtn.addEventListener('click', () => {
+    if (drop.classList.contains('is-open')) close();
+    else open();
+  });
   cancelBtn.addEventListener('click', close);
 
   // Framework7 Autocomplete draws + positions the results dropdown for us.

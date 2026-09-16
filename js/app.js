@@ -21,19 +21,20 @@ import { initSearch } from './search.js';
 const VISITED_KEY = 'bnm_visited';
 
 /**
- * Find the middle point of a polygon's outer ring (for the pin + fly-to).
- * @param {number[][]} ring - array of [lng, lat] points
- * @returns {number[]} [lng, lat] center
+ * Get a building's [lng, lat] center from its geometry (point or polygon).
+ * @param {object} geometry - a GeoJSON geometry
+ * @returns {number[]} [lng, lat]
  */
-function centroid(ring) {
+function centerOf(geometry) {
+  if (geometry.type === 'Point') return geometry.coordinates;
+  const ring = geometry.coordinates[0].slice(0, -1); // polygon: average the corners
   let lng = 0;
   let lat = 0;
-  const pts = ring.slice(0, -1); // last point repeats the first
-  pts.forEach((p) => {
+  ring.forEach((p) => {
     lng += p[0];
     lat += p[1];
   });
-  return [lng / pts.length, lat / pts.length];
+  return [lng / ring.length, lat / ring.length];
 }
 
 /** Boot Framework7 (draws the navbar, menu, popups, sheet in iOS style). */
@@ -41,22 +42,40 @@ function startUI() {
   return new Framework7({ el: '#app', name: 'Better NMSU Maps', theme: 'ios' });
 }
 
-/** Wire the hamburger to the fade menu, and the menu links to the popups. */
+/** Wire the fade menu, underline the current page, and open the sub-pages. */
 function initMenu(app) {
   const menu = app.popup.create({ el: '#menu-popup' });
   const menuEl = document.querySelector('#menu-popup');
+  const schedule = app.popup.create({ el: '#schedule-popup' });
+  const settings = app.popup.create({ el: '#settings-popup' });
+
+  /** Underline whichever page we're currently on. */
+  function setCurrent(page) {
+    ['map', 'schedule', 'settings'].forEach((p) => {
+      document.querySelector('#menu-' + p).classList.toggle('is-current', p === page);
+    });
+  }
+  setCurrent('map');
+
   menu.on('open', () => menuEl.classList.add('menu-open'));
   menu.on('close', () => menuEl.classList.remove('menu-open'));
+  schedule.on('closed', () => setCurrent('map'));
+  settings.on('closed', () => setCurrent('map'));
 
   document.querySelector('#menu-btn').addEventListener('click', () => menu.open());
-  document.querySelector('#menu-map').addEventListener('click', () => menu.close());
-  document.querySelector('#menu-schedule').addEventListener('click', () => {
+  document.querySelector('#menu-map').addEventListener('click', () => {
+    setCurrent('map');
     menu.close();
-    app.popup.open('#schedule-popup');
+  });
+  document.querySelector('#menu-schedule').addEventListener('click', () => {
+    setCurrent('schedule');
+    menu.close();
+    schedule.open();
   });
   document.querySelector('#menu-settings').addEventListener('click', () => {
+    setCurrent('settings');
     menu.close();
-    app.popup.open('#settings-popup');
+    settings.open();
   });
 }
 
@@ -110,12 +129,12 @@ async function main() {
   const byId = {};
   const list = [];
   geojson.features.forEach((f) => {
-    const record = { ...f.properties, center: centroid(f.geometry.coordinates[0]) };
+    const record = { ...f.properties, center: centerOf(f.geometry) };
     byId[record.id] = record;
     list.push(record);
   });
 
-  const map = initMap(store, geojson, byId);
+  const map = initMap(store, byId);
   initSheet(app, store, byId);
   initPill(store, byId);
   initSearch(app, store, list, byId);

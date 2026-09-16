@@ -19,18 +19,14 @@ Built by **The Brainy Bunch** for CS 371.
   floor viewer** slides up. The bottom pill morphs into a **Floor 1 / Floor 2**
   selector. Closing keeps the building selected; tap the pill to reopen.
 
-## ⚠️ Add the two floor-plan photos (one manual step)
+## Floor plans
 
-The code looks for these two files — just drop your photos in with these exact names:
+Floors 1 and 2 of Hardman & Jacobs ship as clean **SVG floor plans**
+(`data/floors/hjlc-1.svg`, `hjlc-2.svg`) traced from the building's evacuation
+maps — they're tiny, crisp at any zoom, and work offline.
 
-```
-data/floors/hjlc-1.jpg   ← Hardman & Jacobs, Floor 1
-data/floors/hjlc-2.jpg   ← Hardman & Jacobs, Floor 2
-```
-
-Until they exist you'll see a "Floor plan photo not added yet" placeholder (that's
-normal). Any image format works if you also change the filename in
-`data/buildings.geojson` (the `floorImages` field).
+Want to use real photos instead? Drop `hjlc-1.jpg` / `hjlc-2.jpg` in `data/floors/`
+and change the `floorImages` paths in `data/buildings.geojson`. Any image type works.
 
 ## File guide
 

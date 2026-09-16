@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1360" font-family="Arial, Helvetica, sans-serif">
+  <!-- Hardman & Jacobs Undergraduate Learning Center — Floor 2 (schematic, traced
+       from the building's emergency evacuation map). -->
+  <rect x="0" y="0" width="1000" height="1360" fill="#ffffff"/>
+
+  <!-- title bar -->
+  <rect x="0" y="0" width="1000" height="86" fill="#8C0B42"/>
+  <text x="30" y="54" fill="#ffffff" font-size="34" font-weight="700">Floor 2</text>
+  <text x="970" y="52" fill="#ffffff" font-size="20" text-anchor="end">Hardman &amp; Jacobs ULC</text>
+
+  <!-- outer walls -->
+  <rect x="40" y="110" width="920" height="1210" fill="#f7f8f9" stroke="#5f6368" stroke-width="3"/>
+
+  <g stroke="#9aa0a6" stroke-width="2" fill="#eceff1">
+    <!-- top small rooms row (R206/R208 + M214/216/S218/220/222) -->
+    <rect x="60" y="120" width="110" height="90"/><rect x="175" y="120" width="110" height="90"/>
+    <rect x="470" y="120" width="80" height="90"/><rect x="552" y="120" width="80" height="90"/>
+    <rect x="634" y="120" width="80" height="90"/><rect x="716" y="120" width="80" height="90"/>
+    <rect x="798" y="120" width="110" height="90"/>
+    <!-- ICT Training Lab 206 + 219 cluster -->
+    <rect x="470" y="230" width="230" height="180" fill="#f3e0e6"/>
+    <rect x="720" y="230" width="190" height="120"/>
+    <rect x="720" y="360" width="190" height="80"/>
+    <rect x="60" y="230" width="110" height="120"/>
+    <!-- open to below (light) -->
+    <rect x="470" y="430" width="230" height="150" fill="#f2f2f2" stroke-dasharray="6 5"/>
+    <!-- Classroom 210 / 225 -->
+    <rect x="430" y="620" width="230" height="260" fill="#e8eef5"/>
+    <rect x="670" y="620" width="240" height="260" fill="#e8eef5"/>
+    <!-- Classroom 230 / 228 -->
+    <rect x="430" y="1010" width="230" height="230" fill="#e8eef5"/>
+    <rect x="670" y="1010" width="240" height="230" fill="#e8eef5"/>
+    <!-- open to below lower -->
+    <rect x="150" y="1010" width="150" height="120" fill="#f2f2f2" stroke-dasharray="6 5"/>
+    <!-- left rooms J218/T232/M234/R217/R216 -->
+    <rect x="90" y="1150" width="90" height="150"/>
+    <rect x="185" y="1150" width="90" height="150"/>
+    <rect x="90" y="1300" width="90" height="30"/>
+  </g>
+
+  <!-- room labels -->
+  <g fill="#33363b" font-size="17" text-anchor="middle">
+    <text x="115" y="170">R206</text><text x="230" y="170">R208</text>
+    <text x="510" y="170">M214</text><text x="592" y="170">216</text>
+    <text x="674" y="170">S218</text><text x="756" y="170">220</text><text x="853" y="170">222</text>
+    <text x="585" y="315" font-size="20" font-weight="700" fill="#8C0B42">ICT Training</text>
+    <text x="585" y="342" font-size="20" font-weight="700" fill="#8C0B42">Lab</text>
+    <text x="585" y="372">206</text>
+    <text x="815" y="298">219</text><text x="815" y="405">219A / 219B</text>
+    <text x="115" y="295">R207</text>
+    <text x="585" y="510" font-size="16" fill="#8a8f96">Open to Below</text>
+    <text x="545" y="745" font-size="22" font-weight="700">Classroom</text>
+    <text x="545" y="770" font-size="18">210</text>
+    <text x="790" y="745" font-size="22" font-weight="700">Classroom</text>
+    <text x="790" y="770" font-size="18">225</text>
+    <text x="545" y="1130" font-size="22" font-weight="700">Classroom</text>
+    <text x="545" y="1155" font-size="18">230</text>
+    <text x="790" y="1130" font-size="22" font-weight="700">Classroom</text>
+    <text x="790" y="1155" font-size="18">228</text>
+    <text x="225" y="1075" font-size="16" fill="#8a8f96">Open to Below</text>
+    <text x="135" y="1230">J218</text><text x="230" y="1230">T232 / M234</text>
+  </g>
+
+  <!-- north arrow -->
+  <g transform="translate(905,150)"><line x1="0" y1="26" x2="0" y2="0" stroke="#5f6368" stroke-width="3"/>
+    <polygon points="0,-6 -7,8 7,8" fill="#5f6368"/><text x="0" y="42" fill="#5f6368" font-size="16" text-anchor="middle">N</text></g>
+</svg>

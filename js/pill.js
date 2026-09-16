@@ -70,13 +70,11 @@ export function initPill(store, byId) {
 
     if (s.mode === 'searching') {
       orb.setState('searching');
-      labelEl.textContent = 'Searching…';
-    } else if (b) {
-      orb.setState('solving');
-      labelEl.textContent = b.name;
+      labelEl.textContent = 'Searching';
     } else {
-      orb.setState('idle');
-      labelEl.textContent = 'Tap a building';
+      // Short + clear, like a button. The building name lives in the sheet header.
+      orb.setState(b ? 'solving' : 'idle');
+      labelEl.textContent = 'Info';
     }
   });
 }

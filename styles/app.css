@@ -32,8 +32,30 @@
 .page-content { padding: 0 !important; overflow: hidden; }
 #map { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
 
-/* The selected-building pin (crimson teardrop from js/map.js). */
-.map-pin { line-height: 0; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35)); }
+/* Apple-style building info button (crimson circle with an "i"). */
+.poi {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: var(--f7-theme-color);
+  color: #fff;
+  font: 700 15px/1 Georgia, "Times New Roman", serif;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  transition: transform 0.18s var(--spring), box-shadow 0.18s ease;
+  padding: 0;
+}
+.poi:hover { transform: scale(1.1); }
+.poi.is-selected {
+  transform: scale(1.25);
+  box-shadow: 0 0 0 4px rgba(140, 11, 66, 0.25), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.poi-i { pointer-events: none; }
 
 /* ---------- 3. Search drop-down ---------- */
 .search-drop {
@@ -60,15 +82,13 @@
   align-items: center;
   gap: 10px;
   max-width: 86vw;
-  padding: 9px 16px;
+  padding: 9px 18px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.9);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-  backdrop-filter: saturate(180%) blur(14px);
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
-  color: #1b1b1d;
+  background: var(--f7-theme-color); /* same crimson as the navbar */
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
+  color: #ffffff;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: padding 0.3s var(--spring), opacity 0.25s ease, transform 0.3s var(--spring);
 }
@@ -91,12 +111,12 @@
   padding: 6px 12px;
   font: inherit;
   font-size: 14px;
-  color: var(--f7-theme-color);
-  background: rgba(140, 11, 66, 0.1);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
 }
-.pill-floor.is-active { background: var(--f7-theme-color); color: #fff; }
+.pill-floor.is-active { background: #fff; color: var(--f7-theme-color); }
 
 /* ---------- 5. The orb (our vanilla thinking-orb) ---------- */
 .orb {
@@ -105,6 +125,8 @@
   width: var(--orb-size, 20px);
   height: var(--orb-size, 20px);
 }
+/* On the crimson pill the orb dots are white so they show up. */
+.pill .orb-dot { background: #fff; }
 .orb-dot {
   position: absolute;
   top: 50%;
@@ -172,7 +194,12 @@
   color: var(--f7-theme-color);
   opacity: 0;
   transform: translateY(14px);
+  text-decoration: none;
+  text-underline-offset: 10px;
+  text-decoration-thickness: 3px;
 }
+/* The page you're currently on is underlined. */
+.menu-link.is-current { text-decoration: underline; }
 /* each line fades in 0.2s after the one before it */
 .popup-menu.menu-open .menu-link { animation: menu-in 0.5s var(--spring) forwards; }
 .popup-menu.menu-open .menu-link:nth-child(1) { animation-delay: 0.05s; }
