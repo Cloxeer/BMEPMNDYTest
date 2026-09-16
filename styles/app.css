@@ -1,0 +1,28 @@
+/*
+  app.css — the ONLY custom CSS in the project, and it stays tiny.
+
+  WHAT IT DOES : (1) recolors Framework7 to NMSU crimson, and
+                 (2) makes the MapLibre map fill the screen behind the navbar.
+  DEPENDS ON   : Framework7 (we only override its color variables).
+  CONTROLS     : the app's accent color and the map box size.
+  NOTE         : We do NOT style buttons/bars/panels here — those are stock
+                 Framework7 components. Keep this file small on purpose.
+*/
+
+/* 1) Paint every Framework7 accent in NMSU crimson. */
+:root {
+  --f7-theme-color: #8C0B42;
+  --f7-theme-color-rgb: 140, 11, 66;
+  --f7-theme-color-shade: #6f0834;
+  --f7-theme-color-tint: #a81050;
+}
+
+/* 2) Let the map fill the page (the iOS navbar floats over it). */
+.page-content { padding: 0 !important; overflow: hidden; }
+#map { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+
+/* 3) A little breathing room for the welcome screen text (content only). */
+.welcome-card { text-align: center; margin-top: 20vh; }
+.welcome-h { margin: 0; line-height: 1.15; }
+.welcome-card .brand { color: var(--f7-theme-color); }
+.welcome-card .by { color: var(--f7-color-gray); margin-top: 6px; }
