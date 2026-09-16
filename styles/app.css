@@ -106,8 +106,8 @@
 .pill--main[aria-disabled="true"] { opacity: 0.8; cursor: default; }
 
 /* the ^ : only when tapping reveals something; flips while the stack is open */
-.pill-chev { display: none; font-size: 14px; font-weight: 700; transition: transform 0.3s var(--spring); }
-.pill.has-chev .pill-chev { display: inline-block; }
+.pill .pill-chev { display: none; font-size: 14px; font-weight: 700; transition: transform 0.3s var(--spring); }
+.pill.has-chev .pill-chev { display: inline-block; } /* ".pill ." beats Framework7's i.icon rule */
 .pill.is-stack-open .pill-chev { transform: rotate(180deg); }
 
 /* the other floors, stacked above the pill (higher floors further up) */

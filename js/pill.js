@@ -62,7 +62,7 @@ export function initPill(store, byId) {
 
     if (!s.sheetOpen) {
       store.set({ sheetOpen: true }); // "Info" opens the sheet
-    } else if (b.floors && b.floors.length > 1) {
+    } else if (b.floorImages && b.floors.length > 1) {
       const open = !stack.classList.contains('is-open'); // "Floor N" shows the other floors
       if (open) buildStack(b, s.activeFloor);
       setStackOpen(open);
@@ -75,10 +75,12 @@ export function initPill(store, byId) {
   store.subscribe((s) => {
     const b = s.selectedId ? byId[s.selectedId] : null;
     const floorMode = !!(b && s.sheetOpen);
-    const manyFloors = !!(b && b.floors && b.floors.length > 1);
+    // Only buildings with drawn floor plans get a floor button.
+    const hasPlans = !!(b && b.floorImages);
+    const manyFloors = hasPlans && b.floors.length > 1;
 
     if (s.mode === 'searching') label.textContent = 'Searching…';
-    else label.textContent = floorMode ? 'Floor ' + (s.activeFloor || 1) : 'Info';
+    else label.textContent = floorMode && hasPlans ? 'Floor ' + (s.activeFloor || 1) : 'Info';
 
     // The ^ only appears when tapping will actually reveal something.
     main.classList.toggle('has-chev', floorMode ? manyFloors : !!b);

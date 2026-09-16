@@ -51,7 +51,11 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 ## Building info
 - [x] Description / address / property no. (HJLC)
 - [~] Photos: free licences exist for only Zuhl, Branson, Goddard (downloaded + credited in data/photos.json). None for HJLC. NMSU's official photos are NOT used (permission unconfirmed). Team photos are the plan
-- [ ] Expand to 10 buildings (15 real footprints already in data/buildings-osm.geojson)
+- [x] 10 buildings live: HJLC, Zuhl, Corbett, Branson, Science Hall, Business Complex, Jett, Breland, Hernandez, Clara Belle Williams
+  - Name, building code, number, address, year built, floors: NMSU Space Planning Buildings layer (Corbett floors from OSM; NMSU doesn't list them)
+  - Badge position: NMSU's official building point. Link: each building's page on map.nmsu.edu
+- [ ] Floor plans for the other 9 (needs posted evacuation-map photos from the team)
+- [ ] Descriptions for the other 9 (not copied from NMSU; team to write or get permission)
 
 ## Wayfinding
 - [ ] Route A → B on the real footpath network (data/paths.geojson, 708 ways)

@@ -1,35 +1,371 @@
 {
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {
-        "id": "HJLC",
-        "name": "Hardman and Jacobs Undergraduate Learning Center",
-        "aka": ["HJLC", "Hardman", "Jacobs", "Learning Center", "323"],
-        "address": "2902 McFie Circle, Las Cruces, NM 88003",
-        "propertyNumber": "323",
-        "floors": [1, 2],
-        "floorImages": {
-          "1": "data/floors/hjlc-1.svg",
-          "2": "data/floors/hjlc-2.svg"
-        },
-        "postedImages": {
-          "1": "data/floors/hjlc-1-posted.jpg",
-          "2": "data/floors/hjlc-2-posted.jpg"
-        },
-        "description": [
-          "This building was built in 2015 and was named for Carl F. Jacobs (who started the NMSU music department) and Marion Hardmen (retired English Professor and Dean of Women).",
-          "Hardman and Jacobs Undergraduate Learning Center houses classrooms of various sizes that are centrally scheduled and used for many of the university's core curriculum classes and larger classes. Most undergraduates will take at least some courses in the undergraduate learning center during their student careers. The center also houses the Student Success Center, which includes TRiO Student Support Services and TRiO Upward Bound, and Information & Communications Technology, which includes a Help Desk, computer labs, a drop-in computer center, computer rentals and computer offices and workshops.",
-          "This building is a LEED Gold certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste."
-        ],
-        "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525521",
-        "source": "OpenStreetMap way/453824115 (ODbL); description from NMSU campus map"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-106.7512196, 32.2824753]
-      }
-    }
-  ]
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "323",
+    "code": "HA",
+    "name": "Hardman and Jacobs Undergraduate Learning Center",
+    "aka": [
+     "HA",
+     "323",
+     "Hardman And Jacobs Undergraduate Learning Center",
+     "HJLC",
+     "Hardman",
+     "Jacobs",
+     "Learning Center"
+    ],
+    "address": "2902 Mcfie Circle, Las Cruces, NM 88003",
+    "propertyNumber": "323",
+    "built": "2015",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525521",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 323)",
+    "floorImages": {
+     "1": "data/floors/hjlc-1.svg",
+     "2": "data/floors/hjlc-2.svg"
+    },
+    "postedImages": {
+     "1": "data/floors/hjlc-1-posted.jpg",
+     "2": "data/floors/hjlc-2-posted.jpg"
+    },
+    "description": [
+     "This building was built in 2015 and was named for Carl F. Jacobs (who started the NMSU music department) and Marion Hardmen (retired English Professor and Dean of Women).",
+     "Hardman and Jacobs Undergraduate Learning Center houses classrooms of various sizes that are centrally scheduled and used for many of the university's core curriculum classes and larger classes. Most undergraduates will take at least some courses in the undergraduate learning center during their student careers. The center also houses the Student Success Center, which includes TRiO Student Support Services and TRiO Upward Bound, and Information & Communications Technology, which includes a Help Desk, computer labs, a drop-in computer center, computer rentals and computer offices and workshops.",
+     "This building is a LEED Gold certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste."
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7511869,
+     32.2824849
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "461",
+    "code": "ZL",
+    "name": "Zuhl Library",
+    "aka": [
+     "ZL",
+     "461",
+     "Zuhl Library"
+    ],
+    "address": "2911 Mcfie Cir., Las Cruces, NM 88003",
+    "propertyNumber": "461",
+    "built": "1992",
+    "floors": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/526019",
+    "photos": [
+     {
+      "file": "data/photos/zuhl-library-1.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:NMSU_Zuhl_2008.JPG",
+      "license": "CC BY 3.0",
+      "author": "Zereshk",
+      "verifiedHow": "In Commons Category:Zuhl Library, description \"New Mexico State University, Zuhl Library\", and the \"ZUHL LIBRARY\" sign is legible on the entrance arcade."
+     },
+     {
+      "file": "data/photos/zuhl-library-2.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:NMSU_ZuhlLibrary.jpg",
+      "license": "CC BY-SA 3.0",
+      "author": "Terry Umbenhaur",
+      "verifiedHow": "In Commons Category:Zuhl Library with description \"Zuhl Library with Organ Mountains in the background\"; same arched gable as photo 1, though the building fills only the lower right (mostly mountains)."
+     }
+    ],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 461)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7496544,
+     32.2814346
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "285",
+    "code": "CC",
+    "name": "Corbett Center Student Union",
+    "aka": [
+     "CC",
+     "285",
+     "Corbett Center"
+    ],
+    "address": "1600 International Mall, Las Cruces, NM 88003",
+    "propertyNumber": "285",
+    "built": "1968",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/526646",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 285)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7477095,
+     32.2828941
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "278",
+    "code": "BL",
+    "name": "Branson Library",
+    "aka": [
+     "BL",
+     "278",
+     "Branson Library"
+    ],
+    "address": "1305 Frenger Mall, Las Cruces, NM 88003",
+    "propertyNumber": "278",
+    "built": "1951",
+    "floors": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/526015",
+    "photos": [
+     {
+      "file": "data/photos/branson-hall-library-1.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Branson_Library_New_Mexico_State_University_Las_Cruces.jpg",
+      "license": "Public domain (PD-self)",
+      "author": "AllenS",
+      "verifiedHow": "In Commons Category:Branson Hall Library, description names Branson Library at NMSU Las Cruces, and \"BRANSON HALL LIBRARY\" lettering is legible on the tower."
+     },
+     {
+      "file": "data/photos/branson-hall-library-2.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:NMSU_BransonLibrary.jpg",
+      "license": "CC BY-SA 3.0",
+      "author": "Terry Umbenhaur",
+      "verifiedHow": "In Commons Category:Branson Hall Library, description \"Branson Library, New Mexico State University\", and \"BRANSON HALL LIBRARY\" lettering is visible on the facade."
+     }
+    ],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 278)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7520317,
+     32.2815539
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "391",
+    "code": "SH",
+    "name": "Science Hall",
+    "aka": [
+     "SH",
+     "391",
+     "Science Hall"
+    ],
+    "address": "1290 Frenger Mall, Las Cruces, NM 88001",
+    "propertyNumber": "391",
+    "built": "1987",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525545",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 391)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7521319,
+     32.2804901
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "386",
+    "code": "BC",
+    "name": "Business Complex",
+    "aka": [
+     "BC",
+     "386",
+     "Business Complex Building"
+    ],
+    "address": "1320 University Ave., Las Cruces, NM 88003",
+    "propertyNumber": "386",
+    "built": "1983",
+    "floors": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525491",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 386)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7521401,
+     32.2835817
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "189",
+    "code": "JH",
+    "name": "Jett Hall",
+    "aka": [
+     "JH",
+     "189",
+     "Jett Hall"
+    ],
+    "address": "1040 South Horseshoe, Las Cruces, NM 88001",
+    "propertyNumber": "189",
+    "built": "1956",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525525",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 189)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7549622,
+     32.281122
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "184",
+    "code": "BD",
+    "name": "Breland Hall",
+    "aka": [
+     "BD",
+     "184",
+     "Breland Hall"
+    ],
+    "address": "1525 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "184",
+    "built": "1954",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525489",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 184)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7482589,
+     32.2810656
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "397",
+    "code": "EC2",
+    "name": "John Whitlock Hernandez Hall",
+    "aka": [
+     "EC2",
+     "397",
+     "John Whitlock Hernandez Hall"
+    ],
+    "address": "3035 S. Espina St., Las Cruces, NM 88001",
+    "propertyNumber": "397",
+    "built": "1988",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525527",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 397)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7549856,
+     32.2802138
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "364",
+    "code": "EN",
+    "name": "Clara Belle Williams Hall",
+    "aka": [
+     "EN",
+     "364",
+     "Clara Belle Williams Hall"
+    ],
+    "address": "1395 International Mall, Las Cruces, NM 88003",
+    "propertyNumber": "364",
+    "built": "1981",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525497",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 364)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7509362,
+     32.2833929
+    ]
+   }
+  }
+ ]
 }

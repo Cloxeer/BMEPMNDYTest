@@ -56,6 +56,13 @@ export function initSheet(app, store, byId) {
    * @param {number} floor - active floor
    */
   function showPlan(b, floor) {
+    // Buildings we haven't drawn yet: hide the switch, say so plainly.
+    const hasPlans = !!b.floorImages;
+    document.querySelector('.bs-switch').hidden = !hasPlans;
+    if (!hasPlans) {
+      cap.textContent = '';
+      return showMissing('Indoor floor plan coming soon.');
+    }
     const list = view === 'plan' ? b.floorImages : b.postedImages;
     const src = list && list[String(floor)];
     tabPlan.classList.toggle('button-active', view === 'plan');
@@ -91,18 +98,21 @@ export function initSheet(app, store, byId) {
 
     const facts = [
       ['Address', b.address],
-      ['Property', b.propertyNumber],
-      ['Floors', b.floors && b.floors.join(', ')],
+      ['Building', b.code && b.code + ' · No. ' + b.propertyNumber],
+      ['Built', b.built],
+      ['Floors', b.floors && b.floors.length],
     ].filter((r) => r[1]).map((r) => '<div class="bs-row"><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>').join('');
 
     return (
       gallery +
       '<h3 class="bs-h3">About this building</h3>' +
-      (b.description || []).map((p) => '<p>' + p + '</p>').join('') +
+      ((b.description || []).map((p) => '<p>' + p + '</p>').join('') ||
+        '<p class="muted">A full description for this building is coming soon.</p>') +
       '<dl class="bs-facts">' + facts + '</dl>' +
       (b.nmsuUrl ? '<a class="bs-link" href="' + b.nmsuUrl + '" target="_blank" rel="noopener">Open on NMSU’s official map ↗</a>' : '') +
-      '<p class="bs-source">Our floor plans are unofficial, redrawn from the evacuation maps posted in the building. ' +
-      'Building location from OpenStreetMap.</p>'
+      '<p class="bs-source">Building facts: NMSU Office of Space Planning' +
+      (b.floorsSource && b.floorsSource !== 'NMSU Space Planning' ? ' (floor count: ' + b.floorsSource + ')' : '') +
+      '. Floor plans are unofficial, redrawn from the evacuation maps posted in the building.</p>'
     );
   }
 
