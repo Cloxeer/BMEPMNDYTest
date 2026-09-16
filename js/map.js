@@ -7,8 +7,8 @@
  *                (2) fades everything that isn't an NMSU class place and outlines
  *                    + names the places that are,
  *                (3) keeps dragging inside the Las Cruces places,
- *                (4) draws a crimson "i" badge on each building; the selected one
- *                    gets a red ring,
+ *                (4) draws a crimson "i" badge with a white ring on each building;
+ *                    the selected one gets a black ring instead,
  *                (5) tells the store when a building or the map is tapped.
  * DEPENDS ON   : maplibre-gl (global `maplibregl`), ./config.js, ./store.js, and
  *                three files made by tools/build_campuses.py:
@@ -52,12 +52,13 @@ function boundsOf(points, pad) {
 
 /**
  * Draw the round "i" badge once, as a picture the map can stamp on buildings.
- * Drawn at 2x so it stays sharp on phone screens.
- * @param {boolean} selected - true adds a red ring to show it's the chosen one
+ * Drawn at 2x so it stays sharp on phone screens. Both badges are the same
+ * size, so nothing jumps when you select one; only the ring changes.
+ * @param {boolean} selected - true = black ring (chosen), false = white ring
  * @returns {object} {width, height, data} image for map.addImage
  */
 function drawInfoBadge(selected) {
-  const size = selected ? 36 : 28; // the selected badge is bigger to fit the ring
+  const size = 28;
   const scale = 2;
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = size * scale;
@@ -65,21 +66,15 @@ function drawInfoBadge(selected) {
   g.scale(scale, scale);
   const r = size / 2;
 
-  if (selected) {
-    // outer red ring
-    g.beginPath();
-    g.arc(r, r, r - 1, 0, Math.PI * 2);
-    g.fillStyle = CONFIG.selectedRing;
-    g.fill();
-  }
-
-  // white border, then the crimson centre (same on both badges)
+  // the ring: white normally, black (and a little thicker) when selected
   g.beginPath();
   g.arc(r, r, 13, 0, Math.PI * 2);
-  g.fillStyle = '#ffffff';
+  g.fillStyle = selected ? CONFIG.selectedRing : '#ffffff';
   g.fill();
+
+  // the crimson centre
   g.beginPath();
-  g.arc(r, r, 11, 0, Math.PI * 2);
+  g.arc(r, r, selected ? 10 : 11, 0, Math.PI * 2);
   g.fillStyle = CONFIG.crimson;
   g.fill();
 
@@ -146,7 +141,7 @@ export function initMap(store, byId, campuses, labels, outside) {
   }
 
   /**
-   * Give the selected building the red-ringed badge; every other one keeps the plain badge.
+   * Give the selected building the black-ringed badge; every other one keeps the white ring.
    * @param {string|null} id - selected building id
    */
   function showSelected(id) {
@@ -194,7 +189,7 @@ export function initMap(store, byId, campuses, labels, outside) {
       paint: { 'text-color': CONFIG.crimson, 'text-halo-color': '#ffffff', 'text-halo-width': 2 },
     });
 
-    // --- Building badges (one layer; the selected one swaps to the red-ringed picture) ---
+    // --- Building badges (one layer; the selected one swaps to the black-ringed picture) ---
     map.addImage('info-badge', drawInfoBadge(false), { pixelRatio: 2 });
     map.addImage('info-badge-selected', drawInfoBadge(true), { pixelRatio: 2 });
     map.addSource('buildings', {

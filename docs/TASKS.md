@@ -36,7 +36,8 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Pill says "Tap a building" when nothing is chosen; "Info" only when a building is chosen
 - [x] Search highlights the typed letters in results
 - [x] Search: tapping it lets go of the selected building; results only after typing; one prompt; icon toggles closed
-- [x] Selected building badge gets a red ring
+- [x] Selected building badge: white ring becomes a black ring (same size, no jump)
+- [x] Building codes match NMSU Registrar (records.nmsu.edu): HJLC, ZL, BL, SH, BC, JH, BD, EC2, EN; Corbett (CC) not on that list
 - [x] Map credits start collapsed; "Open on NMSU's official map" link opens
 - [x] Pill: smaller, cleaner; orb removed; Info has a ^ that flips when open
 - [x] ONE pill that never moves: Info ^ → Floor N ^ while the sheet is open (until X); ^ reveals the other floors stacked above; picking hides them

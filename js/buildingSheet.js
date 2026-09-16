@@ -112,7 +112,7 @@ export function initSheet(app, store, byId) {
         '<p class="muted">A full description for this building is coming soon.</p>') +
       '<dl class="bs-facts">' + facts + '</dl>' +
       (b.nmsuUrl ? '<a class="bs-link external" href="' + b.nmsuUrl + '" target="_blank" rel="noopener">Open on NMSU’s official map ↗</a>' : '') +
-      '<p class="bs-source">Building facts: NMSU Office of Space Planning' +
+      '<p class="bs-source">Building code: ' + (b.codeSource || 'NMSU') + '. Other facts: NMSU Office of Space Planning' +
       (b.floorsSource && b.floorsSource !== 'NMSU Space Planning' ? ' (floor count: ' + b.floorsSource + ')' : '') +
       '. Floor plans are unofficial, redrawn from the evacuation maps posted in the building.</p>'
     );

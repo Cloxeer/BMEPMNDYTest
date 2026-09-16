@@ -5,7 +5,7 @@
    "type": "Feature",
    "properties": {
     "id": "323",
-    "code": "HA",
+    "code": "HJLC",
     "name": "Hardman and Jacobs Undergraduate Learning Center",
     "aka": [
      "HA",
@@ -39,7 +39,8 @@
      "This building was built in 2015 and was named for Carl F. Jacobs (who started the NMSU music department) and Marion Hardmen (retired English Professor and Dean of Women).",
      "Hardman and Jacobs Undergraduate Learning Center houses classrooms of various sizes that are centrally scheduled and used for many of the university's core curriculum classes and larger classes. Most undergraduates will take at least some courses in the undergraduate learning center during their student careers. The center also houses the Student Success Center, which includes TRiO Student Support Services and TRiO Upward Bound, and Information & Communications Technology, which includes a Help Desk, computer labs, a drop-in computer center, computer rentals and computer offices and workshops.",
      "This building is a LEED Gold certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste."
-    ]
+    ],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
     "type": "Point",
@@ -87,7 +88,8 @@
       "verifiedHow": "In Commons Category:Zuhl Library with description \"Zuhl Library with Organ Mountains in the background\"; same arched gable as photo 1, though the building fills only the lower right (mostly mountains)."
      }
     ],
-    "source": "NMSU Office of Space Planning, Buildings layer (property 461)"
+    "source": "NMSU Office of Space Planning, Buildings layer (property 461)",
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
     "type": "Point",
@@ -119,7 +121,8 @@
     "floorsSource": "OpenStreetMap building:levels",
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/526646",
     "photos": [],
-    "source": "NMSU Office of Space Planning, Buildings layer (property 285)"
+    "source": "NMSU Office of Space Planning, Buildings layer (property 285)",
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
    },
    "geometry": {
     "type": "Point",
@@ -167,7 +170,8 @@
       "verifiedHow": "In Commons Category:Branson Hall Library, description \"Branson Library, New Mexico State University\", and \"BRANSON HALL LIBRARY\" lettering is visible on the facade."
      }
     ],
-    "source": "NMSU Office of Space Planning, Buildings layer (property 278)"
+    "source": "NMSU Office of Space Planning, Buildings layer (property 278)",
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
     "type": "Point",
@@ -199,7 +203,8 @@
     "floorsSource": "NMSU Space Planning",
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525545",
     "photos": [],
-    "source": "NMSU Office of Space Planning, Buildings layer (property 391)"
+    "source": "NMSU Office of Space Planning, Buildings layer (property 391)",
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
     "type": "Point",
@@ -232,7 +237,8 @@
     "floorsSource": "NMSU Space Planning",
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525491",
     "photos": [],
-    "source": "NMSU Office of Space Planning, Buildings layer (property 386)"
+    "source": "NMSU Office of Space Planning, Buildings layer (property 386)",
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
     "type": "Point",
@@ -263,7 +269,8 @@
     "floorsSource": "NMSU Space Planning",
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525525",
     "photos": [],
-    "source": "NMSU Office of Space Planning, Buildings layer (property 189)"
+    "source": "NMSU Office of Space Planning, Buildings layer (property 189)",
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
     "type": "Point",
@@ -295,7 +302,8 @@
     "floorsSource": "NMSU Space Planning",
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525489",
     "photos": [],
-    "source": "NMSU Office of Space Planning, Buildings layer (property 184)"
+    "source": "NMSU Office of Space Planning, Buildings layer (property 184)",
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
     "type": "Point",
@@ -326,7 +334,8 @@
     "floorsSource": "NMSU Space Planning",
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525527",
     "photos": [],
-    "source": "NMSU Office of Space Planning, Buildings layer (property 397)"
+    "source": "NMSU Office of Space Planning, Buildings layer (property 397)",
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
     "type": "Point",
@@ -357,7 +366,8 @@
     "floorsSource": "NMSU Space Planning",
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525497",
     "photos": [],
-    "source": "NMSU Office of Space Planning, Buildings layer (property 364)"
+    "source": "NMSU Office of Space Planning, Buildings layer (property 364)",
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
     "type": "Point",

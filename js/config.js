@@ -32,8 +32,8 @@ export const CONFIG = {
   // Which NMSU places are shown (only places where classes can happen) is
   // decided in tools/build_campuses.py, which writes data/campuses.geojson.
 
-  // Ring colour on the selected building's badge.
-  selectedRing: '#E0241B',
+  // Ring colour on the selected building's badge (unselected badges have a white ring).
+  selectedRing: '#000000',
 
   // How we make campus stand out: a light crimson tint inside the real
   // boundary, a crimson outline on it, and a white wash over everything
