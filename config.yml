@@ -202,6 +202,8 @@ sheet:
   floorsLabel: "Floors"
   typeLabel: "Type"
   insideLabel: "Inside"
+  menuLinkText: "See the menu ↗"
+  foodHereText: "Food here:"
   hoursLabel: "Hours"
   phoneLabel: "Phone"
   historicLabel: "Historic"
@@ -233,6 +235,7 @@ sheet:
   headingSize: "15px"
   bodySize: "14px"
   bodyLineHeight: 1.55
+  chipHeight: "30px" # the small food buttons on a building's page
   labelWidth: "80px"
   labelSize: "13px"
   linkSize: "14px"
@@ -348,7 +351,7 @@ categories: # kinds of places on the map; the colours mean the same thing everyw
   food: { label: "Food", color: "#ff2d55", icon: "restaurant", iconSet: "material", isPlace: true, inFilters: true } # Apple pink
   staff: { label: "Staff Academic", color: "#30b0c7", icon: "briefcase_fill", startHidden: true } # Apple teal: offices, labs, research
   historic: { label: "Historic", color: "#a2845e", icon: "building_columns_fill", startHidden: true } # Apple brown: old stone and adobe
-  parking: { label: "Parking", color: "#5856d6", icon: "local_parking", iconSet: "material", startHidden: true, isPlace: true, inFilters: true } # Apple indigo
+  parking: { label: "Parking", color: "#5856d6", icon: "local_parking", iconSet: "material", startHidden: true, isPlace: true } # Apple indigo
   # Only in Settings > Map filters at first (add them to the button there):
   athletics: { label: "Athletics", color: "#ff3b30", icon: "sportscourt_fill", startHidden: true } # Apple red
   services: { label: "Student Services", color: "#5ac8fa", icon: "person_2_fill", startHidden: true } # Apple light blue: bookstore, health center, food court
@@ -380,7 +383,9 @@ parking: # parking lot shapes on the map (js/map/parkingLayers.js), shown with t
 mapFilters: # the round Map filters button right of the pill (js/bottomBar/mapFiltersButton.js)
   icon: "line_horizontal_3_decrease"
   storageKey: "bnm_map_filters_v3" # remembers which categories this device hid (v3: new categories start off)
-  optionsKey: "bnm_filter_options_v2" # remembers which rows the button has (Settings > Map filters; v2: Parking added)
+  optionsKey: "bnm_filter_options_v3" # remembers which rows the button has (Settings > Map filters; v3: four rows)
+  moreLabel: "More options" # the last row: opens Settings > Map filters
+  moreIcon: "ellipsis"
 
 mapSettings: # the round Map settings button left of the pill (js/bottomBar/mapSettingsButton.js)
   icon: "map"
@@ -420,8 +425,9 @@ locations:
 
 settings:
   filtersTitle: "Map filters"
-  filtersFooter: "Choose up to 6 kinds of places to have a switch in the Map filters button. Switch one off to make room for another; search always finds every place, switched on or not."
-  filtersMax: 6 # how many can be in the button at once
+  filtersFooter: "Choose up to 4 kinds of places to have a switch in the Map filters button. Switch one off to make room for another; search always finds every place, switched on or not."
+  filtersMax: 4 # how many can be in the button at once
+  shakeTime: "0.4s" # how long the "6/6" shakes when you try to add one more
   filterIconBox: "30px" # the rounded coloured square behind each icon, like iPhone Settings
   filterIconRadius: "7px"
   filterIconSize: "18px"

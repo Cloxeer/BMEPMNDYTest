@@ -65,6 +65,8 @@ export class BuildingSheet {
     this.description = document.querySelector('#bs-description');
     this.facts = document.querySelector('#bs-facts');
     this.link = document.querySelector('#bs-link');
+    this.menuLink = document.querySelector('#bs-menu-link');
+    this.foodHere = document.querySelector('#bs-food');
     this.source = document.querySelector('#bs-source');
 
     this.shownKey = ''; // "buildingId|floor|room" on screen now
@@ -74,6 +76,12 @@ export class BuildingSheet {
     this.floorPlan = new FloorPlan(app, this.photoViewer, askDirections);
 
     this.photos.addEventListener('click', (event) => this.onPhotoTap(event));
+    this.foodHere.addEventListener('click', (event) => {
+      const chip = event.target.closest('[data-place]');
+      if (chip) {
+        store.selectBuilding(this.buildingsById[chip.dataset.place], 'search');
+      }
+    });
     store.subscribe((state) => this.update(state));
 
     // Framework7 says "closed" when the closing animation ENDS. That can be after the
@@ -260,7 +268,33 @@ export class BuildingSheet {
     this.link.hidden = !building.nmsuUrl; // a brand-new building may not be on NMSU's map yet
     this.link.href = safeUrl(building.nmsuUrl || '');
 
+    // Food places have a menu on NMSU's own pages; buildings show the food inside them instead.
+    this.menuLink.hidden = !building.menuUrl;
+    this.menuLink.href = safeUrl(building.menuUrl || '');
+    this.menuLink.textContent = this.words.menuLinkText;
+    this.fillFoodHere(building);
+
     this.source.textContent = this.sourceTextFor(building);
+  }
+
+  /**
+   * The food places inside this building, as small buttons (Gerald Thomas Hall: La Jefa, Westside Bistro).
+   * @param {object} building
+   */
+  fillFoodHere(building) {
+    const inside = [];
+    for (const place of Object.values(this.buildingsById)) {
+      if (place.category === 'food' && place.insideName === building.name) {
+        inside.push(place);
+      }
+    }
+    this.foodHere.hidden = inside.length === 0;
+    let html = '<span class="bs-food-label">' + escapeHtml(this.words.foodHereText) + '</span>';
+    for (const place of inside) {
+      html += '<button class="bs-food-chip" type="button" data-place="' + escapeHtml(place.id) + '">' +
+        escapeHtml(place.name) + '</button>';
+    }
+    this.foodHere.innerHTML = html;
   }
 
   /* ---------- "You've arrived" banner ---------- */

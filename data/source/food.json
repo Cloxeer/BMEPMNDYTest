@@ -13,7 +13,8 @@
     "  \"officialSources\": [\"https://...\"]         the pages that confirm it",
     "  \"photos\": []                               same format as data/source/photos.json",
     "  \"hours\": [\"Mon. - Thur.: 7 am - 3 pm\", ...]   exactly as the official page writes them; \"phone\": \"(575) 646-5475\" or null",
-    "  \"hoursSource\", \"hoursCheckedOn\"             where the hours come from, and the day they were copied"
+    "  \"hoursSource\", \"hoursCheckedOn\"             where the hours come from, and the day they were copied",
+    "  \"menuUrl\": \"https://dining.nmsu.edu/menus/...\"   the menu link on the official page, or null"
   ],
   "food": [
     {
@@ -46,7 +47,8 @@
       ],
       "phone": "(575) 646-5475",
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/menus/einstein-bagels.html"
     },
     {
       "id": "food-527480",
@@ -77,7 +79,8 @@
       ],
       "phone": null,
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/menus/taosmenu.html"
     },
     {
       "id": "food-wow",
@@ -105,7 +108,8 @@
       ],
       "phone": null,
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/WOW-Menu.pdf"
     },
     {
       "id": "food-ramshi",
@@ -133,7 +137,8 @@
       ],
       "phone": null,
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/RAMSHI-MENU.pdf"
     },
     {
       "id": "food-mediterranean",
@@ -163,7 +168,8 @@
       ],
       "phone": null,
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/Mediterranean-Menu.pdf"
     },
     {
       "id": "food-531041",
@@ -193,7 +199,8 @@
       ],
       "phone": null,
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/menus/petes-patio.html"
     },
     {
       "id": "food-527482",
@@ -224,7 +231,8 @@
       ],
       "phone": null,
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/menus/wild-blue-sushi.html"
     },
     {
       "id": "food-527458",
@@ -255,7 +263,8 @@
       ],
       "phone": null,
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": null
     },
     {
       "id": "food-527474",
@@ -283,7 +292,8 @@
       ],
       "phone": null,
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://www.pandaexpress.com/"
     },
     {
       "id": "food-527490",
@@ -313,7 +323,8 @@
       ],
       "phone": null,
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/Almas-Kitchen-Menu-2026.pdf"
     },
     {
       "id": "food-527488",
@@ -343,7 +354,8 @@
       ],
       "phone": null,
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": null
     },
     {
       "id": "food-568589",
@@ -371,7 +383,8 @@
       ],
       "phone": "(575) 646-4262",
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/menus/gila-grill.html"
     },
     {
       "id": "food-527456",
@@ -404,7 +417,8 @@
       ],
       "phone": "(575) 646-4262",
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/menus/einstein-bagels.html"
     },
     {
       "id": "food-527460",
@@ -435,7 +449,8 @@
       ],
       "phone": null,
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/menus/zuhl-fuel.html"
     },
     {
       "id": "food-527478",
@@ -464,7 +479,8 @@
       ],
       "phone": "(575) 646-5021",
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": null
     },
     {
       "id": "food-la-jefa",
@@ -494,7 +510,8 @@
       ],
       "phone": "(575) 646-1316",
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://dining.nmsu.edu/PRINT-MENU-1.pdf"
     },
     {
       "id": "food-527476",
@@ -526,7 +543,8 @@
       ],
       "phone": "(575) 646-2457",
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://golf.nmsu.edu/1888_taphouse_kitchen/1888_Taphouse_Kitchen_FINAL%20MENU_2.pdf"
     },
     {
       "id": "food-westside-bistro",
@@ -557,7 +575,8 @@
       ],
       "phone": null,
       "hoursSource": "https://newsroom.nmsu.edu/news/nmsu-students-to-unveil-rebranded-campus-restaurant-feb.-28/s/09481e03-a2e8-43dd-b48b-e5e7e42d5e7c",
-      "hoursCheckedOn": "2026-09-17"
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": "https://100west.nmsu.edu"
     }
   ]
 }

@@ -5,12 +5,12 @@
  * WHAT IT DOES : Tap the button: rows glide up out of it, one per category in
  *                config.yml, each in that category's colour. The most used sits at the
  *                bottom, closest to your thumb:
- *                  - Study (crimson), Housing (orange), Parks (green), Food (pink): on at first
- *                  - Staff Academic (teal), Historic (brown), Parking (indigo): off at first
+ *                  Study (crimson), Housing (orange), Parks (green) and Food (pink) at first.
  *                A filled circle means that kind of place is on the map; a white
  *                circle means it's hidden. The choice is remembered on this device.
- *                Which rows the button has is chosen in Settings > Map filters (also
- *                remembered); with no rows at all, the button hides.
+ *                The last row, "More options", opens Settings > Map filters, where you
+ *                choose which four kinds of places the button holds (Parking, Historic,
+ *                Athletics and the rest live there). With no rows at all, only that row shows.
  *                The badges on the map use the same colours, so the rows also
  *                work as a key to what the colours mean.
  * DEPENDS ON   : ../core/config.js, ../core/store.js, ../core/html.js, ../core/storage.js,
@@ -55,6 +55,12 @@ export class MapFiltersButton {
     });
     this.stack.addEventListener('click', (event) => {
       event.stopPropagation(); // tapping a row keeps the list open
+      if (event.target.closest('[data-more]')) {
+        this.setOpen(false);
+        // js/pages/menu.js opens the Settings page at its Map filters part.
+        document.dispatchEvent(new CustomEvent('open-map-filters-settings'));
+        return;
+      }
       const row = event.target.closest('[data-category]');
       if (row) {
         store.toggleCategory(row.dataset.category);
@@ -88,6 +94,10 @@ export class MapFiltersButton {
         '<span class="map-option-icon">' + iconHtml(look.icon, look.iconSet) + '</span>' +
         '<span class="map-option-label">' + escapeHtml(look.label) + '</span></button>';
     }
+    // The top row opens Settings, where the kinds of places in this button are chosen.
+    html = '<button class="map-option map-option--more" type="button" data-more style="--i: ' + shownNames.length + '">' +
+      '<span class="map-option-icon">' + iconHtml(this.settings.moreIcon) + '</span>' +
+      '<span class="map-option-label">' + escapeHtml(this.settings.moreLabel) + '</span></button>' + html;
     this.stack.innerHTML = html;
   }
 
@@ -201,8 +211,8 @@ export class MapFiltersButton {
       save(this.settings.storageKey, JSON.stringify(state.hiddenCategories));
     }
 
-    // Only while looking at the map (the sheet covers it; directions hide the whole bar), and only with rows to show.
-    const show = !state.sheetOpen && state.filterOptions.length > 0;
+    // Only while looking at the map: the sheet covers it, and directions hide the whole bar.
+    const show = !state.sheetOpen;
     this.button.classList.toggle('is-hidden', !show);
     this.button.inert = !show;
     if (!show) {

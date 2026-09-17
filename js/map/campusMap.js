@@ -62,6 +62,7 @@ export class CampusMap {
     this.namesVisible = true; // the Building names setting
     this.shownCategories = Object.keys(CONFIG.categories); // Map filters: which categories are on the map
     this.selectedId = null; // the chosen place, shown even when its category is switched off
+    this.waitingForPlaces = false; // true while waiting for the map to finish drawing, in addPlaces()
 
     // `ready` finishes once the map has loaded and the badges are drawn (directions wait for it).
     this.ready = new Promise((resolve) => {
@@ -126,7 +127,13 @@ export class CampusMap {
    */
   addPlaces(places) {
     if (!this.hasBadges()) {
-      this.map.once('idle', () => this.addPlaces(places)); // still drawing: wait for it
+      if (!this.waitingForPlaces) {
+        this.waitingForPlaces = true; // only ever one wait, so nothing stacks up
+        this.map.once('idle', () => {
+          this.waitingForPlaces = false;
+          this.addPlaces(places);
+        });
+      }
       return;
     }
     const features = [];

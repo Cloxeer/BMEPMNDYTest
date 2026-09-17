@@ -136,6 +136,25 @@
 .bs-row dd { flex: 1; font-size: var(--sheet-body-size); color: var(--theme-text-strong); margin: 0; }
 .bs-link { display: inline-block; margin-top: var(--s2); font-size: var(--sheet-link-size); font-weight: var(--sheet-link-weight); color: var(--f7-theme-color); }
 .bs-link[hidden] { display: none; }
+/* Food inside a building: one small button each, like iOS chips. */
+.bs-food { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s3); }
+.bs-food[hidden] { display: none; }
+.bs-food-label { font-size: var(--sheet-label-size); color: var(--theme-text-muted); }
+.bs-food-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  width: auto; /* Framework7 makes buttons full width */
+  height: var(--sheet-chip-height);
+  padding: 0 var(--s3);
+  border: none;
+  border-radius: var(--sheet-chip-height);
+  background: var(--theme-line-soft);
+  color: var(--f7-theme-color);
+  font: 600 var(--sheet-label-size) var(--theme-font);
+  cursor: pointer;
+}
+.bs-food-chip:active { filter: brightness(0.95); }
 .bs-section .bs-source { font-size: var(--sheet-source-size); color: var(--theme-text-faint); margin-top: var(--s4); }
 
 /* Full-screen picture viewer (a Framework7 popup) must cover the sheet. */

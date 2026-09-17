@@ -52,6 +52,13 @@ export class Menu {
         this.openPage(name);
       });
     }
+
+    // "More options" in the Map filters button (js/bottomBar/mapFiltersButton.js).
+    document.addEventListener('open-map-filters-settings', () => {
+      this.underline('settings');
+      this.openPage('settings');
+      document.querySelector('#filter-options-title').scrollIntoView({ block: 'start' });
+    });
   }
 
   /**

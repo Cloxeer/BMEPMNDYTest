@@ -1,0 +1,478 @@
+{
+ "//": [
+  "Downloaded from OpenStreetMap (ODbL licence) by tools/build_places.py, and kept here so rebuilding",
+  "doesn't have to wait on OpenStreetMap's busy free service. Delete this file to fetch them again.",
+  "Format: GeoJSON. One Feature per parking area on an NMSU property that NMSU's own parking layer",
+  "does not cover: properties osmWayId, name (\"Parking\" when OpenStreetMap has no name) and campus",
+  "(the NMSU property it sits on), plus its outline."
+ ],
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "osmWayId": 1313637355,
+    "name": "Parking",
+    "campus": "Chihuahuan Desert Rangeland Research Center (College Ranch)"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -106.9233494,
+       32.5528812
+      ],
+      [
+       -106.9233256,
+       32.5529804
+      ],
+      [
+       -106.9232377,
+       32.5530093
+      ],
+      [
+       -106.9227734,
+       32.5521239
+      ],
+      [
+       -106.92287,
+       32.5520772
+      ],
+      [
+       -106.9229917,
+       32.5521948
+      ],
+      [
+       -106.9233494,
+       32.5528812
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "osmWayId": 1313638708,
+    "name": "Parking",
+    "campus": "Chihuahuan Desert Rangeland Research Center (College Ranch)"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -106.9235106,
+       32.5530877
+      ],
+      [
+       -106.9233997,
+       32.5528011
+      ],
+      [
+       -106.9233872,
+       32.5525508
+      ],
+      [
+       -106.923278,
+       32.5525312
+      ],
+      [
+       -106.9231563,
+       32.5523487
+      ],
+      [
+       -106.9233245,
+       32.5520832
+      ],
+      [
+       -106.9234426,
+       32.5521209
+      ],
+      [
+       -106.9235911,
+       32.5522959
+      ],
+      [
+       -106.9237003,
+       32.552504
+      ],
+      [
+       -106.9237075,
+       32.5527061
+      ],
+      [
+       -106.9236556,
+       32.552967
+      ],
+      [
+       -106.9235911,
+       32.5530786
+      ],
+      [
+       -106.9235106,
+       32.5530877
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "osmWayId": 1313638709,
+    "name": "Parking",
+    "campus": "Chihuahuan Desert Rangeland Research Center (College Ranch)"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -106.921163,
+       32.5514452
+      ],
+      [
+       -106.9210968,
+       32.5516307
+      ],
+      [
+       -106.9209769,
+       32.5516549
+      ],
+      [
+       -106.9207747,
+       32.5515689
+      ],
+      [
+       -106.9203936,
+       32.5512884
+      ],
+      [
+       -106.9202701,
+       32.5511164
+      ],
+      [
+       -106.9202906,
+       32.5507736
+      ],
+      [
+       -106.9207407,
+       32.5509083
+      ],
+      [
+       -106.9208982,
+       32.5512235
+      ],
+      [
+       -106.921163,
+       32.5514452
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "osmWayId": 1313760631,
+    "name": "Parking",
+    "campus": "Chihuahuan Desert Rangeland Research Center (College Ranch)"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -106.9230288,
+       32.5520193
+      ],
+      [
+       -106.9229698,
+       32.5520001
+      ],
+      [
+       -106.9229276,
+       32.5520954
+      ],
+      [
+       -106.9229879,
+       32.5521153
+      ],
+      [
+       -106.9229913,
+       32.5521073
+      ],
+      [
+       -106.9230288,
+       32.5520193
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "osmWayId": 1313760632,
+    "name": "Parking",
+    "campus": "Chihuahuan Desert Rangeland Research Center (College Ranch)"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -106.9206433,
+       32.550563
+      ],
+      [
+       -106.920623,
+       32.5504607
+      ],
+      [
+       -106.9205609,
+       32.5504694
+      ],
+      [
+       -106.9205812,
+       32.5505718
+      ],
+      [
+       -106.9206433,
+       32.550563
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "osmWayId": 1315444856,
+    "name": "Parking",
+    "campus": "Grants"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -107.8435034,
+       35.1655771
+      ],
+      [
+       -107.8433175,
+       35.1660555
+      ],
+      [
+       -107.8430803,
+       35.1660523
+      ],
+      [
+       -107.8428193,
+       35.1661622
+      ],
+      [
+       -107.8426097,
+       35.166466
+      ],
+      [
+       -107.8424199,
+       35.1664014
+      ],
+      [
+       -107.8420601,
+       35.1662915
+      ],
+      [
+       -107.8422736,
+       35.1659553
+      ],
+      [
+       -107.8425583,
+       35.1657193
+      ],
+      [
+       -107.8432021,
+       35.1655379
+      ],
+      [
+       -107.8435034,
+       35.1655771
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "osmWayId": 1315444857,
+    "name": "Parking",
+    "campus": "Grants"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -107.8421827,
+       35.1670059
+      ],
+      [
+       -107.8418347,
+       35.1669541
+      ],
+      [
+       -107.8420363,
+       35.166382
+      ],
+      [
+       -107.8423764,
+       35.166466
+      ],
+      [
+       -107.8421827,
+       35.1670059
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "osmWayId": 1315444858,
+    "name": "Parking",
+    "campus": "Grants"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -107.8413008,
+       35.1652344
+      ],
+      [
+       -107.8412771,
+       35.1657161
+      ],
+      [
+       -107.841028,
+       35.1656449
+      ],
+      [
+       -107.8410478,
+       35.1652441
+      ],
+      [
+       -107.8413008,
+       35.1652344
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "osmWayId": 670344129,
+    "name": "Parking",
+    "campus": "Santa Fe"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -106.1359167,
+       35.8043672
+      ],
+      [
+       -106.1359681,
+       35.8042916
+      ],
+      [
+       -106.1360439,
+       35.8043285
+      ],
+      [
+       -106.1362278,
+       35.804418
+      ],
+      [
+       -106.1361649,
+       35.8045644
+      ],
+      [
+       -106.1362087,
+       35.8045976
+      ],
+      [
+       -106.1362743,
+       35.8045644
+      ],
+      [
+       -106.136329,
+       35.8046353
+      ],
+      [
+       -106.1361923,
+       35.8047662
+      ],
+      [
+       -106.135897,
+       35.8044468
+      ],
+      [
+       -106.1359167,
+       35.8043672
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "osmWayId": 673998168,
+    "name": "Parking",
+    "campus": "Santa Fe"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       -106.1058204,
+       35.7501051
+      ],
+      [
+       -106.1057361,
+       35.7497018
+      ],
+      [
+       -106.1049239,
+       35.7496555
+      ],
+      [
+       -106.1048928,
+       35.7498829
+      ],
+      [
+       -106.1050173,
+       35.7500651
+      ],
+      [
+       -106.1058204,
+       35.7501051
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

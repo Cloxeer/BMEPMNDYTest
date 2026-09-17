@@ -63,9 +63,16 @@ export class SettingsPage {
 
     this.filterOptionsList.addEventListener('change', (event) => {
       const input = event.target.closest('[data-category]');
-      if (input) {
-        store.setFilterOption(input.dataset.category, input.checked, this.words.filtersMax);
+      if (!input) {
+        return;
       }
+      const full = input.checked && store.get().filterOptions.length >= this.words.filtersMax;
+      if (full) {
+        input.checked = false; // the button is full: switch one off first
+        this.shakeCount();
+        return;
+      }
+      store.setFilterOption(input.dataset.category, input.checked, this.words.filtersMax);
     });
 
     // ...and whatever changed the store (here, Map settings, or the directions card) is shown and saved.
@@ -93,6 +100,13 @@ export class SettingsPage {
     } else {
       store.setUnits(this.directionWords.units);
     }
+  }
+
+  /** Shake "Map filters (6/6)", so it's clear why nothing happened. It shakes again on every try. */
+  shakeCount() {
+    this.filterOptionsTitle.classList.remove('is-full');
+    this.filterOptionsTitle.offsetWidth; // let the browser finish the old shake, so a new one starts
+    this.filterOptionsTitle.classList.add('is-full');
   }
 
   /** One row per category: its icon in a rounded coloured square, its name, and a Framework7 switch. */
@@ -157,8 +171,7 @@ export class SettingsPage {
     this.filterOptionsTitle.textContent = this.words.filtersTitle + ' (' + used + '/' + this.words.filtersMax + ')';
     for (const input of this.filterOptionsList.querySelectorAll('[data-category]')) {
       const inButton = state.filterOptions.includes(input.dataset.category);
-      input.checked = inButton;
-      input.disabled = !inButton && used >= this.words.filtersMax; // full: switch one off first
+      input.checked = inButton; // all switches stay usable: trying when full shakes the count
     }
     this.showChoice(this.travelSwitch, state.travelMode);
     this.showChoice(this.unitsSwitch, state.units);

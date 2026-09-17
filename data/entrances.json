@@ -12,7 +12,7 @@
    "building": "323",
    "floor": 1,
    "plan": "data/floors/hjlc-1.svg",
-   "viewBox": "230 -20 1080 1650",
+   "viewBox": "230 -190 1080 1820",
    "label": "EXIT",
    "point": [
     388.0,
@@ -25,7 +25,7 @@
    "building": "323",
    "floor": 1,
    "plan": "data/floors/hjlc-1.svg",
-   "viewBox": "230 -20 1080 1650",
+   "viewBox": "230 -190 1080 1820",
    "label": "EXIT",
    "point": [
     388.0,
@@ -38,7 +38,7 @@
    "building": "323",
    "floor": 1,
    "plan": "data/floors/hjlc-1.svg",
-   "viewBox": "230 -20 1080 1650",
+   "viewBox": "230 -190 1080 1820",
    "label": "EXIT",
    "point": [
     1270.0,
@@ -51,7 +51,7 @@
    "building": "323",
    "floor": 1,
    "plan": "data/floors/hjlc-1.svg",
-   "viewBox": "230 -20 1080 1650",
+   "viewBox": "230 -190 1080 1820",
    "label": "EXIT",
    "point": [
     995.0,
@@ -64,7 +64,7 @@
    "building": "323",
    "floor": 1,
    "plan": "data/floors/hjlc-1.svg",
-   "viewBox": "230 -20 1080 1650",
+   "viewBox": "230 -190 1080 1820",
    "label": "Door",
    "point": [
     1270.0,
