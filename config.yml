@@ -347,7 +347,21 @@ categories: # kinds of places on the map; the colours mean the same thing everyw
   parking: { label: "Parking", color: "#5856d6", icon: "local_parking", iconSet: "material", startHidden: true, letter: "P", isPlace: true, inFilters: true } # Apple indigo
 
 parking: # parking lot shapes on the map (js/map/parkingLayers.js), shown with the Parking filter
-  fillOpacity: 0.18
+  # Each lot is drawn in its permit color, as NMSU Parking Services' parking map colors them
+  # (services.nmsu.edu/parking: orange = all permits, brown = free). Keys are the colors NMSU's lot data uses.
+  permitColors:
+    Orange: "#ff9500"
+    Purple: "#af52de"
+    Green: "#34c759"
+    Crimson: "#8C0B42"
+    Brown: "#a2845e"
+    Yellow: "#ffcc00"
+    Pink: "#ff2d55"
+    Turquoise: "#30b0c7"
+    Blue: "#007aff"
+  otherColor: "#8e8e93" # lots with no permit color, or a special one ("Special", "Non NMSU Parking"): gray
+  nameColor: "#1b1b1d"
+  fillOpacity: 0.28
   edgeWidth: 1.5
   nameSize: 12
   nameMinZoom: 15

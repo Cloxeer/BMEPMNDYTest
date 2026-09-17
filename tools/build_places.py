@@ -68,7 +68,7 @@ SHAPES_NOTE = [
 ]
 PARKING_NOTE = [
     'Made by tools/build_places.py from NMSU Facilities GIS (Parking layer). Do not edit by hand.',
-    'Format: GeoJSON. One Feature per parking lot: properties {"id", "category", "name"} and its outline.',
+    'Format: GeoJSON. One Feature per parking lot: properties {"id", "category", "name", "permitColor"} and its outline.',
     'Drawn on the map while the Parking filter is on, and used by directions to tell when you have arrived.',
 ]
 
@@ -153,9 +153,11 @@ def feature(record, lng, lat):
 
 
 def shape_feature(record, geometry):
-    """A GeoJSON outline Feature for one place."""
-    return {'type': 'Feature', 'properties': {'id': record['id'], 'category': record['category'], 'name': record['name']},
-            'geometry': geometry}
+    """A GeoJSON outline Feature for one place (parking lots also keep their permit color, to draw them in it)."""
+    properties = {'id': record['id'], 'category': record['category'], 'name': record['name']}
+    if record['category'] == 'parking':
+        properties['permitColor'] = record['permitColor']
+    return {'type': 'Feature', 'properties': properties, 'geometry': geometry}
 
 
 def build_parks(features, shapes):

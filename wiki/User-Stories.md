@@ -1,6 +1,6 @@
 # User Stories
 
-Effort is in Fibonacci numbers. We are treating the whole project as about 233.
+Effort is in Fibonacci numbers, sized against Pictures of entrances (55). The six stories add up to 322.
 
 ## 1: Pictures of entrances
 
@@ -22,7 +22,7 @@ Elaboration: The map opens on the Las Cruces campus. Buildings we support have a
 
 Constraints: Has to work in a phone browser with no login.
 
-Effort Estimation: 21
+Effort Estimation: 34
 
 Acceptance Test: Open the site on a phone. Check that the map shows campus and all 10 buildings have a button. Zoom in and check the names show. Drag and zoom and make sure it doesn't lag.
 
@@ -34,7 +34,7 @@ Elaboration: Search takes building names, building codes, and rooms (SH 118A, sh
 
 Constraints: Only rooms from NMSU's class schedule or our floor plans show up. If nothing matches it says so.
 
-Effort Estimation: 21
+Effort Estimation: 34
 
 Acceptance Test: Search SH 118A, sh118a, and HJLC 225 and check they find the right room. Search SH 205 (not a real room) and check nothing comes up.
 
@@ -46,7 +46,7 @@ Elaboration: The building page shows our floor plan and a photo of the evacuatio
 
 Constraints: Floor plans have to come from the posted evacuation maps.
 
-Effort Estimation: 21
+Effort Estimation: 55
 
 Acceptance Test: Open Hardman and Jacobs, switch between our plan and the posted map, switch to floor 2, and zoom in. Open a building without a floor plan and check it says it's not available.
 
@@ -58,7 +58,7 @@ Elaboration: The user picks a building and taps the directions button. The app a
 
 Constraints: Needs location permission. Routes use real paths and roads from OpenStreetMap.
 
-Effort Estimation: 34
+Effort Estimation: 89
 
 Acceptance Test: Start directions to Zuhl Library and check a route shows up with steps. Switch between walk, bike, and drive and check the route changes. End the trip and check it asks first.
 
@@ -70,30 +70,6 @@ Elaboration: Tapping a room on the floor plan highlights it and shows arrows fro
 
 Constraints: Arrows only go through hallways on the floor plan.
 
-Effort Estimation: 21
+Effort Estimation: 55
 
 Acceptance Test: Open Hardman and Jacobs, tap room 125, and check it's highlighted with arrows from a door. Tap room 228 and check the arrows start at the stairs on floor 2.
-
-## 7: Map settings
-
-Story: As a student using the map, I want to turn on my location and have the map face the way I'm facing so that it's easier to follow while walking.
-
-Elaboration: A map settings button opens options: show my location, turn the map with me, go back to campus, and show building names. Options that are on are red and options that are off are white.
-
-Constraints: Needs location and compass permission on the phone.
-
-Effort Estimation: 13
-
-Acceptance Test: Open map settings and turn on location, check the dot shows and the option is red. Turn on "turn map with me," rotate the phone, and check the map turns. Tap back to campus and check the map goes back. Turn options off and check they go white.
-
-## 8: NMSU locations
-
-Story: As a visitor, I want a list of all NMSU locations so that I can find places that aren't on the main campus.
-
-Elaboration: The menu has an Other Locations page sorted by distance. Tapping one moves the map there.
-
-Constraints: Only real NMSU locations.
-
-Effort Estimation: 8
-
-Acceptance Test: Open Other Locations, check it's sorted by distance, tap Horse Farm and check the map moves there.
