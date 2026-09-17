@@ -1,4 +1,9 @@
 {
+ "//": [
+  "Downloaded from OpenStreetMap (ODbL licence). Read by tools/build_buildings.py for floor counts NMSU doesn't list.",
+  "Format: GeoJSON. One Feature per building: properties id (NMSU property number), name, osmId, osmType,",
+  "address, levels (number of floors, as text), center and source. Update it from OpenStreetMap; don't type facts in."
+ ],
  "type": "FeatureCollection",
  "features": [
   {

@@ -333,11 +333,11 @@ categories: # kinds of places on the map; the colours mean the same thing everyw
   living: { label: "Living", color: "#ff9500", icon: "bed_double_fill" } # Apple orange: warm, home
   park: { label: "Parks", color: "#34c759", icon: "tree" } # Apple green: outdoors
 
-mapFilters: # the round Map filters button right of the pill (js/mapFilters.js)
+mapFilters: # the round Map filters button right of the pill (js/bottomBar/mapFiltersButton.js)
   icon: "line_horizontal_3_decrease"
   storageKey: "bnm_hidden_categories"
 
-mapSettings: # the round Map settings button left of the pill (js/mapSettings.js)
+mapSettings: # the round Map settings button left of the pill (js/bottomBar/mapSettingsButton.js)
   icon: "map"
   options: # top to bottom
     location: { label: "My location", icon: "location_fill" }

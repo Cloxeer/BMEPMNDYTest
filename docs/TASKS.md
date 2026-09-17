@@ -73,7 +73,7 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [ ] Blue translucent `>>>` chevrons from the door to the room
 
 ## Code quality
-- [x] config.yml holds every changeable value; js/config.js turns it into CONFIG + CSS variables
+- [x] config.yml holds every changeable value; js/core/config.js turns it into CONFIG + CSS variables
 - [x] Store has named actions (selectBuilding, closeSheet, ...) instead of raw state patches
 - [x] Removed band-aids: global page padding override, !important specificity fights, menu nth-child delays, map.__fence, init-order dependency, orb leftovers
 - [x] tools/build_buildings.py rebuilds data/buildings.geojson (byte-identical to before)
@@ -110,6 +110,7 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] 20 more buildings (15 next by class sections, 5 residence halls); 5 campus parks
 - [x] Map filters button: Study (crimson), Living (orange), Parks (green); badges use the same colours
 - [x] Settings: simpler data note; website version at the bottom
+- [x] Code rewritten for first-time coders: folders by part, one class per part, plain loops, "//" format notes in every data file (checked: same screens, same data)
 - [ ] Floors, year built, code unknown for some new buildings (shown as Unknown until NMSU publishes them)
 - [ ] Photos of the residence halls and parks (none freely licensed found)
 - [ ] Entrance photos: take one per door and list it under entrancePhotos in data/source/building-extras.json

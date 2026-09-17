@@ -5,7 +5,7 @@
   WHAT IT DOES : Lays out the UI from Framework7's iOS components (navbar, menu,
                  sheet, popups) plus our map, bottom pill, and search drop-down.
   DEPENDS ON   : Framework7 + Framework7 Icons, MapLibre, js-yaml (all from a CDN),
-                 styles/app.css, js/app.js, config.yml
+                 styles/*.css, js/main.js (starts everything), config.yml
   CONTROLS     : everything on screen.
 
   Rule: bars/menus/sheets/popups are stock Framework7. Our own pieces are the
@@ -27,7 +27,15 @@
   <!-- Google's Material Symbols: only the walk / bike / car figures (Framework7's icons have none) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,1,0&icon_names=directions_bike,directions_car,directions_walk" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
-  <link rel="stylesheet" href="styles/app.css" />
+  <!-- Our styles, one file per part of the screen. The order matters: later files can build on earlier ones. -->
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/map.css" />
+  <link rel="stylesheet" href="styles/search.css" />
+  <link rel="stylesheet" href="styles/bottomBar.css" />
+  <link rel="stylesheet" href="styles/routeCard.css" />
+  <link rel="stylesheet" href="styles/menu.css" />
+  <link rel="stylesheet" href="styles/sheet.css" />
+  <link rel="stylesheet" href="styles/pages.css" />
 </head>
 <body>
 
@@ -74,12 +82,12 @@
     <div class="sheet-modal building-sheet" id="building-sheet">
       <div class="sheet-modal-inner">
         <div class="bs-head">
-          <!-- Left: directions to this building (js/directions.js draws the route) -->
+          <!-- Left: an empty space the same width as the X, so the name stays centred -->
           <span class="bs-side"></span>
           <span id="bs-name" class="bs-name"></span>
           <button class="bs-side bs-x sheet-close" type="button" aria-label="Close">&times;</button>
         </div>
-        <!-- Every building uses this same layout. js/buildingSheet.js fills in each
+        <!-- Every building uses this same layout. js/sheet/buildingSheet.js fills in each
              field; a field with nothing to show gets a short message instead. -->
         <div class="bs-body">
           <!-- Shown after directions bring you inside the building -->
@@ -179,7 +187,7 @@
         <div class="page-content page-plain">
           <div class="block-title">Map</div>
           <div class="list simple-list"><ul>
-            <!-- Framework7 toggle; js/settings.js remembers every choice on this device -->
+            <!-- Framework7 toggle; js/pages/settings.js remembers every choice on this device -->
             <li>
               <label for="setting-building-names">Building names</label>
               <label class="toggle">
@@ -218,7 +226,7 @@
             </li>
           </ul></div>
 
-          <!-- Filled by js/settings.js from the data files the app actually loaded -->
+          <!-- Filled by js/pages/settings.js from the data files the app actually loaded -->
           <div class="block-title">Data</div>
           <div class="list media-list inset"><ul id="data-sources"></ul></div>
           <div class="block-footer" id="data-note"></div>
@@ -248,10 +256,10 @@
 
   <!-- The bottom pill. It never moves: "Info ^" opens the sheet, then the same
        pill becomes "Floor 1 ^" until the sheet is closed with X. Tapping it
-       reveals the other floors stacked above it. The round button on its
-       left shows your location (js/locate.js).
+       reveals the other floors stacked above it. The round buttons beside it
+       are Map settings / Directions (left) and Map filters (right): js/bottomBar/.
        Kept outside #app so it floats above the map and the sheet. -->
-  <!-- Turn-by-turn card while directions are on (js/routeCard.js). It takes the
+  <!-- Turn-by-turn card while directions are on (js/directions/routeCard.js). It takes the
        pill's place at the bottom. Tap it to see every step; X ends the trip. -->
   <div id="route-card" class="route-card" role="region" aria-label="Directions" hidden>
     <span class="route-grabber" aria-hidden="true"></span>
@@ -269,7 +277,7 @@
       <i class="icon f7-icons" aria-hidden="true">xmark</i>
     </button>
     <!-- Shown when the card is expanded: how to travel (walk / bike / drive, buttons
-         made by js/routeCard.js from config.yml), then every step -->
+         made by js/directions/routeCard.js from config.yml), then every step -->
     <div class="route-steps-wrap">
       <div id="route-modes" class="segmented segmented-strong route-modes" role="radiogroup" aria-label="Travel mode"></div>
       <ol id="route-steps" class="route-steps"></ol>
@@ -281,17 +289,17 @@
 
   <div id="pill" class="pill-bar">
     <!-- Left of the pill, one of two round buttons shows:
-         Map settings (nothing selected; its options glide up out of it, js/mapSettings.js)
-         or Directions (a building is selected, js/askDirections.js). -->
+         Map settings (nothing selected; its options glide up out of it, js/bottomBar/mapSettingsButton.js)
+         or Directions (a building is selected, js/bottomBar/directionsButton.js). -->
     <!-- The settings button and its options travel together: during directions,
-         js/mapSettings.js moves this group into #route-tools, above the turn card. -->
+         js/bottomBar/mapSettingsButton.js moves this group into #route-tools, above the turn card. -->
     <div id="settings-anchor" class="settings-anchor">
       <button id="settings-btn" class="pill pill--side" type="button" aria-label="Map settings" aria-expanded="false" aria-controls="map-options">
         <i class="icon f7-icons pill-side-icon" aria-hidden="true">map</i>
       </button>
       <div id="map-options" class="option-stack" role="group" aria-label="Map settings"></div>
     </div>
-    <!-- Right of the pill: Map filters (Study / Living / Parks), js/mapFilters.js -->
+    <!-- Right of the pill: Map filters (Study / Living / Parks), js/bottomBar/mapFiltersButton.js -->
     <div id="filters-anchor" class="filters-anchor">
       <button id="filters-btn" class="pill pill--side" type="button" aria-label="Map filters" aria-expanded="false" aria-controls="map-filters">
         <i class="icon f7-icons pill-side-icon" aria-hidden="true">line_horizontal_3_decrease</i>
@@ -310,6 +318,6 @@
   <script src="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
-  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

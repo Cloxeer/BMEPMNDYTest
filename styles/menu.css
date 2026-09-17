@@ -1,0 +1,61 @@
+/*
+  styles/menu.css — the full-screen fade-in menu.
+
+  CONTROLS     : #menu-popup and its words.
+  DEPENDS ON   : Framework7, and the CSS variables js/core/config.js makes from
+                 config.yml (pill.height -> --pill-height, and so on).
+  USED BY      : index.html
+
+  RULES : • Values come from config.yml. Change them there, not here.
+          • Spacing uses --s1 … --s16: multiples of theme.spacingUnit (4px), set in styles/base.css.
+*/
+
+/* ---------- Menu ---------- */
+.popup-menu {
+  background: var(--menu-background);
+  -webkit-backdrop-filter: blur(var(--menu-blur));
+  backdrop-filter: blur(var(--menu-blur));
+  transform: none !important; /* fade instead of Framework7's slide-up */
+  opacity: 0;
+  transition: opacity var(--menu-fade-time) ease;
+}
+.popup-menu.menu-open { opacity: 1; }
+.menu-close {
+  position: absolute;
+  top: calc(var(--s4) + env(safe-area-inset-top, 0px));
+  right: var(--s5);
+  font-size: var(--menu-close-size);
+  line-height: 1;
+  color: var(--f7-theme-color);
+  z-index: 2;
+}
+.menu-inner { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--menu-gap); }
+.menu-link {
+  font-size: var(--menu-link-size);
+  font-weight: var(--menu-link-weight);
+  color: var(--f7-theme-color);
+  opacity: 0;
+  transform: translateY(var(--menu-link-rise));
+  text-decoration: none;
+  text-underline-offset: var(--menu-underline-offset);
+  text-decoration-thickness: var(--menu-underline-thickness);
+}
+.menu-link.is-current { text-decoration: underline; }
+/* Each word fades in after the one before it (--i is set on each link in index.html). */
+.popup-menu.menu-open .menu-link {
+  animation: menu-in var(--menu-link-time) var(--theme-spring) forwards;
+  animation-delay: calc(var(--menu-first-delay) + var(--i) * var(--menu-delay-step));
+}
+@keyframes menu-in { to { opacity: 1; transform: none; } }
+
+/* ---------- Bigger screens ---------- */
+@media (min-width: 768px) {
+  .menu-link { font-size: var(--menu-link-size-desktop); }
+  .menu-inner { gap: var(--menu-gap-desktop); }
+}
+
+/* ---------- "Reduce motion" setting ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .popup-menu, .menu-link { transition: none !important; animation: none !important; }
+  .menu-link { opacity: 1; transform: none; }
+}

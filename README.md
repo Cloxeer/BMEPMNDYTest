@@ -57,38 +57,27 @@ On GitHub: **Settings → Pages → Deploy from a branch → `main` / `/ (root)`
 ```
 index.html              every screen
 config.yml              every changeable value
-styles/app.css          look + animation
-js/app.js               starts the app, menu, welcome screen
-js/config.js            loads config.yml
-js/store.js             app state + the actions that change it
-js/html.js              makes data safe to put into HTML
-js/map.js               map, campus highlight, building badges
-js/buildingSheet.js     building sheet
-js/pill.js              bottom pill
-js/locate.js            your location dot
-js/mapSettings.js       map settings button and its options
-js/mapFilters.js        map filters button (Study / Living / Parks)
-js/askDirections.js     directions button and "Get directions?" question
-js/search.js            search (buildings and rooms)
-js/searchMatch.js       what counts as a search match
-js/directions.js        walking directions
-js/turns.js             next turn, distance and time
-js/routeCard.js         turn-by-turn card (tap for every step)
-js/heading.js           which way you're facing
-js/settings.js          Settings page switches
-js/floorPlan.js         plan / posted-map slides, tap a room
-js/planArt.js           room highlight + indoor arrows on the plan
-js/geo.js               distance / inside-outline maths
-js/locations.js         Locations page
+js/main.js              starts the app: read this first
+js/core/                settings, app state, saving choices, safe HTML
+js/logic/               maths and text only (distances, search matching, turns, routes)
+js/map/                 the map, badges, your location, compass
+js/bottomBar/           the pill, Map settings, Map filters, Directions button
+js/directions/          route data, route drawing, turn-by-turn card
+js/sheet/               building sheet, floor plans, photo viewer
+js/pages/               search, menu, Locations, Settings, welcome, navbar title
+styles/                 one stylesheet per part of the screen
 data/                   files the app reads (don't edit the built ones by hand)
 data/floors/            floor plans (SVG, redrawn from posted evacuation maps)
 data/photos/            building photos (licensed; credits in data/source/photos.json)
-data/source/            raw inputs for the tools below
+data/source/            inputs for the tools below
 tools/                  scripts that rebuild data/ from official sources
 ```
 
 Every file starts with a comment saying what it does, what it depends on and what
-it controls. Every function has a comment above it.
+it controls. Every function has a comment above it. Every data file starts with a
+`"//"` note saying how it's formatted. The full list of files is in
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md); how we write code is in
+[docs/CODING-GUIDE.md](docs/CODING-GUIDE.md).
 
 ## Rebuild the data
 

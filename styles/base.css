@@ -1,0 +1,79 @@
+/*
+  styles/base.css — the foundations every other stylesheet builds on.
+
+  CONTROLS     : Framework7's colours, the spacing scale, page layouts, the navbars, rounded corners.
+  DEPENDS ON   : Framework7, and the CSS variables js/core/config.js makes from
+                 config.yml (pill.height -> --pill-height, and so on).
+  USED BY      : index.html (loaded first)
+
+  RULES : • Values come from config.yml. Change them there, not here.
+          • Spacing uses --s1 … --s16: multiples of theme.spacingUnit (4px), set in styles/base.css.
+*/
+
+/* ---------- Foundations ---------- */
+:root {
+  --f7-theme-color: var(--theme-crimson);
+  --f7-theme-color-rgb: var(--theme-crimson-rgb);
+  --f7-theme-color-shade: var(--theme-crimson-shade);
+  --f7-theme-color-tint: var(--theme-crimson-tint);
+
+  --s1: calc(var(--theme-spacing-unit) * 1);
+  --s2: calc(var(--theme-spacing-unit) * 2);
+  --s3: calc(var(--theme-spacing-unit) * 3);
+  --s4: calc(var(--theme-spacing-unit) * 4);
+  --s5: calc(var(--theme-spacing-unit) * 5);
+  --s6: calc(var(--theme-spacing-unit) * 6);
+  --s8: calc(var(--theme-spacing-unit) * 8);
+  --s12: calc(var(--theme-spacing-unit) * 12);
+  --s16: calc(var(--theme-spacing-unit) * 16);
+}
+
+/* Stay hidden until config.yml is applied, so nothing flashes unstyled. */
+html:not(.config-ready) body { visibility: hidden; }
+
+/* `hidden` must always win over the display rules below. */
+[hidden] { display: none !important; }
+
+/* Start-up failure message. Uses fixed values on purpose: it must work even when config.yml didn't load. */
+.startup-error {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  font-family: sans-serif;
+  color: #8c0b42;
+  background: #fff;
+  visibility: visible;
+}
+
+/* ---------- Navbars (crimson, white text) ---------- */
+.navbar-crimson .navbar-bg { background: var(--f7-theme-color); }
+.navbar-crimson .navbar-bg::after { display: none; }
+.navbar-crimson,
+.navbar-crimson a,
+.navbar-crimson .title,
+.navbar-crimson .icon { color: var(--theme-white) !important; } /* beats Framework7's navbar link colours */
+/* The small second line under the title ("To Room 228" / building name). */
+.navbar-crimson .title .subtitle { color: var(--theme-white); opacity: 0.8; }
+.nav-spacer { display: inline-block; width: var(--s6); } /* keeps the title centred next to a lone close button */
+
+/* ---------- Page layouts ---------- */
+/* Full-bleed pages (map, welcome) drop Framework7's page padding and scrolling. */
+.page-content.page-fill { padding: 0 !important; overflow: hidden; }
+/* Ordinary pages (locations, settings) scroll below their navbar. */
+.page-content.page-plain {
+  padding: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px) + var(--s3)) 0 var(--s8);
+}
+
+/* ---------- Apple-style squircle corners ----------
+   Chrome, Edge and Samsung Internet draw them; iPhone Safari doesn't yet and
+   keeps normal rounded corners, so nothing breaks. */
+@supports (corner-shape: squircle) {
+  .pill, .bs-floor-img, .bs-photo img, .bs-switch, .bs-switch .button,
+  .search-field, .search-drop .search-results, .list.inset ul, .button,
+  .welcome-card .button { corner-shape: squircle; }
+}

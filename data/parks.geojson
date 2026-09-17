@@ -1,4 +1,9 @@
 {
+ "//": [
+  "Made by tools/build_parks.py. Do not edit by hand: edit data/source/parks.json, then run python tools/build_parks.py",
+  "Format: GeoJSON. One Feature per park: a Point where the park is, and properties in the same shape as a building",
+  "record in data/buildings.geojson, with \"category\": \"park\" and \"kind\" (e.g. \"Outdoor Spaces\")."
+ ],
  "type": "FeatureCollection",
  "features": [
   {

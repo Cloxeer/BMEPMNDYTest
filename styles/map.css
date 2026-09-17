@@ -1,0 +1,40 @@
+/*
+  styles/map.css — the map, and the facing beam on your location dot.
+
+  CONTROLS     : #map, .user-heading, MapLibre's hidden location button.
+  DEPENDS ON   : Framework7, and the CSS variables js/core/config.js makes from
+                 config.yml (pill.height -> --pill-height, and so on).
+  USED BY      : index.html
+
+  RULES : • Values come from config.yml. Change them there, not here.
+          • Spacing uses --s1 … --s16: multiples of theme.spacingUnit (4px), set in styles/base.css.
+*/
+
+/* ---------- The map ---------- */
+#map { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+
+/* Which way you're facing: a soft blue beam from the location dot (js/map/compass.js). */
+.user-heading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--locate-beam-size);
+  height: var(--locate-beam-size);
+  border-radius: 50%;
+  background: conic-gradient(from calc(var(--locate-beam-width) / -2), var(--locate-beam-color) 0 var(--locate-beam-width), transparent 0);
+  /* Clear in the middle (the dot shows through), fading out towards the edge. */
+  -webkit-mask: radial-gradient(circle, transparent 14%, #000 22%, transparent 70%);
+  mask: radial-gradient(circle, transparent 14%, #000 22%, transparent 70%);
+  transform: translate(-50%, -50%) rotate(var(--heading, 0deg));
+  transition: transform 0.15s linear;
+  pointer-events: none;
+  z-index: -1;
+}
+.user-heading[hidden] { display: none; }
+/* MapLibre's own location button stays hidden; Map settings drives it (js/map/myLocation.js). */
+.maplibregl-ctrl-group:has(.maplibregl-ctrl-geolocate) { display: none; }
+
+/* ---------- "Reduce motion" setting ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .user-heading { transition: none !important; animation: none !important; }
+}

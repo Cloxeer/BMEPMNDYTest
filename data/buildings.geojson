@@ -1,4 +1,13 @@
 {
+ "//": [
+  "Made by tools/build_buildings.py. Do not edit by hand: add a building to BUILDINGS in the script,",
+  "or change data/source/building-extras.json or data/source/photos.json, then run python tools/build_buildings.py",
+  "Format: GeoJSON. One Feature per building: a Point where NMSU places it, and properties:",
+  "id and propertyNumber (NMSU property number), code, name, aka (other names search finds), address, built (year),",
+  "floors ([1, 2, ...], empty when unknown), floorsSource, nmsuUrl, photos, source, category (\"study\" or \"living\"),",
+  "floorImages and postedImages (floor -> picture file), description (paragraphs), doors ([lng, lat] points), codeSource.",
+  "A missing fact is null or empty, and the app shows \"Unknown\" for it: nothing is guessed."
+ ],
  "type": "FeatureCollection",
  "features": [
   {

@@ -1,4 +1,8 @@
 {
+ "//": [
+  "Downloaded from OpenStreetMap way/50280146 (ODbL licence). Read by tools/build_campuses.py.",
+  "Format: GeoJSON. One Feature: the NMSU Golf Course outline, with properties Name, City, km, points and source."
+ ],
  "type": "FeatureCollection",
  "features": [
   {

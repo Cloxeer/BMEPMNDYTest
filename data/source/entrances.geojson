@@ -1,4 +1,8 @@
 {
+ "//": [
+  "Downloaded from OpenStreetMap (ODbL licence). Read by tools/build_buildings.py: the doors directions lead to.",
+  "Format: GeoJSON. One Point Feature per door: properties osmId and entrance (OpenStreetMap's entrance tag)."
+ ],
  "type": "FeatureCollection",
  "features": [
   {

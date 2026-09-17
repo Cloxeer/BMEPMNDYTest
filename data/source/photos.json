@@ -1,4 +1,16 @@
 {
+  "//": [
+    "HOW TO FORMAT THIS FILE (read by tools/build_buildings.py; run it after editing)",
+    "Photos of buildings. Each key is the photo key a building has in BUILDINGS in tools/build_buildings.py.",
+    "Its value is a list of photos, each:",
+    "  \"file\": \"data/photos/zuhl-library-1.jpg\"   the photo in this project (null = found, but not usable or not downloaded)",
+    "  \"sourceUrl\": \"https://...\"                 the page the photo comes from (shown as the credit link)",
+    "  \"imageUrl\": \"https://...\"                  the picture file itself (optional)",
+    "  \"license\": \"CC BY-SA 3.0\"                  the licence, copied from the source page",
+    "  \"author\": \"Name\"                           who took it, copied from the source page",
+    "  \"verifiedHow\": \"...\"                       how we checked it really shows this building",
+    "Only use photos whose licence allows it, and credit them exactly as the source page says."
+  ],
   "Corbett Center Student Union": [
     {
       "file": null,

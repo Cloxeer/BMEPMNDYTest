@@ -1,140 +1,204 @@
 # How Better NMSU Maps is built
 
-A static website: no server, no build step for the app. The browser loads
-`index.html`, which loads the libraries and `js/app.js`. Everything else starts
-from there.
+A static website: no server, no build step. The browser loads `index.html`,
+which loads the libraries, the stylesheets in `styles/`, and **`js/main.js`**.
+`main.js` starts everything, in order, so it's the best file to read first.
 
 ## The big picture
 
 ```mermaid
 flowchart LR
-    yml[config.yml] --> config[js/config.js]
-    data[(data/*.geojson)] --> app[js/app.js]
-    config --> app
-    app --> map[js/map.js]
-    app --> sheet[js/buildingSheet.js]
-    app --> pill[js/pill.js]
-    app --> search[js/search.js]
-    app --> locations[js/locations.js]
-    app --> locate[js/locate.js]
-    locate --> map
-    app --> directions[js/directions.js]
-    directions <--> store
-    directions --> turns[js/turns.js]
-    directions --> card[js/routeCard.js]
-    sheet --> floorplan[js/floorPlan.js]
-    floorplan --> art[js/planArt.js]
-    search --> match[js/searchMatch.js]
-    map <--> store[js/store.js]
+    yml[config.yml] --> config[core/config.js]
+    data[(data/*.geojson, *.json)] --> main[main.js]
+    config --> main
+    main --> map[map/CampusMap]
+    main --> bar[bottomBar/*]
+    main --> sheet[sheet/BuildingSheet]
+    main --> directions[directions/Directions]
+    main --> pages[pages/*]
+    store[(core/store.js)]
+    map <--> store
+    bar <--> store
     sheet <--> store
-    pill <--> store
-    search <--> store
-    locations --> map
+    directions <--> store
+    pages <--> store
+    directions --> logic[logic/*: geo, routeMath, turns]
+    pages --> search[logic/searchMatch]
 ```
 
-Three rules keep it predictable:
+Four rules keep it predictable:
 
-1. **Every changeable value lives in `config.yml`.** `js/config.js` reads it
+1. **Every changeable value lives in `config.yml`.** `js/core/config.js` reads it
    into `CONFIG` (for JavaScript) and turns every value into a CSS variable
-   (`pill.height` becomes `--pill-height`) for `styles/app.css`.
-2. **The store is the only thing that changes app state.** Files call named
-   actions such as `store.selectBuilding(building, 'map')` or `store.closeSheet()`, and
-   react to changes with `store.subscribe(fn)`. No file reaches into another
-   file's elements.
-3. **Heavy data work happens ahead of time, in `tools/`.** The app never does
-   geometry math or downloads NMSU records; it reads files that are already done.
+   (`pill.height` becomes `--pill-height`) for the stylesheets.
+2. **The store is the only thing that changes app state** (a *single source of truth*).
+   Files call named actions such as `store.selectBuilding(building, 'map')` and
+   react to changes with `store.subscribe(listener)` (the *observer* pattern).
+   No file reaches into another file's elements.
+3. **Each part is a class that gets what it needs through its constructor**
+   (*dependency injection*): `new MapFiltersButton(campusMap)`. `main.js` is the
+   only place that creates them, so you can see every connection in one file.
+4. **Maths and data work are kept apart from the page.**
+   `js/logic/` has no page or map code at all, and the heavy work (downloading
+   NMSU records, shape maths) happens ahead of time in `tools/`.
+
+## Folders
+
+| Folder | What's in it | Who owns it |
+|---|---|---|
+| `js/core/` | Shared tools: settings, app state, saving choices, safe HTML | Technical Lead |
+| `js/logic/` | Pure maths and text, no page code: distances, shapes, search matching, turn words, route maths | QA / fact checker (easiest to review and test) |
+| `js/map/` | The map, its badges and campus shapes, your location, the compass | Map / UI |
+| `js/bottomBar/` | The pill and the round buttons at the bottom | Map / UI |
+| `js/directions/` | Loading route data, drawing the route, the turn-by-turn card | Technical Lead + Map / UI |
+| `js/sheet/` | The building sheet: floor plans, photos, the picture viewer | Design & QA |
+| `js/pages/` | Menu, search, Locations, Settings, welcome screen, navbar title | Design & QA |
+| `styles/` | One stylesheet per part of the screen | Design & QA |
+| `tools/` | Python scripts that build `data/` from official sources | Campus Data |
+| `data/source/` | The inputs those scripts read (hand-checked extras, photos, parks) | Campus Data |
 
 ## Files
 
 | File | Job |
 |---|---|
-| `index.html` | All screens, built from Framework7's iOS components |
-| `config.yml` | Every colour, size, time and label, grouped by page |
-| `styles/app.css` | Look and animation, using only `config.yml` variables |
-| `js/app.js` | Start-up: config → Framework7 → data → each feature; menu + welcome |
-| `js/config.js` | Loads `config.yml`, fills `CONFIG`, sets CSS variables |
-| `js/store.js` | App state + the actions that change it |
-| `js/html.js` | Escapes data before it goes into HTML |
-| `js/map.js` | The map: campus highlight, building badges, taps |
-| `js/buildingSheet.js` | The full-page building sheet |
-| `js/pill.js` | The bottom pill (Info / floors) |
-| `js/locate.js` | Your location dot (MapLibre's GeolocateControl): on/off, accurate state for the toggle |
-| `js/mapFilters.js` | Map filters button right of the pill: show or hide Study / Living / Parks (colours from `categories` in config.yml, same as the badges) |
-| `js/mapSettings.js` | Map settings button left of the pill: My location, Turn map with me, Building names, Back to campus |
-| `js/askDirections.js` | Directions button (same spot, when a building is selected) and the "Get directions?" / "Change destination?" questions |
-| `js/search.js` | The search drop-down (buildings and rooms) |
-| `js/searchMatch.js` | What counts as a match: room numbers, codes, small typos |
-| `js/directions.js` | Walking route with blue arrows (Dijkstra shortest path via geojson-path-finder); opens the sheet when you walk in |
-| `js/turns.js` | Route -> next turn, distance, time ("590 ft · Turn right onto the path") |
-| `js/routeCard.js` | The turn-by-turn card that replaces the pill during directions; tap to list every step, X asks before ending |
-| `js/settings.js` | Settings switches (Building names), remembered on this device |
-| `js/heading.js` | Compass beam on your location dot, and turning the map with you |
-| `js/floorPlan.js` | Plan / posted-map slides (Framework7 Swiper), tap a room to choose it |
-| `js/planArt.js` | Draws the chosen room and the indoor arrows onto our plan |
-| `js/geo.js` | Distances and point-inside-outline maths |
-| `js/locations.js` | The Locations page |
+| `index.html` | Every screen, built from Framework7's iOS components |
+| `config.yml` | Every colour, size, time and label, grouped by part |
+| `js/main.js` | Start-up: config → Framework7 → data → every part, in order |
+| **core** | |
+| `js/core/config.js` | Loads `config.yml`, fills `CONFIG`, sets the CSS variables |
+| `js/core/store.js` | `Store` class: the app state and the actions that change it |
+| `js/core/storage.js` | Remembering choices on this device (safe when storage is blocked) |
+| `js/core/html.js` | Escapes data before it goes into HTML |
+| **logic** | |
+| `js/logic/shapes.js` | Point inside a polygon, polygon area, box around points |
+| `js/logic/geo.js` | Distances in metres, "am I inside this building?" |
+| `js/logic/searchMatch.js` | What counts as a search match: room numbers, codes, small typos |
+| `js/logic/turns.js` | A route → the next turn, distances, time ("590 ft · Turn right onto the path") |
+| `js/logic/routeMath.js` | Segment costs, nearest network point, where a route starts and ends |
+| **map** | |
+| `js/map/campusMap.js` | `CampusMap`: creates the map, flies to the chosen place, handles taps |
+| `js/map/campusLayers.js` | Draws NMSU's class places (tint, outline, names) |
+| `js/map/badges.js` | The "i" badges and names, and the MapLibre rules that colour them |
+| `js/map/myLocation.js` | `MyLocation`: your blue dot (MapLibre's GeolocateControl) |
+| `js/map/compass.js` | `Compass`: the facing beam, and "Turn map with me" |
+| **bottomBar** | |
+| `js/bottomBar/bottomPill.js` | `BottomPill`: "Tap a building" / "Info" / "Floor 1", and the floor stack |
+| `js/bottomBar/mapSettingsButton.js` | `MapSettingsButton`: My location, Turn map with me, Building names, Home |
+| `js/bottomBar/mapFiltersButton.js` | `MapFiltersButton`: show or hide Study / Living / Parks |
+| `js/bottomBar/directionsButton.js` | `DirectionsButton`: the "Get directions?" / "Change destination?" questions |
+| **directions** | |
+| `js/directions/directions.js` | `Directions`: follows GPS, finds the route (Dijkstra via geojson-path-finder), detects arriving |
+| `js/directions/routeData.js` | `RouteData`: loads the routing library, outlines and path networks once |
+| `js/directions/routeDrawing.js` | Draws the blue line, arrows and dotted hops on the map |
+| `js/directions/routeCard.js` | `RouteCard`: the turn-by-turn card; tap for every step, X asks before ending |
+| **sheet** | |
+| `js/sheet/buildingSheet.js` | `BuildingSheet`: fills in the sheet, opens and closes it |
+| `js/sheet/floorPlan.js` | `FloorPlan`: plan / posted-map slides, tapping rooms and entrances |
+| `js/sheet/planPicture.js` | Draws the chosen room, indoor arrows and entrances onto our plan |
+| `js/sheet/photoViewer.js` | `PhotoViewer`: full-screen pictures with pinch-zoom |
+| **pages** | |
+| `js/pages/search.js` | `Search`: the search drop-down (rooms, then buildings) |
+| `js/pages/menu.js` | `Menu`: the full-screen menu, opens Locations and Settings |
+| `js/pages/locations.js` | `LocationsPage`: every NMSU place, nearest first |
+| `js/pages/settings.js` | `SettingsPage`: choices, Reset, the Data list |
+| `js/pages/welcome.js` | The welcome screen, once per browser tab |
+| `js/pages/navbarTitle.js` | "Campus", or "To Zuhl Library" during directions |
+| **styles** (loaded in this order) | |
+| `styles/base.css` | Framework7 colours, spacing scale, page layouts, navbars, squircle corners |
+| `styles/map.css` | The map, the facing beam |
+| `styles/search.css` | The search drop-down |
+| `styles/bottomBar.css` | The pill, floor stack, round buttons and their options |
+| `styles/routeCard.css` | The turn-by-turn card |
+| `styles/menu.css` | The menu |
+| `styles/sheet.css` | The building sheet |
+| `styles/pages.css` | Welcome screen and Settings page |
 
-## App state
+A **class** is used when a part remembers things between taps (a button that is
+open or closed, a sheet showing a building). A plain **function** is used when
+something only needs setting up once (`showWelcome`) or just calculates an
+answer (everything in `js/logic/`).
+
+## App state (`js/core/store.js`)
 
 | Field | Meaning |
 |---|---|
-| `selectedId` | The chosen building, or `null` |
+| `selectedId` | The chosen building or park, or `null` |
 | `selectedVia` | `'map'` or `'search'`: sets the pause before the sheet opens |
 | `sheetWaiting` | The sheet opens once the map has flown to the building |
-| `selectedRoom` | The room picked in search (highlighted on its floor plan), or `null` |
-| `directionsTo` | `{ buildingId, room }` while directions are on |
-| `arrived` | directions brought you inside: the sheet shows "You've arrived" |
 | `sheetOpen` | Is the building sheet showing? |
-| `activeFloor` | Floor shown in the sheet |
+| `activeFloor` | The floor shown in the sheet |
+| `selectedRoom` | The chosen room (highlighted on its floor plan), or `null` |
+| `directionsTo` | `{ buildingId, room }` while directions are on |
+| `arrived` | Directions brought you inside: the sheet shows "You've arrived" |
+| `travelMode` | `'walk'`, `'bike'` or `'drive'` |
+| `showNames` | Building names on the map |
+| `units` | `'imperial'` (ft, mi) or `'metric'` (m, km) |
+| `hiddenCategories` | Map filters that are switched off |
 | `searching` | Is search open? |
 
 | Action | What changes |
 |---|---|
-| `selectBuilding(b, via)` | select `b` on its first floor, end search; the map flies there |
+| `selectBuilding(b, via)` | choose `b` on its first floor, end search; the map flies there |
 | `selectRoom(b, room, via)` | like `selectBuilding`, on the room's floor |
 | `pickRoom(room)` | a room tapped on the plan in the sheet |
-| `startDirections()` / `endDirections()` | directions on / off |
-| `arrived(b)` | you walked in: directions off, sheet opens on the room's floor |
-| `sheetCanOpen(id)` | called by the map after the flight + pause: opens the sheet if still waiting |
-| `clearSelection()` | nothing selected, sheet closed, search ended |
-| `openSheet()` / `closeSheet()` | sheet open / closed (building stays selected) |
+| `sheetCanOpen(id)` | called by the map after the flight and pause: opens the sheet if still waiting |
+| `clearSelection()` | nothing chosen, sheet closed, search ended |
+| `openSheet()` / `closeSheet()` | sheet open / closed (the building stays chosen) |
 | `showFloor(n)` | show floor `n` |
-| `startSearch()` | nothing selected, sheet closed, search open |
-| `endSearch()` | search closed |
+| `startSearch()` / `endSearch()` | search open (nothing chosen) / closed |
+| `startDirections()` / `endDirections()` | directions on / off |
+| `arrived(b)` | you walked in: directions off, the sheet opens on the room's floor |
+| `setTravelMode(m)`, `setShowNames(on)`, `setUnits(u)` | the user's choices |
+| `toggleCategory(c)`, `setHiddenCategories(list)` | Map filters |
+
+## Data structures and algorithms you'll find
+
+| Where | What | Why |
+|---|---|---|
+| `js/core/store.js` | Observer pattern (a list of listener functions) | Every part updates itself when the state changes |
+| `js/logic/routeMath.js`, `js/directions/routeData.js` | A graph of paths; Dijkstra's shortest path (geojson-path-finder) | The shortest walk, bike ride or drive |
+| `js/logic/routeMath.js` | `Map` from "point|point" to street names | Naming the street of every turn |
+| `js/logic/searchMatch.js` | Levenshtein distance (a dynamic-programming table) | Finding "Hardman" when you type "harmon" |
+| `js/logic/shapes.js` | Ray casting, the shoelace formula | Tapping a room; "am I inside?" |
+| `tools/indoor_routes.py` | A grid, breadth-first search, Dijkstra with a priority queue (`heapq`) | Arrows from the door to a room |
+| `tools/build_routes.py` | Union-find (disjoint sets) | Keeping only paths that connect |
 
 ## Data
 
+Every data file starts with a `"//"` entry: what the file is and how to format it.
+(JSON has no comments, so this is the stand-in; the scripts and the app skip it.)
+
 | File | Made by | From |
 |---|---|---|
-| `data/buildings.geojson` | `tools/build_buildings.py` | NMSU Space Planning buildings layer, NMSU Registrar codes, `data/source/photos.json`, `data/source/building-extras.json` |
+| `data/buildings.geojson`, `building-shapes.geojson` | `tools/build_buildings.py` | NMSU Space Planning buildings layer, NMSU Registrar codes, `data/source/photos.json`, `data/source/building-extras.json` |
 | `data/campuses.geojson`, `campus-labels.geojson`, `outside-mask.geojson` | `tools/build_campuses.py` | NMSU Space Planning campus boundaries + ground-lease parcels, OpenStreetMap golf course |
+| `data/parks.geojson`, `park-shapes.geojson` | `tools/build_parks.py` | Campus parks from NMSU's campus map (`data/source/parks.json`); outlines from OpenStreetMap, or a small arrival circle |
+| `data/rooms.json` | `tools/build_rooms.py` (+ `tools/indoor_routes.py`) | Rooms on our floor plans (outlines + indoor routes) and rooms in NMSU's public class schedule (no floor or outline) |
+| `data/entrances.json` | `tools/build_entrances.py` | Outside doors on our floor plans; photos under `entrancePhotos` in `data/source/building-extras.json` |
+| `data/routes/walk.geojson`, `bike.geojson`, `drive.geojson` | `tools/build_routes.py` | OpenStreetMap paths and roads, sorted by their access tags; one-way streets kept for bikes and cars |
 | `data/floors/*.svg` | Hand-drawn | Evacuation maps posted in each building |
-| `data/rooms.json` | `tools/build_rooms.py` (+ `tools/indoor_routes.py`) | Rooms on our floor plans (with outlines and an indoor route from the nearest outside door / stairs) + rooms in NMSU's public class schedule (Banner; no floor or outline) |
-| `data/routes/walk.geojson`, `bike.geojson`, `drive.geojson` | `tools/build_routes.py` | OpenStreetMap paths and roads, sorted by OSM access tags; one-way streets kept for bikes and cars (NMSU publishes no path or road data) |
-| `data/parks.geojson`, `data/park-shapes.geojson` | `tools/build_parks.py` | 5 campus parks from NMSU's campus map (`data/source/parks.json`), same record shape as buildings with `category: park`; outlines from OpenStreetMap, or a small arrival circle |
-| `data/entrances.json` | `tools/build_entrances.py` | Outside doors marked on our floor plans; photos listed under `entrancePhotos` in `data/source/building-extras.json` |
-| `data/building-shapes.geojson` | `tools/build_buildings.py` | NMSU Space Planning building outlines |
 | `data/photos/*.jpg` | Downloaded | Wikimedia Commons (licences in `data/source/photos.json`) |
+| `tools/json_files.py` | — | Writes every data file with its `"//"` note first |
 
 Which source wins when they disagree:
 
 1. **NMSU Registrar** for building codes (what students see on schedules)
 2. **NMSU Office of Space Planning** for boundaries and building facts
-3. **OpenStreetMap** only where NMSU publishes nothing (golf course outline, Corbett's floor count)
-
-`data/source/paths.geojson` and `entrances.geojson` are the walking network
-and doors from OpenStreetMap, kept for the wayfinding feature that isn't built yet.
+3. **OpenStreetMap** only where NMSU publishes nothing (golf course outline, some floor counts)
 
 ## Things that look odd but are on purpose
 
 - **Badges are drawn by the map, not as HTML markers.** HTML markers lag while dragging.
-- **The sheet waits for the map.** Picking a building flies the map there first, pauses
+- **The sheet waits for the map.** Choosing a building flies the map there first, pauses
   (`map.sheetPauseAfterTap` / `sheetPauseAfterSearch`), then opens the sheet, so you see where it is.
-- **Every sheet has the same layout** (in `index.html`); empty fields show a message.
+- **Every sheet has the same layout** (in `index.html`); empty parts show a message.
   `tools/build_buildings.py` gives every building the same fields.
-- **Indoor arrows come from our plans, not GPS.** Phones can't tell which room or floor you're in, so arrival is detected at the building (NMSU's outline); the plan then shows arrows from the nearest outside door (floor 1) or stairs (upper floors) through open floor to the room's edge. Room doors aren't on the posted maps, so arrows stop at the room.
-- **Some rooms have no highlight.** Rooms from the class schedule have no published floor or outline, so the app goes to the building and says so.
-- **The pill sits outside `#app`** with a high `z-index` so it floats above Framework7's sheet.
+- **Indoor arrows come from our plans, not GPS.** Phones can't tell which room or floor you're in,
+  so arrival is detected at the building (NMSU's outline); the plan then shows arrows from the
+  nearest outside door (floor 1) or stairs (upper floors) to the room's edge.
+- **Some rooms have no highlight.** Rooms from the class schedule have no published floor or outline.
+- **The bottom bar sits outside `#app`** with a high `z-index` so it floats above Framework7's sheet.
 - **The page stays hidden until `config.yml` loads**, so nothing flashes unstyled.
-- **Leased NMSU land is cut out of the campus shapes** (not painted over), so
-  the real map shows through.
+- **Leased NMSU land is cut out of the campus shapes** (not painted over), so the real map shows through.
+- **The order parts are created in `main.js` matters.** Each part starts listening to the store
+  when it's created, and they update in that order.

@@ -1,0 +1,94 @@
+/*
+  styles/search.css — the search that drops down under the navbar.
+
+  CONTROLS     : #search-drop: the search field, results and highlights.
+  DEPENDS ON   : Framework7, and the CSS variables js/core/config.js makes from
+                 config.yml (pill.height -> --pill-height, and so on).
+  USED BY      : index.html
+
+  RULES : • Values come from config.yml. Change them there, not here.
+          • Spacing uses --s1 … --s16: multiples of theme.spacingUnit (4px), set in styles/base.css.
+*/
+
+/* ---------- Search ---------- */
+.search-drop {
+  position: absolute;
+  top: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px));
+  left: 0;
+  right: 0;
+  z-index: var(--search-layer);
+  background: var(--f7-theme-color);
+  padding: var(--s1) var(--s3) var(--s3);
+  box-shadow: 0 var(--search-panel-shadow-y) var(--search-panel-shadow-blur) var(--theme-shadow-soft);
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform var(--search-slide-time) ease-out, opacity var(--search-fade-time) ease-out,
+    visibility 0s linear var(--search-slide-time);
+}
+.search-drop.is-open {
+  transform: none;
+  opacity: 1;
+  visibility: visible;
+  transition: transform var(--search-slide-time) ease-out, opacity var(--search-fade-time) ease-out;
+}
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  height: var(--search-field-height);
+  padding: 0 var(--s3);
+  background: var(--theme-white);
+  border-radius: var(--search-field-radius);
+}
+.search-field .icon { font-size: var(--search-icon-size); color: var(--theme-text-muted); }
+.search-field input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: none;
+  font-size: var(--search-input-size); /* 16px or more stops iPhone Safari zooming in */
+  color: var(--theme-text-strong);
+}
+.search-field:focus-within { box-shadow: 0 0 0 var(--theme-focus-ring-width) var(--search-focus-ring); }
+.search-drop .search-results {
+  margin: var(--s2) 0 0;
+  max-height: var(--search-results-max-height);
+  overflow-y: auto;
+  background: var(--theme-white);
+  border-radius: var(--search-field-radius);
+}
+.search-drop .search-results ul { background: var(--theme-white); }
+.search-drop .search-results .item-subtitle { color: var(--theme-text-muted); font-size: var(--search-subtitle-size); }
+.search-hit {
+  background: var(--search-highlight);
+  color: var(--f7-theme-color);
+  font-weight: 700;
+  border-radius: var(--s1);
+  padding: 0;
+}
+/* The round x that clears the search field (like iOS). */
+.search-clear {
+  display: inline-flex;
+  width: auto; /* Framework7 makes buttons full width; this one only needs its icon */
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--theme-text-faint);
+  cursor: pointer;
+}
+.search-clear[hidden] { display: none; }
+.search-clear .icon { font-size: var(--search-clear-icon-size); }
+/* We draw our own clear button, so hide the browser's. */
+#search-input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.search-empty { padding: var(--s3) var(--s4); color: var(--theme-text-muted); font-size: var(--search-empty-size); list-style: none; }
+
+/* ---------- "Reduce motion" setting ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .search-drop { transition: none !important; animation: none !important; }
+}

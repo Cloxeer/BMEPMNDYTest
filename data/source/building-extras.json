@@ -1,4 +1,17 @@
 {
+  "//": [
+    "HOW TO FORMAT THIS FILE (read by tools/build_buildings.py, build_rooms.py and build_entrances.py; run them after editing)",
+    "Extra facts about buildings that NMSU's records don't have. One entry per building, keyed by its NMSU property number,",
+    "e.g. \"323\": { ... }. Every field is optional; leave out what you don't have. Never guess a fact.",
+    "  \"code\": \"HJLC\"                             the building code, when NMSU's is missing or different (null = not published)",
+    "  \"aka\": [\"Hardman\", \"Jacobs\"]               other names people search for",
+    "  \"floors\": 2                                the number of floors, only when NMSU lists none (null = unknown)",
+    "  \"floorsSource\": \"OpenStreetMap ...\"         where that floor count comes from (required with \"floors\")",
+    "  \"floorImages\": {\"1\": \"data/floors/x.svg\"}   floor number -> our redrawn floor plan",
+    "  \"postedImages\": {\"1\": \"data/floors/x.jpg\"}  floor number -> photo of the evacuation map posted in the building",
+    "  \"entrancePhotos\": {\"323-1-2\": \"data/photos/x.jpg\"}  entrance id (from data/entrances.json) -> photo of that door",
+    "  \"description\": [\"First paragraph.\", \"Second paragraph.\"]"
+  ],
   "323": {
     "code": "HJLC",
     "aka": [
