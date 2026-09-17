@@ -77,16 +77,19 @@ function drawBadgePicture(color, letter, selected) {
 /**
  * A map rule that only shows places whose category is switched on, plus the chosen
  * place (so a place found in search shows even when its category is switched off).
- * Parking lots only get a badge while chosen: their shapes and names are drawn instead (./parkingLayers.js).
  * @param {string[]} shownCategories - e.g. ['study', 'park']
  * @param {string|null} selectedId - the chosen place's id
+ * @param {boolean} [skipParking] - true for the names layer: parking lots have their own names (./parkingLayers.js)
  * @returns {Array} a MapLibre filter expression
  */
-export function categoryFilter(shownCategories, selectedId) {
+export function categoryFilter(shownCategories, selectedId, skipParking) {
   const categoryIsOn = ['in', ['get', 'category'], ['literal', shownCategories]];
-  const notParking = ['!=', ['get', 'category'], 'parking']; // parking lots are shown as shapes, not badges
   const isSelected = ['==', ['get', 'id'], selectedId || ''];
-  return ['any', ['all', categoryIsOn, notParking], isSelected];
+  if (!skipParking) {
+    return ['any', categoryIsOn, isSelected];
+  }
+  const notParking = ['!=', ['get', 'category'], 'parking'];
+  return ['all', ['any', categoryIsOn, isSelected], notParking];
 }
 
 /**
@@ -159,7 +162,7 @@ export function addBadges(map, buildingsById, shownCategories, namesVisible) {
     type: 'symbol',
     source: 'buildings',
     minzoom: settings.namesMinZoom,
-    filter: categoryFilter(shownCategories, null),
+    filter: categoryFilter(shownCategories, null, true),
     layout: {
       visibility: visibility,
       'text-field': ['get', 'name'],

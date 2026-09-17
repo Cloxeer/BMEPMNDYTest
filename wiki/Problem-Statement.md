@@ -18,6 +18,9 @@ Planned features:
 - A message when you get to the building.
 - A map settings button for things like showing your location, turning the map to the way you're facing, and going back to campus.
 - A list of all NMSU locations.
+- Filters to show other kinds of places: parks, places to eat, housing and parking lots.
+
+It won't only be for new students. Students who have been here a while can use it to find places they haven't been yet, like places to eat or a park nearby.
 
 The data will come from NMSU (Space Planning for buildings, the Registrar for building codes, the class schedule for room numbers), photos we take of the posted evacuation maps, and OpenStreetMap for paths and roads. We don't want to show anything that isn't from a real source.
 
@@ -40,7 +43,7 @@ Our main user is a new NMSU student (freshman or transfer) trying to find their 
 
 ## Quantified Value Proposition
 
-Right now a student has to figure out the building code, find the building, and then search inside for the room. With our app they can type the room from their schedule and see the building and the room on the floor plan in one search.
+Right now a student has to figure out the building code, find the building, and then search inside for the room. With our website they can type the room from their schedule and see the building and the room on the floor plan in one search.
 
 These are our target numbers. We have not measured them yet, and we will test them on real phones:
 

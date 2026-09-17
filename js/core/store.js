@@ -286,7 +286,7 @@ class Store {
 
   /**
    * Add a category to the Map filters button, or take it out (Settings > Map filters).
-   * Taking one out also takes it off the map, so nothing is left on that you can't switch off.
+   * Adding one also shows it on the map, and taking one out hides it, so the switch and the map agree.
    * @param {string} category
    * @param {boolean} inButton
    */
@@ -297,18 +297,17 @@ class Store {
         options.push(name);
       }
     }
-    if (inButton) {
-      options.push(category);
-      this.update({ filterOptions: options });
-      return;
-    }
     const hidden = [];
     for (const name of this.state.hiddenCategories) {
       if (name !== category) {
-        hidden.push(name);
+        hidden.push(name); // whichever way it goes, it isn't hidden by an old choice
       }
     }
-    hidden.push(category);
+    if (inButton) {
+      options.push(category);
+    } else {
+      hidden.push(category); // off the button means off the map
+    }
     this.update({ filterOptions: options, hiddenCategories: hidden });
   }
 }

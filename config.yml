@@ -346,7 +346,7 @@ categories: # kinds of places on the map; the colours mean the same thing everyw
   food: { label: "Food", color: "#ff2d55", icon: "restaurant", iconSet: "material", isPlace: true, inFilters: true } # Apple pink
   staff: { label: "Staff Academic", color: "#30b0c7", icon: "briefcase_fill", startHidden: true } # Apple teal: offices, labs, research
   historic: { label: "Historic", color: "#a2845e", icon: "building_columns_fill", startHidden: true } # Apple brown: old stone and adobe
-  parking: { label: "Parking", color: "#5856d6", icon: "local_parking", iconSet: "material", startHidden: true, letter: "P", isPlace: true, inFilters: true } # Apple indigo
+  parking: { label: "Parking", color: "#5856d6", icon: "local_parking", iconSet: "material", startHidden: true, isPlace: true, inFilters: true } # Apple indigo
   # Only in Settings > Map filters at first (add them to the button there):
   athletics: { label: "Athletics", color: "#ff3b30", icon: "sportscourt_fill", startHidden: true } # Apple red
   services: { label: "Student Services", color: "#5ac8fa", icon: "person_2_fill", startHidden: true } # Apple light blue: bookstore, health center, food court

@@ -135,7 +135,7 @@ export class CampusMap {
       return; // still loading: the badges are drawn with this choice
     }
     this.map.setFilter('building-pins', categoryFilter(categories, this.selectedId));
-    this.map.setFilter('building-names', categoryFilter(categories, this.selectedId));
+    this.map.setFilter('building-names', categoryFilter(categories, this.selectedId, true));
     setParkingLotsVisible(this.map, categories.includes('parking'));
   }
 
@@ -165,7 +165,7 @@ export class CampusMap {
       return; // still loading: drawEverything calls this again
     }
     this.map.setFilter('building-pins', categoryFilter(this.shownCategories, buildingId));
-    this.map.setFilter('building-names', categoryFilter(this.shownCategories, buildingId));
+    this.map.setFilter('building-names', categoryFilter(this.shownCategories, buildingId, true));
     this.map.setLayoutProperty('building-pins', 'icon-image', badgePictureRule(buildingId));
     this.map.setPaintProperty('building-names', 'text-color', nameColorRule(buildingId));
   }
