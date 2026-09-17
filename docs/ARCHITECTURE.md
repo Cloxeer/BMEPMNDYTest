@@ -83,7 +83,7 @@ Four rules keep it predictable:
 | `js/map/badges.js` | The "i" badges and names, and the MapLibre rules that colour them |
 | `js/map/myLocation.js` | `MyLocation`: your blue dot (MapLibre's GeolocateControl) |
 | `js/map/compass.js` | `Compass`: the facing beam, and "Turn map with me" |
-| `js/map/northCompass.js` | `NorthCompass`: the small compass top left (Map settings > Compass, off at first); tap = Home |
+| `js/map/northCompass.js` | `NorthCompass`: the small compass top left (Map settings > Compass, on at first); tap = Home |
 | `js/map/parkingLayers.js` | Parking lot shapes and names, downloaded the first time the Parking filter is switched on |
 | **bottomBar** | |
 | `js/bottomBar/bottomPill.js` | `BottomPill`: "Tap a building" / "Info" / "Floor 1", and the floor stack |

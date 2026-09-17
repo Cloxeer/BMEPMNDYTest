@@ -28,8 +28,8 @@ export class NorthCompass {
     this.control = new maplibregl.NavigationControl({ showZoom: false, showCompass: true, visualizePitch: true });
     this.shown = false; // is the control on the map now?
 
-    // Bring back this device's choice (off at first).
-    store.setShowCompass(readSaved(this.settings.compassStorageKey) === 'on');
+    // Bring back this device's choice (on at first, until you switch it off).
+    store.setShowCompass(readSaved(this.settings.compassStorageKey) !== 'off');
     store.subscribe((state) => this.update(state));
   }
 

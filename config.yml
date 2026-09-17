@@ -405,7 +405,7 @@ mapSettings: # the round Map settings button left of the pill (js/bottomBar/mapS
   compassWaitMs: 1500 # how long to wait for a first compass reading before saying there isn't one
   noCompassTitle: "Compass unavailable"
   noCompassText: "Turning the map with you needs your phone's compass. Allow motion access for this site, or try on a phone."
-  compassStorageKey: "bnm_compass" # remembers the Compass switch on this device (off at first)
+  compassStorageKey: "bnm_compass" # remembers the Compass switch on this device (on at first)
   compassLabel: "Compass: tap to go home, north up"
   compassSize: "36px"
   compassTop: "12px" # below the navbar

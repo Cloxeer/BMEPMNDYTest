@@ -107,14 +107,12 @@ export class Search {
 
   /** Wire the search icon, the field, the round x, and the Escape and Enter keys. */
   /**
-   * More places to search (parks, food and parking arrive a moment after the map).
-   * @param {object[]} places
+   * The rooms arrive a moment after the map (data/rooms.json), so search can find them too.
+   * The parks, food and parking lots are already here: js/main.js adds them to the very same
+   * list this class was handed, so pushing them again would show every place twice.
    * @param {object[]} rooms
    */
-  addPlaces(places, rooms) {
-    for (const place of places) {
-      this.buildings.push(place);
-    }
+  addRooms(rooms) {
     this.rooms = rooms;
   }
 

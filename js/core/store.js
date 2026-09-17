@@ -30,7 +30,7 @@ class Store {
       arrived: false, // true after directions brought you inside the chosen building
       travelMode: 'walk', // how directions travel: 'walk', 'bike' or 'drive'
       showNames: true, // building names above the badges (Settings page and Map settings)
-      showCompass: false, // the small compass in the top left corner (Map settings)
+      showCompass: true, // the small compass in the top left corner (Map settings; on until you switch it off)
       units: 'imperial', // distances in 'imperial' (ft, mi) or 'metric' (m, km)
       hiddenCategories: [], // Map filters: categories switched off ('study', 'living', 'park', ...)
       filterOptions: [], // the categories that have a row in the Map filters button (Settings > Map filters)

@@ -2,7 +2,7 @@
   "//": [
     "HOW TO FORMAT THIS FILE (read by tools/build_places.py; run it after editing)",
     "\"food\" is a list of places to eat or drink on main campus that NMSU Dining currently lists (dining.nmsu.edu/where-to-eat.html).",
-    "Only add a place an official NMSU page lists as open, and remove one when NMSU stops listing it. Each place:",
+    "Only add a place an official NMSU page lists: NMSU Dining's Where to Eat page, or NMSU's own campus map (map.nmsu.edu). Remove one when NMSU stops listing it. Each place:",
     "  \"id\": \"food-527454\"                         \"food-\" + its NMSU campus map id (or its name in lowercase-with-dashes if it has none)",
     "  \"name\": \"Einstein Bros Bagels\", \"kind\": \"Cafe\"   as NMSU Dining writes them",
     "  \"searchNames\": [\"Einstein Bros\"]            other spellings people type, so search finds it",
@@ -233,6 +233,36 @@
       "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
       "hoursCheckedOn": "2026-09-17",
       "menuUrl": "https://dining.nmsu.edu/menus/wild-blue-sushi.html"
+    },
+    {
+      "id": "food-527468",
+      "name": "Chick-fil-A",
+      "kind": "Fast food",
+      "searchNames": [
+        "Chick fil A",
+        "Chickfila",
+        "Chick-fil-a Corbett"
+      ],
+      "insideBuilding": {
+        "name": "Corbett Center Student Union",
+        "propertyNumber": "285"
+      },
+      "concept3dId": 527468,
+      "lat": 32.282791,
+      "lng": -106.748001,
+      "sourceText": "On NMSU's official campus map (map.nmsu.edu), which says it is in the Corbett Center. NMSU Dining's Where to Eat page did not list it on 17 Sept. 2026, so its hours are not shown here.",
+      "officialSources": [
+        "https://map.nmsu.edu/?id=1888#!m/527468",
+        "https://dining.nmsu.edu/where-to-eat.html"
+      ],
+      "photos": [],
+      "hours": [
+        "Unknown - NMSU Dining's Where to Eat page does not list this place"
+      ],
+      "phone": null,
+      "hoursSource": "https://map.nmsu.edu/?id=1888#!m/527468",
+      "hoursCheckedOn": "2026-09-17",
+      "menuUrl": null
     },
     {
       "id": "food-527458",
