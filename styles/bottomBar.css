@@ -127,7 +127,7 @@
 .filters-anchor .pill--side { right: 0; }
 .option-stack.option-stack--right { left: auto; right: 0; align-items: flex-end; } /* rows grow left, so long names stay on screen */
 .option-stack--right .map-option { transform-origin: right bottom; } /* icon on the left, like Map settings */
-/* The "More options" row: grey, and never filled in (it opens Settings instead of switching anything). */
+/* The "Swap filters" row: grey, and never filled in (it opens Settings instead of switching anything). */
 .map-option--more .map-option-icon { color: var(--theme-text-muted); box-shadow: inset 0 0 0 var(--pill-floor-ring) var(--theme-line-strong); }
 .map-option--more .map-option-label { color: var(--theme-text-muted); }
 

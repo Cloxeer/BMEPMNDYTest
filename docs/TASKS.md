@@ -131,7 +131,7 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
       start-up main-thread blocks 2.9s -> 2.1s; badge drawing 227ms -> 22ms; at normal speed, first paint 292ms
 - [x] Food: menu links and phone numbers from NMSU Dining; a building's page lists the food inside it
 - [x] Compass on the Hardman and Jacobs floor plans, turned the way the building really faces (12 deg on floor 1)
-- [x] Map filters: 4 rows plus "More options" (opens Settings); the count shakes when it's full
+- [x] Map filters: 4 rows plus a fifth "Swap filters" row (opens Settings); the count shakes when it's full
 - [x] OpenStreetMap parking areas kept in data/source/osm-parking.geojson, so rebuilds don't wait on OpenStreetMap
 - [ ] Floors, year built, code unknown for some new buildings (shown as Unknown until NMSU publishes them)
 - [ ] Photos of the residence halls and parks (none freely licensed found)

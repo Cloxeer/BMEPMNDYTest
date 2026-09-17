@@ -384,8 +384,8 @@ mapFilters: # the round Map filters button right of the pill (js/bottomBar/mapFi
   icon: "line_horizontal_3_decrease"
   storageKey: "bnm_map_filters_v3" # remembers which categories this device hid (v3: new categories start off)
   optionsKey: "bnm_filter_options_v3" # remembers which rows the button has (Settings > Map filters; v3: four rows)
-  moreLabel: "More options" # the last row: opens Settings > Map filters
-  moreIcon: "ellipsis"
+  moreLabel: "Swap filters" # the fifth row: opens Settings > Map filters, to swap which four the button holds
+  moreIcon: "arrow_2_squarepath"
 
 mapSettings: # the round Map settings button left of the pill (js/bottomBar/mapSettingsButton.js)
   icon: "map"

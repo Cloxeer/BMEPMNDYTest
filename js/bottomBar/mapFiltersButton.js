@@ -8,7 +8,7 @@
  *                  Study (crimson), Housing (orange), Parks (green) and Food (pink) at first.
  *                A filled circle means that kind of place is on the map; a white
  *                circle means it's hidden. The choice is remembered on this device.
- *                The last row, "More options", opens Settings > Map filters, where you
+ *                The fifth row, "Swap filters", opens Settings > Map filters, where you
  *                choose which four kinds of places the button holds (Parking, Historic,
  *                Athletics and the rest live there). With no rows at all, only that row shows.
  *                The badges on the map use the same colours, so the rows also

@@ -53,7 +53,7 @@ export class Menu {
       });
     }
 
-    // "More options" in the Map filters button (js/bottomBar/mapFiltersButton.js).
+    // "Swap filters" in the Map filters button (js/bottomBar/mapFiltersButton.js).
     document.addEventListener('open-map-filters-settings', () => {
       this.underline('settings');
       this.openPage('settings');
