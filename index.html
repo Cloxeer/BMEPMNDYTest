@@ -276,14 +276,21 @@
     </div>
   </div>
 
+  <!-- During directions the Map settings button sits here: just above the turn card, on its left. -->
+  <div id="route-tools" class="route-tools"></div>
+
   <div id="pill" class="pill-bar">
     <!-- Left of the pill, one of two round buttons shows:
          Map settings (nothing selected; its options glide up out of it, js/mapSettings.js)
          or Directions (a building is selected, js/askDirections.js). -->
-    <button id="settings-btn" class="pill pill--side" type="button" aria-label="Map settings" aria-expanded="false" aria-controls="map-options">
-      <i class="icon f7-icons pill-side-icon" aria-hidden="true">map</i>
-    </button>
-    <div id="map-options" class="option-stack" role="group" aria-label="Map settings"></div>
+    <!-- The settings button and its options travel together: during directions,
+         js/mapSettings.js moves this group into #route-tools, above the turn card. -->
+    <div id="settings-anchor" class="settings-anchor">
+      <button id="settings-btn" class="pill pill--side" type="button" aria-label="Map settings" aria-expanded="false" aria-controls="map-options">
+        <i class="icon f7-icons pill-side-icon" aria-hidden="true">map</i>
+      </button>
+      <div id="map-options" class="option-stack" role="group" aria-label="Map settings"></div>
+    </div>
     <button id="directions-btn" class="pill pill--side is-hidden" type="button" aria-label="Get directions">
       <i class="icon f7-icons pill-side-icon" aria-hidden="true">arrow_up_right_diamond_fill</i>
     </button>

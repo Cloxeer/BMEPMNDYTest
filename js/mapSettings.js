@@ -12,9 +12,12 @@
  *                or the button again, to close.
  *                When a building is selected, this spot shows the Directions
  *                button instead (js/askDirections.js).
+ *                During directions the bottom bar steps aside for the turn card,
+ *                so the button (with its options) moves to #route-tools, just
+ *                above the card on the left, and comes back when the trip ends.
  * DEPENDS ON   : Framework7 (alert dialog), ./config.js, ./store.js, ./html.js, ./map.js (showHome),
  *                js/locate.js (handed in), #map-settings in index.html.
- * CONTROLS     : #settings-btn and #map-options.
+ * CONTROLS     : #settings-anchor (#settings-btn and #map-options), and where it sits.
  * USED BY      : js/app.js
  */
 
@@ -34,6 +37,9 @@ export function initMapSettings(app, locate, buildingsById) {
   const button = document.querySelector('#settings-btn');
   const buttonIcon = button.querySelector('i');
   const stack = document.querySelector('#map-options');
+  const anchor = document.querySelector('#settings-anchor'); // button + options, moved as one
+  const homeSpot = anchor.parentElement; // the bottom bar, next to the pill
+  const routeSpot = document.querySelector('#route-tools'); // above the turn card
 
   // What each option does. "isOn" is null for one-tap actions (they're never "on").
   const options = {
@@ -106,9 +112,17 @@ export function initMapSettings(app, locate, buildingsById) {
   locate.onChange(refresh);
   locate.heading.onFollowChange(refresh);
 
-  // Only while looking at the map with nothing selected (a selected building shows Directions here).
   store.subscribe((state) => {
-    const show = !state.selectedId && !state.sheetOpen;
+    // Directions on and the map in view: the turn card is up, so sit above it.
+    const routing = Boolean(state.directionsTo && !state.sheetOpen && !state.searching);
+    const spot = routing ? routeSpot : homeSpot;
+    if (anchor.parentElement !== spot) {
+      setOpen(false);
+      spot.appendChild(anchor);
+    }
+
+    // Otherwise only with nothing selected (a selected building shows Directions here).
+    const show = routing || (!state.selectedId && !state.sheetOpen);
     button.classList.toggle('is-hidden', !show);
     button.inert = !show;
     if (!show) setOpen(false);

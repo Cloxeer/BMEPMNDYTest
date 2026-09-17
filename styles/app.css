@@ -246,11 +246,36 @@ html:not(.config-ready) body { visibility: hidden; }
 .pill--side.is-hidden { opacity: 0; transform: scale(var(--pill-floor-start-scale)); pointer-events: none; }
 .pill--side.is-open { background: var(--theme-white); color: var(--f7-theme-color); } /* settings open: button turns into a close button */
 
+/* The settings button + its options, as one group (so they can move together). */
+.settings-anchor {
+  position: absolute;
+  right: calc(100% + var(--pill-floor-gap));
+  bottom: 0;
+  width: var(--pill-height);
+  height: var(--pill-height);
+}
+.settings-anchor .pill--side { right: 0; }
+
+/* During directions: a spot just above the turn card, lined up with its left edge.
+   --route-card-height is kept up to date by js/routeCard.js, so the button rides
+   up smoothly when the card expands. */
+.route-tools {
+  position: fixed;
+  left: max(var(--s4), calc(50% - var(--directions-card-max-width) / 2));
+  bottom: calc(var(--pill-bottom-offset) + env(safe-area-inset-bottom, 0px) + var(--route-card-height, 0px) + var(--pill-floor-gap));
+  width: var(--pill-height);
+  height: var(--pill-height);
+  z-index: var(--directions-card-layer);
+}
+.route-tools:empty { display: none; }
+.route-tools .settings-anchor { right: 0; left: 0; animation: tools-in var(--pill-floor-move-time) var(--theme-smooth); }
+@keyframes tools-in { from { opacity: 0; transform: translateY(var(--s2)) scale(var(--pill-floor-start-scale)); } }
+
 /* Map settings options: closed, every row sits hidden inside the settings button;
    opening glides each one up into its place, bottom row first (like the floor pills). */
 .option-stack {
   position: absolute;
-  left: calc(-1 * (var(--pill-floor-gap) + var(--pill-height))); /* lines up with the settings button's left edge */
+  left: 0; /* lines up with the settings button's left edge */
   bottom: calc(100% + var(--pill-floor-gap));
   display: flex;
   flex-direction: column;
@@ -645,6 +670,6 @@ html:not(.config-ready) body { visibility: hidden; }
 
 /* ---------- 12. "Reduce motion" setting ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .search-drop, .pill, .pill-bar, .pill-chev, .popup-menu, .menu-link, .route-card, .bs-arrived, .user-heading, .map-option { transition: none !important; animation: none !important; }
+  .search-drop, .pill, .pill-bar, .pill-chev, .popup-menu, .menu-link, .route-card, .bs-arrived, .user-heading, .map-option, .settings-anchor { transition: none !important; animation: none !important; }
   .menu-link { opacity: 1; transform: none; }
 }

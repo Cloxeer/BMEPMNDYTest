@@ -59,7 +59,16 @@ export function initRouteCard(app) {
     const state = store.get();
     const onMap = Boolean(state.directionsTo && !state.sheetOpen && !state.searching);
     card.hidden = !(onMap && hasTrip);
+    shareHeight();
   }
+
+  /** Tell the page how tall the card is, so the Map settings button can sit just above it (styles/app.css). */
+  function shareHeight() {
+    const height = card.hidden ? 0 : card.offsetHeight;
+    document.documentElement.style.setProperty('--route-card-height', height + 'px');
+  }
+  // The card grows while it expands: keep the height current the whole time.
+  new ResizeObserver(shareHeight).observe(card);
 
   /** @param {boolean} expanded - show every step, or just the next one */
   function setExpanded(expanded) {
