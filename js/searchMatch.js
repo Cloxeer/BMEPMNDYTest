@@ -103,7 +103,7 @@ export function buildingMatches(words, ownWords) {
  */
 export function roomScore(words, room, building, ownWords) {
   const number = room.number.toLowerCase();
-  const code = building.code.toLowerCase();
+  const code = (building.code || '').toLowerCase(); // some buildings have no code yet
   let best = 0;
 
   words.forEach((typed, index) => {
