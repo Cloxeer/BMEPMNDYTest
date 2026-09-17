@@ -82,6 +82,8 @@ BANNER_NAMES = {
     'Golf Course Clubhouse': '597',
     'Photovotaic Center': '369',  # the schedule's own spelling
     'Ag. Institute/Police/Parking': '30',
+    'Equestrian Building': '465',
+    'Fabian Garcia Science Center': '158',
     'James B. Delamater Activity Ce': '321',
     'Rentfrow Gym': '211',
     'Garcia Residence Hall': '275',

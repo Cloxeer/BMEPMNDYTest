@@ -52,6 +52,7 @@ map:
   flyDuration: 320 # ms to fly to a chosen building: quick, with a soft landing
   flyCurve: 1.2 # how much the flight zooms out on the way (1 = barely)
   maxPixelRatio: 2 # sharp phones draw at most 2x, so cheaper phones stay smooth
+  maxTileCache: 60 # how many map tiles to keep in memory (fewer = less memory on cheap phones)
   buildingNames: true # names above the info badges (people can switch this in Settings)
   namesMinZoom: 15.5 # names appear from this zoom in
   nameSizeSmall: 11 # px at namesMinZoom
@@ -209,6 +210,7 @@ sheet:
   floorCountText: "floor count"
   codeSourceText: "Building code"
   factsSourceText: "Other facts: NMSU Office of Space Planning"
+  descriptionSourceText: "Description"
   plansNoteText: "Floor plans are unofficial, redrawn from the evacuation maps posted in the building."
   photoViewerTheme: "light"
   titleSize: "16px"
@@ -418,7 +420,8 @@ locations:
 
 settings:
   filtersTitle: "Map filters"
-  filtersFooter: "Choose which kinds of places have a switch in the Map filters button. Fewer switches keep it tidy; search always finds every place."
+  filtersFooter: "Choose up to 6 kinds of places to have a switch in the Map filters button. Switch one off to make room for another; search always finds every place, switched on or not."
+  filtersMax: 6 # how many can be in the button at once
   filterIconBox: "30px" # the rounded coloured square behind each icon, like iPhone Settings
   filterIconRadius: "7px"
   filterIconSize: "18px"

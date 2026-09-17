@@ -21,8 +21,8 @@
 import { CONFIG } from '../core/config.js';
 import { store } from '../core/store.js';
 import { allPointsOf, boxAround } from '../logic/shapes.js';
-import { addCampusLayers, hideBasemapBusinesses } from './campusLayers.js';
-import { addBadges, categoryFilter, badgePictureRule, nameColorRule } from './badges.js';
+import { addCampusLayers } from './campusLayers.js';
+import { addBadges, addBadgePictures, badgeFeature, categoryFilter, badgePictureRule, nameColorRule } from './badges.js';
 import { setParkingLotsVisible } from './parkingLayers.js';
 
 /**
@@ -54,8 +54,9 @@ export class CampusMap {
    * @param {object} campuses - data/campuses.geojson
    * @param {object} labels - data/campus-labels.geojson
    * @param {object} outside - data/outside-mask.geojson
+   * @param {object} style - the background map's style (js/main.js already took out the layers we hide)
    */
-  constructor(buildingsById, campuses, labels, outside) {
+  constructor(buildingsById, campuses, labels, outside, style) {
     const settings = CONFIG.map;
     this.buildingsById = buildingsById;
     this.namesVisible = true; // the Building names setting
@@ -80,7 +81,7 @@ export class CampusMap {
 
     this.map = new maplibregl.Map({
       container: 'map',
-      style: settings.styleUrl,
+      style: style,
       center: settings.center,
       zoom: settings.zoom,
       minZoom: settings.minZoom,
@@ -90,11 +91,14 @@ export class CampusMap {
       pixelRatio: Math.min(window.devicePixelRatio || 1, settings.maxPixelRatio),
       dragRotate: true,
       attributionControl: { compact: true },
+      maxTileCacheSize: settings.maxTileCache, // fewer map tiles kept in memory: kinder to cheap phones
+      refreshExpiredTiles: false, // don't re-download tiles we already have while you're using the map
     });
     this.map.touchZoomRotate.enable();
     this.map.touchPitch.enable();
 
     this.map.on('load', () => this.drawEverything(campuses, labels, outside));
+    this.map.on('error', (event) => console.error('Map:', event.error));
     this.followSelection();
   }
 
@@ -106,7 +110,6 @@ export class CampusMap {
    */
   drawEverything(campuses, labels, outside) {
     foldCredits();
-    hideBasemapBusinesses(this.map);
     addCampusLayers(this.map, campuses, labels, outside);
     addBadges(this.map, this.buildingsById, this.shownCategories, this.namesVisible);
     // Campus names go on top, so badges can't hide them (they only show zoomed out, before building names appear).
@@ -115,6 +118,22 @@ export class CampusMap {
     this.markSelected(store.get().selectedId);
     this.listenForTaps();
     this.markReady();
+  }
+
+  /**
+   * Put more places on the map after it has drawn (parks, food and parking arrive a moment later).
+   * @param {object[]} places - place records, already added to buildingsById
+   */
+  addPlaces(places) {
+    if (!this.hasBadges()) {
+      this.map.once('idle', () => this.addPlaces(places)); // still drawing: wait for it
+      return;
+    }
+    const features = [];
+    for (const place of Object.values(this.buildingsById)) {
+      features.push(badgeFeature(place));
+    }
+    this.map.getSource('buildings').setData({ type: 'FeatureCollection', features: features });
   }
 
   /**
@@ -131,9 +150,16 @@ export class CampusMap {
    */
   setShownCategories(categories) {
     this.shownCategories = categories;
+    // A chosen place whose kind was just switched off is let go, so the sheet and pill don't
+    // point at something you can't see.
+    const chosen = this.buildingsById[this.selectedId];
+    if (chosen && !categories.includes(chosen.category)) {
+      store.clearSelection();
+    }
     if (!this.hasBadges()) {
       return; // still loading: the badges are drawn with this choice
     }
+    addBadgePictures(this.map, categories); // draws any badge picture this kind of place still needs
     this.map.setFilter('building-pins', categoryFilter(categories, this.selectedId));
     this.map.setFilter('building-names', categoryFilter(categories, this.selectedId, true));
     setParkingLotsVisible(this.map, categories.includes('parking'));
@@ -163,6 +189,10 @@ export class CampusMap {
     this.selectedId = buildingId;
     if (!this.hasBadges()) {
       return; // still loading: drawEverything calls this again
+    }
+    const chosen = this.buildingsById[buildingId];
+    if (chosen) {
+      addBadgePictures(this.map, [chosen.category]); // a place found in search can be a kind that's switched off
     }
     this.map.setFilter('building-pins', categoryFilter(this.shownCategories, buildingId));
     this.map.setFilter('building-names', categoryFilter(this.shownCategories, buildingId, true));

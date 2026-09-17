@@ -290,7 +290,10 @@ class Store {
    * @param {string} category
    * @param {boolean} inButton
    */
-  setFilterOption(category, inButton) {
+  setFilterOption(category, inButton, maxOptions) {
+    if (inButton && this.state.filterOptions.length >= maxOptions) {
+      return; // the button is full: switch one off first
+    }
     const options = [];
     for (const name of this.state.filterOptions) {
       if (name !== category) {

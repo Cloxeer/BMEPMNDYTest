@@ -18,6 +18,17 @@
   <meta name="theme-color" content="#8C0B42" /><!-- replaced by theme.crimson from config.yml -->
   <title>Better NMSU Maps</title>
 
+  <!-- Start the connections to the libraries and map tiles right away, so they don't wait in line. -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- The first screen's own files, so the browser fetches them all at once instead of one after another. -->
+  <link rel="modulepreload" href="js/main.js" />
+  <link rel="modulepreload" href="js/core/config.js" />
+  <link rel="modulepreload" href="js/core/store.js" />
+  <link rel="modulepreload" href="js/map/campusMap.js" />
+  <link rel="modulepreload" href="js/map/badges.js" />
+  <link rel="modulepreload" href="js/map/campusLayers.js" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.css" />
   <!-- App icon: favicon.svg (sharp at any size), a PNG for browsers without SVG icons, and the iPhone home-screen icon -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />

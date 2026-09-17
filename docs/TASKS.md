@@ -122,6 +122,13 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Settings-only categories: Athletics, Student Services, Shops, Greenhouses, Barns, Warehouses (58 buildings, off at first)
 - [x] Food hours and phone numbers from NMSU Dining; Westside Bistro (HRTM, Gerald Thomas Hall)
 - [ ] Westside Bistro hours: confirm this semester's days with HRTM (NMSU last announced Fridays 11-1 in Feb. 2025)
+- [x] NMSU campus map description on every building that has one (156 of 165); Financial Aid building in Student Services
+- [x] Classes at the Equestrian Building and Fabian Garcia Science Center now map to NMSU's records
+- [x] Settings: at most 6 kinds of places in the Map filters button; switching a kind off lets go of a chosen place of that kind
+- [x] Parking at NMSU properties NMSU's parking layer misses: parking areas from OpenStreetMap, marked as such
+- [ ] Horse Farm Office: the schedule's name matches no NMSU building record (the Horse Farm barns are on the map)
+- [x] Speed on a slow phone (6x slower CPU, measured): map usable 4.4s -> 3.5s first visit, 2.0s on a repeat visit;
+      start-up main-thread blocks 2.9s -> 2.1s; badge drawing 227ms -> 22ms; at normal speed, first paint 292ms
 - [ ] Floors, year built, code unknown for some new buildings (shown as Unknown until NMSU publishes them)
 - [ ] Photos of the residence halls and parks (none freely licensed found)
 - [ ] Entrance photos: take one per door and list it under entrancePhotos in data/source/building-extras.json

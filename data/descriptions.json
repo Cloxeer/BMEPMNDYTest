@@ -1,0 +1,1459 @@
+{
+ "//": [
+  "Made by tools/build_buildings.py. Do not edit by hand: edit \"description\" in data/source/building-extras.json,",
+  "or the building's page on NMSU's campus map, then run python tools/build_buildings.py",
+  "Format: \"descriptions\" is {property number: [paragraph, paragraph, ...]}. The app loads it just after the map,",
+  "because the map does not need it and it is the longest text in the project."
+ ],
+ "descriptions": {
+  "323": [
+   "This building was built in 2015 and was named for Carl F. Jacobs (who started the NMSU music department) and Marion Hardmen (retired English Professor and Dean of Women).",
+   "Hardman and Jacobs Undergraduate Learning Center houses classrooms of various sizes that are centrally scheduled and used for many of the university's core curriculum classes and larger classes. Most undergraduates will take at least some courses in the undergraduate learning center during their student careers. The center also houses the Student Success Center, which includes TRiO Student Support Services and TRiO Upward Bound, and Information & Communications Technology, which includes a Help Desk, computer labs, a drop-in computer center, computer rentals and computer offices and workshops.",
+   "This building is a LEED Gold certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste."
+  ],
+  "461": [
+   "Zuhl Library was originally known as the \"New Library\". Construction was completed in 1992. The name was changed in 2000 to Zuhl Library after Herbert and Joan Zuhl. Both the Library and the Museum are dedicated to them, which hold geological artifacts from their personal collection, such as fossils, meteorites, and petrified wood. This collection is internationally recognized. Zuhl Library was the site of the first in-house copy room where students could photocopy pages from journals, books, and articles. It won awards for the best interior design, and it was one of the first (along with Branson Library) buildings to have an electronic classroom. These rooms were meant to be used to teach faculty how to use digital media like Microsoft PowerPoint or Adobe Illustrator. Zuhl Library is now a major academic research library that provides expanding resources and services to students, faculty, staff, the community and many other scholars. They support and enhance the teaching, learning, research, and outreach endeavors of NMSU. The library offers access to their massive collections of photos, documents, and other resources, as well as conference rooms which can be reserved for classes or study groups.",
+   "Drop box Location: Northeast curbside or near entrance doors or Branson near entrance doors.",
+   "Library",
+   "Building monitor information can be found here.",
+   "2911 MCFIE CIR",
+   "ZL",
+   "LAS CRUCES, NM, 88003",
+   "Property: 461"
+  ],
+  "285": [
+   "This building was constructed in 1968 and named after Roger B. Corbett, the President of NMSU from 1955-1970. The original plan for the building was much different from what you see today. The original location for the building was to be approximately where Educational Services building is today behind Garcia Hall. Also the original plan was only two",
+   "stories but featured a planetarium, bowling lanes, billiard and table tennis, a bookstore, administrative",
+   "offices, and room for games, hobbies, a dark room, etc.",
+   "Corbett Center, the university's student union, is a bustling center of activity on campus. It is home to the several dining establishments and many student organizations and programs. Corbett Center also offers attractive conference facilities.",
+   "Dining",
+   "ASNMSU",
+   "Building monitor information can be found here.",
+   "1600 INTERNATIONAL MALL",
+   "CC",
+   "LAS CRUCES, NM, 88003",
+   "Property: 285"
+  ],
+  "278": [
+   "Branson Library got its name from John W Branson, who served as acting president from October 1938 to September 1949. Since its construction in 1951, the Library has undergone numerous renovations. It has a variety of academic texts, as well as a general collection of literature. There are study spaces within Branson Library, making it a great place to work on coursework.",
+   "Drop Box Location: In front of the Branson Library next to the entrance doors.",
+   "Library",
+   "Building monitor information can be found here.",
+   "1305 FRENGER MALL",
+   "BL",
+   "LAS CRUCES, NM, 88003",
+   "Property: 278"
+  ],
+  "391": [
+   "Science Hall was built in 1987. There is a dedication plaque on this building from the Board of Regents. The Science Hall is home to the departments of Computer Science, Mathematical Sciences, Women's Studies, Sociology, and Psychology. Science Hall contains 119,295 square feet of laboratories, classroom space, and faculty offices.",
+   "Psychology",
+   "Computer Science",
+   "Mathematical Sciences",
+   "Gender and Sexuality Studies",
+   "Building monitor information can be found here.",
+   "1290 FRENGER MALL",
+   "SH",
+   "LAS CRUCES, NM, 88001",
+   "Property: 391"
+  ],
+  "386": [
+   "The Business Complex houses the College of Business, faculty offices, and classrooms. It was built in 1983. The bronze statue in the courtyard, created by NMSU alumnus Duke Sundt, is titled \"The Traders.\" It depicts the birth of trade among the cultures of this region.",
+   "University Student Records",
+   "College of Business",
+   "Finance",
+   "Management",
+   "Marketing",
+   "Accounting & Information Systems",
+   "Economics",
+   "Building monitor information can be found here.",
+   "1320 UNIVERSITY AVE",
+   "BC",
+   "LAS CRUCES, NM, 88003",
+   "Property: 386"
+  ],
+  "189": [
+   "The bidding for the construction of the Chemistry Building, Gardiner Hell, and Jett Hall all opened the same day in 1955. Jett Hall occupies the southern side of the Horseshoe. This building was constructed with Jett Annex in 1957, and in 1965 the northeast, east, and West wings were added along with improvements to the entrance. After more than 60 years, Jett Hall is still home to the chemical, mechanical, and aerospace engineering departments. The hall was named after Daniel Boone Jett, a beloved former dean of the College of Engineering and a professor of civil engineering for 30 years.",
+   "College of Engineering,",
+   "Chemical & Materials Engineering,",
+   "Mechanical Engineering",
+   "Building monitor information can be found here.",
+   "1040 SOUTH HORSESHOE",
+   "JH",
+   "LAS CRUCES, NM, 88001",
+   "Property: 189"
+  ],
+  "184": [
+   "Breland Hall, originally designed to be a men's dormitory, is home to many departments in the School Arts and Sciences. The idea to create the building began in 1954 and construction was finished on September 1, 1956. The hall was named for the late Rufus Galloway Breland, Professor of English, 1925-28, and Head of the English Department from 1928 until the time of his death on December 27, 1940. In 1976, Breland Hall was remodeled at a cost of $1.9 million to accommodate the College of Arts and Sciences, offices, classrooms, Arts and Sciences Departments, and laboratories. In addition, Breland Hall also houses the college's academic advisors.",
+   "Criminal Justice",
+   "Languages & Linguistics",
+   "Geography",
+   "College of Arts & Sciences",
+   "University Student Records",
+   "Anthropology",
+   "Philosophy",
+   "Government",
+   "Building monitor information can be found here.",
+   "1525 STEWART ST",
+   "BD",
+   "LAS CRUCES, NM, 88003",
+   "Property: 184"
+  ],
+  "397": [
+   "John Whitlock Hernandez Hall was originally called Engineering Complex II. It was built in 1989. It houses the Civil, Agricultural, and Geological Engineering Department (CAGE).",
+   "Civil Engineering Department",
+   "Building monitor information can be found here.",
+   "3035 S. ESPINA ST",
+   "EC2",
+   "LAS CRUCES, NM, 88001",
+   "Property: 397"
+  ],
+  "364": [
+   "Clara Belle Williams Hall (formerly known as the English Building), was built in 1981. It houses English Department classrooms and offices as well as the Writing Center. Clara Belle Williams Hall was renamed in February 2005, in honor of Clara Belle Williams, the first black student to graduate from the university.",
+   "English",
+   "Theatre Arts",
+   "Writing Center",
+   "Building monitor information can be found here.",
+   "1395 INTERNATIONAL MALL",
+   "EN",
+   "LAS CRUCES, NM, 88003",
+   "Property: 364"
+  ],
+  "287": [
+   "This building was constructed in 1968 for the College of Education and named for William B. O’Donnell. O’Donnell was a former professor, dean of students, and dean of the College of Education. He was also Vice President of the University from 1959 to 1968.The project was authorized in 1966 and work was completed in 1968. In 1977 the university had to save the building from “sinking”. On Sunday, December 12 1999, the building had a fire on the second floor that burned that floor and covered the rest of the building with soot. The College of Education was able to return to its home in May of 2000.",
+   "College of Health, Education, and Social Transformation",
+   "Kinesiology",
+   "Building monitor information can be found here.",
+   "1220 STEWART ST",
+   "OH",
+   "LAS CRUCES, NM, 88001",
+   "Property: 287"
+  ],
+  "389": [
+   "Located on the north side of the Horseshoe, the Music Building on campus today used to only be the Military Science Building that was built in 1911. While it used to have a gun range on the third floor and was called \"The Armory\" from 1938 to 1981, once the Music Building portion was added in 1983 the rest of the building became offices for faculty or practice rooms for students. This building is also referred to as the Atkinson Recital Hall.",
+   "Music Department",
+   "Building monitor information can be found here.",
+   "1075 NORTH HORSESHOE",
+   "MC",
+   "LAS CRUCES, NM, 88001",
+   "Property: 389"
+  ],
+  "187": [
+   "This building, home to the Department of Chemistry and Biochemistry, was built in 1957 and was remodeled and expanded in 1996. Home to laboratories, classrooms, research instrumentation and faculty offices, the Chemistry Building is located along the north leg of the \"horseshoe\" and is one of several buildings containing facilities utilized by the Department of Chemistry. Chemistry graduate students may use facilities at nearby White Sands Missile Range, including a linear accelerator, a deuterium-tritium generator, a fast-burst reactor, counting equipment, and extensive computer equipment.",
+   "Chemistry & Biochemistry",
+   "Biology",
+   "Building monitor information can be found here.",
+   "1175 NORTH HORSESHOE",
+   "CB",
+   "LAS CRUCES, NM, 88001",
+   "Property: 187"
+  ],
+  "34": [
+   "Foster Hall is home of the Department of Biology. The original building, constructed in 1930, is on the National Register of Historic Places and is named after former NMSU President Luther Foster. Six years after construction, a fresco was added by Santa Fe artist Olive Rush as part of the Public Arts Project. The fresco was restored in 1983. A recent renovation added 17,000 square feet of space for faculty offices, laboratories and classrooms to that expansion.",
+   "Biology",
+   "Building monitor information can be found here.",
+   "1200 S. HORSESHOE",
+   "FH",
+   "LAS CRUCES, NM, 88003",
+   "Property: 34"
+  ],
+  "249": [
+   "This building was constructed in 2014 and is home to the Pete V. Domenici Institute, which provides community engagement activities that serve to enhance the understanding of regional and national public policy issues. Following Senator Domenici's retirement from the U.S. Senate in 2008, the Pete V. Domenici Institute for Public Policy (Domenici Institute) was established on the main campus of New Mexico State University with the goal of continuing Senator Domenici's legacy of service.",
+   "University Student Records,",
+   "Marketing,",
+   "Economics, Applied Statistics & International Business,",
+   "Economic Development",
+   "Pete V. Domenici Institute",
+   "Building monitor information can be found here.",
+   "3014 MCFIE CIR",
+   "DOM",
+   "LAS CRUCES, NM, 88003",
+   "Property: 249"
+  ],
+  "83": [
+   "Originally designed as a new Student Union building, Milton Hall was built in 1947. The Board of Regents decided to dedicate the new building to the veterans of the previous wars, and the name Milton Hall was agreed upon. Milton Hall was the Student Union up until Corbett Center was built in 1968. It is now home to KRWG-TV, KRWG-FM, the Journalism Department, Center for Educational Development, Printing and Duplicating, and other departments.",
+   "KRWG Radio,",
+   "KRWG Television,",
+   "Instructional Media Services,",
+   "Digital Learning Initiatives,",
+   "Journalism & Mass Communications",
+   "Building monitor information can be found here.",
+   "2915 MCFIE CIR",
+   "MH",
+   "LAS CRUCES, NM, 88003",
+   "Property: 83"
+  ],
+  "244": [
+   "Gerald Thomas is home to the College of Agriculture, Consumer, and Environmental Sciences. It was built in 1963. Gerald Thomas Hall was designed by Wolgamood and Millington Architects. The hall was named for Gerald Thomas, former NMSU President from 1970 through 1984. In addition to classrooms, laboratories and faculty offices, Gerald Thomas is also home to the Chile Pepper Institute, which can be found in room 265.",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Chile Pepper Institute",
+   "Building monitor information can be found here.",
+   "940 COLLEGE DR",
+   "GT",
+   "LAS CRUCES, NM, 88001",
+   "Property: 244"
+  ],
+  "590": [
+   "Opened in 2004, the Health and Social Services Building is home to the College of Health and Social Services, the School of Nursing, the School of Social Work and the Department of Public Health Science. The building also incorporates Aggie Memorial Tower.",
+   "College of Health, Education, and Social Transformation",
+   "Public Health",
+   "Building monitor information can be found here.",
+   "1335 INTERNATIONAL MALL",
+   "HSS",
+   "LAS CRUCES, NM, 88003",
+   "Property: 590"
+  ],
+  "188": [
+   "Gardiner Hall is home to the Department of Physics and contains faculty offices, classrooms, and laboratory space. It was built in 1957 and named after George Gardiner, a physics professor and founder of the Physical Science Laboratory.",
+   "This building is a LEED Silver certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste. You can find more information about this program here.",
+   "Physics",
+   "Building monitor information can be found here.",
+   "1255 NORTH HORSESHOE",
+   "GN",
+   "LAS CRUCES, NM, 88003",
+   "Property: 188"
+  ],
+  "541": [
+   "Ed and Harold Foreman Engineering Complex (formerly Engineering Complex III) houses the departments of Engineering Technology and Industrial Engineering.",
+   "Industrial Engineering",
+   "Engineering Technology",
+   "Surveying",
+   "Office of Engineering",
+   "Building monitor information can be found here.",
+   "1060 FRENGER MALL",
+   "EC3",
+   "LAS CRUCES, NM, 88001",
+   "Property: 541"
+  ],
+  "657": [
+   "Devasthali Hall provides specialized studios and multi-purpose areas for NMSU's diverse art and culture curriculum. Studios include both indoor and outdoor space for woodworking, drawing and painting, printmaking, sculpture, photography, ceramics, and jewelry-making. This building acts as both studio space for class and a showcase for art.",
+   "This building is a LEED certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste. You can find more information about this program here.",
+   "Art Department",
+   "Art Gallery",
+   "Building monitor information can be found here.",
+   "1308 E. UNIVERSITY AVE",
+   "DEV",
+   "LAS CRUCES, NM, 88003",
+   "Property: 657"
+  ],
+  "365": [
+   "The Communication Sciences Building houses the Department of Communication Studies and the Special Education/Communication Disorders Department. It was built in 1981 over the old south end zone of the former football field.",
+   "Communication Disorders",
+   "English",
+   "Communication Studies",
+   "Building monitor information can be found here.",
+   "1405 INTERNATIONAL MALL",
+   "COMM",
+   "LAS CRUCES, NM, 88003",
+   "Property: 365"
+  ],
+  "288": [
+   "Guthrie Hall was named for the College of Business Dean G.L. Guthrie, who came to the university in 1925 and taught until 1969. The building was constructed in 1968. Guthrie Hall houses the advising center for the College of Business as well as classrooms and faculty offices.",
+   "College of Business",
+   "School of Nursing",
+   "Building monitor information can be found here.",
+   "1325 INTERNATIONAL MALL",
+   "GU",
+   "LAS CRUCES, NM, 88003",
+   "Property: 288"
+  ],
+  "551": [
+   "Skeen Hall was originally known as the Center for the Sustainable Development of Arid Lands, or CSDAL. It was built in 2000 and now houses extraneous agricultural based departments. In 2001, it was recognized as one of the \"Best Buildings\" for exteriors. The architect of this building was Van H. Gilbert, P.C. Skeen Hall was named after two local New Mexicans, Joe and Mary Skeen. Mr. Skeen advocated for federal funding for agricultural research during his twenty years as a U.S. Congressman. Mrs. Skeen identified the needs of the Land-Grant program in the National Council on Agricultural Research, Extension and Teaching.",
+   "Plant & Environmental Sciences",
+   "Entomology, Plant Pathology, and Weed Science",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Building monitor information can be found here.",
+   "945 COLLEGE DR",
+   "SKH",
+   "LAS CRUCES, NM, 88001",
+   "Property: 551"
+  ],
+  "631": [
+   "The Center for the Arts houses the NMSU Theatre program, as well as classes for the College of Arts and Sciences. This facility features a 466-seat performance space for theater and dance, replete with an orchestra pit and trap room, orchestra level, two balconies, and a fly tower.",
+   "This building is a LEED Gold certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste. You can find more information about this program here.",
+   "Theatre Arts",
+   "College of Arts & Sciences",
+   "Building monitor information can be found here.",
+   "1000 E. UNIVERSITY AVE",
+   "CFTA",
+   "LAS CRUCES, NM, 88005",
+   "Property: 631"
+  ],
+  "368": [
+   "Knox Hall is one of several buildings housing the College of Agricultural, Consumer, and Environmental Sciences. Built in 1981, Knox Hall currently is home to the Department of Animal and Range Sciences.",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Fishery & Wildlife Sciences,",
+   "Animal & Range Sciences",
+   "Building monitor information can be found here.",
+   "2980 SOUTH ESPINA ST",
+   "KN",
+   "LAS CRUCES, NM, 88001",
+   "Property: 368"
+  ],
+  "33": [
+   "The construction of Kent Hall was completed in 1930. It was designed as a men's dormitory to house up to 80 students, though, ironically, its first occupants were the women from McFie Hall during a summer of remodeling. By 1960, a few changes to the building made it possible to allow women to stay here at the same time as the men. In 1964, the building became the home of the new Speech Department. Sixteen years later, the building was remodeled from a dorm to an office building, and by 1981, the University Museum moved in. After a half million dollar renovation, the building reopened in 1986 as the new University Museum, which it remains to this day.",
+   "University Museum",
+   "Building monitor information can be found here.",
+   "1280 E. UNIVERSITY AVE",
+   "KH",
+   "LAS CRUCES, NM, 88003",
+   "Property: 33"
+  ],
+  "619": [
+   "This building was built in 2013 and is used by the College of Health and Social Services houses the Southwest Survey Research Center.",
+   "This building is a LEED Gold certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste. You can find more information about this program here.",
+   "Health and Social Services Program",
+   "Building monitor information can be found here.",
+   "1337 INTERNATIONAL MALL",
+   "HSSA",
+   "LAS CRUCES, NM, 88003",
+   "Property: 619"
+  ],
+  "363": [
+   "Engineering Complex I houses the Engineering New Mexico Resource Network, the Alliance for Minority Participation, as well as surveying engineering offices, classrooms and laboratories. The building was constructed in 1980.",
+   "NM Alliance for Minority Participation",
+   "Civil Engineering",
+   "Engineering NM Resource Network",
+   "Engineering Technology",
+   "Engineering College",
+   "AIS Aggie Innovation Space",
+   "Building monitor information can be found here.",
+   "1025 STEWART ST",
+   "EC1",
+   "LAS CRUCES, NM, 88001",
+   "Property: 363"
+  ],
+  "82": [
+   "The Biology Annex was first introduced as the Air Mechanics Building. The building is now used to teach biology and science.",
+   "Department of Biology",
+   "Building monitor information can be found here.",
+   "3080 WILLIAMS AVE",
+   "BX",
+   "LAS CRUCES, NM, 88001",
+   "Property: 82"
+  ],
+  "35": [
+   "The Y.M.C.A. (Young Man's Christian Association) Building, which would later be called the William B. Conroy Honors Center, was built on university property in 1907. This makes it the oldest building at NMSU! It is a three-story California Mission Revival-style masonry and stucco building with a French tile hipped roof. It has an arched entryway. It was built with a brick exterior but that was later plastered over.    While it was on university property, NMSU started off by renting the building out. Although it was one of the Trost & Trost original buildings, NMSU did not purchase the building until 1964. It was used by the Music Department from 1929 to 1965, and then the Air Force ROTC Program until 1982. After this it was vacant until 2002, by which time renovations had taken place and the Honors College had moved in. It is named after William B. Conroy, who was an NMSU president from 1997 to 2000.",
+   "Honors College/Crimson School Program",
+   "2745 SOUTH ESPINA ST",
+   "WCHC",
+   "LAS CRUCES, NM, 88001",
+   "Property: 35"
+  ],
+  "385": [
+   "This building is used for set design to create magical scenes for the theatrical performances by NMSU students.",
+   "Theatre Arts",
+   "3525 LOCUST ST",
+   "TS",
+   "LAS CRUCES, NM, 88001",
+   "Property: 385"
+  ],
+  "225": [
+   "The Astronomy Building was built in 1959 and is home to the Department of Astronomy. This department owns several telescopes, which they've distributed amongst the observatories throughout campus. NASA also uses this building as a Planetary Node, which collects atmospheric data. The node also provides academic research materials for both staff and students.",
+   "Astronomy",
+   "Building monitor information can be found here.",
+   "1320 FRENGER MALL",
+   "AY",
+   "LAS CRUCES, NM, 88001",
+   "Property: 225"
+  ],
+  "190": [
+   "This annex belongs to chemical, mechanical, and aerospace engineering departments. The hall was named after Daniel Boone Jett, a beloved former dean of the College of Engineering and a professor of civil engineering for 30 years.",
+   "Mechanical Engineering,",
+   "Civil Engineering",
+   "Building monitor information can be found here.",
+   "1040 SOUTH HORSESHOE",
+   "JX",
+   "LAS CRUCES, NM, 88001",
+   "Property: 190"
+  ],
+  "10": [
+   "Goddard Hall, with its distinctive bell tower and Spanish Renaissance style, was completed in 1913. The building was dedicated in 1934 to the late dean of engineering, Ralph Willis Goddard. Goddard Hall is home to the College of Engineering. The oldest engineering college in New Mexico, NMSU's College of Engineering emphasizes hands-on learning through internships, cooperative education opportunities, research and teams that compete in national engineering competitions such as the Mini Baja and the Concrete Canoe Competition.",
+   "Engineering",
+   "Building monitor information can be found here.",
+   "1100 SOUTH HORSESHOE",
+   "GO",
+   "LAS CRUCES, NM, 88001",
+   "Property: 10"
+  ],
+  "245": [
+   "This building was constructed in 1962. It is currently used for Agricultural Engineering and the Facility for Investigating Dog/Owner Learning and Behavior, or FIDO LAB.",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Family & Consumer Sciences",
+   "Extension Home EC & Communication",
+   "3005 KNOX ST",
+   "AE",
+   "LAS CRUCES, NM, 88001",
+   "Property: 245"
+  ],
+  "662": [
+   "The Food Science, Security and Safety Center serves as an international hub for food safety and security along the United States-Mexico border. It houses six state-of-the-art laboratories for research in functional foods, nutraceuticals, food processing, dairy science, fermentation, minimizing water usage in food production and other areas. The facility also supports value-added agriculture, one of New Mexico’s nine targeted industries.",
+   "This building opened in the spring of 2023.",
+   "Animal & Range Services",
+   "College of ACES",
+   "Food Safety Laboratory",
+   "3140 KNOX ST",
+   "FSL",
+   "LAS CRUCES, NM, 88003",
+   "Property: 662"
+  ],
+  "683": [],
+  "321": [
+   "The 100,000 sq ft James B. Delamater Activity Center houses Recreational Sports, which includes Intramural Sports, Outdoor Recreation, Aquatic Center, Climbing and Bouldering Walls, and Group Fitness.",
+   "Cardio Room",
+   "Weight Room",
+   "4 Racquetball Courts",
+   "12′ Bouldering Wall",
+   "Dance/Aerobic Studio",
+   "Indoor Cycling Room",
+   "Indoor Running Track",
+   "6 Basketball/Volleyball Courts",
+   "2 Futsal Courts",
+   "Intramural Fields",
+   "Outdoor Recreation Office",
+   "Aggie Fit",
+   "The Activity Center is home to the Department of Physical Education, Recreation, and Dance. It is open to students, faculty, staff, and their guests, and offers facilities such as a weight room, elevated indoor jogging track, racquetball courts, and basketball-volleyball play areas. The Activity Center was built in 1973; an expansion and a renovation were completed in 1996.",
+   "For hours and information on facilities and activities, please visit Activity Center.",
+   "Building monitor information can be found here.",
+   "1600 STEWART ST",
+   "AC",
+   "LAS CRUCES, NM, 88003",
+   "Property: 321"
+  ],
+  "211": [
+   "In 1959, a new women's physical education gymnasium was built. It was named Rentfrow Gym after Era Rentfrow, a woman who spent most of her life at NMSU. She enrolled in preparatory school in 1911, graduated in 1919, and was the university registrar from 1922 to 1959. This gymnasium is currently home to the College of Education's Department of Kinesiology and Dance.",
+   "Kinesiology & Dance",
+   "3165 WILLIAMS AVE",
+   "RH",
+   "LAS CRUCES, NM, 88003",
+   "Property: 211"
+  ],
+  "275": [
+   "Garcia Hall (1968) is a patio-style residence hall that holds approximately 800 students each academic year. Serving as the university's primary first-year facility, Garcia Hall offers plenty of opportunities for new students to connect to the campus. Garcia Hall is home to various living learning communities. Also located in Garcia Hall, La Vista Learning Center is a recently completed 10,000 square foot academic support area featuring two state-of-the-art classrooms, study areas, computer labs, faculty and academic advising spaces, and cyber café. Intentionally built to support the freshman year experience, this space provides a myriad of activities focused on assisting first year students with the college transition.",
+   "Garcia Hall",
+   "Building monitor information can be found here.",
+   "1715 INTERNATIONAL MALL",
+   "GH",
+   "LAS CRUCES, NM, 88001",
+   "Property: 275"
+  ],
+  "604": [
+   "Designed to encourage social interaction between residents, Pinon Hall (2006) features relaxing community-living spaces, a billiards room, and two large, grassy courtyards perfect for outdoor studying or an impromptu volleyball game. Room furniture can be lofted to allow students more flexibility in room design. Each room is designed as a part of a suite where roommates share a bathroom with the residents of the adjoining room. Piñon Hall is ADA compliant and offers many well-designed rooms with an elevator to accommodate students with special needs.",
+   "Piñon Hall is located in North Campus with the other traditional halls where students have easy access to Corbett Center Student Union as well as various university departments, making it easier to conduct business or seek additional assistance. All other residence halls are minutes away, so visiting friends or getting together with a group for class projects is a snap! Piñon Hall also houses student athletes from the following sports: baseball, golf, softball, tennis and track & field.",
+   "Piñon Hall",
+   "Building monitor information can be found here.",
+   "1760 E. UNIVERSITY AVE",
+   "NFH",
+   "LAS CRUCES, NM, 88001",
+   "Property: 604"
+  ],
+  "658": [
+   "Juniper (2019) is designed to encourage social interaction between residents. This area has a large, grassy courtyards perfect for outdoor studying. Room furniture can be lofted to allow students more flexibility in room design. Each room is designed as a part of a suite where roommates share a bathroom with the residents of the adjoining room. Juniper Hall is ADA compliant and offers many well-designed rooms with an elevator to accommodate students with special needs. Juniper Hall is located in North Campus with the other traditional halls where students have easy access to Corbett Center Student Union as well as various university departments, making it easier to conduct business or seek additional assistance. All other residence halls are minutes away, so visiting friends or getting together with a group for class projects is a snap!",
+   "Juniper Hall",
+   "Building monitor information can be found here.",
+   "1525 INTERNATIONAL MALL",
+   "JUN",
+   "LAS CRUCES, NM, 88003",
+   "Property: 658"
+  ],
+  "185": [
+   "RGH is a fully-updated building that still has the charm, character and feel of yesteryear. This hall is big on tradition with a style emphasizes its unique atmosphere. RGH features a massive courtyard known for its attractiveness and prominence for social functions. RGH is the only living area on campus where the rooms open onto an inside hallway; a traditional “double-loaded corridor” design. This design encourages resident interaction and makes for a very strong sense of community amongst a diverse group of residents ranging from freshmen to graduate students.",
+   "Rhodes-Garrett-Hamiel Hall",
+   "Building monitor information can be found here.",
+   "2725 JORDAN ST",
+   "RGH",
+   "LAS CRUCES, NM, 88001",
+   "Property: 185"
+  ],
+  "605": [
+   "The Chamisa Club House is a student union center for Chamisa Village Residence. Resident events are held here. There are also dorms within this building.",
+   "Chamisa Village apartments, located on North Campus near Corbett Center Student Union, come in two and four bedroom layouts. They are for Sophomore students and above. Much thought and planning was placed on creating living spaces conducive to accommodating the student lifestyle. Each roommate has a private bedroom with a loft-able, full size bed. The kitchen and living room layouts feature an open floor plan to encourage social interaction.",
+   "Chamisa Club House",
+   "Building monitor information can be found here.",
+   "1725 STEWART ST",
+   "CAMPAPT",
+   "LAS CRUCES, NM, 88001",
+   "Property: 605"
+  ],
+  "645": [
+   "Chamisa Village apartments, located on North Campus near Corbett Center Student Union, come in two and four bedroom layouts. They are for Sophomore students and above. Much thought and planning was placed on creating living spaces conducive to accommodating the student lifestyle. Each roommate has a private bedroom with a loft-able, full size bed. The kitchen and living room layouts feature an open floor plan to encourage social interaction.",
+   "This building is a LEED Gold certified building. LEED, or Leadership  in  Energy and Environmental Design, is a program that strives to create  a  more sustainable world. This building has been specifically designed  to  use fewer resources and decrease waste. You can find more  information  about this program here.",
+   "Chamisa",
+   "Building monitor information can be found here.",
+   "1725 STEWART ST",
+   "CAMPAPT",
+   "LAS CRUCES, NM, 88001",
+   "Property: 605"
+  ],
+  "413F": [
+   "Cervantes Village was recently refurbished in 2012, and offers both furnished and unfinished units with one, two, or four bedrooms. One bedrooms have a studio layout with a shared bathroom with one other apartment. Two bedroom apartments have a shared living room and full sized kitchen with a shared bathroom. Four bedroom apartments have a large kitchen, a living room, and two bathrooms. These apartments are in close proximity to Aggie Express, making it a very attractive and convenient place to live. A South Resident Parking Permit is required to park in this complex.",
+   "Cervantes Village",
+   "Building monitor information can be found here.",
+   "1500 CENTER DR",
+   "CERV",
+   "LAS CRUCES, NM, 88001",
+   "Property: 413F"
+  ],
+  "462K": [
+   "Vista del Monte apartments are fully furnished two-bedroom or one bathroom apartments with kitchens. Located approximately half a mile from the heart of campus, VDM apartments are walking distance from the library, Activity Center, Natatorium, and many other buildings on campus. Vista del Monte apartments are available for students at the sophomore level and above. VDM is also home to our Graduate Community and International Community, making this area a very diverse and fun place to live. The Aggie Express is only steps away and features a full-service convenience store, laundry facilities, a computer lab and workout room.",
+   "Vista Del Monte Apartments",
+   "Building monitor information can be found here.",
+   "3525 WILLIAMS AVE",
+   "VDM",
+   "LAS CRUCES, NM, 88001",
+   "Property: 526X"
+  ],
+  "206": [
+   "Sutherland Village is located to the north of Tom Fort Village. It features similar concrete block homes. The only difference is the style of windows that were used. Tom Fort and Sutherland Villages flourish with activity as children play in front yards and neighbors barbecue together. These unfurnished, single-family, one story homes are a favorite among our students and feature large fenced-in yards where approved pets are welcome. Tom Fort and Sutherland Villages are available for students with families only. Located approximately half a mile from the heart of campus, these homes are walking distance from the DACC campus, library, James B. Delamater Activity Center, Aquatic Center, and many other buildings on campus. The Aggie Express is only steps away and features a full-service convenience store, laundry facilities, a computer lab and workout room.",
+   "Sutherland Village",
+   "The building monitor for this building is Bud Satterwhite. They can be reached at (575) 646-4460 or at budsatt2@nmsu.edu.",
+   "3401 ESPINA ST",
+   "SFH",
+   "LAS CRUCES, NM, 88001"
+  ],
+  "214": [
+   "Tom Fort Village is located to the south of Sutherland Village. It  features similar concrete block homes. The only difference is the style  of windows that were used. Tom Fort and Sutherland Villages flourish  with activity as children play in front yards and neighbors barbecue  together. These unfurnished, single-family, one story homes are a  favorite among our students and feature large fenced-in yards where  approved pets are welcome.",
+   "Tom Fort and Sutherland Villages are  available for students with families only. Located approximately half a  mile from the heart of campus, these homes are walking distance from the  DACC campus, library, James B. Delamater Activity Center, Aquatic  Center, and many other buildings on campus. The Aggie Express is only  steps away and features a full-service convenience store, laundry  facilities, a computer lab and workout room. A South Resident Parking  permit is required for street parking, but no permit is needed to park  in your own driveway.",
+   "Tom Fort",
+   "The building monitor for this building is Bud Satterwhite. They can be  reached at 646‐4460 or at budsatt2@nmsu.edu.",
+   "1500 STANDLEY DR",
+   "SFH",
+   "LAS CRUCES, NM, 88001"
+  ],
+  "596": [],
+  "251": [
+   "The NMSU Aquatic Center contains a 25-yard indoor pool and an Olympic-size outdoor pool. Both pools are heated and are open all year round. Come swim laps or go off the 1 meter or 3 meter diving boards during our recreation time. In order to swim at the NMSU Aquatic Center, you must be an AggieFit member. Guests can use this facility, but they must pay a fee of $10.00 and be escorted by an AggieFit member. Students and AggieFit members are allowed no more than three guests per day.",
+   "Swimming and Diving",
+   "Aquatic Center",
+   "Building monitor information can be found here.",
+   "1520 STEWART ST",
+   "NA",
+   "LAS CRUCES, NM, 88003",
+   "Property: 251"
+  ],
+  "597": [
+   "The Golf Clubhouse is home to the golf pro shop and the Player's Grill. The Player's Grill is a beautiful public restaurant and bar located inside the clubhouse overlooking the NMSU Golf Course. Customers are treated to scenic views of the golf course and the Mesilla Valley while seated in either the restaurant or on the spacious outdoor patio. All golf course parking is free of charge and you don't have to golf in order to dine at the restaurant. In the state of New Mexico, the NMSU golf course ranked ninth for best golf course and 22nd for best college golf course in the country.",
+   "Golf",
+   "Building monitor information can be found here.",
+   "3500 HERB WIMBERLY DR",
+   "GC",
+   "LAS CRUCES, NM, 88011",
+   "Property: 597"
+  ],
+  "369": [
+   "NMSU's photovoltaic center and laboratories are used to research solar energy. The photovoltaic systems at NMSU are unique because they have a Data Acquisition System (DAS) that measures the power output, sunlight, amounts of current and temperature data.",
+   "Southwest Technology Development Institute",
+   "3705 LOCUST ST.",
+   "PVC",
+   "LAS CRUCES, NM, 88001",
+   "Property: 369"
+  ],
+  "30": [
+   "Constructed in 1930 on the north side of McFie Hall, originally the girl’s dormitory, the Agricultural Institute was The original purpose of the southern wing of the building was a dining hall. In 2003 the building was remodeled to accommodate the police department.",
+   "The NMSU Police Department strives to provide an environment free of crime to enhance the educational process at the university.  The members of the Department are committed to the protection of the lives, rights, and property of all citizens; the vigorous apprehension of criminals; the creation of new and innovative programs; and effective dialogue with the members of the public.",
+   "Police Department NMSU",
+   "(575) 646-3311",
+   "725 COLLEGE DR",
+   "AI",
+   "LAS CRUCES, NM, 88001",
+   "Property: 30"
+  ],
+  "465": [
+   "This center houses a classroom, tack room, locker rooms, and offices for coaches. The facility, which opened in 2003, is located on Stewart Street at the southwest edge of campus will help NM State build on its equestrian legacy. The facility supports competitive riders, equine science students and beginners taking riding classes to fulfill physical education requirements. NM State offers a minor in horse management, with classes in introductory horse science, horse evaluation, horse production, fitting and selling, applied horsemanship, stable management and Western and English equitation.",
+   "Animal & Range Science",
+   "401 W. UNION AVE",
+   "EA",
+   "LAS CRUCES, NM, 88005",
+   "Property: 465"
+  ],
+  "158": [
+   "This building houses office and labs for Hort Farm. Hort Farm is one of NMSU's Agricultural Science Centers, and is part of the College of Agricultural, Consumer, and Environmental Sciences.",
+   "Fabian Garcia Agriculture Science Center",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Building monitor information can be found here.",
+   "113 W. UNIVERSITY AVE",
+   "HF",
+   "LAS CRUCES, NM, 88005",
+   "Property: 158"
+  ],
+  "36": [
+   "The Nason House, which was originally the President's House, was constructed in 1918. By 1935, Dr. H.L. Kent was president of New Mexico State University. He was asked by Dan W. Williams, President of the Board of Regents, to stop renting the house out to students and teachers. In 1956 the house received renovations and was used by presidents of the university until 1980. The house was dedicated to Willoughby Nason, a graduate student studying Mexican Revolutionary History, in 1987. Since then, the house has been used by the Center for Latin American Studies.",
+   "Center of Latin American Studies",
+   "Building monitor information can be found here.",
+   "1070 E. UNIVERSITY AVE",
+   "NHS",
+   "LAS CRUCES, NM, 88001",
+   "Property: 36"
+  ],
+  "32": [
+   "This building was built in 1928, and named after R. L Young-- prominent lawyer in Las Cruces for many",
+   "years. Young Hall started off as the location of a new library. This library was once again moved to Branson Hall in 1952. The building was remodeled in 1953 and taken over by the English Department in 1958. By 1982 it was renovated and the Military Science and Aerospace Department moved in. It is currently still home to the Department of Military Science and the Army ROTC program on campus.",
+   "Department of Military Studies",
+   "Department of Mechanical and Aerospace Engineering",
+   "1300 SOUTH HORSESHOE",
+   "YH",
+   "LAS CRUCES, NM, 88003",
+   "Property: 32"
+  ],
+  "56": [
+   "Dove Hall was named for Claude C. Dove who came to NMSU in 1935 as the first professor of Education and Psychology from 1935 to 1963. He was professor emeritus from 1963 to 1979.",
+   "There is also a street named for him in Las Cruces. Completed in 1939 as a Works Project Administration (WPA) project, Dove Hall is now home to the New Mexico State University Foundation. The purpose of the Foundation is to secure, manage, and invest private gifts for the benefit of NMSU's teaching, research, extension education and public service programs.",
+   "Development Office",
+   "University Advancement VP Office",
+   "Building monitor information can be found here.",
+   "1305 NORTH HORSESHOE",
+   "DH",
+   "LAS CRUCES, NM, 88003",
+   "Property: 56"
+  ],
+  "154": [
+   "Garcia Center was built in 1949 and was once a residence hall. It was converted into offices in 1969 and is now home to a number of student support offices such as the Placement and Career Center, Student Advising, International Programs and Scholar Services, Black Programs, Chicano Programs, American Indian Programs, and the university's Veteran's Program.",
+   "Black Programs",
+   "Chicano Program",
+   "Academic Advising",
+   "Building monitor information can be found here.",
+   "3024 Andrew Wall Place",
+   "GA",
+   "LAS CRUCES, NM, 88003",
+   "Property: 154"
+  ],
+  "172": [
+   "Hadley Hall is home to several administrative units including the President's Office and Human Resources. It was built in 1953 and named after Hiram Hadley, the university's first President.",
+   "Building monitor information can be found here.",
+   "2850 WEDDELL ST",
+   "HH",
+   "LAS CRUCES, NM, 88001",
+   "Property: 172"
+  ],
+  "179": [
+   "The O'Loughlin House was originally built in 1952 as a Home Management House and was used as part of the Home Economics Department. It is now home to the Office of Institutional Equity. This office is committed to non-discrimination and equal opportunity in our employment and learning environments.",
+   "Office of Institutional Equity",
+   "Building monitor information can be found here.",
+   "1130 E. UNIVERSITY AVE",
+   "OLH",
+   "LAS CRUCES, NM, 88001",
+   "Property: 179"
+  ],
+  "535": [
+   "This facility is used to study pests that can be found on farm animals and infect crops.",
+   "Biosecurity & Food Safety Center",
+   "3115 AGGIE RODEO DR",
+   "LAS CRUCES, NM, 88011",
+   "Property: 535"
+  ],
+  "534": [
+   "This facility is used to study pests that can be found on farm animals and infect crops.",
+   "Biosecurity & Food Safety Center",
+   "3115 AGGIE RODEO DR",
+   "LAS CRUCES, NM, 88011",
+   "Property: 534"
+  ],
+  "387A": [],
+  "601": [
+   "The state-of-the-art NMSU Tennis Center opened for the 2006 spring dual match season, located just south of Aggie Memorial Stadium. It features 12 post-tension concrete tennis courts with the best lighting system for any facility in the Southwest. The post-tension concrete courts are the finest hard courts in the world.",
+   "Tennis",
+   "Building monitor information can be found here.",
+   "1800 WELLS ST",
+   "TC",
+   "LAS CRUCES, NM, 88001",
+   "Property: 601"
+  ],
+  "355": [
+   "At the southeast edge of campus, Wells Hall was built in 1978. What was originally meant to be a dormitory for students is now a storage facility and the site of university student art shows. The plan for the building was supposed to be temporary housing for the large influx of new students, but due to the fact that it did not have enough exits from the living quarters, it did not meet fire code standards.",
+   "For more information, visit https://artdepartment.nmsu.edu/",
+   "Institution For Excel in Math & Science Education",
+   "New Mexico Space Grant Consortium",
+   "Art",
+   "Anthropology",
+   "Klipsch School of Electronic Computer Engineering",
+   "Theatre Arts",
+   "Athletics",
+   "1720 WELLS ST",
+   "WE",
+   "LAS CRUCES, NM, 88001",
+   "Property: 355"
+  ],
+  "552": [
+   "As the name suggests, NMSU baseball staff occupies the office in this building, as does the locker room for the NMSU baseball team.",
+   "NMSU Baseball",
+   "Building monitor information can be found here.",
+   "3315 LOCUST ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 552"
+  ],
+  "612": [
+   "The building includes a 100-seat team room, two smaller meeting spaces, support spaces, and a large lobby known as the Clifford Ross and Cooper CPA's Hall of Legends. The Hall of Legends features a 12x45 foot mural depicting a collage of past players and coaches.",
+   "NMSU Football",
+   "Building monitor information can be found here.",
+   "1810 STEWART ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 612"
+  ],
+  "348": [
+   "Built in 1978, Passive Solar currently houses NMSU's General Counsel and Real Estate departments.",
+   "University General Counsel",
+   "Building monitor information can be found here.",
+   "4003 TORTUGAS TRAIL",
+   "SAH",
+   "LAS CRUCES, NM, 88011",
+   "Property: 348"
+  ],
+  "514": [
+   "NMSU's photovoltaic center and laboratories are used to research solar energy. The photovoltaic systems at NMSU are unique because they have a Data Acquisition System (DAS) that measures the power output, sunlight, amounts of current and temperature data.",
+   "Southwest Technology Development Institute",
+   "3705 LOCUST ST.",
+   "PVL",
+   "LAS CRUCES, NM, 88001",
+   "Property: 514"
+  ],
+  "387C": [],
+  "388": [
+   "The South Campus Housing Office services Cervantes, Vista Del Monte, Tom Village, and Sutherland Village. They can put in a work order, supply high speed internet installation equipment, and assist when students are locked out.",
+   "Housing",
+   "Building monitor information can be found here.",
+   "1410 CENTER DR",
+   "VDMC",
+   "LAS CRUCES, NM, 88001",
+   "Property: 388"
+  ],
+  "281": [
+   "NMSU's Physical Science Laboratory is a multi-disciplined organization that develops new technology for space exploration, homeland security, drug and weapon detection, and advanced weaponry. PSL supports both NASA and White Sands Missile Range. This structure is the front gate for PSL. You must check in before you are allowed to enter.",
+   "PSL Security Safety Services",
+   "1055 AGRICULTURE WAY",
+   "PGCM",
+   "LAS CRUCES, NM, 88001"
+  ],
+  "329": [
+   "This building supports agricultural research and is run by the College of Agricultural, Consumer, and Environmental Sciences.",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Plant & Environmental Sciences",
+   "Building monitor information can be found here.",
+   "3080 KNOX ST",
+   "CBI",
+   "LAS CRUCES, NM, 88001",
+   "Property: 329"
+  ],
+  "212": [
+   "The New Mexico Space Grant Consortium building is the only endowed Space Grant building in the U.S. This building was named after Len Sugerman, who was a key supporter of the development of the Southwest Regional Spaceport.",
+   "New Mexico Space Grant Consortium",
+   "3050 KNOX ST",
+   "SG",
+   "LAS CRUCES, NM, 88001",
+   "Property: 212"
+  ],
+  "372": [
+   "This building is scheduled to be demolished.",
+   "Animal & Range Sciences",
+   "Building monitor information can be found here.",
+   "3020 KNOX ST",
+   "MPL",
+   "LAS CRUCES, NM, 88001",
+   "Property: 372"
+  ],
+  "126": [
+   "The Information and Communication Technologies (ICT) building was completed in 1978. In the spring of 1987, its primary computer room doubled in size with the construction of the Science Hall. The computer center's lab is open 24 hours a day Monday through Saturday. It is not open on Sundays.",
+   "ICT Data Center & Access",
+   "ICT Enterprise Network",
+   "ICT Database Administration",
+   "Building monitor information can be found here.",
+   "1275 STEWART ST",
+   "CP",
+   "LAS CRUCES, NM, 88001",
+   "Property: 126"
+  ],
+  "426": [],
+  "585": [
+   "Wooton Hall, or the Jornada USDA Experimental Range Headquarters, was constructed in 2002, and is not owned by the University. The Jornada has served as a field research laboratory since its establishment in 1912. The varied scientific activities on the range throughout this century have led to important discoveries about desert ecosystems that have been the basis for principles of land management that have application around the globe. This region is probably the most extensively studied desert on earth, and research activities both on-site and around the globe, continue to flourish in the 21st century. From microscopic-scale studies of soil microorganisms to synoptic-scale assessments of vegetation patterns detected from satellite-based sensors, the Jornada research group is addressing a multitude of research needs relevant to natural resource management issues.",
+   "Jornada",
+   "Building monitor information can be found here.",
+   "2995 KNOX ST",
+   "LAS CRUCES, NM, 88001",
+   "Property: 585"
+  ],
+  "2": [
+   "This is the campus' original agricultural building. It was acquired by the university in 1889. It was already on the land when the university purchased the campus grounds. It has also been referred to as the Seed House. It is currently occupied by Entomology Plant Pathology and Weed Science and is used for Nematology related work under ACES.",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Building monitor information can be found here.",
+   "655 COLLEGE DR",
+   "NL",
+   "LAS CRUCES, NM, 88005",
+   "Property: 2"
+  ],
+  "643": [
+   "This building is a LEED Gold certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste. You can find more information about this program here.",
+   "Building monitor information can be found here.",
+   "975 AGRICULTURE WAY",
+   "LAS CRUCES, NM, 88003",
+   "Property: 643"
+  ],
+  "319": [
+   "The Tombaugh Observatory was built between 1967 and 1971. They were named for the great astronomer Clyde William Tombaugh.",
+   "The Tombaugh Observatory is equipped with two Celestron 11\" CPC1100 Schmidt-Cassegrain telescopes, a 16\" Meade Starfinder Dobsonian telescope, various smaller telescopes, and a telescope custom-built by Clyde Tombaugh and operated by the Astronomical Society of Las Cruces.",
+   "Astronomy",
+   "Tombaugh Observatory",
+   "3415 WILLIAMS AVE",
+   "TOS",
+   "LAS CRUCES, NM, 88003",
+   "Property: 319"
+  ],
+  "318": [
+   "The Tombaugh Observatory was built between 1967 and 1971. They were named for the great astronomer Clyde William Tombaugh.",
+   "The Tombaugh Observatory is equipped with two Celestron 11\" CPC1100 Schmidt-Cassegrain telescopes, a 16\" Meade Starfinder Dobsonian telescope, various smaller telescopes, and a telescope custom-built by Clyde Tombaugh and operated by the Astronomical Society of Las Cruces.",
+   "Astronomy",
+   "Tombaugh Observatory",
+   "3415 WILLIAMS AVE",
+   "TOC",
+   "LAS CRUCES, NM, 88003",
+   "Property: 318"
+  ],
+  "317": [
+   "The Tombaugh Observatory was built between 1967 and 1971. They were named for the great astronomer Clyde William Tombaugh.",
+   "The Tombaugh Observatory is equipped with two Celestron 11\" CPC1100 Schmidt-Cassegrain telescopes, a 16\" Meade Starfinder Dobsonian telescope, various smaller telescopes, and a telescope custom-built by Clyde Tombaugh and operated by the Astronomical Society of Las Cruces.",
+   "Astronomy",
+   "Tombaugh Observatory",
+   "3415 WILLIAMS AVE",
+   "TON",
+   "LAS CRUCES, NM, 88003",
+   "Property: 317"
+  ],
+  "338": [
+   "The Educational Services Center was built in 1978. It houses most student service departments including Admissions, the Registrar, Financial Aid, and the Graduate School.",
+   "Building monitor information can be found here.",
+   "1780 EAST UNIVERSITY AVE",
+   "ED",
+   "LAS CRUCES, NM, 88001",
+   "Property: 338"
+  ],
+  "221": [
+   "This building houses the main offices for the Vice President of Human and Physical Resources, and several of the Offices of Facilities and Services departments.",
+   "Facilities and Services",
+   "Building monitor information can be found here.",
+   "1530 WELLS ST",
+   "OFS",
+   "LAS CRUCES, NM, 88001",
+   "Property: 221"
+  ],
+  "282": [
+   "Built in 1970, Stucky Hall is home to the Chemical & Materials Engineering Department. It also houses the New Mexico Water Resources Research Institute (NM WRRI), which funds research conducted by faculty and students from universities across the state to address water problems critical to New Mexico and the Southwest. The institute also participates in joint efforts to solve water-related problems along the U.S./Mexico border.",
+   "Water Resources Research Institution",
+   "Chemical & Materials Engineering (CHME)",
+   "3170 SOUTH ESPINA ST",
+   "SY",
+   "LAS CRUCES, NM, 88001",
+   "Property: 282"
+  ],
+  "44": [],
+  "359": [
+   "This building seeks to study insects. The building was named in honor of J. Gordon Watts, renowned entomologist and founder of EPPWS.",
+   "Entomology, Plant Pathology, and Weed Science",
+   "Building monitor information can be found here.",
+   "650 COLLEGE AVE",
+   "JGW",
+   "LAS CRUCES, NM, 88005",
+   "Property: 359"
+  ],
+  "360": [
+   "This building seeks to study insects. The building was named in honor of J. Gordon Watts, renowned entomologist and founder of EPPWS.",
+   "Entomology, Plant Pathology, and Weed Science",
+   "Building monitor information can be found here.",
+   "650 COLLEGE AVE",
+   "JGM",
+   "LAS CRUCES, NM, 88005",
+   "Property: 360"
+  ],
+  "361": [
+   "This building seeks to study insects. The building was named in honor of J. Gordon Watts, renowned entomologist and founder of EPPWS.",
+   "Entomology, Plant Pathology, and Weed Science",
+   "Building monitor information can be found here.",
+   "650 COLLEGE AVE",
+   "JGE",
+   "LAS CRUCES, NM, 88005",
+   "Property: 361"
+  ],
+  "447": [
+   "This building seeks to study insects. The building was named in honor of J. Gordon Watts, renowned entomologist and founder of EPPWS.",
+   "Entomology, Plant Pathology, and Weed Science",
+   "Building monitor information can be found here.",
+   "650 COLLEGE AVE",
+   "JGF",
+   "LAS CRUCES, NM, 88005",
+   "Property: 447"
+  ],
+  "588": [
+   "This center houses a classroom, tack room, locker room, and offices for coaches. The facility, which opened in 2003, is located on Stewart Street at the southwest edge of campus will help NM State build on its equestrian legacy. The facility supports competitive riders, equine science students, and beginners taking riding classes to fulfill physical education requirements. NM State offers a minor in horse management, with classes in introductory horse science, horse evaluation, horse production, fitting and selling, applied horsemanship, stable management and Western and English equitation.",
+   "Animal & Range Sciences",
+   "Building monitor information can be found here.",
+   "750 STEWART ST",
+   "EQU",
+   "LAS CRUCES, NM, 88001",
+   "Property: 588"
+  ],
+  "394D": [
+   "Genesis Center was built in 1987 and contains units A, B, C and a center office.",
+   "Building monitor information can be found here.",
+   "3655 RESEARCH DR",
+   "GCD",
+   "LAS CRUCES, NM, 88001",
+   "Property: 394D"
+  ],
+  "394C": [
+   "Genesis Center was built in 1987 and contains units A, B, C and a center office.",
+   "Building monitor information can be found here.",
+   "3655 RESEARCH DR",
+   "GCC",
+   "LAS CRUCES, NM, 88001",
+   "Property: 394C"
+  ],
+  "394B": [
+   "Genesis Center was built in 1987 and contains units A, B, C and a center office.",
+   "Building monitor information can be found here.",
+   "3655 RESEARCH DR",
+   "GCB",
+   "LAS CRUCES, NM, 88001",
+   "Property: 394B"
+  ],
+  "412A": [
+   "Constructed in 1990, this building is the location of the Purchasing department, Environmental Health and Safety, and the College of Health and Social Services. Driving safety courses are also taught in this building.",
+   "College of Health and Social Services",
+   "Environmental Health and Safety",
+   "Financial Systems",
+   "Economic Development",
+   "1620 STANDLEY DR",
+   "ARA",
+   "LAS CRUCES, NM, 88001"
+  ],
+  "394A": [
+   "Genesis Center was built in 1987 and contains units A, B, C and a center office.",
+   "Building monitor information can be found here.",
+   "3655 RESEARCH DR",
+   "GCA",
+   "LAS CRUCES, NM, 88001",
+   "Property: 394A"
+  ],
+  "412C": [
+   "Constructed in 1990, this building is the location of the Purchasing department, Environmental Health and Safety, and the College of Health and Social Services. Driving safety courses are also taught in this building.",
+   "College of Health and Social Services",
+   "Payroll Services",
+   "Environmental Health",
+   "1620 STANDLEY DR",
+   "ARC",
+   "LAS CRUCES, NM, 88001"
+  ],
+  "371": [
+   "This world class facility is used to measure wall-bounded turbulence, as well as other aerodynamic research.",
+   "Mechanical Engineering",
+   "Environmental Health Safety & Risk",
+   "1635 STANDLEY DR",
+   "WTR",
+   "LAS CRUCES, NM, 88001",
+   "Property: 371"
+  ],
+  "263": [
+   "Clinton P. Anderson Hall, to the south of Walden Hall, was built in 1965 and dedicated to a beloved New Mexico Senator, Clinton P. Anderson. The building is currently home to the Physical Science Laboratory (PSL). PSL is a unique national resource that supports the development and application of new and existing technologies.",
+   "PSL Anderson Hall Research",
+   "Building monitor information can be found here.",
+   "1050 STEWART ST",
+   "PSL",
+   "LAS CRUCES, NM, 88001",
+   "Property: 263"
+  ],
+  "412B": [
+   "Constructed in 1990, this building is the location of the Purchasing department, Environmental Health and Safety, and the College of Health and Social Services. Driving safety courses are also taught in this building.",
+   "College of Health and Social Services",
+   "Environmental Health and Safety",
+   "Center for Learning & Professional Development",
+   "Institutional Analysis",
+   "1620 STANDLEY DR",
+   "ARB",
+   "LAS CRUCES, NM, 88001"
+  ],
+  "283": [
+   "The 24\" observatory on 'A' mountain is located on Tortugas Mountain and is supplied with a 1967 Boller and Chivens 24\" reflector telescope. For years, the observatory has been used for imaging and observing planets in our solar system. Today the 'A' mountain observatory is used for NMSU undergraduate courses, small research projects, and observing a wide variety of stars for the American Association of Variable Star Observers.",
+   "Astronomy",
+   "Building monitor information can be found here.",
+   "4525-1 OBSERVATORY RD",
+   "OBN",
+   "LAS CRUCES, NM, 88003",
+   "Property: 283"
+  ],
+  "161": [
+   "Memorial Tower was built where the Health and Social Services is now, and is in fact partially incorporated into the current building. President Milton requested that a tower be built to commemorate the war dead, and by early 1951, it was completed. Once the Aggie Memorial Stadium, the current location for football events, was completed in 1978, the third, fourth, and fifth floors were abandoned and the bottom two became a snack room and dining area. The Health and Social Services building was completed in 2003.",
+   "Building monitor information can be found here.",
+   "1335 INTERNATIONAL MALL",
+   "MEM",
+   "LAS CRUCES, NM, 88003",
+   "Property: 161"
+  ],
+  "633": [
+   "The American Indian Student Center (AISC) functions to provide a welcoming and supportive environment where students can have a cultural community away from home. The presence of the AISC exemplifies NMSU's commitment to the recruitment, retention, and graduation of American Indian students. It is a space for studying, programming, student organization meetings, social engagement, and student community building.",
+   "The AISC houses the AIP (American Indian Program) and has a kitchen, commons, study area, meditation room, and a multipurpose room for programming. The building is Wi-Fi equipped and is housed with computers. It provides an environment of learning and cultural sharing for all students and the entire NMSU community.",
+   "This building is a LEED Silver certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste. You can find more information about this program here.",
+   "American Indian Student Center",
+   "Building monitor information can be found here.",
+   "3015 ANDREW WALL PL",
+   "AISC",
+   "LAS CRUCES, NM, 88005",
+   "Property: 633"
+  ],
+  "471": [
+   "Aggie Express provides residents in Student Family Housing, Vista Del Monte Apartments and Cervantes Village with a variety of conveniences. The building features a community-size laundry with front load washers and dryers, a large computer lab and a fitness center. Additionally, Aggie Express features a fully-stocked convenience store managed by Sodexo offering a broad selection of food items and daily needs.",
+   "Aggie Express",
+   "(575) 646-7789",
+   "Building monitor information can be found here.",
+   "3555 WILLIAMS DR",
+   "AGX",
+   "LAS CRUCES, NM, 88001",
+   "Property: 471"
+  ],
+  "417": [
+   "This space is use for antenna farm storage, as well as tools needed to repair antennas.",
+   "3615 LOCUST AVE",
+   "AFS",
+   "LAS CRUCES, NM, 88001",
+   "Property: 417"
+  ],
+  "254": [
+   "Facilities and Services is responsible for campus maintenance. They provide services such as carpentry, paint jobs, lock smith help, and campus data management. This building is responsible for overseeing campus construction.",
+   "Facilities and Services",
+   "1530 WELLS ST",
+   "OCN",
+   "LAS CRUCES, NM, 88001",
+   "Property: 254"
+  ],
+  "536": [
+   "Aggie Recycling was developed by NMSU to comply with the Sate of New Mexico's mandate for institutions of higher education and improve handling of campus generated solid waste.",
+   "Students and employees of NMSU can take their recyclables to the Aggie Recycling Center during business hours. Business hours are 6am-2pm, Monday-Friday, drop-offs are not permitted outside of working hours, on weekends, or holidays.",
+   "Recycling Center",
+   "3540 LOCUST ST",
+   "LAS CRUCES, NM, 88001",
+   "Property: 536"
+  ],
+  "455": [
+   "The Sign Shop is staffed with graphic designers to fabricate signs, room numbers, name badges, banners, directional signage, name plates and posters.",
+   "Sign Shop",
+   "1530 WELLS ST",
+   "OMS",
+   "LAS CRUCES, NM, 88001",
+   "Property: 455"
+  ],
+  "373": [
+   "This building provides maintenance services to NMSU Vehicles.",
+   "Please visit Transportation Services to learn more.",
+   "3535 RESEARCH DR",
+   "OMP",
+   "LAS CRUCES, NM, 88001",
+   "Property: 373"
+  ],
+  "393": [
+   "This facility maintains flora for the College of Agricultural, Consumer, and Environmental Sciences.",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "3490 AGGIE RODEO DR",
+   "GTG",
+   "LAS CRUCES, NM, 88011",
+   "Property: 393"
+  ],
+  "392": [
+   "This facility maintains flora for the College of Agricultural, Consumer, and Environmental Sciences.",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "3490 AGGIE RODEO DR",
+   "GTG",
+   "LAS CRUCES, NM, 88011",
+   "Property: 393"
+  ],
+  "562": [
+   "The Southwest Technology Development Institute (SWTDI) is a non-profit, university-based organization that provides applied research and development services for private and public sector clients. SWTDI was established in 1977 as the New Mexico Solar Energy Institute, and has active research programs in energy and related systems. SWTDI?s goal is to promote deployment and use of reliable renewable energy technologies. This building combines aquaculture, the cultivation of aquatic animals, such as fish, shrimp, crayfish, or prawns, in tanks, and hydroponics, the growing of plants in water, to reach the SWTDI's goals of renewable systems.",
+   "Institute for Energy & Environment",
+   "3425 WATER PUMP RD",
+   "LAS CRUCES, NM, 88011",
+   "Property: 562"
+  ],
+  "553": [
+   "The visitor's dugout is for the opposing or away team to use to take a seat and gather their equipment.",
+   "Building monitor information can be found here.",
+   "3315 LOCUST ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 553"
+  ],
+  "579": [
+   "This is the on-site seller of NMSU baseball tickets.",
+   "Building monitor information can be found here.",
+   "3315 LOCUST ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 579"
+  ],
+  "578": [
+   "The restrooms are open to the public outside the baseball stadium for fans to use.",
+   "Building monitor information can be found here.",
+   "3315 LOCUST ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 578"
+  ],
+  "610": [
+   "After softball games, the teams reviews the film in the Film Room in order to critique their playing and improve.",
+   "Building monitor information can be found here.",
+   "1780 STEWART ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 610"
+  ],
+  "554": [
+   "This is the locker room for the Women's Softball team. The team office is also located in this building.",
+   "NMSU Softball",
+   "1780 STEWART ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 554"
+  ],
+  "581": [
+   "This is the announcer and press box for softball games.",
+   "Building monitor information can be found here.",
+   "1780 STEWART ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 581"
+  ],
+  "261": [
+   "The Aggie Health and Wellness Center is a one stop shop for all physical and mental health needs. This building serves both students and staff. It provides checkups, immunizations, psychiatric services, counseling, diagnostic tests, reproductive health, women's health, x-rays, and lab tests-all conducted within the building. There is also pharmacy on site where you can pick up prescriptions and over-the-counter medications. They also sell wellness kits such as ?flu kits? that come with item such as soup, cough syrup, and tissues. The hours of operation are 8AM-11:30AM, 1PM-5PM Monday through Friday. This Facility is closed Saturday and Sunday.",
+   "Aggie Health and Wellness Center",
+   "To schedule an appointment, call (575) 646-1512.",
+   "Building monitor information can be found here.",
+   "3080 BRELAND DR",
+   "SHC",
+   "LAS CRUCES, NM, 88003",
+   "Property: 261"
+  ],
+  "342": [
+   "Since 1978, Aggie Memorial Stadium has been the home of New Mexico State football. Officially dedicated on Sept. 16, 1978, the Aggies christened the stadium with a 35-32 victory over rival University of Texas-El Paso. The top seven crowds in the history of Aggie Memorial Stadium, and eight of the top nine, have come in games against UTEP. It has a capacity of 28,853.",
+   "Aggie Memorial Stadium",
+   "NMSU Football",
+   "Building monitor information can be found here.",
+   "1810 STEWART ST",
+   "ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 342"
+  ],
+  "628": [],
+  "290": [
+   "Constructed in 1969 and was formerly know as the Animal Husbandry Maternity Barn.",
+   "Animal & Range Sciences",
+   "3175 KNOX ST",
+   "FRB",
+   "LAS CRUCES, NM, 88001",
+   "Property: 290"
+  ],
+  "216": [
+   "NMSU's Physical Science Laboratory is a multi-disciplined organization that develops new technology for space exploration, homeland security, drug and weapon detection, and advanced weaponry. PSL supports both NASA and White Sands Missile Range. This particular building support the machinery for PSL.",
+   "PSL Internal Service Centers",
+   "1050 STEWART ST",
+   "PMS",
+   "LAS CRUCES, NM, 88001",
+   "Property: 216"
+  ],
+  "280": [
+   "NMSU's Physical Science Laboratory is a multi-disciplined organization that develops new technology for space exploration, homeland security, drug and weapon detection, and advanced weaponry. PSL supports both NASA and White Sands Missile Range. This building creates physical technology.",
+   "PSL Internal Services Center",
+   "1050 STEWART ST",
+   "PFS",
+   "LAS CRUCES, NM, 88001",
+   "Property: 280"
+  ],
+  "193": [
+   "As the name suggests, this barn houses the bulls living at NMSU.",
+   "Animal & Range Sciences",
+   "Building monitor information can be found here.",
+   "3145 KNOX ST",
+   "BUL",
+   "LAS CRUCES, NM, 88001",
+   "Property: 193"
+  ],
+  "196": [
+   "This building was constructed in 1957 and serves as housing for NMSU's pigs.",
+   "Animal & Range Services",
+   "765 STEWART ST",
+   "HB",
+   "LAS CRUCES, NM, 88001",
+   "Property: 196"
+  ],
+  "241": [
+   "The building was constructed in 1963, and is also known as the Cattle Feed House.",
+   "Animal & Range Sciences",
+   "Building monitor information can be found here.",
+   "965 STEWART ST",
+   "BEF",
+   "LAS CRUCES, NM, 88001"
+  ],
+  "376": [
+   "Animal & Range Sciences",
+   "Building monitor information can be found here.",
+   "955 STEWART ST",
+   "CFB",
+   "LAS CRUCES, NM, 88001",
+   "Property: 376"
+  ],
+  "194": [
+   "This building houses the university's sheep.",
+   "Animal & Range Services",
+   "Building monitor information can be found here.",
+   "950 FRENGER ST",
+   "SHB",
+   "LAS CRUCES, NM, 88001",
+   "Property: 194"
+  ],
+  "652": [
+   "The Spiritual Center is a non-denominational facility that can accommodate religious services for campus and student groups as well as ceremonial events for the campus and the general public. Located west of the Educational Services Building, adjacent to the duck pond, it is a beautiful location that can be reserved for weddings or memorial services.  This building was opened in 2015.",
+   "For more information, please visit Spiritual Center.",
+   "Building monitor information can be found here.",
+   "1720 E. UNIVERSITY AVE",
+   "SC",
+   "LAS CRUCES, NM, 88003",
+   "Property: 652"
+  ],
+  "632": [
+   "The NMSU Bookstore is a great place to study. This space is stocked with textbooks for purchase or rental, tables, and has a charming café-like atmosphere.",
+   "Additionally, NMSU merchandise can also be found for sale at this location. Also at this location, on the second floor, are ID Card Services and Parking Services.",
+   "This building is a LEED Gold certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste. You can find more information about this program here.",
+   "NMSU Bookstore",
+   "ID Services",
+   "Parking Services",
+   "Starbucks",
+   "1400 E. UNIVERSITY AVE",
+   "LAS CRUCES, NM, 88005",
+   "Property: 632"
+  ],
+  "468": [
+   "Built in 1992, NM State's weight-training center is located in the Aggie Memorial Stadium complex. The 13,500-square-foot facility benefits NMSU student athletes in 17 athletic programs. It became a reality thanks to the Coca-Cola Bottling Company of Las Cruces, which funded construction as well as the facility's original weightlifting equipment and exercise machines. Additional weight and aerobic equipment was added to the facility in 1998.",
+   "NMSU Football",
+   "NMSU Soccer",
+   "Building monitor information can be found here.",
+   "1800 STEWART ST",
+   "COK",
+   "LAS CRUCES, NM, 88003",
+   "Property: 468"
+  ],
+  "555": [
+   "The dugout of the opposing softball team.",
+   "Building monitor information can be found here.",
+   "1780 STEWART ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 555"
+  ],
+  "580": [
+   "These are bathrooms for public use located near the softball facilities.",
+   "Building monitor information can be found here.",
+   "1780 STEWART ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 580"
+  ],
+  "609": [
+   "This building is the meeting place for the Softball Team.",
+   "NMSU Softball",
+   "Building monitor information can be found here.",
+   "1780 STEWART ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 609"
+  ],
+  "220": [
+   "Facilities and Services is responsible for campus maintenance. They provide services such as carpentry, paint jobs, lock smith help, and campus data management. This building is responsible for overseeing campus carpentry.",
+   "Facilities and Services",
+   "1530 WELLS ST",
+   "OCS",
+   "LAS CRUCES, NM, 88001",
+   "Property: 220"
+  ],
+  "153": [
+   "Facilities and Services is responsible for campus maintenance. They provides services such as carpentry, paint jobs, lock smith help, and campus data management. This building is FS storage.",
+   "Facilities and Services",
+   "1620 WELLS ST",
+   "SQU",
+   "LAS CRUCES, NM, 88001",
+   "Property: 153"
+  ],
+  "279": [
+   "NMSU's Physical Science Laboratory is a multi-disciplined organization that develops new technology for space exploration, homeland security, drug and weapon detection, and advanced weaponry. PSL supports both NASA and White Sands Missile Range. This facility is responsible for the maintenance of PSL buildings.",
+   "PSL Facilities Management",
+   "PSL Space Aerospace",
+   "1050 STEWART ST",
+   "PGCP",
+   "LAS CRUCES, NM, 88001",
+   "Property: 279"
+  ],
+  "432": [
+   "This department seeks to study insects. This structure supports these efforts. The building was named in honor of J. Gordon Watts, renowned entomologist and founder of EPPWS.",
+   "Entomology, Plant Pathology, and Weed Science",
+   "Building monitor information can be found here.",
+   "650 COLLEGE AVE",
+   "JGS",
+   "LAS CRUCES, NM, 88005",
+   "Property: 432"
+  ],
+  "352": [
+   "This greenhouse supports the growth of flora for Hort Farm. Hort Farm is one of NMSU's Agricultural Science Centers, and is part of the College of Agricultural, Consumer, and Environmental Sciences.",
+   "Fabian Garcia Agriculture Science Center",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Building monitor information can be found here.",
+   "113 W. UNIVERSITY AVE",
+   "LAS CRUCES, NM, 88005",
+   "Property: 584"
+  ],
+  "351": [
+   "This greenhouse supports the growth of flora for Hort Farm. Hort Farm is one of NMSU's Agricultural Science Centers, and is part of the College of Agricultural, Consumer, and Environmental Sciences.",
+   "Fabian Garcia Agriculture Science Center",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Building monitor information can be found here.",
+   "113 W. UNIVERSITY AVE",
+   "LAS CRUCES, NM, 88005",
+   "Property: 584"
+  ],
+  "421": [
+   "This greenhouse supports the growth of flora for Hort Farm. Hort Farm is one of NMSU's Agricultural Science Centers, and is part of the College of Agricultural, Consumer, and Environmental Sciences.",
+   "Fabian Garcia Agriculture Science Center",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Building monitor information can be found here.",
+   "113 W. UNIVERSITY AVE",
+   "FGGC",
+   "LAS CRUCES, NM, 88005",
+   "Property: 421"
+  ],
+  "420": [
+   "This greenhouse supports the growth of flora for Hort Farm. Hort Farm is one of NMSU's Agricultural Science Centers, and is part of the College of Agricultural, Consumer, and Environmental Sciences.",
+   "Fabian Garcia Agriculture Science Center",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Building monitor information can be found here.",
+   "113 W. UNIVERSITY AVE",
+   "FGB",
+   "LAS CRUCES, NM, 88005",
+   "Property: 420"
+  ],
+  "584": [
+   "This greenhouse supports the growth of flora for Hort Farm. Hort Farm is one of NMSU's Agricultural Science Centers, and is part of the College of Agricultural, Consumer, and Environmental Sciences.",
+   "Fabian Garcia Agriculture Science Center",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Building monitor information can be found here.",
+   "113 W. UNIVERSITY AVE",
+   "LAS CRUCES, NM, 88005",
+   "Property: 584"
+  ],
+  "353": [
+   "This greenhouse supports the growth of flora for Hort Farm. Hort Farm is one of NMSU's Agricultural Science Centers, and is part of the College of Agricultural, Consumer, and Environmental Sciences.",
+   "Fabian Garcia Agriculture Science Center",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Building monitor information can be found here.",
+   "113 W. UNIVERSITY AVE",
+   "LAS CRUCES, NM, 88005",
+   "Property: 584"
+  ],
+  "467": [
+   "This is a storage building for campus furniture and materials.",
+   "3533 LOCUST ST",
+   "BW",
+   "LAS CRUCES, NM, 88001",
+   "Property: 467"
+  ],
+  "262": [
+   "Frenger Food Court is a popular lunchtime spot housing five independent businesses. Indoor and outdoor seating is available as well as wireless internet.",
+   "Learn more about meal plans and dining at NMSU here.",
+   "Building monitor information can be found here.",
+   "1420 FRENGER MALL",
+   "FC",
+   "LAS CRUCES, NM, 88001",
+   "Property: 262"
+  ],
+  "284": [
+   "The Pan American Center, built in 1968 and renovated in 2007, is one of the finest arenas in the American Southwest. Seating 13,140 fans, the Pan Am hosts athletic events, including Aggie basketball and volleyball, as well as some of the top entertainers in America. The renovation and expansion project added an annex building to the south end of the arena that features offices, practice facilities and locker rooms, and a conference room named for former Special Events director and community icon Barbara \"Mother\" Hubbard. The Pan American Center is located just west of its namesake, the Pan American Highway (Interstate 25), and sits immediately to the north of Aggie Memorial Stadium.",
+   "Pan American Center",
+   "Building monitor information can be found here.",
+   "1810 E. UNIVERSITY AVE",
+   "PAC",
+   "LAS CRUCES, NM, 88001",
+   "Property: 284"
+  ],
+  "390": [
+   "These greenhouses are used as labs to research plant genetic engineering. They fall under the College of Agriculture, Consumer and Environmental Sciences (ACES).",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Building monitor information can be found here.",
+   "2990 KNOX ST",
+   "PGG",
+   "LAS CRUCES, NM, 88001",
+   "Property: 390"
+  ],
+  "237": [
+   "The Facilities and Services shops include Electrical, Space Planning, Sustainability, Paint, and Movers.",
+   "1520 WELLS ST",
+   "OSB",
+   "LAS CRUCES, NM, 88001",
+   "Property: 237"
+  ],
+  "222": [],
+  "140": [
+   "The Biology Greenhouse is home to the flora studied by students interested in becoming a botanist.",
+   "Biology",
+   "3080 WILLIAMS AVE",
+   "BGE",
+   "LAS CRUCES, NM, 88003",
+   "Property: 140"
+  ],
+  "139": [
+   "The Biology Greenhouse is home to the flora studied by students interested in becoming botanists.",
+   "Biology",
+   "3080 WILLIAMS AVE",
+   "BGC",
+   "LAS CRUCES, NM, 88003",
+   "Property: 139"
+  ],
+  "137": [
+   "The Biology Greenhouse is home to the flora studied by students interested in becoming botanists.",
+   "Biology",
+   "3080 WILLIAMS AVE",
+   "BGW",
+   "LAS CRUCES, NM, 88003",
+   "Property: 137"
+  ],
+  "138": [
+   "The Biology Greenhouse is home to the flora studied by students interested in becoming a botanist.",
+   "Biology",
+   "3080 WILLIAMS AVE",
+   "BGN",
+   "LAS CRUCES, NM, 88003",
+   "Property: 138"
+  ],
+  "419": [
+   "The NMSU Horse Farm is a facility where students take what they learn in the classroom to hands on experience vary from different levels of education.",
+   "Animal & Range Services",
+   "401 W. UNION AVE",
+   "HFS",
+   "LAS CRUCES, NM, 88005",
+   "Property: 419"
+  ],
+  "507": [
+   "Horse Farm is one of NMSU's Agricultural Science Centers, and is part of the College of Agricultural, Consumer, and Environmental Sciences. This structure houses the Horses at this Science Center.",
+   "Animal & Range Services",
+   "ACES",
+   "401 W. UNION AVE",
+   "HFH",
+   "LAS CRUCES, NM, 88005",
+   "Property: 507"
+  ],
+  "508": [
+   "Hort Farm is one of NMSU's Agricultural Science Centers, and is part of the College of Agricultural, Consumer, and Environmental Sciences.",
+   "Fabian Garcia Agriculture Science Center",
+   "College of Agricultural, Consumer, and Environmental Sciences",
+   "Building monitor information can be found here.",
+   "113 W. UNIVERSITY AVE",
+   "FGU",
+   "LAS CRUCES, NM, 88005",
+   "Property: 508"
+  ],
+  "611": [
+   "This is the locker room for NMSU Baseball.",
+   "NMSU Baseball",
+   "Building monitor information can be found here.",
+   "3315 LOCUST ST",
+   "LAS CRUCES, NM, 88003",
+   "Property: 611"
+  ],
+  "642": [
+   "This building serves as housing for NMSU's stock of studs.",
+   "Animal & Range Sciences",
+   "401 W. UNION AVE",
+   "LAS CRUCES, NM, 88005",
+   "Property: 642"
+  ],
+  "449": []
+ }
+}

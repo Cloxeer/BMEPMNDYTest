@@ -31,15 +31,13 @@ const VIEW_ORDER = ['plan', 'posted']; // the slides, left to right
 export class FloorPlan {
   /**
    * @param {Framework7} app - for the "no photo yet" message
-   * @param {object[]} rooms - data/rooms.json
-   * @param {object[]} entrances - data/entrances.json
    * @param {PhotoViewer} photoViewer - full-screen pictures
    * @param {() => void} askDirections - asks "Get directions to this room?"
    */
-  constructor(app, rooms, entrances, photoViewer, askDirections) {
+  constructor(app, photoViewer, askDirections) {
     this.app = app;
-    this.rooms = rooms;
-    this.entrances = entrances;
+    this.rooms = []; // until setRooms(), a moment after the map
+    this.entrances = [];
     this.photoViewer = photoViewer;
     this.askDirections = askDirections;
     this.words = CONFIG.sheet;
@@ -68,6 +66,16 @@ export class FloorPlan {
 
     this.listenToSwitchAndSwipe();
     this.listenToPlanTaps();
+  }
+
+  /**
+   * The rooms and doors, once they've loaded.
+   * @param {object[]} rooms - data/rooms.json
+   * @param {object[]} entrances - data/entrances.json
+   */
+  setRooms(rooms, entrances) {
+    this.rooms = rooms;
+    this.entrances = entrances;
   }
 
   /* ---------- The switch and swiping ---------- */

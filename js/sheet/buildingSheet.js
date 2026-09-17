@@ -38,11 +38,9 @@ export class BuildingSheet {
   /**
    * @param {Framework7} app
    * @param {Object.<string, object>} buildingsById
-   * @param {object[]} rooms - data/rooms.json
-   * @param {object[]} entrances - data/entrances.json
    * @param {() => void} askDirections - asked after a room on the plan is tapped
    */
-  constructor(app, buildingsById, rooms, entrances, askDirections) {
+  constructor(app, buildingsById, askDirections) {
     this.buildingsById = buildingsById;
     this.words = CONFIG.sheet;
 
@@ -73,7 +71,7 @@ export class BuildingSheet {
     this.sheetIsOpen = false; // what Framework7 is showing right now
 
     this.photoViewer = new PhotoViewer(app);
-    this.floorPlan = new FloorPlan(app, rooms, entrances, this.photoViewer, askDirections);
+    this.floorPlan = new FloorPlan(app, this.photoViewer, askDirections);
 
     this.photos.addEventListener('click', (event) => this.onPhotoTap(event));
     store.subscribe((state) => this.update(state));
@@ -89,6 +87,22 @@ export class BuildingSheet {
         store.closeSheet(); // the user closed it (X or pull-down)
       }
     });
+  }
+
+  /** Draw the sheet again (after the descriptions or rooms have loaded). */
+  redraw() {
+    this.shownKey = '';
+    this.update(store.get());
+  }
+
+  /**
+   * The rooms and doors, once they've loaded (a moment after the map).
+   * @param {object[]} rooms - data/rooms.json
+   * @param {object[]} entrances - data/entrances.json
+   */
+  setRooms(rooms, entrances) {
+    this.floorPlan.setRooms(rooms, entrances);
+    this.redraw(); // draw the open sheet again, now with its rooms
   }
 
   /* ---------- Photos ---------- */
@@ -201,8 +215,12 @@ export class BuildingSheet {
     if (building.floorsSource !== 'NMSU Space Planning') {
       floorsNote = ' (' + this.words.floorCountText + ': ' + building.floorsSource + ')';
     }
+    let descriptionNote = '';
+    if (building.descriptionSource) {
+      descriptionNote = ' ' + this.words.descriptionSourceText + ': ' + building.descriptionSource + '.';
+    }
     return this.words.codeSourceText + ': ' + building.codeSource + '. ' +
-      this.words.factsSourceText + floorsNote + '. ' + this.words.plansNoteText;
+      this.words.factsSourceText + floorsNote + '.' + descriptionNote + ' ' + this.words.plansNoteText;
   }
 
   /**

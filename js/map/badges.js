@@ -26,6 +26,9 @@
 
 import { CONFIG } from '../core/config.js';
 
+// One canvas, reused for every badge picture: making canvases is slow on cheap phones.
+let sharedCanvas = null;
+
 /**
  * Draw one round badge as a picture the map can place on buildings.
  * Every badge is the same size, so choosing one never makes it jump.
@@ -36,10 +39,15 @@ import { CONFIG } from '../core/config.js';
  */
 function drawBadgePicture(color, letter, selected) {
   const look = CONFIG.badge;
-  const canvas = document.createElement('canvas');
-  canvas.width = look.size * look.pixelRatio;
-  canvas.height = look.size * look.pixelRatio;
-  const pen = canvas.getContext('2d');
+  if (!sharedCanvas) {
+    sharedCanvas = document.createElement('canvas');
+    sharedCanvas.width = look.size * look.pixelRatio;
+    sharedCanvas.height = look.size * look.pixelRatio;
+  }
+  const canvas = sharedCanvas;
+  const pen = canvas.getContext('2d', { willReadFrequently: true });
+  pen.setTransform(1, 0, 0, 1, 0, 0);
+  pen.clearRect(0, 0, canvas.width, canvas.height);
   pen.scale(look.pixelRatio, look.pixelRatio);
   const middle = look.size / 2;
 
@@ -115,30 +123,52 @@ export function nameColorRule(selectedId) {
 }
 
 /**
- * Add the badge pictures, the places, and the badge and name layers to the map.
+ * One map point for a place: only what the map itself needs.
+ * @param {object} place
+ * @returns {object} a GeoJSON Point feature
+ */
+export function badgeFeature(place) {
+  return {
+    type: 'Feature',
+    properties: { id: place.id, name: place.name, category: place.category },
+    geometry: { type: 'Point', coordinates: place.center },
+  };
+}
+
+/**
+ * Make sure the badge pictures for these categories are on the map. Drawing a picture takes
+ * a moment on a cheap phone, so each category's pair is only drawn when it's first shown.
+ * @param {maplibregl.Map} map
+ * @param {string[]} categories
+ */
+export function addBadgePictures(map, categories) {
+  const imageOptions = { pixelRatio: CONFIG.badge.pixelRatio };
+  for (const category of categories) {
+    if (map.hasImage('badge-' + category)) {
+      continue; // already drawn
+    }
+    const look = CONFIG.categories[category];
+    const letter = look.letter || CONFIG.badge.letter;
+    // Two pictures per category: the white-ringed one, and the blue-ringed one for when it's chosen.
+    map.addImage('badge-' + category, drawBadgePicture(look.color, letter, false), imageOptions);
+    map.addImage('badge-' + category + '-selected', drawBadgePicture(look.color, letter, true), imageOptions);
+  }
+}
+
+/**
+ * Add the places, and the badge and name layers, to the map.
  * @param {maplibregl.Map} map
  * @param {Object.<string, object>} buildingsById - every building and park, by id
  * @param {string[]} shownCategories - categories switched on in Map filters
  * @param {boolean} namesVisible - the Building names setting
  */
 export function addBadges(map, buildingsById, shownCategories, namesVisible) {
-  // Two pictures per category colour: "badge-study", "badge-study-selected", "badge-living", ...
-  const imageOptions = { pixelRatio: CONFIG.badge.pixelRatio };
-  for (const category of Object.keys(CONFIG.categories)) {
-    const look = CONFIG.categories[category];
-    const letter = look.letter || CONFIG.badge.letter;
-    map.addImage('badge-' + category, drawBadgePicture(look.color, letter, false), imageOptions);
-    map.addImage('badge-' + category + '-selected', drawBadgePicture(look.color, letter, true), imageOptions);
-  }
+  addBadgePictures(map, shownCategories);
 
   // One map point per place.
   const features = [];
   for (const place of Object.values(buildingsById)) {
-    features.push({
-      type: 'Feature',
-      properties: { id: place.id, name: place.name, category: place.category },
-      geometry: { type: 'Point', coordinates: place.center },
-    });
+    features.push(badgeFeature(place));
   }
   map.addSource('buildings', { type: 'geojson', data: { type: 'FeatureCollection', features: features } });
 

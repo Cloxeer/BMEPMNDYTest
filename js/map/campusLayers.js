@@ -4,25 +4,12 @@
  *
  * WHAT IT DOES : Adds the map layers for the campus shapes. The shapes are made
  *                ahead of time by tools/build_campuses.py, so this file only draws.
- *                Also hides the basemap's business labels (not checked by us).
  * DEPENDS ON   : a MapLibre map, ../core/config.js, and the files from tools/build_campuses.py.
  * CONTROLS     : the 'outside', 'campuses' and 'campus-labels' map sources and their layers.
  * USED BY      : js/map/campusMap.js
  */
 
 import { CONFIG } from '../core/config.js';
-
-/**
- * Hide the basemap's business labels: they come from a third party and we haven't checked them.
- * @param {maplibregl.Map} map
- */
-export function hideBasemapBusinesses(map) {
-  for (const layer of map.getStyle().layers) {
-    if (layer['source-layer'] === CONFIG.map.hiddenBasemapLayer) {
-      map.setLayoutProperty(layer.id, 'visibility', 'none');
-    }
-  }
-}
 
 /**
  * Draw NMSU's class places: fade the rest, then tint, outline and name ours.

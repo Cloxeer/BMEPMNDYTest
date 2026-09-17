@@ -157,7 +157,7 @@ answer (everything in `js/logic/`).
 | `arrived(b)` | you walked in: directions off, the sheet opens on the room's floor |
 | `setTravelMode(m)`, `setShowNames(on)`, `setShowCompass(on)`, `setUnits(u)` | the user's choices |
 | `toggleCategory(c)`, `setHiddenCategories(list)` | Map filters |
-| `setFilterOption(c, inButton)`, `setFilterOptions(list)` | Settings > Map filters (taking a row out also hides that category) |
+| `setFilterOption(c, inButton, max)`, `setFilterOptions(list)` | Settings > Map filters: up to 6 rows; switching one on shows that category, off hides it |
 
 ## Data structures and algorithms you'll find
 
@@ -178,9 +178,9 @@ Every data file starts with a `"//"` entry: what the file is and how to format i
 
 | File | Made by | From |
 |---|---|---|
-| `data/buildings.geojson`, `building-shapes.geojson` | `tools/build_buildings.py` | NMSU Space Planning buildings layer, NMSU Registrar codes, `data/source/photos.json`, `data/source/building-extras.json` |
+| `data/buildings.geojson`, `building-shapes.geojson`, `descriptions.json` | `tools/build_buildings.py` | NMSU Space Planning buildings layer, NMSU Registrar codes, `data/source/photos.json`, `data/source/building-extras.json` |
 | `data/campuses.geojson`, `campus-labels.geojson`, `outside-mask.geojson` | `tools/build_campuses.py` | NMSU Space Planning campus boundaries + ground-lease parcels, OpenStreetMap golf course |
-| `data/places.geojson`, `place-shapes.geojson`, `parking-lots.geojson` | `tools/build_places.py` | Places that aren't buildings: parks (NMSU's campus map, `data/source/parks.json`), food (NMSU Dining, `data/source/food.json`) and parking lots (NMSU Facilities GIS Parking layer) |
+| `data/places.geojson`, `place-shapes.geojson`, `parking-lots.geojson` | `tools/build_places.py` | Places that aren't buildings: parks (NMSU's campus map), food with its hours (NMSU Dining), and parking lots (NMSU Facilities GIS Parking layer, plus OpenStreetMap parking at NMSU properties that layer misses) |
 | `data/rooms.json` | `tools/build_rooms.py` (+ `tools/indoor_routes.py`) | Rooms on our floor plans (outlines + indoor routes) and rooms in NMSU's public class schedule (no floor or outline) |
 | `data/entrances.json` | `tools/build_entrances.py` | Outside doors on our floor plans; photos under `entrancePhotos` in `data/source/building-extras.json` |
 | `data/routes/walk.geojson`, `bike.geojson`, `drive.geojson` | `tools/build_routes.py` | OpenStreetMap paths and roads, sorted by their access tags; one-way streets kept for bikes and cars |
@@ -196,6 +196,12 @@ Which source wins when they disagree:
 
 ## Speed
 
+- **The first screen loads first.** `main.js` downloads only the buildings and campus shapes, starts
+  Framework7 while they're on their way, and creates the map. Everything else (places, rooms, doors,
+  descriptions) loads straight afterwards and is handed to the parts that use it, so the map appears sooner.
+- **Work is done when it's needed, not at start-up:** each badge picture is drawn the first time its
+  kind of place is shown, the Locations and Settings pages are built the first time they're opened,
+  search works out its word list on first use, and the parking outlines download when Parking is switched on.
 - **The service worker (`sw.js`)** answers from the copy saved on the phone after the first visit:
   in testing, every app file and data file came back in about 2–17 ms with nothing downloaded.
   It refreshes that copy quietly in the background, so **a change shows up the second time the app

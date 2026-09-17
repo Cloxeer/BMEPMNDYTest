@@ -11,6 +11,9 @@ WHAT IT DOES : Writes every place in the same shape as a building record, so the
                            Arrival uses the outline of the building it's inside, when it has one.
                  parking : downloaded from NMSU Facilities GIS (the official "Parking" layer):
                            every lot NMSU maps, with its outline, name and permit colour.
+                           NMSU's layer only covers some of its properties, so for every other
+                           NMSU property the parking areas mapped in OpenStreetMap are added,
+                           marked as coming from OpenStreetMap.
 DEPENDS ON   : Python 3, shapely (python -m pip install --user shapely), internet
                (OpenStreetMap API, NMSU Facilities GIS). tools/json_files.py
 READS        : data/source/parks.json, data/source/food.json, data/building-shapes.geojson
@@ -21,6 +24,8 @@ RUN          : python tools/build_buildings.py first (food uses its outlines), t
 
 import json
 import math
+import time
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -39,6 +44,8 @@ METRES_PER_DEGREE = 111320
 NMSU_MAP_LINK = 'https://map.nmsu.edu/?id=1888#!m/'
 PARKING_LAYER = ('https://services6.arcgis.com/r7ZUBDL24w5VsBnN/arcgis/rest/services/'
                  'roads7252025/FeatureServer/17')
+CAMPUSES = PROJECT / 'data' / 'campuses.geojson'
+OVERPASS = 'https://overpass-api.de/api/interpreter'
 
 # How NMSU's parking layer writes each campus -> how we show it.
 CAMPUS_NAMES = {
@@ -268,6 +275,78 @@ def build_parking(features, lot_shapes):
     print(len(lots), 'parking lots done')
 
 
+def download_osm_parking(box):
+    """Every parking area OpenStreetMap has in a box (south, west, north, east), as (way id, tags, ring)."""
+    query = '[out:json][timeout:120];way["amenity"="parking"](' + ','.join(str(n) for n in box) + ');out geom tags;'
+    body = urllib.parse.urlencode({'data': query}).encode()
+    request = urllib.request.Request(OVERPASS, data=body, headers={'User-Agent': 'BetterNMSUMaps-build/1.0'})
+    # OpenStreetMap's free query service is often busy: wait and try again a few times.
+    elements = None
+    for attempt in range(5):
+        try:
+            with urllib.request.urlopen(request, timeout=180) as response:
+                elements = json.load(response)['elements']
+            break
+        except Exception as error:
+            print('   OpenStreetMap busy, waiting 30 seconds:', error)
+            time.sleep(30)
+    if elements is None:
+        raise RuntimeError('OpenStreetMap did not answer; run the script again later')
+
+    areas = []
+    for way in elements:
+        ring = []
+        for point in way['geometry']:
+            ring.append([round(point['lon'], 7), round(point['lat'], 7)])
+        if len(ring) > 3:
+            areas.append((way['id'], way.get('tags', {}), ring))
+    return areas
+
+
+def properties_without_lots(lot_shapes):
+    """NMSU properties (data/campuses.geojson) that have none of NMSU's own mapped lots."""
+    lots = []
+    for lot in lot_shapes:
+        lots.append(shape(lot['geometry']))
+
+    without = []
+    for place in read_json(CAMPUSES)['features']:
+        boundary = shape(place['geometry'])
+        has_lot = False
+        for lot in lots:
+            if boundary.intersects(lot):
+                has_lot = True
+                break
+        if not has_lot:
+            without.append(place)
+    return without
+
+
+def build_osm_parking(features, lot_shapes):
+    """Parking areas from OpenStreetMap, for the NMSU properties NMSU's own parking layer doesn't cover."""
+    added = 0
+    for place in properties_without_lots(lot_shapes):
+        boundary = shape(place['geometry'])
+        west, south, east, north = boundary.bounds
+        for way_id, tags, ring in download_osm_parking((south, west, north, east)):
+            area = shape({'type': 'Polygon', 'coordinates': [ring]})
+            if not boundary.contains(area.representative_point()):
+                continue  # in the box, but not on NMSU's land
+            name = tags.get('name') or 'Parking'
+            record = place_record('parking-osm-' + str(way_id), 'parking', name, 'Parking lot',
+                                  'Parking area mapped in OpenStreetMap (way ' + str(way_id) + '), inside NMSU\'s '
+                                  + place['properties']['Name'] + '. NMSU does not publish a lot map for this property.')
+            record['campus'] = place['properties']['Name']
+            record['aka'] = [place['properties']['Name']]
+            spot = area.representative_point()
+            features.append(feature(record, spot.x, spot.y))
+            lot_shapes.append(shape_feature(record, {'type': 'Polygon', 'coordinates': [ring]}))
+            added += 1
+        print('  ', place['properties']['Name'], 'done')
+        time.sleep(3)  # be kind to OpenStreetMap's free service
+    print(added, 'parking areas from OpenStreetMap added for properties NMSU\'s parking layer misses')
+
+
 def main():
     """Write every park, food place and parking lot, and their outlines."""
     features = []
@@ -276,6 +355,7 @@ def main():
     build_parks(features, shapes)
     build_food(features, shapes)
     build_parking(features, lot_shapes)
+    build_osm_parking(features, lot_shapes)
     write_json(PLACES_OUTPUT, PLACES_NOTE, {'type': 'FeatureCollection', 'features': features}, 'compact')
     write_json(SHAPES_OUTPUT, SHAPES_NOTE, {'type': 'FeatureCollection', 'features': shapes}, 'compact')
     write_json(PARKING_OUTPUT, PARKING_NOTE, {'type': 'FeatureCollection', 'features': lot_shapes}, 'compact')

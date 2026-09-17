@@ -27,9 +27,8 @@ export class SettingsPage {
   /**
    * @param {Framework7} app
    * @param {CampusMap} campusMap - shows or hides the building names
-   * @param {object} counts - how many of each thing the app loaded, for the Data list
    */
-  constructor(app, campusMap, counts) {
+  constructor(app, campusMap) {
     this.app = app;
     this.campusMap = campusMap;
     this.words = CONFIG.settings;
@@ -65,14 +64,13 @@ export class SettingsPage {
     this.filterOptionsList.addEventListener('change', (event) => {
       const input = event.target.closest('[data-category]');
       if (input) {
-        store.setFilterOption(input.dataset.category, input.checked);
+        store.setFilterOption(input.dataset.category, input.checked, this.words.filtersMax);
       }
     });
 
     // ...and whatever changed the store (here, Map settings, or the directions card) is shown and saved.
     store.subscribe((state) => this.update(state));
 
-    this.fillData(counts);
   }
 
   /** Bring back this device's saved choices, or config.yml's defaults. */
@@ -99,7 +97,7 @@ export class SettingsPage {
 
   /** One row per category: its icon in a rounded coloured square, its name, and a Framework7 switch. */
   buildFilterOptions() {
-    document.querySelector('#filter-options-title').textContent = this.words.filtersTitle;
+    this.filterOptionsTitle = document.querySelector('#filter-options-title');
     document.querySelector('#filter-options-footer').textContent = this.words.filtersFooter;
     let html = '';
     for (const name of Object.keys(CONFIG.categories)) {
@@ -154,8 +152,13 @@ export class SettingsPage {
    */
   update(state) {
     this.namesToggle.checked = state.showNames;
+    // The switches, and how many of the 6 places in the button are used.
+    const used = state.filterOptions.length;
+    this.filterOptionsTitle.textContent = this.words.filtersTitle + ' (' + used + '/' + this.words.filtersMax + ')';
     for (const input of this.filterOptionsList.querySelectorAll('[data-category]')) {
-      input.checked = state.filterOptions.includes(input.dataset.category);
+      const inButton = state.filterOptions.includes(input.dataset.category);
+      input.checked = inButton;
+      input.disabled = !inButton && used >= this.words.filtersMax; // full: switch one off first
     }
     this.showChoice(this.travelSwitch, state.travelMode);
     this.showChoice(this.unitsSwitch, state.units);

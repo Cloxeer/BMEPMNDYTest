@@ -4,8 +4,10 @@
  *
  * WHAT IT DOES : 1. loads config.yml,
  *                2. starts Framework7 (the iOS-style buttons, sheets and popups),
- *                3. loads the data files,
- *                4. creates every part of the app and hands each one what it needs.
+ *                3. loads just what the first screen needs (the buildings and the campus shapes),
+ *                4. creates every part of the app and hands each one what it needs,
+ *                5. loads the rest in the background (places, rooms, doors) and hands those over,
+ *                   so the map is usable as early as possible, even on a slow phone.
  *                If anything goes wrong while starting, it shows a readable message.
  * DEPENDS ON   : Framework7 (the global `Framework7`), every js/ folder, and data/.
  * CONTROLS     : the start-up order.
@@ -64,6 +66,25 @@ function startFramework7() {
       },
     },
   });
+}
+
+/**
+ * The background map's style, with the layers we always hide taken out (the basemap's business
+ * labels: third-party and not checked by us). Taking them out here saves the phone drawing and
+ * checking them on every frame.
+ * @returns {Promise<object>} a MapLibre style
+ */
+async function loadMapStyle() {
+  const response = await fetch(CONFIG.map.styleUrl);
+  const style = await response.json();
+  const layers = [];
+  for (const layer of style.layers) {
+    if (layer['source-layer'] !== CONFIG.map.hiddenBasemapLayer) {
+      layers.push(layer);
+    }
+  }
+  style.layers = layers;
+  return style;
 }
 
 /**
@@ -128,46 +149,48 @@ function showStartupError(error) {
   document.body.appendChild(box);
 }
 
+/**
+ * Turn a data file's features into place records: the same shape for buildings and places,
+ * with "center" added, so everything on the map is treated the same way.
+ * @param {object} file - a GeoJSON FeatureCollection
+ * @returns {object[]}
+ */
+function recordsFrom(file) {
+  const records = [];
+  for (const feature of file.features) {
+    const record = Object.assign({}, feature.properties);
+    record.center = feature.geometry.coordinates;
+    records.push(record);
+  }
+  return records;
+}
+
 /** Start everything, in order. */
 async function startApp() {
   await loadConfig();
-  const app = startFramework7();
 
-  // All the data files download at the same time.
-  const files = await Promise.all([
+  // Ask for the first screen's files FIRST, then set up Framework7 while they're on their way:
+  // the phone does both at once instead of one after the other.
+  const downloads = Promise.all([
     loadData('buildings.geojson'), // buildings (tools/build_buildings.py)
     loadData('campuses.geojson'), // NMSU class places, nearest first (tools/build_campuses.py)
     loadData('campus-labels.geojson'), // one name per place
     loadData('outside-mask.geojson'), // everything that isn't a class place
-    loadData('rooms.json'), // rooms (tools/build_rooms.py)
-    loadData('entrances.json'), // outside doors on our floor plans (tools/build_entrances.py)
-    loadData('places.geojson'), // parks, food and parking lots (tools/build_places.py)
+    loadMapStyle(), // the background map's own style file
   ]);
-  const buildingFile = files[0];
+  const app = startFramework7();
+  const files = await downloads;
   const campuses = files[1];
-  const labels = files[2];
-  const outside = files[3];
-  const rooms = files[4].rooms;
-  const entrances = files[5].entrances;
-  const placeFile = files[6];
-
-  // Buildings and places use the same record shape; "category" tells them apart.
-  // Each place's map position is the point in its data file.
-  const places = [];
-  for (const feature of buildingFile.features.concat(placeFile.features)) {
-    const place = Object.assign({}, feature.properties);
-    place.center = feature.geometry.coordinates;
-    places.push(place);
-  }
+  const places = recordsFrom(files[0]);
   const buildingsById = {};
   for (const place of places) {
     buildingsById[place.id] = place;
   }
 
   // Create every part. The order matters: parts that others need come first.
-  const campusMap = new CampusMap(buildingsById, campuses, labels, outside);
+  const campusMap = new CampusMap(buildingsById, campuses, files[2], files[3], files[4]);
   const directionsButton = new DirectionsButton(app, buildingsById);
-  new BuildingSheet(app, buildingsById, rooms, entrances, () => directionsButton.ask());
+  const sheet = new BuildingSheet(app, buildingsById, () => directionsButton.ask());
   new BottomPill(buildingsById);
   const myLocation = new MyLocation(app, campusMap.map);
   new NorthCompass(campusMap, myLocation.compass);
@@ -175,11 +198,11 @@ async function startApp() {
   new MapFiltersButton(campusMap);
   const routeCard = new RouteCard(app);
   new Directions(app, campusMap, myLocation, routeCard, buildingsById);
-  new Search(places, rooms, buildingsById);
-  new Menu(app, campuses, campusMap, places);
+  const search = new Search(places, [], buildingsById);
+  new Menu(app, campuses, campusMap, () => places);
   showWelcome(app);
   followNavbarTitle(buildingsById);
-  new SettingsPage(app, campusMap, countData(places, rooms, entrances, campuses));
+  const settingsPage = new SettingsPage(app, campusMap);
 
   // Handy in the browser's developer console: type `store.get()` to see the app state.
   window.app = app;
@@ -188,6 +211,48 @@ async function startApp() {
   window.CONFIG = CONFIG;
 
   keepAppOnPhone(); // next time, the app opens from the phone's own copy
+  loadTheRest(campusMap, sheet, search, settingsPage, buildingsById, places, campuses);
+}
+
+/**
+ * Load everything the first screen can do without, then hand it to the parts that use it.
+ * @param {CampusMap} campusMap
+ * @param {BuildingSheet} sheet
+ * @param {Search} search
+ * @param {SettingsPage} settingsPage
+ * @param {Object.<string, object>} buildingsById - places are added to it
+ * @param {object[]} places - places are added to it
+ * @param {object} campuses
+ */
+async function loadTheRest(campusMap, sheet, search, settingsPage, buildingsById, places, campuses) {
+  const files = await Promise.all([
+    loadData('places.geojson'), // parks, food and parking lots (tools/build_places.py)
+    loadData('rooms.json'), // rooms (tools/build_rooms.py)
+    loadData('entrances.json'), // outside doors on our floor plans (tools/build_entrances.py)
+    loadData('descriptions.json'), // the buildings' descriptions (tools/build_buildings.py)
+  ]);
+  const newPlaces = recordsFrom(files[0]);
+  const rooms = files[1].rooms;
+  const entrances = files[2].entrances;
+  const descriptions = files[3].descriptions;
+
+  // Every building gets its description; places (parks, food, parking) have none.
+  for (const place of places) {
+    place.description = descriptions[place.id] || [];
+  }
+
+  for (const place of newPlaces) {
+    places.push(place);
+    buildingsById[place.id] = place;
+  }
+  for (const place of newPlaces) {
+    place.description = [];
+  }
+  campusMap.addPlaces(newPlaces);
+  sheet.redraw(); // the open sheet, now with its description
+  search.addPlaces(newPlaces, rooms);
+  sheet.setRooms(rooms, entrances);
+  settingsPage.fillData(countData(places, rooms, entrances, campuses));
 }
 
 startApp().catch(showStartupError);

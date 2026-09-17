@@ -97,17 +97,36 @@ export class Search {
     this.clearButton = document.querySelector('#search-clear');
     this.showing = false; // is the drop-down on screen? It always follows state.searching.
 
-    // Work out each building's words once, not on every key press.
+    // Each place's searchable words, worked out once each (not on every key press),
+    // the first time search is opened.
     this.wordsOf = {};
-    for (const building of buildings) {
-      this.wordsOf[building.id] = buildingWords(building);
-    }
 
     this.listen();
     store.subscribe((state) => this.update(state));
   }
 
   /** Wire the search icon, the field, the round x, and the Escape and Enter keys. */
+  /**
+   * More places to search (parks, food and parking arrive a moment after the map).
+   * @param {object[]} places
+   * @param {object[]} rooms
+   */
+  addPlaces(places, rooms) {
+    for (const place of places) {
+      this.buildings.push(place);
+    }
+    this.rooms = rooms;
+  }
+
+  /** Work out the searchable words of any place that doesn't have them yet. */
+  readyWords() {
+    for (const building of this.buildings) {
+      if (!this.wordsOf[building.id]) {
+        this.wordsOf[building.id] = buildingWords(building);
+      }
+    }
+  }
+
   listen() {
     this.searchButton.addEventListener('click', () => {
       if (store.get().searching) {
@@ -198,6 +217,7 @@ export class Search {
    * @param {string} text
    */
   showResults(text) {
+    this.readyWords();
     const typed = typedWords(text);
     this.list.innerHTML = '';
     this.results.hidden = typed.length === 0;

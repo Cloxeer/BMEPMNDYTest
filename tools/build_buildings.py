@@ -10,7 +10,8 @@ WHAT IT DOES : Runs on a developer's computer (not in the app). For each buildin
                building of the uses in USE_CATEGORIES (athletics, student services, shops,
                greenhouses, barns, warehouses).
 DEPENDS ON   : Python 3 and an internet connection. No extra packages. tools/json_files.py
-SOURCES      : NMSU Office of Space Planning "Buildings" layer: name, code, address,
+SOURCES      : NMSU campus map (map.nmsu.edu, Concept3D): the description on each building's page
+               NMSU Office of Space Planning "Buildings" layer: name, code, address,
                  year built, number of stories, map position, outline
                NMSU Registrar building abbreviations (records.nmsu.edu): the code
                  students see on schedules, when it differs (see building-extras.json)
@@ -19,11 +20,14 @@ SOURCES      : NMSU Office of Space Planning "Buildings" layer: name, code, addr
                data/source/building-extras.json: floor plans, descriptions, checked extras
                data/source/entrances.geojson: doors mapped in OpenStreetMap
 WRITES       : data/buildings.geojson (one point per building, with its facts)
+               data/descriptions.json (each building's description; kept apart so the map
+                 can open before the longer text has loaded)
                data/building-shapes.geojson (NMSU's official outline of each building:
                  used to tell when you've walked inside)
 RUN          : python tools/build_buildings.py
 """
 
+import html
 import json
 import math
 import re
@@ -36,11 +40,16 @@ from json_files import read_json, write_json
 PROJECT = Path(__file__).resolve().parent.parent
 SOURCE = PROJECT / 'data' / 'source'
 OUTPUT = PROJECT / 'data' / 'buildings.geojson'
+DESCRIPTIONS_OUTPUT = PROJECT / 'data' / 'descriptions.json'
 SHAPES_OUTPUT = PROJECT / 'data' / 'building-shapes.geojson'
 DOOR_DISTANCE_M = 4  # an OpenStreetMap door this close (metres) to NMSU's outline belongs to the building
 METRES_PER_DEGREE = 111320
 NMSU_BUILDINGS = ('https://services6.arcgis.com/r7ZUBDL24w5VsBnN/arcgis/rest/services/'
                   'buildings_642026_WFL1/FeatureServer/9/query')
+NMSU_MAP = 'https://api.concept3d.com/locations/{id}?map=1888&key=0001085cc708b9cef47080f064612ca5'
+NMSU_MAP_LIST = 'https://api.concept3d.com/locations?map=1888&key=0001085cc708b9cef47080f064612ca5'
+SAME_PLACE_METRES = 120  # a campus map point this close to a building, with the same name, is that building
+MAP_DESCRIPTION_SOURCE = "NMSU's official campus map (map.nmsu.edu)"
 REGISTRAR = 'NMSU Registrar building abbreviations (records.nmsu.edu)'
 
 # Each building: (property number, name shown in the app, name in OpenStreetMap,
@@ -111,6 +120,8 @@ BUILDINGS = [
     ('597', 'Golf Course Clubhouse', None, 660865, None),
     ('369', 'Photovoltaic Center', None, 660870, None),
     ('30', 'Campus Police / Ag Institute', None, 660999, None),
+    ('465', 'Equestrian Tack Room', None, 661017, None),  # the schedule's "Equestrian Building" (Registrar code EA, Equitation Building)
+    ('158', 'Hort Farm Office & Labs', None, 660981, None),  # the schedule's "Fabian Garcia Science Center" (Registrar code HF)
     # Historic buildings not listed above: on the National Register of Historic Places, or named
     # historic in NMSU's Heritage Preservation Plan (the designations are in building-extras.json).
     ('36', 'Nason House', None, 525431, None),
@@ -150,6 +161,9 @@ USE_CATEGORIES = [
 ABBREVIATIONS = {'PSL', 'USDA', 'NMDA', 'VERL', 'HQ', 'FS', 'MTN', 'NMSU', 'SWTDI', 'PGEL'}
 SMALL_WORDS = {'AND', 'OF', 'THE', 'FOR'}  # stay lowercase inside a name
 
+# Buildings full of offices students go to (Financial Aid, the Registrar, Admissions): "Student Services", not "Staff Academic".
+SERVICES_BUILDINGS = {'338'}
+
 NOT_ON_REGISTRAR_LIST = {'36', '56', '154', '172', '179', '285', '657', '365', '619', '190', '662', '604', '658', '605', '645', '413F', '462K', '206', '214', '369'}
 
 BUILDINGS_NOTE = [
@@ -158,10 +172,18 @@ BUILDINGS_NOTE = [
     'Format: GeoJSON. One Feature per building: a Point where NMSU places it, and properties:',
     'id and propertyNumber (NMSU property number), code, name, aka (other names search finds), address, built (year),',
     'floors ([1, 2, ...], empty when unknown), floorsSource, nmsuUrl, photos, source, category ("study" or "living"),',
-    'floorImages and postedImages (floor -> picture file), description (paragraphs), doors ([lng, lat] points), codeSource,',
-    'historic (an official historic designation, or null). category can also be "historic", "staff" (Staff Academic),',
+    'and descriptionSource. The descriptions themselves are in data/descriptions.json.',
+    'floorImages and postedImages (floor -> picture file), doors ([lng, lat] points), codeSource,',
+    'historic (an official historic designation, or null), descriptionSource (where the description came from).',
+    'category can also be "historic", "staff" (Staff Academic), "services" (Student Services),',
     '"athletics", "services" (Student Services), "shop", "greenhouse", "barn" or "warehouse".',
     'A missing fact is null or empty, and the app shows "Unknown" for it: nothing is guessed.',
+]
+DESCRIPTIONS_NOTE = [
+    'Made by tools/build_buildings.py. Do not edit by hand: edit "description" in data/source/building-extras.json,',
+    "or the building's page on NMSU's campus map, then run python tools/build_buildings.py",
+    'Format: "descriptions" is {property number: [paragraph, paragraph, ...]}. The app loads it just after the map,',
+    'because the map does not need it and it is the longest text in the project.',
 ]
 SHAPES_NOTE = [
     'Made by tools/build_buildings.py. Do not edit by hand.',
@@ -321,6 +343,59 @@ def doors_of(doors, outline):
     return kept
 
 
+def simple_name(name):
+    """A name with only its letters and numbers, for comparing: "Hort Farm Office & Labs" -> "hortfarmofficelabs"."""
+    return re.sub(r'[^a-z0-9]', '', (name or '').lower())
+
+
+def metres_apart(a, b):
+    """Straight-line distance in metres between two [lng, lat] points."""
+    shrink = math.cos(math.radians(a[1]))
+    return math.hypot((a[0] - b[0]) * shrink, a[1] - b[1]) * METRES_PER_DEGREE
+
+
+def download_map_places():
+    """Every place on NMSU's campus map: [(id, name, [lng, lat]), ...]."""
+    places = []
+    for place in download_json(NMSU_MAP_LIST):
+        if place.get('lat') and place.get('lng'):
+            places.append((place['id'], place.get('name') or '', [place['lng'], place['lat']]))
+    return places
+
+
+def find_map_ids(map_places, record, names):
+    """
+    Every id on NMSU's campus map that is this building: same name, and close enough to be the same place.
+    Nothing is guessed: a point with a different name is not used.
+    """
+    wanted = set()
+    for name in names:
+        wanted.add(simple_name(name))
+    position = [record['Longitude'], record['Latitude']]
+    found = []
+    for map_id, map_name, map_position in map_places:
+        if simple_name(map_name) in wanted and metres_apart(position, map_position) <= SAME_PLACE_METRES:
+            found.append(map_id)
+    return found
+
+
+def map_description(map_id):
+    """The description NMSU's campus map shows for a building, as paragraphs. Empty when it has none."""
+    if not map_id:
+        return []
+    page = download_json(NMSU_MAP.format(id=map_id))
+    text = page.get('description') or ''
+    text = re.sub(r'<br\s*/?>|</p>', '\n', text)  # line breaks become new paragraphs
+    text = re.sub(r'<[^>]+>', '', text)  # drop the rest of the HTML
+    text = html.unescape(text).replace('\r', '')
+    paragraphs = []
+    for line in text.split('\n'):
+        line = line.strip()
+        if line:
+            paragraphs.append(line)
+    return paragraphs
+
+
 def display_name(description):
     """NMSU's building name in capitals -> how we show it: "PSL, CLINTON P. ANDERSON HALL" -> "PSL, Clinton P. Anderson Hall"."""
     words = []
@@ -405,6 +480,7 @@ def main():
     by_use, use_categories = find_by_use(listed)
     buildings = BUILDINGS + staff_academic + by_use
     official = download_official_records(buildings)
+    map_places = download_map_places()
     osm = {}
     for feature in read_json(SOURCE / 'buildings-osm.geojson')['features']:
         osm[feature['properties'].get('name')] = feature['properties']
@@ -417,6 +493,7 @@ def main():
 
     features = []
     shapes = []
+    descriptions = {}
     for number, name, osm_name, map_id, photo_key in buildings:
         record = official[number]
         extra = extras.get(number, {})
@@ -427,14 +504,35 @@ def main():
         if floors == 0:
             print('WARNING: no floor count for', number, name)
 
-        nmsu_url = None  # None: not on NMSU's campus map yet
+        # NMSU's campus map: the id listed above, plus any point with this building's name at this spot.
+        # The description comes from the first one that has one.
+        map_ids = []
         if map_id:
-            nmsu_url = 'https://map.nmsu.edu/?id=1888#!m/' + str(map_id)
+            map_ids.append(map_id)
+        for other_id in find_map_ids(map_places, record, [name, record['Descriptio']]):
+            if other_id not in map_ids:
+                map_ids.append(other_id)
+
+        description = extra.get('description', [])
+        description_source = None
+        for candidate in map_ids:
+            if description:
+                break
+            description = map_description(candidate)
+            if description:
+                description_source = MAP_DESCRIPTION_SOURCE
+                map_ids = [candidate] + map_ids  # link to the page the description came from
+
+        nmsu_url = None  # None: not on NMSU's campus map yet
+        if map_ids:
+            nmsu_url = 'https://map.nmsu.edu/?id=1888#!m/' + str(map_ids[0])
         category = 'study'  # colour and Map filters group
         if number in LIVING:
             category = 'living'
         elif number in HISTORIC:
             category = 'historic'
+        elif number in SERVICES_BUILDINGS:
+            category = 'services'
         elif number in staff_numbers:
             category = 'staff'
         elif number in use_categories:
@@ -458,7 +556,7 @@ def main():
             'category': category,
             'floorImages': existing_pictures(extra.get('floorImages', {}), number),  # floor -> our redrawn plan
             'postedImages': existing_pictures(extra.get('postedImages', {}), number),  # floor -> photo of the posted map
-            'description': extra.get('description', []),  # paragraphs
+            'descriptionSource': description_source,
             'doors': doors_of(doors, outlines[number]),  # where directions lead (empty = the nearest path)
             'historic': extra.get('historic'),  # an official historic designation, or None
         }
@@ -472,13 +570,19 @@ def main():
         else:
             building['codeSource'] = REGISTRAR
 
+        descriptions[number] = description  # paragraphs, written to their own file below
         shapes.append({'type': 'Feature', 'properties': {'id': number}, 'geometry': outlines[number]})
         position = [round(record['Longitude'], 7), round(record['Latitude'], 7)]
         features.append({'type': 'Feature', 'properties': building, 'geometry': {'type': 'Point', 'coordinates': position}})
-        print(number, (building['code'] or '-').ljust(5), name, '(' + str(floors) + ' floors, ' + str(len(building['doors'])) + ' doors)')
+        note = ''
+        if not description:
+            note = ' (no description on NMSU\'s campus map)'
+        print(number, (building['code'] or '-').ljust(5), name, '(' + str(floors) + ' floors, ' + str(len(building['doors'])) + ' doors)' + note)
 
     write_json(OUTPUT, BUILDINGS_NOTE, {'type': 'FeatureCollection', 'features': features}, 'pretty')
     print(len(features), 'buildings written to', OUTPUT)
+    write_json(DESCRIPTIONS_OUTPUT, DESCRIPTIONS_NOTE, {'descriptions': descriptions}, 'pretty')
+    print(len(descriptions), 'descriptions written to', DESCRIPTIONS_OUTPUT)
     write_json(SHAPES_OUTPUT, SHAPES_NOTE, {'type': 'FeatureCollection', 'features': shapes}, 'compact')
     print(len(shapes), 'outlines written to', SHAPES_OUTPUT)
 
