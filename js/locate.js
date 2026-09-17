@@ -1,37 +1,37 @@
 /**
  * @file js/locate.js
- * @summary The round location button to the left of the pill.
+ * @summary Your location on the map (the blue dot) and which way you face.
  *
- * WHAT IT DOES : Tap it: the map asks for your precise (GPS) location, shows
- *                you as a blue dot and follows you. Tap again to stop.
- *                If location is blocked, or you're off the campus map, it says so.
- *                It only shows while you're looking at the map (hidden while a sheet is open).
- *                A beam on the dot shows which way you're facing (js/heading.js).
- * DEPENDS ON   : ./store.js (is a sheet open?), maplibre-gl's GeolocateControl (does the GPS work and draws
- *                the dot), ./config.js, #locate-btn in index.html.
+ * WHAT IT DOES : Owns MapLibre's GeolocateControl: turns your location on and
+ *                off, tells listeners when it changes (so the Map settings
+ *                toggle is always accurate), and explains when location is
+ *                blocked or you're off the campus map. Also sets up the compass
+ *                (js/heading.js) for the facing beam and "Turn map with me".
+ *                There's no button in here: the Map settings panel
+ *                (js/mapSettings.js) and directions (js/directions.js) call it.
+ * DEPENDS ON   : maplibre-gl's GeolocateControl (does the GPS work and draws
+ *                the dot), ./config.js, ./heading.js.
  *                Browsers only share location on https or localhost.
- * CONTROLS     : #locate-btn.
- * USED BY      : js/app.js (which hands showMyLocation to js/directions.js)
+ * CONTROLS     : the location dot.
+ * USED BY      : js/app.js (hands it to js/mapSettings.js and js/directions.js)
  *
  * WHY A HIDDEN CONTROL: MapLibre's GeolocateControl already handles
  * permissions, accuracy and the blue dot. We keep its own button hidden
- * (styles/app.css) and press it from our pill-style button instead.
+ * (styles/app.css) and drive it from our Map settings panel instead.
  */
 
 import { CONFIG } from './config.js';
-import { store } from './store.js';
 import { initHeading } from './heading.js';
 
 /**
- * Wire the location button.
+ * Wire location.
  * @param {Framework7} app - for the "location unavailable" message
  * @param {maplibregl.Map} map
- * @returns {{ showMyLocation: () => void }} for js/directions.js
+ * @returns {object} { isOn, setOn, showMyLocation, onChange, heading }
  */
 export function initLocate(app, map) {
-  const button = document.querySelector('#locate-btn');
-  const icon = button.querySelector('i');
   const settings = CONFIG.locate;
+  const listeners = [];
 
   const locator = new maplibregl.GeolocateControl({
     positionOptions: { enableHighAccuracy: true }, // precise GPS, not a rough network guess
@@ -39,44 +39,62 @@ export function initLocate(app, map) {
     fitBoundsOptions: { maxZoom: settings.zoom }, // how close to zoom in on you
   });
   map.addControl(locator);
-  const heading = initHeading(map); // the beam showing which way you face
+  const heading = initHeading(map);
 
-  /** @param {boolean} on - is your location being shown? */
-  function setActive(on) {
-    button.classList.toggle('is-active', on);
-    button.setAttribute('aria-pressed', String(on));
-    icon.textContent = on ? 'location_fill' : 'location';
+  /**
+   * Is location on? MapLibre keeps this in _watchState ('OFF' when off; it stays
+   * on while you pan away, which MapLibre calls 'BACKGROUND'). It isn't public,
+   * but it's the only accurate answer, and our MapLibre version is pinned (4.7.1).
+   * @returns {boolean}
+   */
+  function isOn() {
+    return locator._watchState !== undefined && locator._watchState !== 'OFF';
+  }
+
+  /** Tell listeners (the Map settings toggle) the current on/off state. */
+  function announce() {
+    listeners.forEach((fn) => fn(isOn()));
   }
 
   /** @param {string} text - explain why we can't show the location */
   function explain(text) {
-    setActive(false);
     app.dialog.alert(text, settings.noLocationTitle);
+    announce();
   }
 
-  button.addEventListener('click', () => {
-    heading.start(); // needs this tap on iPhone
-    // trigger() returns false while the control is still starting up or location isn't supported.
-    if (!locator.trigger()) explain(settings.noLocationText);
-  });
-  locator.on('geolocate', (position) => heading.fromGps(position.coords));
+  /**
+   * Turn location on or off.
+   * @param {boolean} on
+   */
+  function setOn(on) {
+    if (on === isOn()) return;
+    if (on) heading.start(); // part of the same tap, so iPhone can ask for the compass too
+    // trigger() moves MapLibre to its next state; panned-away ('BACKGROUND') needs two presses to reach OFF.
+    for (let presses = 0; presses < 2 && isOn() !== on; presses += 1) {
+      if (!locator.trigger()) {
+        explain(settings.noLocationText); // still starting up, or location isn't supported
+        return;
+      }
+    }
+    announce();
+  }
 
-  locator.on('trackuserlocationstart', () => setActive(true));
-  locator.on('trackuserlocationend', () => setActive(false));
+  locator.on('geolocate', (position) => heading.fromGps(position.coords));
+  ['trackuserlocationstart', 'trackuserlocationend', 'geolocate'].forEach((name) => locator.on(name, announce));
   locator.on('error', () => explain(settings.noLocationText));
   locator.on('outofmaxbounds', () => explain(settings.outsideText));
 
-  // Only on the map: fade out while the building sheet covers it.
-  store.subscribe((state) => {
-    button.classList.toggle('is-hidden', state.sheetOpen);
-    button.inert = state.sheetOpen; // can't be tapped or tabbed to while hidden
-  });
-
   return {
-    /** Show and follow your location, unless it's already on (pressing again would turn it off). */
+    isOn,
+    setOn,
+    /** Show and follow your location (from "Get directions"); does nothing if it's already on. */
     showMyLocation() {
-      heading.start(); // called from the "Get directions" tap, so iPhone can ask for the compass
-      if (!button.classList.contains('is-active')) locator.trigger();
+      setOn(true);
     },
+    /** @param {(on: boolean) => void} fn - told whenever location turns on or off */
+    onChange(fn) {
+      listeners.push(fn);
+    },
+    heading,
   };
 }

@@ -49,7 +49,7 @@ map:
   nearbyKm: 10
   fencePadding: 0.01
   selectZoom: 16.8
-  flyDuration: 650 # ms to fly to a chosen building: quick, with a soft landing
+  flyDuration: 420 # ms to fly to a chosen building: quick, with a soft landing
   flyCurve: 1.2 # how much the flight zooms out on the way (1 = barely)
   maxPixelRatio: 2 # sharp phones draw at most 2x, so cheaper phones stay smooth
   buildingNames: true # names above the info badges (people can switch this in Settings)
@@ -62,8 +62,8 @@ map:
   nameColor: "#1b1b1d"
   nameHalo: "#ffffff"
   nameHaloWidth: 1.5
-  sheetPauseAfterTap: 200 # ms between the map arriving at a tapped building and its sheet opening
-  sheetPauseAfterSearch: 300 # same, for a building picked in search
+  sheetPauseAfterTap: 40 # ms between the map arriving at a tapped building and its sheet opening
+  sheetPauseAfterSearch: 100 # same, for a building picked in search
   fitPadding: 48
   fitMaxZoom: 17
   fitDuration: 900
@@ -196,7 +196,6 @@ sheet:
   sideWidth: "40px" # room on each side of the title: directions button left, X right
   roundButtonSize: "32px"
   roundButtonBackground: "rgba(255, 255, 255, 0.2)"
-  directionsIconSize: "18px"
   zoomBackground: "rgba(255, 255, 255, 0.92)"
   zoomIconSize: "16px"
   arrivedIconSize: "28px"
@@ -277,6 +276,10 @@ directions:
   endTripText: "Are you sure you want to end your trip?"
   endTripYes: "End trip"
   endTripNo: "Keep going"
+  askTitle: "Directions"
+  askText: "Get directions to"
+  askYes: "Go"
+  askNo: "Not now"
   switchTitle: "Change destination?"
   switchFromText: "You're on your way to"
   switchToText: "Get directions to"
@@ -310,6 +313,24 @@ directions:
   roomColor: "rgba(10, 132, 255, 0.28)" # the highlighted room on a floor plan (light blue)
   roomEdge: "#0a84ff"
   roomEdgeWidth: 6 # in floor-plan units
+
+mapSettings: # the round Map settings button left of the pill (js/mapSettings.js)
+  icon: "map"
+  options: # top to bottom
+    location: { label: "My location", icon: "location_fill" }
+    follow: { label: "Turn map with me", icon: "location_north_fill" }
+    names: { label: "Building names", icon: "textformat" }
+    campus: { label: "Back to campus", icon: "house_fill" }
+  rowHeight: "44px"
+  iconCircle: "36px"
+  iconSize: "18px"
+  labelSize: "15px"
+  followInterval: 150 # ms between map turns while following your heading
+  followMinDegrees: 3 # ignore compass wobbles smaller than this
+  unfollowDuration: 400 # ms to turn back to north when following stops
+  compassWaitMs: 1500 # how long to wait for a first compass reading before saying there isn't one
+  noCompassTitle: "Compass unavailable"
+  noCompassText: "Turning the map with you needs your phone's compass. Allow motion access for this site, or try on a phone."
 
 locate:
   beamSize: "72px" # the "which way you face" beam around your location dot

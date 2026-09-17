@@ -25,6 +25,7 @@ const state = {
   directionsTo: null, // { buildingId, room } while directions are on, otherwise null
   arrived: false, // true after directions brought you inside the selected building
   travelMode: 'walk', // how directions travel: 'walk', 'bike' or 'drive'
+  showNames: true, // building names above the badges (Settings page and Map settings)
   searching: false, // is the search drop-down open?
 };
 
@@ -148,6 +149,14 @@ export const store = {
    */
   setTravelMode(mode) {
     if (mode !== state.travelMode) update({ travelMode: mode });
+  },
+
+  /**
+   * Show or hide building names on the map.
+   * @param {boolean} on
+   */
+  setShowNames(on) {
+    if (on !== state.showNames) update({ showNames: on });
   },
 
   /** Stop directions. */

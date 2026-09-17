@@ -25,6 +25,8 @@ import { initLocate } from './locate.js';
 import { initDirections } from './directions.js';
 import { initRouteCard } from './routeCard.js';
 import { initSettings } from './settings.js';
+import { initMapSettings } from './mapSettings.js';
+import { initDirectionsButton } from './askDirections.js';
 
 /**
  * Start Framework7. While any full-screen popup is open, the bottom pill hides.
@@ -206,9 +208,11 @@ async function main() {
   const buildingsById = Object.fromEntries(buildings.map((building) => [building.id, building]));
 
   const map = initMap(buildingsById, campuses, labels, outside);
-  initBuildingSheet(app, buildingsById, rooms);
+  const directionsButton = initDirectionsButton(app, buildingsById);
+  initBuildingSheet(app, buildingsById, rooms, directionsButton.ask);
   initPill(buildingsById);
   const locate = initLocate(app, map);
+  initMapSettings(app, locate);
   initDirections(app, map, locate, initRouteCard(app), buildingsById);
   initSearch(buildings, rooms, buildingsById);
   initMenu(app, campuses);

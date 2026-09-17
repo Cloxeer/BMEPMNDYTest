@@ -58,14 +58,16 @@ Three rules keep it predictable:
 | `js/map.js` | The map: campus highlight, building badges, taps |
 | `js/buildingSheet.js` | The full-page building sheet |
 | `js/pill.js` | The bottom pill (Info / floors) |
-| `js/locate.js` | The location button left of the pill (MapLibre's GeolocateControl) |
+| `js/locate.js` | Your location dot (MapLibre's GeolocateControl): on/off, accurate state for the toggle |
+| `js/mapSettings.js` | Map settings button left of the pill: My location, Turn map with me, Building names, Back to campus |
+| `js/askDirections.js` | Directions button (same spot, when a building is selected) and the "Get directions?" / "Change destination?" questions |
 | `js/search.js` | The search drop-down (buildings and rooms) |
 | `js/searchMatch.js` | What counts as a match: room numbers, codes, small typos |
 | `js/directions.js` | Walking route with blue arrows (Dijkstra shortest path via geojson-path-finder); opens the sheet when you walk in |
 | `js/turns.js` | Route -> next turn, distance, time ("590 ft · Turn right onto the path") |
 | `js/routeCard.js` | The turn-by-turn card that replaces the pill during directions; tap to list every step, X asks before ending |
 | `js/settings.js` | Settings switches (Building names), remembered on this device |
-| `js/heading.js` | Compass beam on your location dot (which way you face) |
+| `js/heading.js` | Compass beam on your location dot, and turning the map with you |
 | `js/floorPlan.js` | Plan / posted-map slides (Framework7 Swiper), tap a room to choose it |
 | `js/planArt.js` | Draws the chosen room and the indoor arrows onto our plan |
 | `js/geo.js` | Distances and point-inside-outline maths |

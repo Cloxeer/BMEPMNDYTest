@@ -1,0 +1,117 @@
+/**
+ * @file js/mapSettings.js
+ * @summary The round Map settings button left of the pill, and the options it opens.
+ *
+ * WHAT IT DOES : Tap the button: it morphs open and the options glide up out
+ *                of it, one after another:
+ *                  - My location        (on / off)
+ *                  - Turn map with me   (on / off: the map faces the way you face)
+ *                  - Building names     (on / off: same switch as the Settings page)
+ *                  - Back to campus     (moves the map back to the main campus, north up)
+ *                An option that's on has a red icon; off is white. Tap outside,
+ *                or the button again, to close.
+ *                When a building is selected, this spot shows the Directions
+ *                button instead (js/askDirections.js).
+ * DEPENDS ON   : Framework7 (alert dialog), ./config.js, ./store.js, ./html.js, ./map.js (showCampus),
+ *                js/locate.js (handed in), #map-settings in index.html.
+ * CONTROLS     : #settings-btn and #map-options.
+ * USED BY      : js/app.js
+ */
+
+import { CONFIG } from './config.js';
+import { store } from './store.js';
+import { escapeHtml } from './html.js';
+import { showCampus } from './map.js';
+
+/**
+ * Wire the Map settings button.
+ * @param {Framework7} app - for messages
+ * @param {object} locate - from js/locate.js
+ */
+export function initMapSettings(app, locate) {
+  const settings = CONFIG.mapSettings;
+  const button = document.querySelector('#settings-btn');
+  const buttonIcon = button.querySelector('i');
+  const stack = document.querySelector('#map-options');
+
+  // What each option does. "isOn" is null for one-tap actions (they're never "on").
+  const options = {
+    location: { isOn: () => locate.isOn(), tap: () => locate.setOn(!locate.isOn()) },
+    follow: { isOn: () => locate.heading.isFollowing(), tap: toggleFollow },
+    names: { isOn: () => store.get().showNames, tap: () => store.setShowNames(!store.get().showNames) },
+    campus: { isOn: null, tap: backToCampus },
+  };
+
+  // One row per option in config.yml, top to bottom; --i staggers the glide (bottom row first).
+  const names = Object.keys(settings.options);
+  stack.innerHTML = names
+    .map((name, row) => {
+      const look = settings.options[name];
+      return '<button class="map-option" type="button" data-option="' + escapeHtml(name) + '" style="--i: ' + (names.length - 1 - row) + '">' +
+        '<span class="map-option-icon"><i class="icon f7-icons" aria-hidden="true">' + escapeHtml(look.icon) + '</i></span>' +
+        '<span class="map-option-label">' + escapeHtml(look.label) + '</span></button>';
+    })
+    .join('');
+
+  /** Colour every toggle by whether it's really on (red) or off (white). */
+  function refresh() {
+    stack.querySelectorAll('[data-option]').forEach((row) => {
+      const option = options[row.dataset.option];
+      if (!option.isOn) return; // actions have no on/off
+      const on = option.isOn();
+      row.classList.toggle('is-on', on);
+      row.setAttribute('aria-pressed', String(on));
+    });
+  }
+
+  /** @param {boolean} open - show or hide the options */
+  function setOpen(open) {
+    stack.classList.toggle('is-open', open);
+    stack.inert = !open; // hidden options can't be tapped or tabbed to
+    button.classList.toggle('is-open', open);
+    button.setAttribute('aria-expanded', String(open));
+    buttonIcon.textContent = open ? 'xmark' : settings.icon;
+    if (open) refresh();
+  }
+
+  /** "Turn map with me": needs a compass, so explain if there isn't one. */
+  async function toggleFollow() {
+    const turningOn = !locate.heading.isFollowing();
+    const worked = await locate.heading.setFollow(turningOn);
+    if (!worked) app.dialog.alert(settings.noCompassText, settings.noCompassTitle);
+    else if (turningOn && !locate.isOn()) locate.setOn(true); // following makes sense with the dot showing
+    refresh();
+  }
+
+  /** Move back to the main campus, facing north. */
+  function backToCampus() {
+    locate.heading.setFollow(false);
+    showCampus();
+    setOpen(false);
+  }
+
+  button.addEventListener('click', (event) => {
+    event.stopPropagation();
+    setOpen(!stack.classList.contains('is-open'));
+  });
+  stack.addEventListener('click', (event) => {
+    event.stopPropagation(); // tapping an option keeps the panel open
+    const row = event.target.closest('[data-option]');
+    if (row) options[row.dataset.option].tap();
+    refresh();
+  });
+  document.addEventListener('click', () => setOpen(false)); // tap anywhere else: close
+
+  locate.onChange(refresh);
+  locate.heading.onFollowChange(refresh);
+
+  // Only while looking at the map with nothing selected (a selected building shows Directions here).
+  store.subscribe((state) => {
+    const show = !state.selectedId && !state.sheetOpen;
+    button.classList.toggle('is-hidden', !show);
+    button.inert = !show;
+    if (!show) setOpen(false);
+    refresh();
+  });
+  setOpen(false);
+}

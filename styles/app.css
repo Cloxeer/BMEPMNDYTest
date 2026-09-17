@@ -231,18 +231,78 @@ html:not(.config-ready) body { visibility: hidden; }
     transform var(--pill-floor-move-time) var(--theme-smooth) calc(var(--i) * var(--pill-floor-stagger));
 }
 
-/* Location button: a round pill just left of the main pill. It's positioned
-   against the bar, so the main pill stays exactly where it was. */
-.pill--locate {
+/* Round buttons just left of the main pill: Map settings or Directions, in the same
+   spot. They're positioned against the bar, so the main pill never moves. Swapping
+   between them is a quick shrink-and-fade. */
+.pill--side {
   position: absolute;
   right: calc(100% + var(--pill-floor-gap));
   bottom: 0;
   width: var(--pill-height);
   padding: 0;
-  transition: transform var(--pill-press-time) ease, opacity var(--pill-hide-time) ease;
+  transition: transform var(--pill-floor-move-time) var(--theme-smooth), opacity var(--pill-hide-time) ease;
 }
-.pill .pill-locate-icon { font-size: var(--pill-locate-icon-size); }
-.pill--locate.is-hidden { opacity: 0; pointer-events: none; } /* sheet is open: map only */
+.pill .pill-side-icon { font-size: var(--pill-locate-icon-size); }
+.pill--side.is-hidden { opacity: 0; transform: scale(var(--pill-floor-start-scale)); pointer-events: none; }
+.pill--side.is-open { background: var(--theme-white); color: var(--f7-theme-color); } /* settings open: button turns into a close button */
+
+/* Map settings options: closed, every row sits hidden inside the settings button;
+   opening glides each one up into its place, bottom row first (like the floor pills). */
+.option-stack {
+  position: absolute;
+  left: calc(-1 * (var(--pill-floor-gap) + var(--pill-height))); /* lines up with the settings button's left edge */
+  bottom: calc(100% + var(--pill-floor-gap));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pill-floor-gap);
+  pointer-events: none;
+}
+.option-stack.is-open { pointer-events: auto; }
+.map-option {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  width: auto; /* Framework7 makes buttons full width */
+  height: var(--map-settings-row-height);
+  padding: 0 var(--s4) 0 var(--s1);
+  border: none;
+  border-radius: var(--map-settings-row-height);
+  background: var(--theme-white);
+  color: var(--theme-text-strong);
+  font: 600 var(--map-settings-label-size) var(--theme-font);
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 var(--pill-shadow-y) var(--pill-shadow-blur) var(--theme-shadow-strong);
+  -webkit-tap-highlight-color: transparent;
+  transform-origin: left bottom;
+  opacity: 0;
+  transform: translateY(calc((var(--i) + 1) * (var(--map-settings-row-height) + var(--pill-floor-gap)))) scale(var(--pill-floor-start-scale));
+  transition: opacity var(--pill-floor-fade-time) ease-in, transform var(--pill-floor-move-time) var(--theme-smooth);
+}
+.option-stack.is-open .map-option {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--pill-floor-fade-time) ease-out calc(var(--i) * var(--pill-floor-stagger)),
+    transform var(--pill-floor-move-time) var(--theme-smooth) calc(var(--i) * var(--pill-floor-stagger));
+}
+.map-option:active { filter: brightness(0.95); }
+.map-option:focus-visible { outline: var(--theme-focus-ring-width) solid var(--theme-focus); outline-offset: var(--theme-focus-ring-offset); }
+/* The round icon: white when off, red when on (colours swap). */
+.map-option-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--map-settings-icon-circle);
+  height: var(--map-settings-icon-circle);
+  border-radius: 50%;
+  background: var(--theme-white);
+  color: var(--f7-theme-color);
+  box-shadow: inset 0 0 0 var(--pill-floor-ring) var(--f7-theme-color);
+  transition: background var(--pill-press-time) ease, color var(--pill-press-time) ease;
+}
+.map-option-icon .icon { font-size: var(--map-settings-icon-size); }
+.map-option.is-on .map-option-icon { background: var(--f7-theme-color); color: var(--theme-white); }
 /* Which way you're facing: a soft blue beam from the location dot (js/heading.js). */
 .user-heading {
   position: absolute;
@@ -261,7 +321,7 @@ html:not(.config-ready) body { visibility: hidden; }
   z-index: -1;
 }
 .user-heading[hidden] { display: none; }
-/* MapLibre's own location button stays hidden; #locate-btn presses it (see js/locate.js). */
+/* MapLibre's own location button stays hidden; Map settings drives it (js/locate.js). */
 .maplibregl-ctrl-group:has(.maplibregl-ctrl-geolocate) { display: none; }
 
 /* Turn-by-turn card: takes the pill's spot while directions are on.
@@ -439,27 +499,7 @@ html:not(.config-ready) body { visibility: hidden; }
   background: var(--f7-theme-color);
   color: var(--theme-white);
 }
-.bs-side { width: var(--sheet-side-width); flex: none; } /* equal space on both sides keeps the title centred */
-.bs-side { display: flex; align-items: center; }
-/* Directions: a round, see-through white button with Apple's turn-diamond icon. */
-.bs-directions {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--sheet-round-button-size);
-  height: var(--sheet-round-button-size);
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: var(--sheet-round-button-background);
-  color: var(--theme-white);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition: transform var(--pill-press-time) ease;
-}
-.bs-directions:active { transform: scale(var(--pill-press-scale)); }
-.bs-directions .icon { font-size: var(--sheet-directions-icon-size); }
-.bs-directions:focus-visible { outline: var(--theme-focus-ring-width) solid var(--theme-white); outline-offset: var(--theme-focus-ring-offset); }
+.bs-side { width: var(--sheet-side-width); flex: none; display: flex; align-items: center; } /* equal space on both sides keeps the title centred */
 .bs-name {
   flex: 1;
   text-align: center;
@@ -602,6 +642,6 @@ html:not(.config-ready) body { visibility: hidden; }
 
 /* ---------- 12. "Reduce motion" setting ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .search-drop, .pill, .pill-bar, .pill-chev, .popup-menu, .menu-link, .route-card, .bs-arrived, .user-heading { transition: none !important; animation: none !important; }
+  .search-drop, .pill, .pill-bar, .pill-chev, .popup-menu, .menu-link, .route-card, .bs-arrived, .user-heading, .map-option { transition: none !important; animation: none !important; }
   .menu-link { opacity: 1; transform: none; }
 }

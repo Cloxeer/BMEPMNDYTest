@@ -99,6 +99,9 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Search remembers what was typed on this device until cleared
 - [x] "Change destination?" prompt when directions are already on
 - [x] Posted evacuation-map photos for Hardman and Jacobs floors 1-2
+- [x] Map settings button (My location, Turn map with me, Building names, Back to campus; red = on, white = off)
+- [x] Directions button moved to the bottom (replaces Map settings when a building is selected); asks before starting; tapping a room asks too
+- [x] Faster building fly-in (420 ms) and sheet opening
 - [ ] Building photos: no freely licensed photos of the 8 remaining buildings exist online (Commons, Flickr CC checked); needs our own photos
 - [ ] Room-level arrival (phones can't detect floor or room indoors; would need indoor positioning hardware)
 - [ ] Driving directions (would need parking data and a road router; walking only for now)

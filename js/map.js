@@ -14,7 +14,8 @@
  *                the files made by tools/build_campuses.py (all shape math
  *                happens there; this file only draws).
  * CONTROLS     : the #map element.
- * USED BY      : js/app.js, js/locations.js, js/directions.js (mapReady)
+ * USED BY      : js/app.js, js/locations.js, js/directions.js (mapReady), js/settings.js,
+ *                js/mapSettings.js (showCampus)
  *
  * WHY BADGES ARE A MAP LAYER, NOT HTML MARKERS: an HTML marker is moved by
  * JavaScript every frame and lags while you drag. A map layer is moved by the
@@ -267,6 +268,19 @@ function followSelection(buildingsById) {
       easing: (t) => 1 - Math.pow(1 - t, 3),
       essential: true,
     }, { flightTo: building.id, via: state.selectedVia });
+  });
+}
+
+/** Move back to the main campus view, facing north (Map settings "Back to campus"). */
+export function showCampus() {
+  map.setMaxBounds(fence);
+  map.easeTo({
+    center: CONFIG.map.center,
+    zoom: CONFIG.map.zoom,
+    bearing: 0,
+    pitch: 0,
+    duration: CONFIG.map.flyDuration,
+    easing: (t) => 1 - Math.pow(1 - t, 3),
   });
 }
 

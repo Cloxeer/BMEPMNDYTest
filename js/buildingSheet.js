@@ -7,9 +7,8 @@
  *                building; a field with nothing to show yet gets a short message
  *                from config.yml, so no building's sheet looks different.
  *                  - Floor plan slides, room taps and indoor arrows: js/floorPlan.js
- *                  - The round button left of the title starts directions to the
- *                    building (and the chosen room, if any). If directions are
- *                    already on to somewhere else, it asks before switching.
+ *                  - Directions: the round button at the bottom (js/askDirections.js);
+ *                    tapping a room on the plan asks about directions to it too.
  *                  - After directions bring you inside, a green "You've arrived"
  *                    banner shows at the top.
  *                Photos and plans open in ONE full-screen viewer with pinch-zoom.
@@ -31,8 +30,9 @@ import { initFloorPlan } from './floorPlan.js';
  * @param {Framework7} app
  * @param {Object.<string, object>} buildingsById
  * @param {object[]} rooms - data/rooms.json
+ * @param {() => void} askDirections - from js/askDirections.js, asked after a room is tapped
  */
-export function initBuildingSheet(app, buildingsById, rooms) {
+export function initBuildingSheet(app, buildingsById, rooms, askDirections) {
   const words = CONFIG.sheet;
 
   // Pulling the header down closes the sheet; scrolling the content never does.
@@ -43,7 +43,6 @@ export function initBuildingSheet(app, buildingsById, rooms) {
   // Every field in the sheet, by name.
   const field = {
     title: document.querySelector('#bs-name'),
-    directionsButton: document.querySelector('#bs-directions'),
     arrived: document.querySelector('#bs-arrived'),
     arrivedTitle: document.querySelector('#bs-arrived-title'),
     arrivedText: document.querySelector('#bs-arrived-text'),
@@ -82,7 +81,7 @@ export function initBuildingSheet(app, buildingsById, rooms) {
 
   /* ---------- Section 1: floor plan (js/floorPlan.js) ---------- */
 
-  const floorPlan = initFloorPlan(rooms, openViewer);
+  const floorPlan = initFloorPlan(rooms, openViewer, askDirections);
 
   /* ---------- Section 2: photos ---------- */
 
@@ -164,45 +163,8 @@ export function initBuildingSheet(app, buildingsById, rooms) {
     field.arrivedText.textContent = text;
   }
 
-  /* ---------- Directions button ---------- */
-
-  /**
-   * How a destination is named in the "switch?" question.
-   * @param {string} buildingId
-   * @param {object|null} room
-   * @returns {string} e.g. "Room 228, Hardman and Jacobs Undergraduate Learning Center"
-   */
-  function placeName(buildingId, room) {
-    const name = buildingsById[buildingId].name;
-    return room ? CONFIG.search.roomText + ' ' + room.number + ', ' + name : name;
-  }
-
-  /** Start directions here, asking first if they're already leading somewhere else. */
-  function startOrSwitch() {
-    const state = store.get();
-    const current = state.directionsTo;
-    const roomNumber = (room) => (room ? room.number : '');
-    const sameTrip = current && current.buildingId === state.selectedId &&
-      roomNumber(current.room) === roomNumber(state.selectedRoom);
-    if (!current || sameTrip) {
-      store.startDirections();
-      return;
-    }
-    const directions = CONFIG.directions;
-    app.dialog.create({
-      title: directions.switchTitle,
-      text: directions.switchFromText + ' ' + placeName(current.buildingId, current.room) + '. ' +
-        directions.switchToText + ' ' + placeName(state.selectedId, state.selectedRoom) + '?',
-      buttons: [
-        { text: directions.switchNo },
-        { text: directions.switchYes, bold: true, onClick: () => store.startDirections() },
-      ],
-    }).open();
-  }
-
   /* ---------- Taps ---------- */
 
-  field.directionsButton.addEventListener('click', startOrSwitch);
   field.photos.addEventListener('click', (event) => {
     const photoButton = event.target.closest('.bs-photo');
     const building = buildingsById[store.get().selectedId];

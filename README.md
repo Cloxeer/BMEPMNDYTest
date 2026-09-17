@@ -63,7 +63,9 @@ js/html.js              makes data safe to put into HTML
 js/map.js               map, campus highlight, building badges
 js/buildingSheet.js     building sheet
 js/pill.js              bottom pill
-js/locate.js            location button next to the pill
+js/locate.js            your location dot
+js/mapSettings.js       map settings button and its options
+js/askDirections.js     directions button and "Get directions?" question
 js/search.js            search (buildings and rooms)
 js/searchMatch.js       what counts as a search match
 js/directions.js        walking directions

@@ -8,7 +8,7 @@
  *                above. The slides are Framework7's Swiper; the switch's
  *                highlight slides along with your finger.
  *                On our plan:
- *                  - tap a room to choose it,
+ *                  - tap a room to choose it (and you're asked if you want directions to it),
  *                  - the chosen room is light blue, with arrows from where you
  *                    come in (js/planArt.js).
  *                The corner button opens the picture full screen.
@@ -44,9 +44,10 @@ function inside(points, x, y) {
  * Wire the floor plan slides.
  * @param {object[]} rooms - data/rooms.json
  * @param {(urls: string[], startAt: number) => void} openViewer - full-screen picture viewer
+ * @param {() => void} askDirections - asks "Get directions to this room?" (js/askDirections.js)
  * @returns {{ show: (building: object, floor: number, room: object|null) => void, reset: () => void }}
  */
-export function initFloorPlan(rooms, openViewer) {
+export function initFloorPlan(rooms, openViewer, askDirections) {
   const words = CONFIG.sheet;
   const slides = document.querySelector('#bs-slides'); // <swiper-container>
   const highlight = document.querySelector('.bs-switch .segmented-highlight');
@@ -209,6 +210,7 @@ export function initFloorPlan(rooms, openViewer) {
       return sum + x1 * y2 - x2 * y1;
     }, 0));
     store.pickRoom(hits.reduce((a, b) => (area(a) <= area(b) ? a : b)));
+    askDirections(); // "Get directions to Room 125?"
   });
 
   document.querySelectorAll('#bs-slides .bs-zoom').forEach((button) => {
