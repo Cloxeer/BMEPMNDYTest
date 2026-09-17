@@ -27,6 +27,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525521",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 323)",
+    "category": "study",
     "floorImages": {
      "1": "data/floors/hjlc-1.svg",
      "2": "data/floors/hjlc-2.svg"
@@ -90,6 +91,7 @@
      }
     ],
     "source": "NMSU Office of Space Planning, Buildings layer (property 461)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -127,6 +129,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/526646",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 285)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -189,6 +192,7 @@
      }
     ],
     "source": "NMSU Office of Space Planning, Buildings layer (property 278)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -226,6 +230,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525545",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 391)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -273,6 +278,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525491",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 386)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -309,6 +315,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525525",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 189)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -346,6 +353,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525489",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 184)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -387,6 +395,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525527",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 397)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -423,6 +432,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525497",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 364)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -460,6 +470,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525539",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 287)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -513,6 +524,7 @@
      }
     ],
     "source": "NMSU Office of Space Planning, Buildings layer (property 389)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -550,6 +562,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525495",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 187)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -601,6 +614,7 @@
      }
     ],
     "source": "NMSU Office of Space Planning, Buildings layer (property 34)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -637,6 +651,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525541",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 249)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -678,6 +693,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525533",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 83)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -720,6 +736,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525513",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 244)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -757,6 +774,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525523",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 590)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -794,6 +812,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525511",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 188)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -836,6 +855,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525505",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 541)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -874,6 +894,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525386",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 657)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -911,6 +932,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525499",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 365)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -948,6 +970,7 @@
     "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525517",
     "photos": [],
     "source": "NMSU Office of Space Planning, Buildings layer (property 288)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -998,6 +1021,7 @@
      }
     ],
     "source": "NMSU Office of Space Planning, Buildings layer (property 551)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -1044,6 +1068,7 @@
      }
     ],
     "source": "NMSU Office of Space Planning, Buildings layer (property 631)",
+    "category": "study",
     "floorImages": {},
     "postedImages": {},
     "description": [],
@@ -1055,6 +1080,827 @@
     "coordinates": [
      -106.7558831,
      32.2837182
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "368",
+    "code": "KN",
+    "name": "Knox Hall",
+    "aka": [
+     "KN",
+     "368",
+     "Knox Hall"
+    ],
+    "address": "2980 South Espina St., Las Cruces, NM 88001",
+    "propertyNumber": "368",
+    "built": "1981",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525531",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 368)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7560556,
+     32.2807501
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "33",
+    "code": "KH",
+    "name": "Kent Hall",
+    "aka": [
+     "KH",
+     "33",
+     "Kent Hall"
+    ],
+    "address": "1280 E. University Ave., Las Cruces, NM 88003",
+    "propertyNumber": "33",
+    "built": "1929",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525529",
+    "photos": [
+     {
+      "file": "data/photos/kent-hall-1.jpg",
+      "author": "AllenS",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Museum.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+     }
+    ],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 33)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.752779,
+     32.2842211
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "619",
+    "code": "HSSA",
+    "name": "Health & Social Services Annex",
+    "aka": [
+     "HSSA",
+     "619",
+     "Hss Annex",
+     "HSS Annex"
+    ],
+    "address": "1337 International Mall, Las Cruces, NM 88003",
+    "propertyNumber": "619",
+    "built": "2010",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525398",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 619)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7512871,
+     32.2830049
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "363",
+    "code": "EC1",
+    "name": "Engineering Complex I",
+    "aka": [
+     "EC1",
+     "363",
+     "Engineering Complex I"
+    ],
+    "address": "1025 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "363",
+    "built": "1980",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525507",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 363)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.754379,
+      32.279935
+     ]
+    ],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.754613,
+     32.2796565
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "82",
+    "code": "BX",
+    "name": "Biology Annex",
+    "aka": [
+     "BX",
+     "82",
+     "Biology Annex"
+    ],
+    "address": "3080 Williams Ave., Las Cruces, NM 88001",
+    "propertyNumber": "82",
+    "built": "1941",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525487",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 82)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7513226,
+     32.2803778
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "35",
+    "code": "WCHC",
+    "name": "William B. Conroy Honors Center",
+    "aka": [
+     "WCHC",
+     "35",
+     "William B. Conroy Honors Center"
+    ],
+    "address": "2745 South Espina St., Las Cruces, NM 88001",
+    "propertyNumber": "35",
+    "built": "1907",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525485",
+    "photos": [
+     {
+      "file": "data/photos/conroy-honors-center-1.jpg",
+      "author": "AllenS",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Conroy_Honors_Center.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+     }
+    ],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 35)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.75586,
+      32.283242
+     ]
+    ],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7557551,
+     32.2832629
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "385",
+    "code": "TS",
+    "name": "Theatre Scene Shop",
+    "aka": [
+     "TS",
+     "385",
+     "Theatre Scene Shop"
+    ],
+    "address": "3525 Locust St., Las Cruces, NM 88001",
+    "propertyNumber": "385",
+    "built": "1983",
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count and OpenStreetMap has none)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525468",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 385)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7446365,
+     32.2761295
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "225",
+    "code": "AY",
+    "name": "Astronomy Building",
+    "aka": [
+     "AY",
+     "225",
+     "Astronomy Building"
+    ],
+    "address": "1320 Frenger Mall, Las Cruces, NM 88001",
+    "propertyNumber": "225",
+    "built": "1959",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525366",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 225)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.751477,
+      32.281145
+     ]
+    ],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7514445,
+     32.2810334
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "190",
+    "code": "JX",
+    "name": "Jett Annex",
+    "aka": [
+     "JX",
+     "190",
+     "Jett Annex"
+    ],
+    "address": "1025 Frenger Mall, Las Cruces, NM 88001",
+    "propertyNumber": "190",
+    "built": "1957",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525426",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 190)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7549147,
+     32.2809591
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "10",
+    "code": "GO",
+    "name": "Goddard Hall",
+    "aka": [
+     "GO",
+     "10",
+     "Goddard Hall"
+    ],
+    "address": "1100 South Horseshoe, Las Cruces, NM 88001",
+    "propertyNumber": "10",
+    "built": "1913",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525515",
+    "photos": [
+     {
+      "file": "data/photos/goddard-hall-1.jpg",
+      "author": "AllenS",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Goddard_Hall_(cropped).jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+     }
+    ],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 10)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.75428,
+      32.281422
+     ],
+     [
+      -106.753896,
+      32.281308
+     ],
+     [
+      -106.753611,
+      32.281361
+     ],
+     [
+      -106.753936,
+      32.281584
+     ]
+    ],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7538934,
+     32.281466
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "245",
+    "code": "AE",
+    "name": "Tejada Building, Extension Annex",
+    "aka": [
+     "AE",
+     "245",
+     "Tejada Building, Extension Annex"
+    ],
+    "address": "3005 Knox St., Las Cruces, NM 88001",
+    "propertyNumber": "245",
+    "built": "1962",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525467",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 245)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7571602,
+     32.2799451
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "662",
+    "code": "FSL",
+    "name": "Food Science, Learning, and Safety Center",
+    "aka": [
+     "FSL",
+     "662",
+     "Food Science, Learning, And Safety Center"
+    ],
+    "address": "3140 Knox St., Las Cruces, NM 88003",
+    "propertyNumber": "662",
+    "built": null,
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count and OpenStreetMap has none)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/895207",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 662)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7573591,
+     32.2782016
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "683",
+    "code": null,
+    "name": "Ag Student Learning Center",
+    "aka": [
+     "683",
+     "Ag Student Learning Center"
+    ],
+    "address": "3170 Knox Street, Las Cruces, NM 88003",
+    "propertyNumber": "683",
+    "built": null,
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count and OpenStreetMap has none)",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 683)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7573296,
+     32.2774342
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "321",
+    "code": "AC",
+    "name": "James B. Delamater Activity Center",
+    "aka": [
+     "AC",
+     "321",
+     "James B. Delamater Activity Center"
+    ],
+    "address": "1600 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "321",
+    "built": "1973",
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count and OpenStreetMap has none)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525956",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 321)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7470556,
+     32.2800114
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "211",
+    "code": "RH",
+    "name": "Rentfrow Hall",
+    "aka": [
+     "RH",
+     "211",
+     "Rentfrow Hall",
+     "Rentfrow Gym"
+    ],
+    "address": "3165 Williams Ave., Las Cruces, NM 88003",
+    "propertyNumber": "211",
+    "built": "1958",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525543",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 211)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7499498,
+     32.279179
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "275",
+    "code": "GH",
+    "name": "Garcia Hall",
+    "aka": [
+     "GH",
+     "275",
+     "Garcia Residence Hall",
+     "Garcia Residence Hall"
+    ],
+    "address": "1715 International Mall, Las Cruces, NM 88001",
+    "propertyNumber": "275",
+    "built": "1968",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "OpenStreetMap building:levels (way 82032543 \"Garcia Hall\", building:levels=2, centered ~32.284529,-106.746270, ~10 m from Space Planning's coordinates 32.28450464,-106.74624107). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly.",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/536447",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 275)",
+    "category": "living",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7462411,
+     32.2845046
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "604",
+    "code": "NFH",
+    "name": "Piñon Hall",
+    "aka": [
+     "NFH",
+     "604",
+     "Pinon Hall",
+     "Pinon Hall"
+    ],
+    "address": "1760 E. University Ave., Las Cruces, NM 88001",
+    "propertyNumber": "604",
+    "built": "2006",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "OpenStreetMap building:levels (relation 1230128 \"Piñon Hall\", building:levels=3, centered ~32.284738,-106.744816, ~15 m from Space Planning's coordinates 32.28471032,-106.74483147). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly.",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/527939",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 604)",
+    "category": "living",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.745408,
+      32.284681
+     ],
+     [
+      -106.745395,
+      32.284627
+     ]
+    ],
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7448315,
+     32.2847103
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "658",
+    "code": "JUN",
+    "name": "Juniper Hall",
+    "aka": [
+     "JUN",
+     "658",
+     "Juniper Hall"
+    ],
+    "address": "1525 International Mall, Las Cruces, NM 88003",
+    "propertyNumber": "658",
+    "built": "2019",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "OpenStreetMap building:levels (way 798519508 \"Juniper Hall\", building:levels=3, centered ~32.283894,-106.747792, ~15 m from Space Planning's coordinates 32.2839096,-106.7477537). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly.",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/529217",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 658)",
+    "category": "living",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.747301,
+      32.283707
+     ],
+     [
+      -106.747395,
+      32.283873
+     ],
+     [
+      -106.74796,
+      32.283858
+     ]
+    ],
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7477537,
+     32.2839096
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "185",
+    "code": "RGH",
+    "name": "Rhodes-Garrett-Hamiel Residence Hall",
+    "aka": [
+     "RGH",
+     "185",
+     "Rhodes-Garrett-Hamiel Res Hall",
+     "RGH"
+    ],
+    "address": "2735 Jordan St., Las Cruces, NM 88003",
+    "propertyNumber": "185",
+    "built": "1955",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "OpenStreetMap building:levels (way 81817224 \"Rhodes-Garrett-Hamiel Residence Center\", building:levels=2, centered ~32.284404,-106.748920, near the complex). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly.",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/529216",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 185)",
+    "category": "living",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7488281,
+     32.2839787
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "605",
+    "code": "CAMPAPT",
+    "name": "Chamisa Village",
+    "aka": [
+     "CAMPAPT",
+     "605",
+     "Chamisa Village"
+    ],
+    "address": "1725 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "605",
+    "built": "2006",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "OpenStreetMap building:levels (multiple Chamisa Village apartment buildings A-H, e.g. way 489138822-826 and relations 3603529/3603660/3603661, all building:levels=3, within the Property 605 footprint). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly.",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/527969",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 605)",
+    "category": "living",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.745687,
+      32.281876
+     ],
+     [
+      -106.74613,
+      32.281786
+     ]
+    ],
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7454112,
+     32.2815313
     ]
    }
   }

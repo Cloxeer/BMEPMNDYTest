@@ -129,7 +129,7 @@
 
           <!-- 3. About -->
           <section class="bs-section">
-            <h3 class="bs-h3">About this building</h3>
+            <h3 id="bs-about-title" class="bs-h3"></h3>
             <div id="bs-description"></div>
             <dl id="bs-facts" class="bs-facts"></dl>
             <!-- "external" tells Framework7 to leave this link alone so the browser opens it -->
@@ -219,11 +219,11 @@
           </ul></div>
 
           <!-- Filled by js/settings.js from the data files the app actually loaded -->
-          <div class="block-title">Data <span class="muted" id="data-version"></span></div>
+          <div class="block-title">Data</div>
           <div class="list media-list inset"><ul id="data-sources"></ul></div>
           <div class="block-footer" id="data-note"></div>
 
-          <p class="settings-credit" id="settings-credit"></p>
+          <p class="settings-credit"><span id="settings-credit"></span><br /><span id="website-version"></span></p>
         </div>
       </div></div>
     </div>
@@ -290,6 +290,13 @@
         <i class="icon f7-icons pill-side-icon" aria-hidden="true">map</i>
       </button>
       <div id="map-options" class="option-stack" role="group" aria-label="Map settings"></div>
+    </div>
+    <!-- Right of the pill: Map filters (Study / Living / Parks), js/mapFilters.js -->
+    <div id="filters-anchor" class="filters-anchor">
+      <button id="filters-btn" class="pill pill--side" type="button" aria-label="Map filters" aria-expanded="false" aria-controls="map-filters">
+        <i class="icon f7-icons pill-side-icon" aria-hidden="true">line_horizontal_3_decrease</i>
+      </button>
+      <div id="map-filters" class="option-stack option-stack--right" role="group" aria-label="Map filters"></div>
     </div>
     <button id="directions-btn" class="pill pill--side is-hidden" type="button" aria-label="Get directions">
       <i class="icon f7-icons pill-side-icon" aria-hidden="true">arrow_up_right_diamond_fill</i>

@@ -63,6 +63,22 @@ BANNER_NAMES = {
     'Guthrie Hall': '288',
     'Skeen Hall': '551',
     'Center for the Arts': '631',
+    'Knox Hall': '368',
+    'Kent Hall': '33',
+    'Health & Social Services Annex': '619',
+    'Engineering Complex I': '363',
+    'Biology Annex': '82',
+    'William B. Conroy Honors Cente': '35',
+    'Theatre Scene Shop': '385',
+    'Astronomy Building': '225',
+    'Jett Annex': '190',
+    'Goddard Hall': '10',
+    'Tejada Building, Extension Ann': '245',
+    'Food Science, Security, and Sa': '662',
+    'Ag Student Learning Center': '683',
+    'James B. Delamater Activity Ce': '321',
+    'Rentfrow Gym': '211',
+    'Garcia Residence Hall': '275',
 }
 
 # A room number: optional letter, three digits, optional letter. "Help Desk 105" ends with one.

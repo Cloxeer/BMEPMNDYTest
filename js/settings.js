@@ -5,9 +5,9 @@
  * WHAT IT DOES : Map: "Building names" on/off (Map settings has the same switch).
  *                Directions: travel by Walk / Bike / Drive, and units (ft/mi or m/km).
  *                Saved on this device: Reset clears everything the app remembers.
- *                Data: version, then each data file the app loaded, its format,
- *                how many things are in it, and where it comes from.
- *                Credit line at the bottom.
+ *                Data: each data file the app loaded, its format, how many things
+ *                are in it, and where it comes from.
+ *                At the bottom: credit, and the website's version.
  *                All choices live in the store; this file restores them when the
  *                app starts and saves them whenever they change, from anywhere.
  * DEPENDS ON   : Framework7 (reset question), ./config.js, ./store.js, ./html.js,
@@ -69,11 +69,11 @@ function segmented(switchElement, choose) {
 
 /**
  * Fill the Data list from what the app really loaded.
- * @param {object} counts - { buildings, rooms, entrances, places, floorPlans, photos }
+ * @param {object} counts - { buildings, parks, rooms, entrances, places, floorPlans, photos }
  */
 function fillData(counts) {
   const words = CONFIG.settings;
-  document.querySelector('#data-version').textContent = words.version;
+  document.querySelector('#website-version').textContent = words.versionText + ' ' + words.version;
   document.querySelector('#data-note').textContent = words.dataNote;
   document.querySelector('#settings-credit').textContent = words.credit;
   document.querySelector('#data-sources').innerHTML = words.dataSources

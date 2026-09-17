@@ -142,18 +142,10 @@
   "Goddard Hall": [
     {
       "file": "data/photos/goddard-hall-1.jpg",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Goddard_Hall_(cropped).jpg",
-      "license": "Public domain (PD-self)",
       "author": "AllenS",
-      "verifiedHow": "Description \"Goddard Hall at New Mexico State University at Las Cruces... Completed 1913\", in NRHP/Buildings of NMSU categories; matches the 1913 Mission Revival tower building with \"GODDARD\" over the door."
-    },
-    {
-      "file": null,
-      "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525515",
-      "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Goddard_Hall.jpg&w=900&h=508&r=1",
-      "license": "NMSU official — permission not confirmed",
-      "author": "New Mexico State University (Concept3D campus map)",
-      "verifiedHow": "Listed in mediaUrls of the official NMSU Concept3D map location 525515 named \"Goddard Hall\" (api.concept3d.com/locations/525515?map=1888); not visually reviewed or downloaded."
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Goddard_Hall_(cropped).jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
     }
   ],
   "Business Complex": [
@@ -328,6 +320,24 @@
       "author": "Holzman Moss Bottino Architecture",
       "license": "CC BY-SA 4.0",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Center_for_the_Arts.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+    }
+  ],
+  "Kent Hall": [
+    {
+      "file": "data/photos/kent-hall-1.jpg",
+      "author": "AllenS",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Museum.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+    }
+  ],
+  "William B. Conroy Honors Center": [
+    {
+      "file": "data/photos/conroy-honors-center-1.jpg",
+      "author": "AllenS",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Conroy_Honors_Center.jpg",
       "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
     }
   ]

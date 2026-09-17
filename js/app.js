@@ -26,6 +26,7 @@ import { initRouteCard } from './routeCard.js';
 import { initSettings } from './settings.js';
 import { initMapSettings } from './mapSettings.js';
 import { initDirectionsButton } from './askDirections.js';
+import { initMapFilters } from './mapFilters.js';
 
 /**
  * Start Framework7. While any full-screen popup is open, the bottom pill hides.
@@ -182,17 +183,20 @@ async function main() {
   await loadConfig();
   const app = startFramework7();
 
-  const [buildingData, campuses, labels, outside, rooms, entrances] = await Promise.all([
+  const [buildingData, campuses, labels, outside, rooms, entrances, parkData] = await Promise.all([
     loadData('buildings.geojson'),
     loadData('campuses.geojson'), // NMSU class places, nearest first
     loadData('campus-labels.geojson'), // one name per place
     loadData('outside-mask.geojson'), // everything that isn't a class place
     loadData('rooms.json'), // rooms found on our floor plans (tools/build_rooms.py)
     loadData('entrances.json'), // outside doors on our floor plans (tools/build_entrances.py)
+    loadData('parks.geojson'), // outdoor spaces from NMSU's campus map (tools/build_parks.py)
   ]);
 
   // Each building's map position is its point in the data file.
-  const buildings = buildingData.features.map((feature) => ({ ...feature.properties, center: feature.geometry.coordinates }));
+  // Every place on the map (buildings and parks) uses the same record shape; "category" tells them apart.
+  const buildings = [...buildingData.features, ...parkData.features]
+    .map((feature) => ({ ...feature.properties, center: feature.geometry.coordinates }));
   const buildingsById = Object.fromEntries(buildings.map((building) => [building.id, building]));
 
   const map = initMap(buildingsById, campuses, labels, outside);
@@ -201,13 +205,15 @@ async function main() {
   initPill(buildingsById);
   const locate = initLocate(app, map);
   initMapSettings(app, locate, buildingsById);
+  initMapFilters();
   initDirections(app, map, locate, initRouteCard(app), buildingsById);
   initSearch(buildings, rooms, buildingsById);
   initMenu(app, campuses);
   initWelcome(app);
   initTitle(buildingsById);
   initSettings(app, {
-    buildings: buildings.length,
+    buildings: buildings.filter((b) => b.category !== 'park').length,
+    parks: buildings.filter((b) => b.category === 'park').length,
     rooms: rooms.length,
     entrances: entrances.length,
     places: campuses.features.length,

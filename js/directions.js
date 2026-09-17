@@ -25,7 +25,7 @@
  * DEPENDS ON   : geojson-path-finder (loaded from the CDN the first time it's
  *                needed), maplibre map, ./config.js, ./store.js, ./geo.js, ./turns.js,
  *                data/routes/{walk,bike,drive}.geojson (tools/build_routes.py),
- *                data/building-shapes.geojson (tools/build_buildings.py).
+ *                data/building-shapes.geojson (tools/build_buildings.py), data/park-shapes.geojson (tools/build_parks.py).
  * CONTROLS     : the 'route' map source and its 'route-line' / 'route-arrows' /
  *                'route-hops' layers.
  * USED BY      : js/app.js
@@ -120,12 +120,14 @@ export function initDirections(app, map, locate, card, buildingsById) {
    */
   async function loadNetwork(mode) {
     if (!PathFinder) {
-      const [library, outlines] = await Promise.all([
+      const [library, buildingOutlines, parkOutlines] = await Promise.all([
         import(PATH_FINDER_URL),
         fetch('data/building-shapes.geojson').then((response) => response.json()),
+        fetch('data/park-shapes.geojson').then((response) => response.json()),
       ]);
       PathFinder = library.default;
-      shapes = Object.fromEntries(outlines.features.map((feature) => [feature.properties.id, feature.geometry]));
+      shapes = Object.fromEntries([...buildingOutlines.features, ...parkOutlines.features]
+        .map((feature) => [feature.properties.id, feature.geometry]));
     }
     if (!networks[mode]) {
       const geojson = await fetch('data/routes/' + mode + '.geojson').then((response) => response.json());

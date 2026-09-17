@@ -255,6 +255,20 @@ html:not(.config-ready) body { visibility: hidden; }
   height: var(--pill-height);
 }
 .settings-anchor .pill--side { right: 0; }
+/* Map filters: the same kind of group, on the other side of the pill. */
+.filters-anchor {
+  position: absolute;
+  left: calc(100% + var(--pill-floor-gap));
+  bottom: 0;
+  width: var(--pill-height);
+  height: var(--pill-height);
+}
+.filters-anchor .pill--side { right: 0; }
+.option-stack--right { left: auto; right: 0; align-items: flex-end; }
+.option-stack--right .map-option { transform-origin: right bottom; flex-direction: row-reverse; padding: 0 var(--s1) 0 var(--s4); }
+/* Filter rows use their category's colour: filled when shown, white when hidden. */
+.map-option[data-color] .map-option-icon { color: var(--row-color); box-shadow: inset 0 0 0 var(--pill-floor-ring) var(--row-color); }
+.map-option[data-color].is-on .map-option-icon { background: var(--row-color); color: var(--theme-white); }
 
 /* During directions: a spot just above the turn card, lined up with its left edge.
    --route-card-height is kept up to date by js/routeCard.js, so the button rides
@@ -543,6 +557,10 @@ html:not(.config-ready) body { visibility: hidden; }
 
 /* The two floor-plan slides (Framework7's Swiper, see js/floorPlan.js). */
 .bs-slides { display: block; }
+/* Parks have no floors: no floor plan section. */
+#building-sheet[data-category="park"] .bs-switch,
+#building-sheet[data-category="park"] .bs-slides { display: none; }
+#building-sheet[data-category="park"] .bs-section:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
 .bs-frame { position: relative; }
 /* Full-screen button, top-right corner of the picture. */
 .bs-zoom {
@@ -634,6 +652,7 @@ html:not(.config-ready) body { visibility: hidden; }
 .bs-row dt { flex: 0 0 var(--sheet-label-width); font-size: var(--sheet-label-size); color: var(--theme-text-muted); margin: 0; }
 .bs-row dd { flex: 1; font-size: var(--sheet-body-size); color: var(--theme-text-strong); margin: 0; }
 .bs-link { display: inline-block; margin-top: var(--s2); font-size: var(--sheet-link-size); font-weight: var(--sheet-link-weight); color: var(--f7-theme-color); }
+.bs-link[hidden] { display: none; }
 .bs-section .bs-source { font-size: var(--sheet-source-size); color: var(--theme-text-faint); margin-top: var(--s4); }
 
 /* Full-screen picture viewer (a Framework7 popup) must cover the sheet. */

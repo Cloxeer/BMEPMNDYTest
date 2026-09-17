@@ -27,6 +27,7 @@ const state = {
   travelMode: 'walk', // how directions travel: 'walk', 'bike' or 'drive'
   showNames: true, // building names above the badges (Settings page and Map settings)
   units: 'imperial', // distances in 'imperial' (ft, mi) or 'metric' (m, km)
+  hiddenCategories: [], // Map filters: categories switched off ('study', 'living', 'park')
   searching: false, // is the search drop-down open?
 };
 
@@ -166,6 +167,25 @@ export const store = {
    */
   setUnits(units) {
     if (units !== state.units) update({ units });
+  },
+
+  /**
+   * Switch one category of places on or off the map (Map filters).
+   * @param {string} category - 'study', 'living' or 'park'
+   */
+  toggleCategory(category) {
+    const hidden = state.hiddenCategories.includes(category)
+      ? state.hiddenCategories.filter((c) => c !== category)
+      : [...state.hiddenCategories, category];
+    update({ hiddenCategories: hidden });
+  },
+
+  /**
+   * Set which categories are hidden (restoring a saved choice).
+   * @param {string[]} categories
+   */
+  setHiddenCategories(categories) {
+    update({ hiddenCategories: categories });
   },
 
   /** Stop directions. */

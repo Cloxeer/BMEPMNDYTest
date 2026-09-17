@@ -168,6 +168,11 @@ sheet:
   noOfficialPlanText: "If you don't see it here, we haven't taken a photo yet. - The Brainy Bunch"
   noDescriptionText: "A full description for this building is coming soon."
   noPhotosText: "No photos of this building yet."
+  aboutTitle: "About this building"
+  # Parks use these instead of the building words above.
+  parkNoPhotosText: "No photos of this park yet."
+  parkNoDescriptionText: "A full description for this park is coming soon."
+  parkAboutTitle: "About this park"
   roomFloorUnknownText: "floor not published by NMSU"
   tapPlanText: "tap a room or an entrance"
   floorsUnknownText: "Number of floors not published by NMSU"
@@ -194,6 +199,8 @@ sheet:
   numberText: "No."
   builtLabel: "Built"
   floorsLabel: "Floors"
+  typeLabel: "Type"
+  parkSourceText: "Location from NMSU's official campus map (map.nmsu.edu). Outline from OpenStreetMap where it has one."
   floorCountText: "floor count"
   codeSourceText: "Building code"
   factsSourceText: "Other facts: NMSU Office of Space Planning"
@@ -321,6 +328,15 @@ directions:
   roomEdge: "#0a84ff"
   roomEdgeWidth: 6 # in floor-plan units
 
+categories: # kinds of places on the map; the colours mean the same thing everywhere
+  study: { label: "Study", color: "#8C0B42", icon: "book_fill" } # NMSU crimson: classes and learning
+  living: { label: "Living", color: "#ff9500", icon: "bed_double_fill" } # Apple orange: warm, home
+  park: { label: "Parks", color: "#34c759", icon: "tree" } # Apple green: outdoors
+
+mapFilters: # the round Map filters button right of the pill (js/mapFilters.js)
+  icon: "line_horizontal_3_decrease"
+  storageKey: "bnm_hidden_categories"
+
 mapSettings: # the round Map settings button left of the pill (js/mapSettings.js)
   icon: "map"
   options: # top to bottom
@@ -360,14 +376,20 @@ settings:
   resetYes: "Reset"
   resetNo: "Cancel"
   credit: "By The Brainy Bunch"
-  version: "vT.1.0"
-  dataNote: "Nothing here is typed in by hand: every file is built from the source listed, by the scripts in our tools/ folder. \"NMSU Office of Space Planning\" is the NMSU office that keeps the university's official records of its buildings and land; we use its public map data."
+  version: "vT.1.0" # the version of this website
+  versionText: "Website version"
+  dataNote: "Every file here is made by the scripts in our tools/ folder from the source listed, not typed in by hand. NMSU Office of Space Planning is the part of NMSU that keeps the official list of campus buildings and land."
   dataSources: # the Data list; "count" fills in how many the app loaded
     - title: "Buildings"
       files: "data/buildings.geojson (GeoJSON)"
       source: "Facts: NMSU Office of Space Planning. Building codes: NMSU Registrar's building abbreviation list."
       count: buildings
       countText: "buildings"
+    - title: "Parks"
+      files: "data/parks.geojson, park-shapes.geojson (GeoJSON)"
+      source: "NMSU's official campus map (map.nmsu.edu); park outlines from OpenStreetMap"
+      count: parks
+      countText: "parks"
     - title: "Building outlines"
       files: "data/building-shapes.geojson (GeoJSON)"
       source: "NMSU Office of Space Planning"

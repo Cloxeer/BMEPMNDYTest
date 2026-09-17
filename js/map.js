@@ -6,8 +6,9 @@
  *                (2) fades everything that isn't an NMSU class place, and tints,
  *                    outlines and names the places that are,
  *                (3) keeps dragging inside the Las Cruces places,
- *                (4) draws a crimson "i" badge on each building (white ring;
- *                    black ring on the selected one), with the building's name
+ *                (4) draws an "i" badge on each place, coloured by category (crimson
+ *                    study, orange living, green parks; white ring, blue on the
+ *                    selected one), which Map filters can hide by category, with its name
  *                    above it (can be turned off in Settings: setBuildingNames),
  *                (5) tells the store when a badge or empty map is tapped.
  * DEPENDS ON   : maplibre-gl (global `maplibregl`), ./config.js, ./store.js, and
@@ -29,6 +30,23 @@ let map = null; // the live MapLibre map
 let fence = null; // drag limits around the Las Cruces places
 let markReady = null; // called once the map has loaded and drawn its layers
 let namesVisible = true; // building names above the badges (Settings can turn them off)
+let shownCategories = null; // Map filters: which categories are on the map (null = all; config.yml loads after this file)
+
+/** @returns {Array} a MapLibre filter: only places whose category is switched on */
+function categoryFilter() {
+  return ['in', ['get', 'category'], ['literal', shownCategories || Object.keys(CONFIG.categories)]];
+}
+
+/**
+ * Show only some categories of places (the Map filters button).
+ * @param {string[]} categories - e.g. ['study', 'park']
+ */
+export function setShownCategories(categories) {
+  shownCategories = categories;
+  if (!map || !map.getLayer('building-pins')) return; // still loading; drawBadges uses shownCategories
+  map.setFilter('building-pins', categoryFilter());
+  map.setFilter('building-names', categoryFilter());
+}
 
 /** Resolves once the map has loaded and the badges are drawn (js/directions.js waits for it). */
 export const mapReady = new Promise((resolve) => {
@@ -62,11 +80,12 @@ function boundsOf(points, padding) {
 
 /**
  * Draw the round "i" badge as a picture the map can place on buildings.
- * Both badges are the same size, so selecting one never makes it jump.
- * @param {boolean} selected - true = black ring, false = white ring
+ * Every badge is the same size, so selecting one never makes it jump.
+ * @param {string} color - the category's colour (config.yml categories)
+ * @param {boolean} selected - true = blue ring, false = white ring
  * @returns {object} {width, height, data} for map.addImage
  */
-function drawBadge(selected) {
+function drawBadge(color, selected) {
   const { size, pixelRatio, ringRadius, centerRadius, selectedCenterRadius } = CONFIG.badge;
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = size * pixelRatio;
@@ -81,7 +100,7 @@ function drawBadge(selected) {
 
   pen.beginPath();
   pen.arc(middle, middle, selected ? selectedCenterRadius : centerRadius, 0, Math.PI * 2);
-  pen.fillStyle = CONFIG.theme.crimson;
+  pen.fillStyle = color;
   pen.fill();
 
   pen.fillStyle = CONFIG.theme.white;
@@ -154,20 +173,27 @@ function drawCampuses(campuses, labels, outside) {
  */
 function drawBadges(buildingsById) {
   const imageOptions = { pixelRatio: CONFIG.badge.pixelRatio };
-  map.addImage('info-badge', drawBadge(false), imageOptions);
-  map.addImage('info-badge-selected', drawBadge(true), imageOptions);
+  // One badge picture per category colour, plus a blue-ringed one for when it's selected:
+  // "badge-study", "badge-study-selected", "badge-living", ...
+  Object.entries(CONFIG.categories).forEach(([category, look]) => {
+    map.addImage('badge-' + category, drawBadge(look.color, false), imageOptions);
+    map.addImage('badge-' + category + '-selected', drawBadge(look.color, true), imageOptions);
+  });
   map.addSource('buildings', {
     type: 'geojson',
     data: {
       type: 'FeatureCollection',
       features: Object.values(buildingsById).map((building) => ({
-        type: 'Feature', properties: { id: building.id, name: building.name }, geometry: { type: 'Point', coordinates: building.center },
+        type: 'Feature',
+        properties: { id: building.id, name: building.name, category: building.category },
+        geometry: { type: 'Point', coordinates: building.center },
       })),
     },
   });
   map.addLayer({
     id: 'building-pins', type: 'symbol', source: 'buildings',
-    layout: { 'icon-image': 'info-badge', 'icon-allow-overlap': true },
+    layout: { 'icon-image': ['concat', 'badge-', ['get', 'category']], 'icon-allow-overlap': true },
+    filter: categoryFilter(),
   });
 
   // Names sit just above the badges. Drawn by the GPU like the badges, so they
@@ -177,6 +203,7 @@ function drawBadges(buildingsById) {
   map.addLayer({
     id: 'building-names', type: 'symbol', source: 'buildings',
     minzoom: names.namesMinZoom,
+    filter: categoryFilter(),
     layout: {
       visibility: namesVisible ? 'visible' : 'none',
       'text-field': ['get', 'name'],
@@ -213,11 +240,11 @@ export function setBuildingNames(visible) {
  */
 function markSelected(buildingId) {
   if (!map.getLayer('building-pins')) return; // still loading; the load step calls this again
+  const isSelected = ['==', ['get', 'id'], buildingId || ''];
   map.setLayoutProperty('building-pins', 'icon-image',
-    ['match', ['get', 'id'], buildingId || '', 'info-badge-selected', 'info-badge']);
-  // The selected building's name turns crimson.
-  map.setPaintProperty('building-names', 'text-color',
-    ['match', ['get', 'id'], buildingId || '', CONFIG.theme.crimson, CONFIG.map.nameColor]);
+    ['case', isSelected, ['concat', 'badge-', ['get', 'category'], '-selected'], ['concat', 'badge-', ['get', 'category']]]);
+  // The selected place's name turns the same blue as its ring.
+  map.setPaintProperty('building-names', 'text-color', ['case', isSelected, CONFIG.badge.selectedRing, CONFIG.map.nameColor]);
 }
 
 /**

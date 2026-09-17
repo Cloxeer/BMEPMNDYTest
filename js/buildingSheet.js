@@ -41,6 +41,8 @@ export function initBuildingSheet(app, buildingsById, rooms, entrances, askDirec
     el: '#building-sheet', backdrop: false, swipeToClose: true, swipeHandler: '#building-sheet .bs-head',
   });
 
+  const sheetElement = document.querySelector('#building-sheet');
+
   // Every field in the sheet, by name.
   const field = {
     title: document.querySelector('#bs-name'),
@@ -49,6 +51,7 @@ export function initBuildingSheet(app, buildingsById, rooms, entrances, askDirec
     arrivedText: document.querySelector('#bs-arrived-text'),
     photos: document.querySelector('#bs-photos'),
     photosEmpty: document.querySelector('#bs-photos-empty'),
+    aboutTitle: document.querySelector('#bs-about-title'),
     credit: document.querySelector('#bs-credit'),
     description: document.querySelector('#bs-description'),
     facts: document.querySelector('#bs-facts'),
@@ -94,7 +97,7 @@ export function initBuildingSheet(app, buildingsById, rooms, entrances, askDirec
     const photos = building.photos;
     field.photos.hidden = photos.length === 0;
     field.photosEmpty.hidden = photos.length > 0;
-    field.photosEmpty.textContent = words.noPhotosText;
+    field.photosEmpty.textContent = building.category === 'park' ? words.parkNoPhotosText : words.noPhotosText;
 
     field.photos.innerHTML = photos
       .map((photo, index) => '<button class="bs-photo" type="button" data-index="' + index + '">' +
@@ -116,22 +119,32 @@ export function initBuildingSheet(app, buildingsById, rooms, entrances, askDirec
    */
   function fillAbout(building) {
     const hasDescription = building.description.length > 0;
-    const paragraphs = hasDescription ? building.description : [words.noDescriptionText];
+    const isPark = building.category === 'park'; // parks aren't buildings: their own words and facts
+    field.aboutTitle.textContent = isPark ? words.parkAboutTitle : words.aboutTitle;
+    const paragraphs = hasDescription ? building.description : [isPark ? words.parkNoDescriptionText : words.noDescriptionText];
     field.description.innerHTML = paragraphs.map((text) => '<p>' + escapeHtml(text) + '</p>').join('');
     field.description.classList.toggle('muted', !hasDescription);
 
-    const facts = [
-      [words.addressLabel, building.address],
-      [words.buildingLabel, building.code + ' · ' + words.numberText + ' ' + building.propertyNumber],
-      [words.builtLabel, building.built],
-      [words.floorsLabel, building.floors.length],
-    ];
+    const facts = isPark
+      ? [[words.typeLabel, building.kind]]
+      : [
+        [words.addressLabel, building.address],
+        [words.buildingLabel, (building.code || words.unknownText) + ' · ' + words.numberText + ' ' + building.propertyNumber],
+        [words.builtLabel, building.built],
+        [words.floorsLabel, building.floors.length],
+      ];
     field.facts.innerHTML = facts
       .map(([name, value]) => '<div class="bs-row"><dt>' + escapeHtml(name) + '</dt><dd>' +
         escapeHtml(value || words.unknownText) + '</dd></div>')
       .join('');
 
-    field.link.href = safeUrl(building.nmsuUrl);
+    field.link.hidden = !building.nmsuUrl; // a brand-new building may not be on NMSU's map yet
+    field.link.href = safeUrl(building.nmsuUrl || '');
+
+    if (isPark) {
+      field.source.textContent = words.parkSourceText;
+      return;
+    }
 
     // Name the floor-count source only when it isn't NMSU's own data.
     const floorsNote = building.floorsSource === 'NMSU Space Planning'
@@ -183,6 +196,7 @@ export function initBuildingSheet(app, buildingsById, rooms, entrances, askDirec
       if (key !== shownKey) {
         const differentBuilding = !shownKey.startsWith(state.selectedId + '|');
         if (differentBuilding) {
+          sheetElement.dataset.category = building.category; // parks hide the floor plan section (styles/app.css)
           floorPlan.reset();
           field.title.textContent = building.name;
           fillPhotos(building);

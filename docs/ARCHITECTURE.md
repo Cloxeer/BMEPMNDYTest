@@ -59,6 +59,7 @@ Three rules keep it predictable:
 | `js/buildingSheet.js` | The full-page building sheet |
 | `js/pill.js` | The bottom pill (Info / floors) |
 | `js/locate.js` | Your location dot (MapLibre's GeolocateControl): on/off, accurate state for the toggle |
+| `js/mapFilters.js` | Map filters button right of the pill: show or hide Study / Living / Parks (colours from `categories` in config.yml, same as the badges) |
 | `js/mapSettings.js` | Map settings button left of the pill: My location, Turn map with me, Building names, Back to campus |
 | `js/askDirections.js` | Directions button (same spot, when a building is selected) and the "Get directions?" / "Change destination?" questions |
 | `js/search.js` | The search drop-down (buildings and rooms) |
@@ -110,6 +111,7 @@ Three rules keep it predictable:
 | `data/floors/*.svg` | Hand-drawn | Evacuation maps posted in each building |
 | `data/rooms.json` | `tools/build_rooms.py` (+ `tools/indoor_routes.py`) | Rooms on our floor plans (with outlines and an indoor route from the nearest outside door / stairs) + rooms in NMSU's public class schedule (Banner; no floor or outline) |
 | `data/routes/walk.geojson`, `bike.geojson`, `drive.geojson` | `tools/build_routes.py` | OpenStreetMap paths and roads, sorted by OSM access tags; one-way streets kept for bikes and cars (NMSU publishes no path or road data) |
+| `data/parks.geojson`, `data/park-shapes.geojson` | `tools/build_parks.py` | 5 campus parks from NMSU's campus map (`data/source/parks.json`), same record shape as buildings with `category: park`; outlines from OpenStreetMap, or a small arrival circle |
 | `data/entrances.json` | `tools/build_entrances.py` | Outside doors marked on our floor plans; photos listed under `entrancePhotos` in `data/source/building-extras.json` |
 | `data/building-shapes.geojson` | `tools/build_buildings.py` | NMSU Space Planning building outlines |
 | `data/photos/*.jpg` | Downloaded | Wikimedia Commons (licences in `data/source/photos.json`) |

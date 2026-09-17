@@ -32,5 +32,67 @@
   "631": {
     "floors": 4,
     "floorsSource": "OpenStreetMap building:levels"
+  },
+  "33": {
+    "floors": 2,
+    "floorsSource": "OpenStreetMap building:levels"
+  },
+  "619": {
+    "aka": [
+      "HSS Annex"
+    ]
+  },
+  "385": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count and OpenStreetMap has none)"
+  },
+  "662": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count and OpenStreetMap has none)"
+  },
+  "683": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count and OpenStreetMap has none)",
+    "code": null
+  },
+  "321": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count and OpenStreetMap has none)"
+  },
+  "211": {
+    "floors": 2,
+    "floorsSource": "OpenStreetMap building:levels",
+    "aka": [
+      "Rentfrow Gym"
+    ]
+  },
+  "275": {
+    "floors": 2,
+    "floorsSource": "OpenStreetMap building:levels (way 82032543 \"Garcia Hall\", building:levels=2, centered ~32.284529,-106.746270, ~10 m from Space Planning's coordinates 32.28450464,-106.74624107). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly.",
+    "aka": [
+      "Garcia Residence Hall"
+    ]
+  },
+  "604": {
+    "floors": 3,
+    "floorsSource": "OpenStreetMap building:levels (relation 1230128 \"Piñon Hall\", building:levels=3, centered ~32.284738,-106.744816, ~15 m from Space Planning's coordinates 32.28471032,-106.74483147). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly.",
+    "aka": [
+      "Pinon Hall"
+    ]
+  },
+  "658": {
+    "floors": 3,
+    "floorsSource": "OpenStreetMap building:levels (way 798519508 \"Juniper Hall\", building:levels=3, centered ~32.283894,-106.747792, ~15 m from Space Planning's coordinates 32.2839096,-106.7477537). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly."
+  },
+  "185": {
+    "floors": 2,
+    "floorsSource": "OpenStreetMap building:levels (way 81817224 \"Rhodes-Garrett-Hamiel Residence Center\", building:levels=2, centered ~32.284404,-106.748920, near the complex). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly.",
+    "aka": [
+      "RGH"
+    ]
+  },
+  "605": {
+    "floors": 3,
+    "floorsSource": "OpenStreetMap building:levels (multiple Chamisa Village apartment buildings A-H, e.g. way 489138822-826 and relations 3603529/3603660/3603661, all building:levels=3, within the Property 605 footprint). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly."
   }
 }

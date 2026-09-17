@@ -15,7 +15,9 @@ What's done and what's next: [docs/TASKS.md](docs/TASKS.md).
 
 - Welcome screen, once per browser session
 - Colour map with NMSU's class places highlighted; everything else faded
-- 25 buildings with official facts (the 10 first-year buildings plus the 15 academic buildings with the most class sections); tap a badge to open its sheet
+- 45 buildings with official facts (the 10 first-year buildings, the 30 academic buildings with the most class sections, and 5 residence halls); tap a badge to open its sheet
+- 5 campus parks from NMSU's official campus map
+- Map filters button: show or hide Study (crimson), Living (orange) and Parks (green); the badge colours match
 - Hardman & Jacobs has floor plans for floors 1–2 (tap to zoom)
 - Search by name, address, building code or number, or a room ("SH 118A", "hjlc 225")
 - Rooms on our floor plans are highlighted in light blue
@@ -65,6 +67,7 @@ js/buildingSheet.js     building sheet
 js/pill.js              bottom pill
 js/locate.js            your location dot
 js/mapSettings.js       map settings button and its options
+js/mapFilters.js        map filters button (Study / Living / Parks)
 js/askDirections.js     directions button and "Get directions?" question
 js/search.js            search (buildings and rooms)
 js/searchMatch.js       what counts as a search match
@@ -104,6 +107,9 @@ python tools/build_rooms.py
 
 # Entrances on the floor plans (no internet needed)
 python tools/build_entrances.py
+
+# Parks: data/source/parks.json + outlines from OpenStreetMap (needs internet)
+python tools/build_parks.py
 
 # Walking paths for directions (OpenStreetMap)
 python tools/build_routes.py

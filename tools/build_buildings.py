@@ -67,10 +67,35 @@ BUILDINGS = [
     ('288', 'Guthrie Hall', None, 525517, None),
     ('551', 'Skeen Hall', None, 525547, 'Skeen Hall'),
     ('631', 'Center for the Arts', None, 525493, 'Center for the Arts'),
+    # The next 15 by class sections (academic first; Rentfrow Gym replaces "Lucy Bell Ma Hall",
+    # which is at NMSU's Gallup campus), then 5 residence halls (Living), checked the same way:
+    ('368', 'Knox Hall', None, 525531, None),
+    ('33', 'Kent Hall', None, 525529, 'Kent Hall'),
+    ('619', 'Health & Social Services Annex', None, 525398, None),
+    ('363', 'Engineering Complex I', None, 525507, None),
+    ('82', 'Biology Annex', None, 525487, None),
+    ('35', 'William B. Conroy Honors Center', None, 525485, 'William B. Conroy Honors Center'),
+    ('385', 'Theatre Scene Shop', None, 525468, None),
+    ('225', 'Astronomy Building', None, 525366, None),
+    ('190', 'Jett Annex', None, 525426, None),
+    ('10', 'Goddard Hall', None, 525515, 'Goddard Hall'),
+    ('245', 'Tejada Building, Extension Annex', None, 525467, None),
+    ('662', 'Food Science, Learning, and Safety Center', None, 895207, None),
+    ('683', 'Ag Student Learning Center', None, None, None),
+    ('321', 'James B. Delamater Activity Center', None, 525956, None),
+    ('211', 'Rentfrow Hall', None, 525543, None),
+    ('275', 'Garcia Hall', None, 536447, None),
+    ('604', 'Piñon Hall', None, 527939, None),
+    ('658', 'Juniper Hall', None, 529217, None),
+    ('185', 'Rhodes-Garrett-Hamiel Residence Hall', None, 529216, None),
+    ('605', 'Chamisa Village', None, 527969, None),
 ]
 
 # Buildings with no classes aren't on the Registrar's list, so their code comes from Space Planning.
-NOT_ON_REGISTRAR_LIST = {'285', '657', '365'}
+# Residence halls: shown in the "Living" category (orange). Everything else is "Study" (crimson).
+LIVING = {'275', '604', '658', '185', '605'}
+
+NOT_ON_REGISTRAR_LIST = {'285', '657', '365', '619', '190', '662', '604', '658', '605'}
 
 
 def read_json(name):
@@ -155,15 +180,16 @@ def main():
             'id': number,
             'code': extra.get('code', record['Address_2']),
             'name': name,
-            'aka': [record['Address_2'], number, record['Descriptio'].title()] + extra.get('aka', []),
+            'aka': [word for word in [record['Address_2'], number, record['Descriptio'].title()] + extra.get('aka', []) if word],
             'address': record['Address_1'].title() + ', Las Cruces, NM ' + record['Zip_Code'],
             'propertyNumber': number,
             'built': record['DateBuilt'],
             'floors': list(range(1, floors + 1)),
             'floorsSource': floors_source,
-            'nmsuUrl': 'https://map.nmsu.edu/?id=1888#!m/' + str(map_id),
+            'nmsuUrl': 'https://map.nmsu.edu/?id=1888#!m/' + str(map_id) if map_id else None,  # None: not on NMSU's map yet
             'photos': [p for p in photos.get(photo_key, []) if p.get('file')] if photo_key else [],
             'source': 'NMSU Office of Space Planning, Buildings layer (property ' + number + ')',
+            'category': 'living' if number in LIVING else 'study',  # colour and Map filters group
             # Every building has the same fields, so every sheet looks the same.
             # Empty means "not added yet"; the app shows a message instead.
             'floorImages': existing_pictures(extra.get('floorImages', {}), number),  # floor -> our redrawn plan
@@ -172,14 +198,17 @@ def main():
             # Where directions lead: mapped doors on this building (empty = walk to its centre).
             'doors': [d for d in doors if metres_to_outline(d, outlines[number]) <= DOOR_DISTANCE_M],
         }
-        building['codeSource'] = ('NMSU Space Planning (not on the Registrar list)'
-                                  if number in NOT_ON_REGISTRAR_LIST else REGISTRAR)
+        if not building['code']:
+            building['codeSource'] = 'Not published by NMSU yet'
+        else:
+            building['codeSource'] = ('NMSU Space Planning (not on the Registrar list)'
+                                      if number in NOT_ON_REGISTRAR_LIST else REGISTRAR)
 
         shapes.append({'type': 'Feature', 'properties': {'id': number}, 'geometry': outlines[number]})
         position = [round(record['Longitude'], 7), round(record['Latitude'], 7)]
         features.append({'type': 'Feature', 'properties': building,
                          'geometry': {'type': 'Point', 'coordinates': position}})
-        print(f"{number} {building['code']:5} {name} ({floors} floors, {len(building['doors'])} doors)")
+        print(f"{number} {building['code'] or '-':5} {name} ({floors} floors, {len(building['doors'])} doors)")
 
     with open(OUTPUT, 'w', encoding='utf-8') as f:
         json.dump({'type': 'FeatureCollection', 'features': features}, f, indent=1, ensure_ascii=False)

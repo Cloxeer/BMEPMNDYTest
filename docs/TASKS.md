@@ -107,6 +107,11 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Faster building fly-in (420 ms) and sheet opening
 - [x] Favicon and home-screen icon; Schedule page and Report a problem button removed; building opens faster (320 ms)
 - [x] Tappable entrances on floor plans (photo, or a note from us if there isn't one yet)
+- [x] 20 more buildings (15 next by class sections, 5 residence halls); 5 campus parks
+- [x] Map filters button: Study (crimson), Living (orange), Parks (green); badges use the same colours
+- [x] Settings: simpler data note; website version at the bottom
+- [ ] Floors, year built, code unknown for some new buildings (shown as Unknown until NMSU publishes them)
+- [ ] Photos of the residence halls and parks (none freely licensed found)
 - [ ] Entrance photos: take one per door and list it under entrancePhotos in data/source/building-extras.json
 - [ ] Building photos: no freely licensed photos of the 8 remaining buildings exist online (Commons, Flickr CC checked); needs our own photos
 - [ ] Room-level arrival (phones can't detect floor or room indoors; would need indoor positioning hardware)
