@@ -118,7 +118,8 @@ export function initMapSettings(app, locate, buildingsById) {
     const spot = routing ? routeSpot : homeSpot;
     if (anchor.parentElement !== spot) {
       setOpen(false);
-      spot.appendChild(anchor);
+      // Back in the bar it goes first, where index.html has it, so the Directions button stays on top of it.
+      spot.insertBefore(anchor, spot.firstChild);
     }
 
     // Otherwise only with nothing selected (a selected building shows Directions here).
