@@ -48,7 +48,17 @@ export class MapSettingsButton {
 
     this.button.addEventListener('click', (event) => {
       event.stopPropagation();
-      this.setOpen(!this.stack.classList.contains('is-open'));
+      const opening = !this.stack.classList.contains('is-open');
+      if (opening) {
+        // Map filters closes, so only one menu is open at a time (js/bottomBar/mapFiltersButton.js listens).
+        document.dispatchEvent(new CustomEvent('map-menu-open', { detail: 'settings' }));
+      }
+      this.setOpen(opening);
+    });
+    document.addEventListener('map-menu-open', (event) => {
+      if (event.detail !== 'settings') {
+        this.setOpen(false);
+      }
     });
     this.stack.addEventListener('click', (event) => this.onOptionTap(event));
     document.addEventListener('click', () => this.setOpen(false)); // tap anywhere else: close

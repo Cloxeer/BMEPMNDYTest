@@ -57,7 +57,8 @@ PLACES_NOTE = [
     '(parking lots are downloaded from NMSU Facilities GIS), then run python tools/build_places.py',
     'Format: GeoJSON. One Feature per place: a Point where it is, and properties in the same shape as a building',
     'record in data/buildings.geojson, plus: category ("park", "food" or "parking"), kind (e.g. "Coffee"),',
-    'insideName (food: the building it is inside, or null), permit and campus (parking: e.g. "Purple · South Campus Resident").',
+    'insideName (food: the building it is inside, or null); for parking: permitColor (e.g. "Purple"), permitRule',
+    '(who can park, as NMSU writes it, e.g. "South Campus Resident" or "Free Parking") and campus.',
     'A missing fact is null, and the app shows "Unknown" for it: nothing is guessed.',
 ]
 SHAPES_NOTE = [
@@ -130,7 +131,8 @@ def place_record(place_id, category, name, kind, source):
         'codeSource': '',
         'category': category,
         'insideName': None,
-        'permit': None,
+        'permitColor': None,
+        'permitRule': None,
         'campus': None,
     }
 
@@ -218,15 +220,20 @@ def parking_name(lot_name):
     return ' '.join(words)
 
 
-def parking_permit(properties):
-    """ "Purple · South Campus Resident", or None when NMSU's layer gives no type."""
-    colour = properties.get('TYPE')
-    meaning = properties.get('COMMENTS')
-    if not colour or colour == 'No Type':
+def permit_color(properties):
+    """The lot's permit color as NMSU's layer writes it ("Purple", "Orange", ...), or None when it gives none."""
+    color = properties.get('TYPE')
+    if not color or color == 'No Type':
         return None
-    if meaning and meaning != 'N/A':
-        return colour + ' · ' + meaning
-    return colour
+    return color
+
+
+def permit_rule(properties):
+    """Who can park, as NMSU's layer writes it ("All Permits Valid", "Commuter Student", "Free Parking", ...), or None."""
+    rule = properties.get('COMMENTS')
+    if not rule or rule == 'N/A':
+        return None
+    return rule
 
 
 def build_parking(features, lot_shapes):
@@ -238,7 +245,8 @@ def build_parking(features, lot_shapes):
         name = parking_name(properties.get('LotName'))
         record = place_record('parking-' + str(properties['OBJECTID']), 'parking', name, 'Parking lot',
                               'Lot outline, name and permit from NMSU Facilities GIS (Parking layer).')
-        record['permit'] = parking_permit(properties)
+        record['permitColor'] = permit_color(properties)
+        record['permitRule'] = permit_rule(properties)
         campus = CAMPUS_NAMES.get(properties.get('CAMPUS'))
         if properties.get('FULLADDR') and properties.get('BLDG_CITY'):
             record['address'] = properties['FULLADDR'].title() + ', ' + properties['BLDG_CITY'].title() + ', NM'

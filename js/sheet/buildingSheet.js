@@ -155,7 +155,8 @@ export class BuildingSheet {
         facts.push([this.words.insideLabel, building.insideName]);
       }
       if (building.category === 'parking') {
-        facts.push([this.words.permitLabel, building.permit]);
+        facts.push([this.words.permitColorLabel, building.permitColor]); // e.g. "Purple"
+        facts.push([this.words.permitRuleLabel, building.permitRule]); // e.g. "South Campus Resident", "Free Parking"
         facts.push([this.words.addressLabel, building.address || building.campus]);
       }
       return facts;

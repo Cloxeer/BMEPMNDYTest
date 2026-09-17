@@ -31,6 +31,9 @@ function subtitleFor(place) {
   if (place.kind) {
     parts.push(place.kind);
   }
+  if (place.permitColor) {
+    parts.push(place.permitColor); // parking: its permit color
+  }
   if (place.insideName) {
     parts.push(place.insideName);
   } else if (place.campus) {

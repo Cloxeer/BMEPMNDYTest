@@ -118,6 +118,7 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Service worker (Workbox): repeat opens load from the phone; parking outlines load only when needed
 - [x] Map filters order by use (Study at the bottom); Staff Academic category (44 buildings, picked from NMSU Space Planning by use)
 - [x] Settings > Map filters: choose which rows the button has
+- [x] Map settings and Map filters close each other; filter icons on the left; Parking row on top (off); lot sheets show permit color and who can park
 - [ ] Floors, year built, code unknown for some new buildings (shown as Unknown until NMSU publishes them)
 - [ ] Photos of the residence halls and parks (none freely licensed found)
 - [ ] Entrance photos: take one per door and list it under entrancePhotos in data/source/building-extras.json
