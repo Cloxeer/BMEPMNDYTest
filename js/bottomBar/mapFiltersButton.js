@@ -3,13 +3,14 @@
  * @summary The round Map filters button right of the pill: show or hide kinds of places.
  *
  * WHAT IT DOES : Tap the button: rows glide up out of it, one per category in
- *                config.yml, each in that category's colour:
- *                  - Study   (crimson: classroom buildings)
- *                  - Living  (orange: residence halls)
- *                  - Parks   (green: outdoor spaces)
- *                  - Historic (brown), Food (pink, off at first), Parking (indigo, off at first)
+ *                config.yml, each in that category's colour. The most used sits at the
+ *                bottom, closest to your thumb:
+ *                  - Study (crimson), Housing (orange), Parks (green), Food (pink): on at first
+ *                  - Staff Academic (teal), Historic (brown), Parking (indigo): off at first
  *                A filled circle means that kind of place is on the map; a white
  *                circle means it's hidden. The choice is remembered on this device.
+ *                Which rows the button has is chosen in Settings > Map filters (also
+ *                remembered); with no rows at all, the button hides.
  *                The badges on the map use the same colours, so the rows also
  *                work as a key to what the colours mean.
  * DEPENDS ON   : ../core/config.js, ../core/store.js, ../core/html.js, ../core/storage.js,
@@ -36,8 +37,7 @@ export class MapFiltersButton {
     this.buttonIcon = this.button.querySelector('i');
     this.stack = document.querySelector('#map-filters');
     this.lastHidden = null; // the hidden categories last put on the map, e.g. "study,park"
-
-    this.buildRows();
+    this.lastOptions = null; // the rows last built, e.g. "study,living"
 
     this.button.addEventListener('click', (event) => {
       event.stopPropagation();
@@ -57,13 +57,22 @@ export class MapFiltersButton {
     this.setOpen(false);
   }
 
-  /** One row per category, top to bottom, in its own colour. */
-  buildRows() {
+  /**
+   * One row per chosen category, in its own colour. The first category in config.yml is the bottom row.
+   * @param {string[]} options - the categories that have a row
+   */
+  buildRows(options) {
+    const shownNames = [];
+    for (const name of this.categoryNames) {
+      if (options.includes(name)) {
+        shownNames.push(name);
+      }
+    }
     let html = '';
-    for (let row = 0; row < this.categoryNames.length; row += 1) {
-      const name = this.categoryNames[row];
+    for (let row = shownNames.length - 1; row >= 0; row -= 1) {
+      const name = shownNames[row];
       const look = this.categories[name];
-      const slot = this.categoryNames.length - 1 - row; // --i staggers the glide: the bottom row goes first
+      const slot = row; // --i staggers the glide: the bottom row (the first category) goes first
       html += '<button class="map-option" type="button" data-category="' + escapeHtml(name) + '" data-color' +
         ' style="--i: ' + slot + '; --row-color: ' + escapeHtml(look.color) + '">' +
         '<span class="map-option-icon">' + iconHtml(look.icon, look.iconSet) + '</span>' +
@@ -85,8 +94,42 @@ export class MapFiltersButton {
     }
   }
 
-  /** Start with the categories this device hid last time, or (first visit) the ones config.yml starts hidden. */
+  /** Start with the rows and hidden categories this device chose last time, or config.yml's defaults. */
   restoreSavedChoice() {
+    this.restoreSavedOptions();
+    this.restoreHiddenCategories();
+  }
+
+  /** The rows the button had last time, or (first visit) the categories config.yml marks inFilters. */
+  restoreSavedOptions() {
+    let options = [];
+    const savedText = readSaved(this.settings.optionsKey);
+    if (savedText !== null) {
+      try {
+        options = JSON.parse(savedText);
+      } catch (error) {
+        options = []; // a broken saved value: use the defaults below
+      }
+    }
+    if (savedText === null || !Array.isArray(options)) {
+      options = [];
+      for (const name of this.categoryNames) {
+        if (this.categories[name].inFilters) {
+          options.push(name);
+        }
+      }
+    }
+    const kept = [];
+    for (const name of options) {
+      if (this.categories[name]) {
+        kept.push(name); // only categories that still exist in config.yml
+      }
+    }
+    store.setFilterOptions(kept);
+  }
+
+  /** The categories this device hid last time, or (first visit) the ones config.yml starts hidden. */
+  restoreHiddenCategories() {
     const savedText = readSaved(this.settings.storageKey);
     let saved = [];
     if (savedText === null) {
@@ -119,6 +162,14 @@ export class MapFiltersButton {
    * @param {object} state
    */
   update(state) {
+    // The rows: rebuilt only when Settings changes which ones there are.
+    const options = state.filterOptions.join(',');
+    if (options !== this.lastOptions) {
+      this.lastOptions = options;
+      this.buildRows(state.filterOptions);
+      save(this.settings.optionsKey, JSON.stringify(state.filterOptions));
+    }
+
     // Rows: filled = shown, white = hidden.
     for (const row of this.stack.querySelectorAll('[data-category]')) {
       const shown = !state.hiddenCategories.includes(row.dataset.category);
@@ -140,8 +191,8 @@ export class MapFiltersButton {
       save(this.settings.storageKey, JSON.stringify(state.hiddenCategories));
     }
 
-    // Only while looking at the map (the sheet covers it; directions hide the whole bar).
-    const show = !state.sheetOpen;
+    // Only while looking at the map (the sheet covers it; directions hide the whole bar), and only with rows to show.
+    const show = !state.sheetOpen && state.filterOptions.length > 0;
     this.button.classList.toggle('is-hidden', !show);
     this.button.inert = !show;
     if (!show) {

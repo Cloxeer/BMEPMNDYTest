@@ -2,8 +2,8 @@
  * @file js/pages/locations.js
  * @summary The Locations page: every place on our map you can go to, grouped by kind.
  *
- * WHAT IT DOES : One list per category in config.yml (Study, Living, Parks, Historic,
- *                Food, Parking), each headed by the category's icon and colour, with
+ * WHAT IT DOES : One list per category in config.yml (Study, Housing, Parks, Food,
+ *                Staff Academic, Historic, Parking), each headed by the category's icon and colour, with
  *                its places A to Z. Historic also lists study and living buildings that
  *                have an official historic designation. Tapping a place closes the page, flies the map
  *                there and opens its sheet (even if that category is switched off

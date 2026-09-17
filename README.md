@@ -15,10 +15,11 @@ What's done and what's next: [docs/TASKS.md](docs/TASKS.md).
 
 - Welcome screen, once per browser session
 - Colour map with NMSU's class places highlighted; everything else faded
-- 55 buildings with official facts: every Las Cruces building with classes in the schedule that clearly matches NMSU's records, and every NMSU Housing community; tap a badge to open its sheet
+- 105 buildings with official facts: every Las Cruces building with classes in the schedule that clearly matches NMSU's records, every NMSU Housing community, historic buildings, and every occupied academic, office, lab and research building (Staff Academic); tap a badge to open its sheet
 - 12 campus parks and green spaces, 17 places to eat (NMSU Dining), and all 346 parking lots NMSU maps, with permit colours
-- Map filters: Study (crimson), Living (orange), Parks (green), Historic (brown), Food (pink) and Parking (indigo); Food and Parking start off, but search always finds them
+- Map filters, most used at the bottom: Study (crimson), Housing (orange), Parks (green), Food (pink), then Staff Academic (teal), Historic (brown) and Parking (indigo), which start off (search always finds them)
 - Locations page: every place on the map by category; Other Locations: every NMSU property
+- Settings > Map filters: choose which categories have a switch in the Map filters button (Study, Housing, Parks and Food at first)
 - Map settings: My location, Turn map with me, Building names, a small compass (tap it to go home), Home
 - Opens from the phone's own saved copy after the first visit (fast, and works offline)
 - Hardman & Jacobs has floor plans for floors 1–2 (tap to zoom)

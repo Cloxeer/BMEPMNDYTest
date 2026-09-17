@@ -6,7 +6,7 @@
   "id and propertyNumber (NMSU property number), code, name, aka (other names search finds), address, built (year),",
   "floors ([1, 2, ...], empty when unknown), floorsSource, nmsuUrl, photos, source, category (\"study\" or \"living\"),",
   "floorImages and postedImages (floor -> picture file), description (paragraphs), doors ([lng, lat] points), codeSource,",
-  "historic (an official historic designation, or null). category can also be \"historic\".",
+  "historic (an official historic designation, or null). category can also be \"historic\" or \"staff\" (Staff Academic).",
   "A missing fact is null or empty, and the app shows \"Unknown\" for it: nothing is guessed."
  ],
  "type": "FeatureCollection",
@@ -2575,6 +2575,1642 @@
     "coordinates": [
      -106.7543647,
      32.2841402
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "535",
+    "code": null,
+    "name": "VERL Farm, Scabies Colony Lab",
+    "aka": [
+     "N/A",
+     "535",
+     "Verl Farm, Scabies Colony Lab"
+    ],
+    "address": "3115 Aggie Rodeo Dr., Las Cruces, NM 88011",
+    "propertyNumber": "535",
+    "built": "1980",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 535)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.714761,
+     32.2905585
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "534",
+    "code": null,
+    "name": "VERL Farm, Scabies Mite Lab",
+    "aka": [
+     "N/A",
+     "534",
+     "Verl Farm, Scabies Mite Lab"
+    ],
+    "address": "3115 Aggie Rodeo Dr., Las Cruces, NM 88011",
+    "propertyNumber": "534",
+    "built": "1980",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 534)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7147501,
+     32.2911181
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "387A",
+    "code": "CERV",
+    "name": "Cervantes Village, Bldg A (Children's Village)",
+    "aka": [
+     "CERV",
+     "387A",
+     "Cervantes Village, Bldg A (Children'S Village)"
+    ],
+    "address": "4101 Sam Steele Way, Las Cruces, NM 88001",
+    "propertyNumber": "387A",
+    "built": "1983",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 387A)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7496121,
+     32.2720972
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "601",
+    "code": "TC",
+    "name": "Tennis Center",
+    "aka": [
+     "TC",
+     "601",
+     "Tennis Center"
+    ],
+    "address": "1800 Wells St., Las Cruces, NM 88001",
+    "propertyNumber": "601",
+    "built": "2006",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 601)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7426656,
+     32.2767466
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "355",
+    "code": "WE",
+    "name": "Wells Hall",
+    "aka": [
+     "WE",
+     "355",
+     "Wells Hall"
+    ],
+    "address": "1720 Wells St., Las Cruces, NM 88001",
+    "propertyNumber": "355",
+    "built": "1978",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 355)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7448095,
+     32.2767689
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "552",
+    "code": null,
+    "name": "Baseball Office and Locker Room",
+    "aka": [
+     "N/A",
+     "552",
+     "Baseball Office And Locker Room"
+    ],
+    "address": "3315 Locust St., Las Cruces, NM 88003",
+    "propertyNumber": "552",
+    "built": "1997",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 552)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7448806,
+     32.278793
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "612",
+    "code": null,
+    "name": "Football Team Building",
+    "aka": [
+     "N/A",
+     "612",
+     "Football Team Building"
+    ],
+    "address": "1810 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "612",
+    "built": "2007",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 612)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7414944,
+     32.2805746
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "348",
+    "code": "SAH",
+    "name": "Passive Solar",
+    "aka": [
+     "SAH",
+     "348",
+     "Passive Solar"
+    ],
+    "address": "4003 Tortugas Trail, Las Cruces, NM 88011",
+    "propertyNumber": "348",
+    "built": "1978",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 348)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.734215,
+     32.2808098
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "514",
+    "code": "PVL",
+    "name": "Photovoltaic Labs",
+    "aka": [
+     "PVL",
+     "514",
+     "Photovoltaic Labs"
+    ],
+    "address": "3705 Locust St., Las Cruces, NM 88001",
+    "propertyNumber": "514",
+    "built": "1980",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 514)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7453997,
+     32.2708162
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "387C",
+    "code": "CERV",
+    "name": "Cervantes Village, Bldg C (Children's Village)",
+    "aka": [
+     "CERV",
+     "387C",
+     "Cervantes Village, Bldg C (Children'S Village)"
+    ],
+    "address": "4121 Sam Steele Way, Las Cruces, NM 88001",
+    "propertyNumber": "387C",
+    "built": "1983",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 387C)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7490203,
+     32.2717717
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "388",
+    "code": "VDMC",
+    "name": "South Campus Residential Offices (Vista Del Monte Community Center)",
+    "aka": [
+     "VDMC",
+     "388",
+     "South Campus Residential Offices (Vista Del Monte Community Center)"
+    ],
+    "address": "1410 Center Dr., Las Cruces, NM 88001",
+    "propertyNumber": "388",
+    "built": "1984",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 388)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7479256,
+     32.2719708
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "281",
+    "code": "PGCM",
+    "name": "PSL Guard House/Main Campus",
+    "aka": [
+     "PGCM",
+     "281",
+     "Psl Guard House/Main Campus"
+    ],
+    "address": "1055 Agriculture Way, Las Cruces, NM 88001",
+    "propertyNumber": "281",
+    "built": "1966",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 281)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7538042,
+     32.2777314
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "329",
+    "code": "BCI",
+    "name": "Cropping Systems Research",
+    "aka": [
+     "BCI",
+     "329",
+     "Cropping Systems Research"
+    ],
+    "address": "3080 Knox St., Las Cruces, NM 88001",
+    "propertyNumber": "329",
+    "built": "1973",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 329)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.757497,
+     32.2790164
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "212",
+    "code": "SG",
+    "name": "Sugerman Space Grant Building",
+    "aka": [
+     "SG",
+     "212",
+     "Sugerman Space Grant Building"
+    ],
+    "address": "3050 Knox St., Las Cruces, NM 88001",
+    "propertyNumber": "212",
+    "built": "1958",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 212)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7574296,
+     32.2794025
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "372",
+    "code": "MPL",
+    "name": "Metabolism & Physiology Lab",
+    "aka": [
+     "MPL",
+     "372",
+     "Metabolism & Physiology Lab"
+    ],
+    "address": "3020 Knox St., Las Cruces, NM 88001",
+    "propertyNumber": "372",
+    "built": "1981",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 372)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7577145,
+     32.2797909
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "126",
+    "code": "CP",
+    "name": "Computer Center",
+    "aka": [
+     "CP",
+     "126",
+     "Computer Center"
+    ],
+    "address": "1275 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "126",
+    "built": "1966",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 126)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7522486,
+     32.2800484
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "426",
+    "code": "PGL",
+    "name": "Food Safety Laboratory",
+    "aka": [
+     "PGL",
+     "426",
+     "Food Safety Laboratory"
+    ],
+    "address": "2990 Knox St., Las Cruces, NM 88001",
+    "propertyNumber": "426",
+    "built": "1989",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 426)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7577821,
+     32.2803865
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "585",
+    "code": null,
+    "name": "Jornada USDA Exp. Range HQ (Wooton Hall)",
+    "aka": [
+     "N/A",
+     "585",
+     "Jornada Usda Exp. Range Hq (Wooton Hall)"
+    ],
+    "address": "2995 Knox St., Las Cruces, NM 88001",
+    "propertyNumber": "585",
+    "built": "2002",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 585)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7571338,
+     32.280476
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "2",
+    "code": "NL",
+    "name": "Nematology Lab",
+    "aka": [
+     "NL",
+     "2",
+     "Nematology Lab"
+    ],
+    "address": "655 College Dr., Las Cruces, NM 88005",
+    "propertyNumber": "2",
+    "built": "1890",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 2)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7633733,
+     32.2807517
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "643",
+    "code": null,
+    "name": "NMDA State Chemist Laboratory",
+    "aka": [
+     "N/A",
+     "643",
+     "Nmda State Chemist Laboratory"
+    ],
+    "address": "975 Agriculture Way, Las Cruces, NM 88003",
+    "propertyNumber": "643",
+    "built": "2012",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 643)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7555559,
+     32.2773344
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "319",
+    "code": "TOS",
+    "name": "Tombaugh Observatory (South)",
+    "aka": [
+     "TOS",
+     "319",
+     "Tombaugh Observatory (South)"
+    ],
+    "address": "3415 Williams Ave., Las Cruces, NM 88003",
+    "propertyNumber": "319",
+    "built": "1971",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 319)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7485767,
+     32.2771827
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "318",
+    "code": "TOC",
+    "name": "Tombaugh Observatory (Center)",
+    "aka": [
+     "TOC",
+     "318",
+     "Tombaugh Observatory (Center)"
+    ],
+    "address": "3415 Williams Ave., Las Cruces, NM 88003",
+    "propertyNumber": "318",
+    "built": "1971",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 318)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7485902,
+     32.2772429
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "317",
+    "code": "TON",
+    "name": "Tombaugh Observatory (North)",
+    "aka": [
+     "TON",
+     "317",
+     "Tombaugh Observatory (North)"
+    ],
+    "address": "3415 Williams Ave., Las Cruces, NM 88003",
+    "propertyNumber": "317",
+    "built": "1971",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 317)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7486134,
+     32.2773344
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "338",
+    "code": "ED",
+    "name": "Educational Services Center",
+    "aka": [
+     "ED",
+     "338",
+     "Educational Services Center"
+    ],
+    "address": "1780 East University Ave., Las Cruces, NM 88001",
+    "propertyNumber": "338",
+    "built": "1978",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 338)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7437863,
+     32.283884
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "221",
+    "code": "OFS",
+    "name": "FS Office",
+    "aka": [
+     "OFS",
+     "221",
+     "Fs Office"
+    ],
+    "address": "1530 Wells St., Las Cruces, NM 88001",
+    "propertyNumber": "221",
+    "built": "1960",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 221)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7468366,
+     32.276097
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "282",
+    "code": "SY",
+    "name": "Stucky Hall",
+    "aka": [
+     "SY",
+     "282",
+     "Stucky Hall"
+    ],
+    "address": "3170 South Espina St., Las Cruces, NM 88001",
+    "propertyNumber": "282",
+    "built": "1970",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 282)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7552393,
+     32.2780868
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "44",
+    "code": "AVC",
+    "name": "Alumni & Visitors Center",
+    "aka": [
+     "AVC",
+     "44",
+     "Alumni & Visitors Center"
+    ],
+    "address": "775 College Dr., Las Cruces, NM 88001",
+    "propertyNumber": "44",
+    "built": "1928",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 44)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7596691,
+     32.2816816
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "359",
+    "code": "JGW",
+    "name": "J. Gordon Watts Entomology Lab, West",
+    "aka": [
+     "JGW",
+     "359",
+     "J. Gordon Watts Entomology Lab, West"
+    ],
+    "address": "650 College Ave., Las Cruces, NM 88005",
+    "propertyNumber": "359",
+    "built": "1978",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 359)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7635392,
+     32.280146
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "360",
+    "code": "JGM",
+    "name": "J. Gordon Watts Entomology Lab, Middle",
+    "aka": [
+     "JGM",
+     "360",
+     "J. Gordon Watts Entomology Lab, Middle"
+    ],
+    "address": "650 College Ave., Las Cruces, NM 88005",
+    "propertyNumber": "360",
+    "built": "1978",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 360)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7633808,
+     32.2801736
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "361",
+    "code": "JGE",
+    "name": "J. Gordon Watts Entomology Lab, East",
+    "aka": [
+     "JGE",
+     "361",
+     "J. Gordon Watts Entomology Lab, East"
+    ],
+    "address": "650 College Ave., Las Cruces, NM 88005",
+    "propertyNumber": "361",
+    "built": "1978",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 361)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7632225,
+     32.2802019
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "447",
+    "code": "JGF",
+    "name": "J. Gordon Watts Lab Freezer Storage",
+    "aka": [
+     "JGF",
+     "447",
+     "J. Gordon Watts Lab Freezer Storage"
+    ],
+    "address": "650 College Dr., Las Cruces, NM 88005",
+    "propertyNumber": "447",
+    "built": "1980",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 447)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.763684,
+     32.279935
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "588",
+    "code": "EQU",
+    "name": "Equine Education Center",
+    "aka": [
+     "EQU",
+     "588",
+     "Equine Education Center"
+    ],
+    "address": "750 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "588",
+    "built": "2003",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 588)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7585354,
+     32.2780669
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "394D",
+    "code": "GCD",
+    "name": "Genesis Center Office",
+    "aka": [
+     "GCD",
+     "394D",
+     "Genesis Center Office"
+    ],
+    "address": "3655 Research Dr., Las Cruces, NM 88001",
+    "propertyNumber": "394D",
+    "built": "1987",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 394D)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7466782,
+     32.2726247
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "394C",
+    "code": "GCC",
+    "name": "Genesis Center C",
+    "aka": [
+     "GCC",
+     "394C",
+     "Genesis Center C"
+    ],
+    "address": "3655 Research Dr., Las Cruces, NM 88001",
+    "propertyNumber": "394C",
+    "built": "1987",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 394C)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7462694,
+     32.2724527
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "394B",
+    "code": "GCB",
+    "name": "Genesis Center B",
+    "aka": [
+     "GCB",
+     "394B",
+     "Genesis Center B"
+    ],
+    "address": "3655 Research Dr., Las Cruces, NM 88001",
+    "propertyNumber": "394B",
+    "built": "1987",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 394B)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7463492,
+     32.2727514
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "412A",
+    "code": "ARA",
+    "name": "Academic Research A",
+    "aka": [
+     "ARA",
+     "412A",
+     "Academic Research A"
+    ],
+    "address": "1620 Standley Dr., Las Cruces, NM 88001",
+    "propertyNumber": "412A",
+    "built": "1990",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 412A)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.745642,
+     32.2728831
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "394A",
+    "code": "GCA",
+    "name": "Genesis Center A",
+    "aka": [
+     "GCA",
+     "394A",
+     "Genesis Center A"
+    ],
+    "address": "3655 Research Dr., Las Cruces, NM 88001",
+    "propertyNumber": "394A",
+    "built": "1987",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 394A)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7464281,
+     32.2730499
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "412C",
+    "code": "ARC",
+    "name": "Academic Research C",
+    "aka": [
+     "ARC",
+     "412C",
+     "Academic Research C"
+    ],
+    "address": "1620 Standley Dr., Las Cruces, NM 88001",
+    "propertyNumber": "412C",
+    "built": "1990",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 412C)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7451437,
+     32.2732295
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "371",
+    "code": "WTR",
+    "name": "Wind Tunnel/Research Building",
+    "aka": [
+     "WTR",
+     "371",
+     "Wind Tunnel/Research Building"
+    ],
+    "address": "1635 Standley Dr., Las Cruces, NM 88001",
+    "propertyNumber": "371",
+    "built": "1981",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 371)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7448277,
+     32.2741341
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "263",
+    "code": "PSL",
+    "name": "PSL, Clinton P. Anderson Hall",
+    "aka": [
+     "PSL",
+     "263",
+     "Psl, Clinton P. Anderson Hall"
+    ],
+    "address": "1050 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "263",
+    "built": "1965",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 263)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7539494,
+     32.2788325
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "412B",
+    "code": "ARB",
+    "name": "Academic Research B",
+    "aka": [
+     "ARB",
+     "412B",
+     "Academic Research B"
+    ],
+    "address": "1620 Standley Dr., Las Cruces, NM 88001",
+    "propertyNumber": "412B",
+    "built": "1990",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 412B)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7452904,
+     32.2729497
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "283",
+    "code": "OBN",
+    "name": "24\" Observatory, \"A\" MTN North",
+    "aka": [
+     "OBN",
+     "283",
+     "24\" Observatory, \"A\" Mtn North"
+    ],
+    "address": "4525-1 Observatory Rd., Las Cruces, NM 88003",
+    "propertyNumber": "283",
+    "built": "1967",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 283)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.6980179,
+     32.2930435
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "161",
+    "code": "MEM",
+    "name": "Memorial Tower",
+    "aka": [
+     "MEM",
+     "161",
+     "Memorial Tower"
+    ],
+    "address": "1335 International Mall, Las Cruces, NM 88003",
+    "propertyNumber": "161",
+    "built": "1950",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 161)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.751588,
+     32.2835921
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "633",
+    "code": "AISC",
+    "name": "American Indian Student Center",
+    "aka": [
+     "AISC",
+     "633",
+     "American Indian Student Center"
+    ],
+    "address": "3015 Andrew Wall Pl., Las Cruces, NM 88005",
+    "propertyNumber": "633",
+    "built": "2010",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 633)",
+    "category": "staff",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.745873,
+      32.282683
+     ],
+     [
+      -106.745824,
+      32.282684
+     ]
+    ],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.745917,
+     32.28277
     ]
    }
   }

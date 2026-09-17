@@ -30,6 +30,19 @@
 .settings-credit { margin: var(--s6) 0 var(--s10); text-align: center; color: var(--theme-text-muted); font-size: var(--settings-credit-size); }
 .muted { color: var(--theme-text-muted); }
 
+/* Map filters list: a rounded coloured square with the category's icon, its name, and a switch (like iPhone Settings). */
+.filter-option-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--settings-filter-icon-box);
+  height: var(--settings-filter-icon-box);
+  border-radius: var(--settings-filter-icon-radius);
+  background: var(--row-color);
+  color: var(--theme-white);
+}
+.filter-option-icon .icon { font-size: var(--settings-filter-icon-size); }
+
 /* ---------- Locations page ---------- */
 /* Each group's title: the category's icon, in its colour, then its name. */
 .places-title { display: flex; align-items: center; gap: var(--s2); color: var(--row-color); }

@@ -10,7 +10,7 @@ Better NMSU Maps will be a campus map website for NMSU students. The main idea i
 - Matthew Holets - Map / UI
 - Brock Patten - Campus Data
 - Wax Sahm - Design and QA Testing
-- (name to be added) - QA, checks that the facts and numbers we show are correct
+- Taymari La Cour - QA, checks that the facts and numbers we show are correct
 
 ## Pages
 

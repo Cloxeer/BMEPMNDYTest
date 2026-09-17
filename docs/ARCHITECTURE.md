@@ -88,7 +88,7 @@ Four rules keep it predictable:
 | **bottomBar** | |
 | `js/bottomBar/bottomPill.js` | `BottomPill`: "Tap a building" / "Info" / "Floor 1", and the floor stack |
 | `js/bottomBar/mapSettingsButton.js` | `MapSettingsButton`: My location, Turn map with me, Building names, Compass, Home |
-| `js/bottomBar/mapFiltersButton.js` | `MapFiltersButton`: show or hide Study / Living / Parks / Historic / Food / Parking (Food and Parking off at first) |
+| `js/bottomBar/mapFiltersButton.js` | `MapFiltersButton`: show or hide Study / Housing / Parks / Food (on at first) and Staff Academic / Historic / Parking (off at first); the first category is the bottom row |
 | `js/bottomBar/directionsButton.js` | `DirectionsButton`: the "Get directions?" / "Change destination?" questions |
 | **directions** | |
 | `js/directions/directions.js` | `Directions`: follows GPS, finds the route (Dijkstra via geojson-path-finder), detects arriving |
@@ -105,7 +105,7 @@ Four rules keep it predictable:
 | `js/pages/menu.js` | `Menu`: the full-screen menu, opens Locations, Other Locations and Settings |
 | `js/pages/locations.js` | `LocationsPage`: every place on our map you can go to, grouped by category |
 | `js/pages/otherLocations.js` | `OtherLocationsPage`: every NMSU property (campuses and sites), nearest first |
-| `js/pages/settings.js` | `SettingsPage`: choices, Reset, the Data list |
+| `js/pages/settings.js` | `SettingsPage`: choices, Map filters rows, Reset, the Data list |
 | `js/pages/welcome.js` | The welcome screen, once per browser tab |
 | `js/pages/navbarTitle.js` | "Campus", or "To Zuhl Library" during directions |
 | **styles** (loaded in this order) | |
@@ -140,6 +140,7 @@ answer (everything in `js/logic/`).
 | `showCompass` | The small compass top left |
 | `units` | `'imperial'` (ft, mi) or `'metric'` (m, km) |
 | `hiddenCategories` | Map filters that are switched off |
+| `filterOptions` | Which categories have a row in the Map filters button (Settings > Map filters) |
 | `searching` | Is search open? |
 
 | Action | What changes |
@@ -156,6 +157,7 @@ answer (everything in `js/logic/`).
 | `arrived(b)` | you walked in: directions off, the sheet opens on the room's floor |
 | `setTravelMode(m)`, `setShowNames(on)`, `setShowCompass(on)`, `setUnits(u)` | the user's choices |
 | `toggleCategory(c)`, `setHiddenCategories(list)` | Map filters |
+| `setFilterOption(c, inButton)`, `setFilterOptions(list)` | Settings > Map filters (taking a row out also hides that category) |
 
 ## Data structures and algorithms you'll find
 

@@ -4,6 +4,9 @@ tools/build_buildings.py - makes data/buildings.geojson (the buildings on the ma
 WHAT IT DOES : Runs on a developer's computer (not in the app). For each building in
                BUILDINGS below it downloads NMSU's official record, adds photos and
                any hand-written extras, and writes the file the app reads.
+               It also adds every other occupied main-campus building NMSU's records list
+               as academic, office, lab, library, observatory or museum space: the
+               "Staff Academic" category (see STAFF_ACADEMIC_USES).
 DEPENDS ON   : Python 3 and an internet connection. No extra packages. tools/json_files.py
 SOURCES      : NMSU Office of Space Planning "Buildings" layer: name, code, address,
                  year built, number of stories, map position, outline
@@ -129,6 +132,13 @@ LIVING = {'275', '604', '658', '185', '605', '645', '413F', '462K', '206', '214'
 HISTORIC = {'36', '32', '56', '154', '172', '179'}
 
 # Buildings with no classes aren't on the Registrar's list, so their code comes from Space Planning.
+# Staff Academic: every other occupied Las Cruces main-campus building whose use in NMSU Space Planning's
+# records (Property_C, e.g. "OFFICE-2 STORY") starts with one of these. Picked by the script, not by hand.
+STAFF_ACADEMIC_USES = ('ACAD', 'OFFICE', 'LAB', 'LIBRARY', 'OBSERVATORY', 'MUSEUM')
+# Short words in NMSU's building names that are abbreviations, so they stay in capitals ("PSL", not "Psl").
+ABBREVIATIONS = {'PSL', 'USDA', 'NMDA', 'VERL', 'HQ', 'FS', 'MTN'}
+SMALL_WORDS = {'AND', 'OF', 'THE', 'FOR'}  # stay lowercase inside a name
+
 NOT_ON_REGISTRAR_LIST = {'36', '56', '154', '172', '179', '285', '657', '365', '619', '190', '662', '604', '658', '605', '645', '413F', '462K', '206', '214', '369'}
 
 BUILDINGS_NOTE = [
@@ -138,7 +148,7 @@ BUILDINGS_NOTE = [
     'id and propertyNumber (NMSU property number), code, name, aka (other names search finds), address, built (year),',
     'floors ([1, 2, ...], empty when unknown), floorsSource, nmsuUrl, photos, source, category ("study" or "living"),',
     'floorImages and postedImages (floor -> picture file), description (paragraphs), doors ([lng, lat] points), codeSource,',
-    'historic (an official historic designation, or null). category can also be "historic".',
+    'historic (an official historic designation, or null). category can also be "historic" or "staff" (Staff Academic).',
     'A missing fact is null or empty, and the app shows "Unknown" for it: nothing is guessed.',
 ]
 SHAPES_NOTE = [
@@ -159,18 +169,18 @@ def parts_of(number):
     return COMPLEX_PARTS.get(number, [number])
 
 
-def property_numbers_query():
-    """The ArcGIS search text for every building in BUILDINGS: Property IN ('323','461',...)."""
+def property_numbers_query(buildings):
+    """The ArcGIS search text for every building in a list like BUILDINGS: Property IN ('323','461',...)."""
     quoted = []
-    for building in BUILDINGS:
+    for building in buildings:
         for part in parts_of(building[0]):
             quoted.append("'" + part + "'")
     return 'Property+IN+(' + ','.join(quoted) + ')'
 
 
-def download_official_records():
-    """NMSU's official record of every building in BUILDINGS, by property number."""
-    url = NMSU_BUILDINGS + '?where=' + property_numbers_query() + '&outFields=*&returnGeometry=false&f=json'
+def download_official_records(buildings):
+    """NMSU's official record of every building in the list, by property number."""
+    url = NMSU_BUILDINGS + '?where=' + property_numbers_query(buildings) + '&outFields=*&returnGeometry=false&f=json'
     records = {}
     for row in download_json(url)['features']:
         # A few properties (e.g. Sutherland Village) have one row per house: keep the first.
@@ -178,16 +188,16 @@ def download_official_records():
     return records
 
 
-def download_outlines():
-    """NMSU's official outline (polygon) of every building in BUILDINGS, by property number."""
-    url = (NMSU_BUILDINGS + '?where=' + property_numbers_query() + '&outFields=Property'
+def download_outlines(buildings):
+    """NMSU's official outline (polygon) of every building in the list, by property number."""
+    url = (NMSU_BUILDINGS + '?where=' + property_numbers_query(buildings) + '&outFields=Property'
            '&returnGeometry=true&outSR=4326&f=geojson')
     shapes_by_property = {}  # property number -> every outline it has
     for feature in download_json(url)['features']:
         shapes_by_property.setdefault(feature['properties']['Property'], []).append(feature['geometry'])
 
     outlines = {}
-    for building in BUILDINGS:
+    for building in buildings:
         geometries = []
         for part in parts_of(building[0]):
             geometries.extend(shapes_by_property[part])
@@ -299,22 +309,75 @@ def doors_of(doors, outline):
     return kept
 
 
+def display_name(description):
+    """NMSU's building name in capitals -> how we show it: "PSL, CLINTON P. ANDERSON HALL" -> "PSL, Clinton P. Anderson Hall"."""
+    words = []
+    for word in description.split(' '):
+        letters = word.strip('(),"&.').upper()
+        if letters in ABBREVIATIONS:
+            words.append(word.upper())
+        elif letters in SMALL_WORDS and len(words) > 0:
+            words.append(word.lower())
+        else:
+            parts = []
+            for part in word.split('/'):  # "HOUSE/MAIN" -> "House/Main"
+                parts.append(capitalize_first_letter(part))
+            words.append('/'.join(parts))
+    return ' '.join(words)
+
+
+def capitalize_first_letter(word):
+    """ "(CHILDREN'S" -> "(Children's": only the first letter is a capital, even after a bracket or quote."""
+    lower = word.lower()
+    for i in range(len(lower)):
+        if lower[i].isalpha():
+            return lower[:i] + lower[i].upper() + lower[i + 1:]
+    return lower
+
+
+def find_staff_academic():
+    """Every occupied Las Cruces main-campus building used for academics, offices, labs, libraries,
+    observatories or museums that isn't already in BUILDINGS: [(property number, name, None, None, None), ...]."""
+    listed = set()
+    for building in BUILDINGS:
+        for part in parts_of(building[0]):
+            listed.add(part)
+    where = "Campus%3D'LAS+CRUCES'+AND+Type%3D'Main'+AND+Status%3D'OCCUPIED'"
+    url = NMSU_BUILDINGS + '?where=' + where + '&outFields=Property,Descriptio,Property_C&returnGeometry=false&f=json'
+    found = []
+    seen = set()
+    for row in download_json(url)['features']:
+        record = row['attributes']
+        number = record['Property']
+        use = (record['Property_C'] or '').split('-')[0].strip()
+        if number in listed or number in seen or use not in STAFF_ACADEMIC_USES:
+            continue
+        seen.add(number)
+        found.append((number, display_name(record['Descriptio']), None, None, None))
+    return found
+
+
 def main():
     """Download, combine and write every building."""
-    official = download_official_records()
+    staff_academic = find_staff_academic()
+    staff_numbers = set()
+    for building in staff_academic:
+        staff_numbers.add(building[0])
+    buildings = BUILDINGS + staff_academic
+    official = download_official_records(buildings)
     osm = {}
     for feature in read_json(SOURCE / 'buildings-osm.geojson')['features']:
         osm[feature['properties'].get('name')] = feature['properties']
     photos = read_json(SOURCE / 'photos.json')
     extras = read_json(SOURCE / 'building-extras.json')
-    outlines = download_outlines()
+    outlines = download_outlines(buildings)
     doors = []
     for feature in read_json(SOURCE / 'entrances.geojson')['features']:
         doors.append(feature['geometry']['coordinates'])
 
     features = []
     shapes = []
-    for number, name, osm_name, map_id, photo_key in BUILDINGS:
+    for number, name, osm_name, map_id, photo_key in buildings:
         record = official[number]
         extra = extras.get(number, {})
         floors, floors_source = floor_count(record, osm.get(osm_name, {}))
@@ -332,6 +395,8 @@ def main():
             category = 'living'
         elif number in HISTORIC:
             category = 'historic'
+        elif number in staff_numbers:
+            category = 'staff'
 
         # Every building has the same fields, so every sheet looks the same.
         # Empty means "not added yet"; the app shows a message instead.
@@ -355,8 +420,11 @@ def main():
             'doors': doors_of(doors, outlines[number]),  # where directions lead (empty = the nearest path)
             'historic': extra.get('historic'),  # an official historic designation, or None
         }
-        if not building['code']:
+        if not building['code'] or building['code'] == 'N/A':
+            building['code'] = None
             building['codeSource'] = 'Not published by NMSU yet'
+        elif number in staff_numbers:
+            building['codeSource'] = 'NMSU Space Planning'
         elif number in NOT_ON_REGISTRAR_LIST:
             building['codeSource'] = 'NMSU Space Planning (not on the Registrar list)'
         else:

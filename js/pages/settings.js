@@ -3,6 +3,8 @@
  * @summary The Settings page, and every choice the app remembers on this device.
  *
  * WHAT IT DOES : Map: "Building names" on or off (Map settings has the same switch).
+ *                Map filters: a switch per kind of place, for whether it has a row in the
+ *                Map filters button (fewer rows = a tidier button).
  *                Directions: travel by Walk / Bike / Drive, and units (ft/mi or m/km).
  *                Saved on this device: Reset forgets everything the app remembers.
  *                Data: each data file the app loaded, its format, how many things
@@ -18,7 +20,7 @@
 
 import { CONFIG } from '../core/config.js';
 import { store } from '../core/store.js';
-import { escapeHtml } from '../core/html.js';
+import { escapeHtml, iconHtml } from '../core/html.js';
 import { readSaved, save, forgetAllStartingWith } from '../core/storage.js';
 
 export class SettingsPage {
@@ -36,8 +38,10 @@ export class SettingsPage {
     this.travelSwitch = document.querySelector('#setting-travel');
     this.unitsSwitch = document.querySelector('#setting-units');
     this.shownNames = null; // the Building names choice last put on the map
+    this.filterOptionsList = document.querySelector('#filter-options');
 
     this.restoreSavedChoices();
+    this.buildFilterOptions();
 
     // Tapping a control changes the store...
     this.namesToggle.addEventListener('change', () => store.setShowNames(this.namesToggle.checked));
@@ -56,6 +60,13 @@ export class SettingsPage {
     document.querySelector('#setting-reset').addEventListener('click', (event) => {
       event.preventDefault();
       this.askToReset();
+    });
+
+    this.filterOptionsList.addEventListener('change', (event) => {
+      const input = event.target.closest('[data-category]');
+      if (input) {
+        store.setFilterOption(input.dataset.category, input.checked);
+      }
     });
 
     // ...and whatever changed the store (here, Map settings, or the directions card) is shown and saved.
@@ -84,6 +95,23 @@ export class SettingsPage {
     } else {
       store.setUnits(this.directionWords.units);
     }
+  }
+
+  /** One row per category: its icon in a rounded coloured square, its name, and a Framework7 switch. */
+  buildFilterOptions() {
+    document.querySelector('#filter-options-title').textContent = this.words.filtersTitle;
+    document.querySelector('#filter-options-footer').textContent = this.words.filtersFooter;
+    let html = '';
+    for (const name of Object.keys(CONFIG.categories)) {
+      const look = CONFIG.categories[name];
+      html += '<li><label class="item-content">' +
+        '<div class="item-media"><span class="filter-option-icon" style="--row-color: ' + escapeHtml(look.color) + '">' +
+        iconHtml(look.icon, look.iconSet) + '</span></div>' +
+        '<div class="item-inner"><div class="item-title">' + escapeHtml(look.label) + '</div>' +
+        '<div class="item-after"><span class="toggle"><input type="checkbox" data-category="' + escapeHtml(name) + '" />' +
+        '<span class="toggle-icon"></span></span></div></div></label></li>';
+    }
+    this.filterOptionsList.innerHTML = html;
   }
 
   /** Ask before forgetting everything; yes starts the app fresh. */
@@ -126,6 +154,9 @@ export class SettingsPage {
    */
   update(state) {
     this.namesToggle.checked = state.showNames;
+    for (const input of this.filterOptionsList.querySelectorAll('[data-category]')) {
+      input.checked = state.filterOptions.includes(input.dataset.category);
+    }
     this.showChoice(this.travelSwitch, state.travelMode);
     this.showChoice(this.unitsSwitch, state.units);
     save(this.directionWords.modeStorageKey, state.travelMode);

@@ -32,7 +32,8 @@ class Store {
       showNames: true, // building names above the badges (Settings page and Map settings)
       showCompass: false, // the small compass in the top left corner (Map settings)
       units: 'imperial', // distances in 'imperial' (ft, mi) or 'metric' (m, km)
-      hiddenCategories: [], // Map filters: categories switched off ('study', 'living', 'park')
+      hiddenCategories: [], // Map filters: categories switched off ('study', 'living', 'park', ...)
+      filterOptions: [], // the categories that have a row in the Map filters button (Settings > Map filters)
       searching: false, // is the search drop-down open?
     };
     this.listeners = []; // functions to call after every change
@@ -273,6 +274,42 @@ class Store {
    */
   setHiddenCategories(categories) {
     this.update({ hiddenCategories: categories });
+  }
+
+  /**
+   * Set which categories have a row in the Map filters button (used to bring back a saved choice).
+   * @param {string[]} categories
+   */
+  setFilterOptions(categories) {
+    this.update({ filterOptions: categories });
+  }
+
+  /**
+   * Add a category to the Map filters button, or take it out (Settings > Map filters).
+   * Taking one out also takes it off the map, so nothing is left on that you can't switch off.
+   * @param {string} category
+   * @param {boolean} inButton
+   */
+  setFilterOption(category, inButton) {
+    const options = [];
+    for (const name of this.state.filterOptions) {
+      if (name !== category) {
+        options.push(name);
+      }
+    }
+    if (inButton) {
+      options.push(category);
+      this.update({ filterOptions: options });
+      return;
+    }
+    const hidden = [];
+    for (const name of this.state.hiddenCategories) {
+      if (name !== category) {
+        hidden.push(name);
+      }
+    }
+    hidden.push(category);
+    this.update({ filterOptions: options, hiddenCategories: hidden });
   }
 }
 
