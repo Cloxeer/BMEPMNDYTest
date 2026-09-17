@@ -47,6 +47,8 @@ map:
   nearbyKm: 10
   fencePadding: 0.01
   selectZoom: 16.8
+  homeBuilding: "285" # "Home" in Map settings flies here: Corbett Center Student Union
+  homeZoom: 17.2
   flyDuration: 320 # ms to fly to a chosen building: quick, with a soft landing
   flyCurve: 1.2 # how much the flight zooms out on the way (1 = barely)
   maxPixelRatio: 2 # sharp phones draw at most 2x, so cheaper phones stay smooth
@@ -83,7 +85,7 @@ badge:
   centerRadius: 11
   selectedCenterRadius: 10
   ring: "#ffffff"
-  selectedRing: "#000000"
+  selectedRing: "#0a84ff" # Apple system blue
   letterFont: 'italic 700 15px Georgia, "Times New Roman", serif'
   letterOffset: 1
   letter: "i"
@@ -168,6 +170,7 @@ sheet:
   noPhotosText: "No photos of this building yet."
   roomFloorUnknownText: "floor not published by NMSU"
   tapPlanText: "tap a room or an entrance"
+  floorsUnknownText: "Number of floors not published by NMSU"
   entranceTitle: "Entrance"
   noEntrancePhotoText: "If you don't see it here, we haven't taken a photo of this entrance yet. - The Brainy Bunch"
   entranceTapRadius: 45 # floor-plan units around a door marker that count as tapping it
@@ -237,7 +240,7 @@ directions:
     bike: { label: "Bike", icon: "directions_bike" }
     drive: { label: "Drive", icon: "directions_car" }
   modeStorageKey: "bnm_travel_mode" # this device remembers the last travel mode
-  units: "imperial" # "imperial" (ft, mi) or "metric" (m, km)
+  units: "imperial" # default until someone picks in Settings: "imperial" (ft, mi) or "metric" (m, km)
   arrivedCardText: "Arrived"
   turnLeftText: "Turn left"
   turnRightText: "Turn right"
@@ -324,7 +327,7 @@ mapSettings: # the round Map settings button left of the pill (js/mapSettings.js
     location: { label: "My location", icon: "location_fill" }
     follow: { label: "Turn map with me", icon: "location_north_fill" }
     names: { label: "Building names", icon: "textformat" }
-    campus: { label: "Back to campus", icon: "house_fill" }
+    home: { label: "Home (Corbett Center)", icon: "house_fill" }
   rowHeight: "44px"
   iconCircle: "36px"
   iconSize: "18px"
@@ -350,6 +353,57 @@ locations:
 
 settings:
   buildingNamesKey: "bnm_building_names" # where this device remembers the Building names switch
+  unitsKey: "bnm_units"
+  savedPrefix: "bnm_" # Reset clears every saved choice starting with this
+  resetTitle: "Reset saved choices?"
+  resetText: "This clears your remembered search text, travel mode, units, and building names setting on this device."
+  resetYes: "Reset"
+  resetNo: "Cancel"
+  credit: "By The Brainy Bunch"
+  version: "vT.1.0"
+  dataNote: "Nothing here is typed in by hand: every file is built from the source listed, by the scripts in our tools/ folder. \"NMSU Office of Space Planning\" is the NMSU office that keeps the university's official records of its buildings and land; we use its public map data."
+  dataSources: # the Data list; "count" fills in how many the app loaded
+    - title: "Buildings"
+      files: "data/buildings.geojson (GeoJSON)"
+      source: "Facts: NMSU Office of Space Planning. Building codes: NMSU Registrar's building abbreviation list."
+      count: buildings
+      countText: "buildings"
+    - title: "Building outlines"
+      files: "data/building-shapes.geojson (GeoJSON)"
+      source: "NMSU Office of Space Planning"
+    - title: "Campus areas"
+      files: "data/campuses.geojson, campus-labels.geojson, outside-mask.geojson (GeoJSON)"
+      source: "NMSU Office of Space Planning (campus boundaries and parcels); golf course outline from OpenStreetMap"
+      count: places
+      countText: "places"
+    - title: "Rooms"
+      files: "data/rooms.json (JSON)"
+      source: "Our floor plans, plus rooms in NMSU's public class schedule"
+      count: rooms
+      countText: "rooms"
+    - title: "Floor plans"
+      files: "data/floors/*.svg and *-posted.jpg"
+      source: "Traced by The Brainy Bunch from the evacuation maps posted in each building, plus our photos of those maps"
+      count: floorPlans
+      countText: "floors"
+    - title: "Entrances"
+      files: "data/entrances.json (JSON)"
+      source: "The doors marked on our floor plans"
+      count: entrances
+      countText: "entrances"
+    - title: "Building photos"
+      files: "data/photos/*.jpg"
+      source: "Freely licensed photos; the photographer and licence are shown under each photo"
+      count: photos
+      countText: "photos"
+    - title: "Paths and roads"
+      files: "data/routes/walk.geojson, bike.geojson, drive.geojson (GeoJSON)"
+      source: "OpenStreetMap contributors (ODbL licence)"
+    - title: "Background map"
+      files: "OpenFreeMap map tiles (loaded online)"
+      source: "OpenStreetMap contributors, OpenMapTiles"
+  switchSize: "13px"
+  creditSize: "13px"
 
 welcome:
   storageKey: "bnm_visited"

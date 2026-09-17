@@ -625,6 +625,13 @@ html:not(.config-ready) body { visibility: hidden; }
 .welcome-card .button-fill { background: var(--theme-white); color: var(--f7-theme-color); }
 
 /* ---------- 10. Small text helpers ---------- */
+/* Settings page */
+.settings-switch { width: auto; flex: none; }
+.settings-switch .button { width: auto; padding: 0 var(--s3); font-size: var(--settings-switch-size); }
+/* Data list: show every file name and source in full (Framework7 cuts these lines off by default). */
+#data-sources .item-subtitle,
+#data-sources .item-text { white-space: normal; display: block; -webkit-line-clamp: unset; max-height: none; overflow: visible; }
+.settings-credit { margin: var(--s6) 0 var(--s10); text-align: center; color: var(--theme-text-muted); font-size: var(--settings-credit-size); }
 .muted { color: var(--theme-text-muted); }
 
 /* ---------- 11. Bigger screens ---------- */

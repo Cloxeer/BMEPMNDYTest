@@ -26,6 +26,7 @@ const state = {
   arrived: false, // true after directions brought you inside the selected building
   travelMode: 'walk', // how directions travel: 'walk', 'bike' or 'drive'
   showNames: true, // building names above the badges (Settings page and Map settings)
+  units: 'imperial', // distances in 'imperial' (ft, mi) or 'metric' (m, km)
   searching: false, // is the search drop-down open?
 };
 
@@ -157,6 +158,14 @@ export const store = {
    */
   setShowNames(on) {
     if (on !== state.showNames) update({ showNames: on });
+  },
+
+  /**
+   * Show distances in feet and miles, or metres and kilometres.
+   * @param {'imperial'|'metric'} units
+   */
+  setUnits(units) {
+    if (units !== state.units) update({ units });
   },
 
   /** Stop directions. */

@@ -49,10 +49,28 @@ BUILDINGS = [
     ('184', 'Breland Hall', 'Breland Hall', 525489, None),
     ('397', 'John Whitlock Hernandez Hall', 'John Whitlock Hernandez Hall / Engineering Complex II', 525527, None),
     ('364', 'Clara Belle Williams Hall', 'Clara Belle Williams Hall', 525497, None),
+    # The 15 Las Cruces academic buildings with the most class sections in NMSU's
+    # Fall 2026 + Spring 2027 class schedule that weren't listed above (checked one by one
+    # against Space Planning, the Registrar list and NMSU's Concept3D map):
+    ('287', "O'Donnell Hall", None, 525539, None),
+    ('389', 'Music Building', None, 525535, 'Music Building'),
+    ('187', 'Chemistry Building', None, 525495, None),
+    ('34', 'Foster Hall', None, 525509, 'Foster Hall'),
+    ('249', 'Pete V. Domenici Hall', None, 525541, None),
+    ('83', 'Milton Hall', None, 525533, None),
+    ('244', 'Gerald Thomas Hall', None, 525513, None),
+    ('590', 'Health and Social Services Building', None, 525523, None),
+    ('188', 'Gardiner Hall', None, 525511, None),
+    ('541', 'Engineering Complex III', None, 525505, None),
+    ('657', 'Devasthali Hall', None, 525386, None),
+    ('365', 'Communication Sciences Building', None, 525499, None),
+    ('288', 'Guthrie Hall', None, 525517, None),
+    ('551', 'Skeen Hall', None, 525547, 'Skeen Hall'),
+    ('631', 'Center for the Arts', None, 525493, 'Center for the Arts'),
 ]
 
 # Buildings with no classes aren't on the Registrar's list, so their code comes from Space Planning.
-NOT_ON_REGISTRAR_LIST = {'285'}
+NOT_ON_REGISTRAR_LIST = {'285', '657', '365'}
 
 
 def read_json(name):
@@ -128,6 +146,8 @@ def main():
         record = official[number]
         extra = extras.get(number, {})
         floors, floors_source = floor_count(record, osm.get(osm_name, {}))
+        if 'floors' in extra:  # checked by hand when NMSU lists no story count (see building-extras.json)
+            floors, floors_source = extra['floors'] or 0, extra['floorsSource']
         if floors == 0:
             print('WARNING: no floor count for', number, name)
 

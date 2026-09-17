@@ -15,7 +15,7 @@ What's done and what's next: [docs/TASKS.md](docs/TASKS.md).
 
 - Welcome screen, once per browser session
 - Colour map with NMSU's class places highlighted; everything else faded
-- 10 buildings with official facts; tap a badge to open its sheet
+- 25 buildings with official facts (the 10 first-year buildings plus the 15 academic buildings with the most class sections); tap a badge to open its sheet
 - Hardman & Jacobs has floor plans for floors 1–2 (tap to zoom)
 - Search by name, address, building code or number, or a room ("SH 118A", "hjlc 225")
 - Rooms on our floor plans are highlighted in light blue

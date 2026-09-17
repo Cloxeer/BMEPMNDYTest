@@ -287,5 +287,48 @@
       "author": "New Mexico State University (Concept3D campus map)",
       "verifiedHow": "Listed in mediaUrls of the official NMSU Concept3D map location 525489 named \"Breland Hall\" (api.concept3d.com/locations/525489?map=1888); not visually reviewed or downloaded."
     }
+  ],
+  "Music Building": [
+    {
+      "file": "data/photos/music-building-1.jpg",
+      "author": "AllenS",
+      "license": "Public domain (PD-self)",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Music_Building,_Armory%E2%80%93Gymnasium.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+    }
+  ],
+  "Foster Hall": [
+    {
+      "file": "data/photos/foster-hall-1.jpg",
+      "author": "AllenS",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Foster_Hall_New_Mexico_State_University_Las_Cruces.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+    },
+    {
+      "file": "data/photos/foster-hall-2.jpg",
+      "author": "Jerri Wells",
+      "license": "CC BY-SA 3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Foster_Hall_NMSU.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+    }
+  ],
+  "Skeen Hall": [
+    {
+      "file": "data/photos/skeen-hall-1.jpg",
+      "author": "Abraham Sanogo",
+      "license": "CC BY 3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:NMSU_Skeen_Hall_2008.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+    }
+  ],
+  "Center for the Arts": [
+    {
+      "file": "data/photos/center-for-the-arts-1.jpg",
+      "author": "Holzman Moss Bottino Architecture",
+      "license": "CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Center_for_the_Arts.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+    }
   ]
 }

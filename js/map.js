@@ -15,7 +15,7 @@
  *                happens there; this file only draws).
  * CONTROLS     : the #map element.
  * USED BY      : js/app.js, js/locations.js, js/directions.js (mapReady), js/settings.js,
- *                js/mapSettings.js (showCampus)
+ *                js/mapSettings.js (showHome)
  *
  * WHY BADGES ARE A MAP LAYER, NOT HTML MARKERS: an HTML marker is moved by
  * JavaScript every frame and lags while you drag. A map layer is moved by the
@@ -271,12 +271,15 @@ function followSelection(buildingsById) {
   });
 }
 
-/** Move back to the main campus view, facing north (Map settings "Back to campus"). */
-export function showCampus() {
+/**
+ * Fly "home" to Corbett Center Student Union, facing north (Map settings "Home").
+ * @param {number[]} center - Corbett Center's [lng, lat] from data/buildings.geojson
+ */
+export function showHome(center) {
   map.setMaxBounds(fence);
   map.easeTo({
-    center: CONFIG.map.center,
-    zoom: CONFIG.map.zoom,
+    center,
+    zoom: CONFIG.map.homeZoom,
     bearing: 0,
     pitch: 0,
     duration: CONFIG.map.flyDuration,

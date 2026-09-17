@@ -179,9 +179,7 @@
         <div class="page-content page-plain">
           <div class="block-title">Map</div>
           <div class="list simple-list"><ul>
-            <li><span>Basemap</span><span class="muted">Colour (Liberty)</span></li>
-            <li><span>Campus highlight</span><span class="muted">On</span></li>
-            <!-- Framework7 toggle; js/settings.js remembers the choice on this device -->
+            <!-- Framework7 toggle; js/settings.js remembers every choice on this device -->
             <li>
               <label for="setting-building-names">Building names</label>
               <label class="toggle">
@@ -190,12 +188,42 @@
               </label>
             </li>
           </ul></div>
-          <div class="block-title">Data</div>
+
+          <div class="block-title">Directions</div>
           <div class="list simple-list"><ul>
-            <li><span>Boundaries</span><span class="muted">NMSU Space Planning</span></li>
-            <li><span>Buildings</span><span class="muted">NMSU Space Planning</span></li>
-            <li><span>Floor plans</span><span class="muted">Posted evacuation maps</span></li>
+            <li>
+              <span>Travel by</span>
+              <div class="segmented segmented-strong settings-switch" id="setting-travel" role="radiogroup" aria-label="Travel by">
+                <button class="button" type="button" data-value="walk">Walk</button>
+                <button class="button" type="button" data-value="bike">Bike</button>
+                <button class="button" type="button" data-value="drive">Drive</button>
+                <span class="segmented-highlight"></span>
+              </div>
+            </li>
+            <li>
+              <span>Units</span>
+              <div class="segmented segmented-strong settings-switch" id="setting-units" role="radiogroup" aria-label="Units">
+                <button class="button" type="button" data-value="imperial">ft / mi</button>
+                <button class="button" type="button" data-value="metric">m / km</button>
+                <span class="segmented-highlight"></span>
+              </div>
+            </li>
           </ul></div>
+
+          <div class="block-title">Saved on this device</div>
+          <div class="list simple-list"><ul>
+            <li>
+              <span>Search text and choices</span>
+              <a href="#" class="link" id="setting-reset">Reset</a>
+            </li>
+          </ul></div>
+
+          <!-- Filled by js/settings.js from the data files the app actually loaded -->
+          <div class="block-title">Data <span class="muted" id="data-version"></span></div>
+          <div class="list media-list inset"><ul id="data-sources"></ul></div>
+          <div class="block-footer" id="data-note"></div>
+
+          <p class="settings-credit" id="settings-credit"></p>
         </div>
       </div></div>
     </div>

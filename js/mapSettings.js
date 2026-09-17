@@ -7,12 +7,12 @@
  *                  - My location        (on / off)
  *                  - Turn map with me   (on / off: the map faces the way you face)
  *                  - Building names     (on / off: same switch as the Settings page)
- *                  - Back to campus     (moves the map back to the main campus, north up)
+ *                  - Home               (flies to Corbett Center Student Union, north up)
  *                An option that's on has a red icon; off is white. Tap outside,
  *                or the button again, to close.
  *                When a building is selected, this spot shows the Directions
  *                button instead (js/askDirections.js).
- * DEPENDS ON   : Framework7 (alert dialog), ./config.js, ./store.js, ./html.js, ./map.js (showCampus),
+ * DEPENDS ON   : Framework7 (alert dialog), ./config.js, ./store.js, ./html.js, ./map.js (showHome),
  *                js/locate.js (handed in), #map-settings in index.html.
  * CONTROLS     : #settings-btn and #map-options.
  * USED BY      : js/app.js
@@ -21,14 +21,15 @@
 import { CONFIG } from './config.js';
 import { store } from './store.js';
 import { escapeHtml } from './html.js';
-import { showCampus } from './map.js';
+import { showHome } from './map.js';
 
 /**
  * Wire the Map settings button.
  * @param {Framework7} app - for messages
  * @param {object} locate - from js/locate.js
+ * @param {Object.<string, object>} buildingsById - to find the home building
  */
-export function initMapSettings(app, locate) {
+export function initMapSettings(app, locate, buildingsById) {
   const settings = CONFIG.mapSettings;
   const button = document.querySelector('#settings-btn');
   const buttonIcon = button.querySelector('i');
@@ -39,7 +40,7 @@ export function initMapSettings(app, locate) {
     location: { isOn: () => locate.isOn(), tap: () => locate.setOn(!locate.isOn()) },
     follow: { isOn: () => locate.heading.isFollowing(), tap: toggleFollow },
     names: { isOn: () => store.get().showNames, tap: () => store.setShowNames(!store.get().showNames) },
-    campus: { isOn: null, tap: backToCampus },
+    home: { isOn: null, tap: goHome },
   };
 
   // One row per option in config.yml, top to bottom; --i staggers the glide (bottom row first).
@@ -83,10 +84,10 @@ export function initMapSettings(app, locate) {
     refresh();
   }
 
-  /** Move back to the main campus, facing north. */
-  function backToCampus() {
+  /** Fly home to Corbett Center Student Union, facing north. */
+  function goHome() {
     locate.heading.setFollow(false);
-    showCampus();
+    showHome(buildingsById[CONFIG.map.homeBuilding].center);
     setOpen(false);
   }
 

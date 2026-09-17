@@ -20,5 +20,17 @@
       "Hardman and Jacobs Undergraduate Learning Center houses classrooms of various sizes that are centrally scheduled and used for many of the university's core curriculum classes and larger classes. Most undergraduates will take at least some courses in the undergraduate learning center during their student careers. The center also houses the Student Success Center, which includes TRiO Student Support Services and TRiO Upward Bound, and Information & Communications Technology, which includes a Help Desk, computer labs, a drop-in computer center, computer rentals and computer offices and workshops.",
       "This building is a LEED Gold certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste."
     ]
+  },
+  "249": {
+    "floors": 2,
+    "floorsSource": "OpenStreetMap building:levels"
+  },
+  "657": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count; the OpenStreetMap entry is marked outdated)"
+  },
+  "631": {
+    "floors": 4,
+    "floorsSource": "OpenStreetMap building:levels"
   }
 }

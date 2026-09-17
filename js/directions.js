@@ -282,7 +282,7 @@ export function initDirections(app, map, locate, card, buildingsById) {
       store.arrived(building);
       return;
     }
-    const key = target.buildingId + '|' + (target.room ? target.room.number : '') + '|' + state.travelMode;
+    const key = target.buildingId + '|' + (target.room ? target.room.number : '') + '|' + state.travelMode + '|' + state.units;
     if (key === routedKey && metresBetween(here, routedFrom) < settings.rerouteMetres) return;
 
     if (nearestPoint(network, here).metres > settings.maxDistanceToNetwork) {
@@ -353,11 +353,11 @@ export function initDirections(app, map, locate, card, buildingsById) {
   }
 
   let running = false;
-  let trip = ''; // "building|room|mode" directions are currently for
+  let trip = ''; // "building|room|mode|units" directions are currently for
   store.subscribe((state) => {
     const wanted = Boolean(state.directionsTo);
     const nextTrip = wanted
-      ? state.directionsTo.buildingId + '|' + (state.directionsTo.room ? state.directionsTo.room.number : '') + '|' + state.travelMode
+      ? state.directionsTo.buildingId + '|' + (state.directionsTo.room ? state.directionsTo.room.number : '') + '|' + state.travelMode + '|' + state.units
       : '';
     if (wanted !== running) {
       running = wanted;

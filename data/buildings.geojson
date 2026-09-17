@@ -436,6 +436,627 @@
      32.2833929
     ]
    }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "287",
+    "code": "OH",
+    "name": "O'Donnell Hall",
+    "aka": [
+     "OH",
+     "287",
+     "O'Donnell Hall"
+    ],
+    "address": "1220 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "287",
+    "built": "1968",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525539",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 287)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.751566,
+      32.279283
+     ],
+     [
+      -106.751731,
+      32.279441
+     ]
+    ],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7522058,
+     32.2791823
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "389",
+    "code": "MC",
+    "name": "Music Building",
+    "aka": [
+     "MC",
+     "389",
+     "Music Building"
+    ],
+    "address": "1075 North Horseshoe, Las Cruces, NM 88001",
+    "propertyNumber": "389",
+    "built": "1983",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525535",
+    "photos": [
+     {
+      "file": "data/photos/music-building-1.jpg",
+      "author": "AllenS",
+      "license": "Public domain (PD-self)",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Music_Building,_Armory%E2%80%93Gymnasium.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+     }
+    ],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 389)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7549988,
+     32.2831523
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "187",
+    "code": "CB",
+    "name": "Chemistry Building",
+    "aka": [
+     "CB",
+     "187",
+     "Chemistry Building"
+    ],
+    "address": "1175 North Horseshoe, Las Cruces, NM 88001",
+    "propertyNumber": "187",
+    "built": "1957",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525495",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 187)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7540889,
+     32.2833994
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "34",
+    "code": "FH",
+    "name": "Foster Hall",
+    "aka": [
+     "FH",
+     "34",
+     "Foster Hall"
+    ],
+    "address": "1200 S. Horseshoe, Las Cruces, NM 88003",
+    "propertyNumber": "34",
+    "built": "1930",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525509",
+    "photos": [
+     {
+      "file": "data/photos/foster-hall-1.jpg",
+      "author": "AllenS",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Foster_Hall_New_Mexico_State_University_Las_Cruces.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+     },
+     {
+      "file": "data/photos/foster-hall-2.jpg",
+      "author": "Jerri Wells",
+      "license": "CC BY-SA 3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Foster_Hall_NMSU.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+     }
+    ],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 34)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.753016,
+     32.2813323
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "249",
+    "code": "DOM",
+    "name": "Pete V. Domenici Hall",
+    "aka": [
+     "DOM",
+     "249",
+     "Pete V. Domenici Hall"
+    ],
+    "address": "3014 Mcfie Cir., Las Cruces, NM 88003",
+    "propertyNumber": "249",
+    "built": "1963",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525541",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 249)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.751253,
+      32.28167
+     ]
+    ],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7509177,
+     32.2817241
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "83",
+    "code": "MH",
+    "name": "Milton Hall",
+    "aka": [
+     "MH",
+     "83",
+     "Milton Hall"
+    ],
+    "address": "2915 Mcfie Cir., Las Cruces, NM 88003",
+    "propertyNumber": "83",
+    "built": "1941",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525533",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 83)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.749673,
+      32.282267
+     ]
+    ],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.749942,
+     32.2824945
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "244",
+    "code": "GT",
+    "name": "Gerald Thomas Hall",
+    "aka": [
+     "GT",
+     "244",
+     "Gerald Thomas Hall"
+    ],
+    "address": "940 College Dr., Las Cruces, NM 88001",
+    "propertyNumber": "244",
+    "built": "1963",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525513",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 244)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7569609,
+     32.2811321
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "590",
+    "code": "HSS",
+    "name": "Health and Social Services Building",
+    "aka": [
+     "HSS",
+     "590",
+     "Health And Social Services Building"
+    ],
+    "address": "1335 International Mall, Las Cruces, NM 88003",
+    "propertyNumber": "590",
+    "built": "2003",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525523",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 590)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7514788,
+     32.283533
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "188",
+    "code": "GN",
+    "name": "Gardiner Hall",
+    "aka": [
+     "GN",
+     "188",
+     "Gardiner Hall"
+    ],
+    "address": "1255 North Horseshoe, Las Cruces, NM 88003",
+    "propertyNumber": "188",
+    "built": "1957",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525511",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 188)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.753057,
+      32.283154
+     ]
+    ],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7530794,
+     32.2834325
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "541",
+    "code": "EC3",
+    "name": "Engineering Complex III",
+    "aka": [
+     "EC3",
+     "541",
+     "Ed And Harold Foreman Engineering Complex"
+    ],
+    "address": "1060 Frenger Mall, Las Cruces, NM 88001",
+    "propertyNumber": "541",
+    "built": "1997",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525505",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 541)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.754379,
+      32.279935
+     ]
+    ],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7543944,
+     32.2803251
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "657",
+    "code": "DEV",
+    "name": "Devasthali Hall",
+    "aka": [
+     "DEV",
+     "657",
+     "Devasthali Hall"
+    ],
+    "address": "1308 E. University Ave., Las Cruces, NM 88003",
+    "propertyNumber": "657",
+    "built": "2019",
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count; the OpenStreetMap entry is marked outdated)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525386",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 657)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7521271,
+     32.2843285
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "365",
+    "code": "COMM",
+    "name": "Communication Sciences Building",
+    "aka": [
+     "COMM",
+     "365",
+     "Communication Sciences Building"
+    ],
+    "address": "1405 International Mall, Las Cruces, NM 88003",
+    "propertyNumber": "365",
+    "built": "1981",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525499",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 365)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7504741,
+     32.2832664
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "288",
+    "code": "GU",
+    "name": "Guthrie Hall",
+    "aka": [
+     "GU",
+     "288",
+     "Guthrie Hall"
+    ],
+    "address": "1325 International Mall, Las Cruces, NM 88003",
+    "propertyNumber": "288",
+    "built": "1968",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525517",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 288)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.752211,
+      32.282925
+     ]
+    ],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7518057,
+     32.2829502
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "551",
+    "code": "SKH",
+    "name": "Skeen Hall",
+    "aka": [
+     "SKH",
+     "551",
+     "Skeen Hall"
+    ],
+    "address": "945 College Dr., Las Cruces, NM 88001",
+    "propertyNumber": "551",
+    "built": "1999",
+    "floors": [
+     1,
+     2,
+     3
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525547",
+    "photos": [
+     {
+      "file": "data/photos/skeen-hall-1.jpg",
+      "author": "Abraham Sanogo",
+      "license": "CC BY 3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:NMSU_Skeen_Hall_2008.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+     }
+    ],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 551)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7571676,
+     32.2823853
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "631",
+    "code": "CFTA",
+    "name": "Center for the Arts",
+    "aka": [
+     "CFTA",
+     "631",
+     "Center For The Arts"
+    ],
+    "address": "1000 E. University Ave., Las Cruces, NM 88005",
+    "propertyNumber": "631",
+    "built": "2012",
+    "floors": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525493",
+    "photos": [
+     {
+      "file": "data/photos/center-for-the-arts-1.jpg",
+      "author": "Holzman Moss Bottino Architecture",
+      "license": "CC BY-SA 4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Center_for_the_Arts.jpg",
+      "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+     }
+    ],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 631)",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7558831,
+     32.2837182
+    ]
+   }
   }
  ]
 }

@@ -7,11 +7,11 @@
  *                arrival time.
  *                  - Tap the card: it grows to show a Walk / Bike / Drive switch
  *                    and every step (like Apple Maps); tap again to fold it back.
- *                    The last travel mode is remembered on this device.
+ *                    The mode is remembered on this device (js/settings.js).
  *                  - X asks "Are you sure you want to end your trip?" first.
  *                It only shows while you're looking at the map (not over the
  *                sheet or search); the pill hides while it's up (js/pill.js).
- * DEPENDS ON   : Framework7 (confirm dialog, segmented switch), ./config.js, ./store.js, ./html.js, localStorage,
+ * DEPENDS ON   : Framework7 (confirm dialog, segmented switch), ./config.js, ./store.js, ./html.js,
  *                #route-card in index.html.
  * CONTROLS     : #route-card.
  * USED BY      : js/app.js (made there, handed to js/directions.js)
@@ -50,21 +50,9 @@ export function initRouteCard(app) {
   modeSwitch.addEventListener('click', (event) => {
     const button = event.target.closest('[data-mode]');
     if (!button) return;
-    try {
-      localStorage.setItem(words.modeStorageKey, button.dataset.mode);
-    } catch (error) {
-      // Not being able to remember is harmless.
-    }
-    store.setTravelMode(button.dataset.mode);
+    store.setTravelMode(button.dataset.mode); // js/settings.js remembers it
   });
 
-  // Start with the mode used last time on this device.
-  try {
-    const saved = localStorage.getItem(words.modeStorageKey);
-    if (saved && words.modes[saved]) store.setTravelMode(saved);
-  } catch (error) {
-    // Storage blocked: walking it is.
-  }
 
   /** Show the card only with a trip to show, directions on, and the map in view. */
   function updateVisibility() {

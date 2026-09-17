@@ -149,7 +149,8 @@ export function initFloorPlan(app, rooms, entrances, openViewer, askDirections) 
    * @returns {string}
    */
   function captionFor(building, floor, room, hasRooms) {
-    const floorName = CONFIG.pill.floorText + ' ' + floor;
+    // Some buildings have no published floor count (e.g. Devasthali Hall): don't show "Floor null".
+    const floorName = floor ? CONFIG.pill.floorText + ' ' + floor : words.floorsUnknownText;
     const roomName = room ? CONFIG.search.roomText + ' ' + room.number : '';
     if (room && room.building === building.id && !room.floor) {
       return roomName + ' (' + words.roomFloorUnknownText + ') · ' + floorName;
@@ -173,7 +174,7 @@ export function initFloorPlan(app, rooms, entrances, openViewer, askDirections) 
     const planFile = building.floorImages[String(floor)];
     const roomsHere = rooms.filter((r) => r.plan && r.plan === planFile);
     const doorsHere = entrances.filter((e) => e.plan === planFile);
-    const floorName = building.name + ', ' + CONFIG.pill.floorText + ' ' + floor;
+    const floorName = building.name + (floor ? ', ' + CONFIG.pill.floorText + ' ' + floor : '');
 
     views.plan.slide.toggleAttribute('data-rooms', roomsHere.length > 0);
     caption.textContent = captionFor(building, floor, room, roomsHere.length > 0);

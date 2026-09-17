@@ -200,13 +200,20 @@ async function main() {
   initBuildingSheet(app, buildingsById, rooms, entrances, directionsButton.ask);
   initPill(buildingsById);
   const locate = initLocate(app, map);
-  initMapSettings(app, locate);
+  initMapSettings(app, locate, buildingsById);
   initDirections(app, map, locate, initRouteCard(app), buildingsById);
   initSearch(buildings, rooms, buildingsById);
   initMenu(app, campuses);
   initWelcome(app);
   initTitle(buildingsById);
-  initSettings();
+  initSettings(app, {
+    buildings: buildings.length,
+    rooms: rooms.length,
+    entrances: entrances.length,
+    places: campuses.features.length,
+    floorPlans: buildings.reduce((sum, b) => sum + Object.keys(b.floorImages).length, 0),
+    photos: buildings.reduce((sum, b) => sum + b.photos.length, 0),
+  });
 
   // Handy in the browser console while developing.
   Object.assign(window, { app, map, store, CONFIG });

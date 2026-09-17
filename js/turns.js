@@ -9,12 +9,13 @@
  *                (3) formats distances (ft/mi or m/km) and the walking time,
  *                (4) lists every step for the expanded directions card.
  *                All words come from config.yml (directions section).
- * DEPENDS ON   : ./config.js, ./geo.js
+ * DEPENDS ON   : ./config.js, ./geo.js, ./store.js (units)
  * USED BY      : js/directions.js
  */
 
 import { CONFIG } from './config.js';
 import { metresBetween } from './geo.js';
+import { store } from './store.js';
 
 const MIN_LEG_METRES = 10; // bends on legs shorter than this are too small to announce
 
@@ -113,7 +114,7 @@ function describe(leg) {
  * @returns {string}
  */
 export function formatDistance(metres) {
-  if (CONFIG.directions.units === 'metric') {
+  if (store.get().units === 'metric') {
     return metres < 1000 ? Math.round(metres / 10) * 10 + ' m' : (metres / 1000).toFixed(1) + ' km';
   }
   const feet = metres * 3.28084;

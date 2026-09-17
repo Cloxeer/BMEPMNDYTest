@@ -59,6 +59,9 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Description / address / property no. (HJLC)
 - [~] Photos: free licences exist for only Zuhl, Branson, Goddard (downloaded + credited in data/photos.json). None for HJLC. NMSU's official photos are NOT used (permission unconfirmed). Team photos are the plan
 - [x] 10 buildings live: HJLC, Zuhl, Corbett, Branson, Science Hall, Business Complex, Jett, Breland, Hernandez, Clara Belle Williams
+- [x] 15 more (most class sections in Fall 2026 + Spring 2027 schedule, academic): O'Donnell, Music, Chemistry, Foster, Domenici, Milton, Gerald Thomas, HSS, Gardiner, EC3, Devasthali, Communication Sciences, Guthrie, Skeen, Center for the Arts
+- [ ] Devasthali Hall floor count (NMSU doesn't publish one; count it on site)
+- [x] Settings: travel mode, units, reset saved choices, data sources with version, credit; selected badge ring Apple blue; Home = Corbett Center
   - Name, building code, number, address, year built, floors: NMSU Space Planning Buildings layer (Corbett floors from OSM; NMSU doesn't list them)
   - Badge position: NMSU's official building point. Link: each building's page on map.nmsu.edu
 - [ ] Floor plans for the other 9 (needs posted evacuation-map photos from the team)

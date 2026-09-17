@@ -48,6 +48,21 @@ BANNER_NAMES = {
     'Breland Hall': '184',
     'John Whitlock Hernandez Hall': '397',
     'Clara Belle Williams Hall': '364',
+    "O'Donnell Hall": '287',
+    'Music Building': '389',
+    'Chemistry Building': '187',
+    'Foster Hall': '34',
+    'Domenici Hall': '249',
+    'Milton Hall': '83',
+    'Gerald Thomas Hall': '244',
+    'Health and Social Services Bui': '590',
+    'Gardiner Hall': '188',
+    'Engineering Complex III': '541',
+    'Devasthali Hall': '657',
+    'Communication Sciences Bldg': '365',
+    'Guthrie Hall': '288',
+    'Skeen Hall': '551',
+    'Center for the Arts': '631',
 }
 
 # A room number: optional letter, three digits, optional letter. "Help Desk 105" ends with one.
