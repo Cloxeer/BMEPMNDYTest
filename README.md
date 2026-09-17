@@ -15,8 +15,8 @@ What's done and what's next: [docs/TASKS.md](docs/TASKS.md).
 
 - Welcome screen, once per browser session
 - Colour map with NMSU's class places highlighted; everything else faded
-- 105 buildings with official facts: every Las Cruces building with classes in the schedule that clearly matches NMSU's records, every NMSU Housing community, historic buildings, and every occupied academic, office, lab and research building (Staff Academic); tap a badge to open its sheet
-- 12 campus parks and green spaces, 17 places to eat (NMSU Dining), and all 346 parking lots NMSU maps, with permit colours
+- 163 buildings with official facts, including athletics, student services, shops, greenhouses, barns and warehouses (off at first, added in Settings): every Las Cruces building with classes in the schedule that clearly matches NMSU's records, every NMSU Housing community, historic buildings, and every occupied academic, office, lab and research building (Staff Academic); tap a badge to open its sheet
+- 12 campus parks and green spaces, 18 places to eat with their hours (NMSU Dining), and all 346 parking lots NMSU maps, with permit colours
 - Map filters, most used at the bottom: Study (crimson), Housing (orange), Parks (green), Food (pink), then Staff Academic (teal), Historic (brown) and Parking (indigo), which start off (search always finds them)
 - Locations page: every place on the map by category; Other Locations: every NMSU property
 - Settings > Map filters: choose which categories have a switch in the Map filters button (Study, Housing, Parks and Food at first)

@@ -11,7 +11,9 @@
     "  \"lat\", \"lng\"                                from NMSU's campus map, or else the building it is inside",
     "  \"sourceText\"                                the small print on its sheet: where these facts come from",
     "  \"officialSources\": [\"https://...\"]         the pages that confirm it",
-    "  \"photos\": []                               same format as data/source/photos.json"
+    "  \"photos\": []                               same format as data/source/photos.json",
+    "  \"hours\": [\"Mon. - Thur.: 7 am - 3 pm\", ...]   exactly as the official page writes them; \"phone\": \"(575) 646-5475\" or null",
+    "  \"hoursSource\", \"hoursCheckedOn\"             where the hours come from, and the day they were copied"
   ],
   "food": [
     {
@@ -36,7 +38,15 @@
         "https://dining.nmsu.edu/menus/einstein-bagels.html",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 7 am - 3 pm",
+        "Friday: 7 am - 2 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": "(575) 646-5475",
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-527480",
@@ -58,7 +68,16 @@
         "https://dining.nmsu.edu/menus/taosmenu.html",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 7 am - 8 pm",
+        "Friday: 7 am - 7 pm",
+        "Saturday: 10 am - 7 pm",
+        "Sunday: 10 am - 8 pm"
+      ],
+      "phone": null,
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-wow",
@@ -78,7 +97,15 @@
         "https://dining.nmsu.edu/WOW-Menu.pdf",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 10 am - 10 pm",
+        "Friday: 10 am - 3 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": null,
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-ramshi",
@@ -98,7 +125,15 @@
         "https://dining.nmsu.edu/RAMSHI-MENU.pdf",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 10 am - 10 pm",
+        "Friday: 10 am - 3 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": null,
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-mediterranean",
@@ -120,7 +155,15 @@
         "https://dining.nmsu.edu/Mediterranean-Menu.pdf",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 10 am - 10 pm",
+        "Friday: 10 am - 3 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": null,
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-531041",
@@ -143,7 +186,14 @@
         "https://dining.nmsu.edu/menus/petes-patio.html",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Fri.: 4 pm - 10 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": null,
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-527482",
@@ -166,7 +216,15 @@
         "https://dining.nmsu.edu/menus/wild-blue-sushi.html",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 10 am - 10 pm",
+        "Friday: 10 am - 3 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": null,
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-527458",
@@ -190,7 +248,14 @@
         "https://dining.nmsu.edu/where-to-eat.html",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Fri.: 8 am - 4:30 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": null,
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-527474",
@@ -211,7 +276,14 @@
         "https://dining.nmsu.edu/where-to-eat.html",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Fri.: 9 am - 10:30 pm",
+        "Sat. - Sun.: 10 am - 10:30 pm"
+      ],
+      "phone": null,
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-527490",
@@ -233,7 +305,15 @@
         "https://dining.nmsu.edu/Almas-Kitchen-Menu-2026.pdf",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 8 am - 3:30 pm",
+        "Friday: 8 am - 2 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": null,
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-527488",
@@ -255,7 +335,15 @@
         "https://dining.nmsu.edu/where-to-eat.html",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 7:30 am - 3 pm",
+        "Friday: 7:30 am - 2 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": null,
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-568589",
@@ -275,7 +363,15 @@
         "https://dining.nmsu.edu/menus/gila-grill.html",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 7 am - 2 pm",
+        "Friday: 7 am - 1 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": "(575) 646-4262",
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-527456",
@@ -300,7 +396,15 @@
         "https://dining.nmsu.edu/menus/einstein-bagels.html",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 7 am - 2 pm",
+        "Friday: 7 am - 1 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": "(575) 646-4262",
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-527460",
@@ -323,7 +427,15 @@
         "https://dining.nmsu.edu/menus/zuhl-fuel.html",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 8 am - 2 pm",
+        "Friday: 8 am - 1 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": null,
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-527478",
@@ -344,7 +456,15 @@
         "https://dining.nmsu.edu/where-to-eat.html",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 10:30 am - 3:30 pm",
+        "Friday: 10:30 am - 2 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": "(575) 646-5021",
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-la-jefa",
@@ -366,7 +486,15 @@
         "https://dining.nmsu.edu/LA-JEFA-NMSU-MENU-16.pdf",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 8 am - 3 pm",
+        "Friday: 8 am - 2 pm",
+        "Sat. - Sun.: CLOSED"
+      ],
+      "phone": "(575) 646-1316",
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
     },
     {
       "id": "food-527476",
@@ -391,7 +519,45 @@
         "https://golf.nmsu.edu/1888_taphouse_kitchen/1888_Taphouse_Kitchen_FINAL%20MENU_2.pdf",
         "https://map.nmsu.edu/?id=1888"
       ],
-      "photos": []
+      "photos": [],
+      "hours": [
+        "Mon. - Thur.: 10 am - 9 pm",
+        "Fri. - Sun.: 8 am - 9 pm"
+      ],
+      "phone": "(575) 646-2457",
+      "hoursSource": "https://dining.nmsu.edu/where-to-eat.html",
+      "hoursCheckedOn": "2026-09-17"
+    },
+    {
+      "id": "food-westside-bistro",
+      "name": "Westside Bistro",
+      "kind": "Student-run restaurant",
+      "searchNames": [
+        "100 West Cafe",
+        "100 West Café",
+        "100 West",
+        "Westside Bistro HRTM"
+      ],
+      "insideBuilding": {
+        "name": "Gerald Thomas Hall",
+        "propertyNumber": "244"
+      },
+      "concept3dId": null,
+      "lat": 32.2811321,
+      "lng": -106.75696089,
+      "sourceText": "Run by students of NMSU's School of Hotel, Restaurant and Tourism Management (NMSU Newsroom, Feb. 2025; 100west.nmsu.edu); placed at the building it is inside (NMSU Office of Space Planning).",
+      "officialSources": [
+        "https://newsroom.nmsu.edu/news/nmsu-students-to-unveil-rebranded-campus-restaurant-feb.-28/s/09481e03-a2e8-43dd-b48b-e5e7e42d5e7c",
+        "https://hrtm.nmsu.edu/about/about-us.html",
+        "https://100west.nmsu.edu"
+      ],
+      "photos": [],
+      "hours": [
+        "Fridays: 11 am - 1 pm (as announced by NMSU in Feb. 2025; check 100west.nmsu.edu for this semester)"
+      ],
+      "phone": null,
+      "hoursSource": "https://newsroom.nmsu.edu/news/nmsu-students-to-unveil-rebranded-campus-restaurant-feb.-28/s/09481e03-a2e8-43dd-b48b-e5e7e42d5e7c",
+      "hoursCheckedOn": "2026-09-17"
     }
   ]
 }

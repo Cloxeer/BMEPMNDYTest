@@ -201,6 +201,8 @@ sheet:
   floorsLabel: "Floors"
   typeLabel: "Type"
   insideLabel: "Inside"
+  hoursLabel: "Hours"
+  phoneLabel: "Phone"
   historicLabel: "Historic"
   permitColorLabel: "Permit color"
   permitRuleLabel: "Who can park"
@@ -345,6 +347,13 @@ categories: # kinds of places on the map; the colours mean the same thing everyw
   staff: { label: "Staff Academic", color: "#30b0c7", icon: "briefcase_fill", startHidden: true } # Apple teal: offices, labs, research
   historic: { label: "Historic", color: "#a2845e", icon: "building_columns_fill", startHidden: true } # Apple brown: old stone and adobe
   parking: { label: "Parking", color: "#5856d6", icon: "local_parking", iconSet: "material", startHidden: true, letter: "P", isPlace: true, inFilters: true } # Apple indigo
+  # Only in Settings > Map filters at first (add them to the button there):
+  athletics: { label: "Athletics", color: "#ff3b30", icon: "sportscourt_fill", startHidden: true } # Apple red
+  services: { label: "Student Services", color: "#5ac8fa", icon: "person_2_fill", startHidden: true } # Apple light blue: bookstore, health center, food court
+  shop: { label: "Shops", color: "#8e8e93", icon: "hammer_fill", startHidden: true } # Apple gray: workshops
+  greenhouse: { label: "Greenhouses", color: "#00c7be", icon: "leaf_arrow_circlepath", startHidden: true } # Apple mint
+  barn: { label: "Barns", color: "#7a5230", icon: "house_alt_fill", startHidden: true } # dark brown
+  warehouse: { label: "Warehouses", color: "#636366", icon: "cube_box_fill", startHidden: true } # dark gray
 
 parking: # parking lot shapes on the map (js/map/parkingLayers.js), shown with the Parking filter
   # Each lot is drawn in its permit color, as NMSU Parking Services' parking map colors them
@@ -368,7 +377,7 @@ parking: # parking lot shapes on the map (js/map/parkingLayers.js), shown with t
 
 mapFilters: # the round Map filters button right of the pill (js/bottomBar/mapFiltersButton.js)
   icon: "line_horizontal_3_decrease"
-  storageKey: "bnm_map_filters_v2" # remembers which categories this device hid (v2: new order and defaults)
+  storageKey: "bnm_map_filters_v3" # remembers which categories this device hid (v3: new categories start off)
   optionsKey: "bnm_filter_options_v2" # remembers which rows the button has (Settings > Map filters; v2: Parking added)
 
 mapSettings: # the round Map settings button left of the pill (js/bottomBar/mapSettingsButton.js)

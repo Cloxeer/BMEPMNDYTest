@@ -57,7 +57,7 @@ PLACES_NOTE = [
     '(parking lots are downloaded from NMSU Facilities GIS), then run python tools/build_places.py',
     'Format: GeoJSON. One Feature per place: a Point where it is, and properties in the same shape as a building',
     'record in data/buildings.geojson, plus: category ("park", "food" or "parking"), kind (e.g. "Coffee"),',
-    'insideName (food: the building it is inside, or null); for parking: permitColor (e.g. "Purple"), permitRule',
+    'insideName, hours (list of lines), phone and hoursSource (food); for parking: permitColor (e.g. "Purple"), permitRule',
     '(who can park, as NMSU writes it, e.g. "South Campus Resident" or "Free Parking") and campus.',
     'A missing fact is null, and the app shows "Unknown" for it: nothing is guessed.',
 ]
@@ -131,6 +131,9 @@ def place_record(place_id, category, name, kind, source):
         'codeSource': '',
         'category': category,
         'insideName': None,
+        'hours': [],
+        'phone': None,
+        'hoursSource': None,
         'permitColor': None,
         'permitRule': None,
         'campus': None,
@@ -196,6 +199,9 @@ def build_food(features, shapes):
         record['photos'] = usable_photos(food.get('photos', []))
         if food.get('concept3dId'):
             record['nmsuUrl'] = NMSU_MAP_LINK + str(food['concept3dId'])
+        record['hours'] = food['hours']  # as the official page writes them, e.g. "Mon. - Thur.: 7 am - 3 pm"
+        record['phone'] = food['phone']
+        record['hoursSource'] = food['hoursSource']
         inside = food.get('insideBuilding')
         if inside:
             record['insideName'] = inside['name']

@@ -119,6 +119,9 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Map filters order by use (Study at the bottom); Staff Academic category (44 buildings, picked from NMSU Space Planning by use)
 - [x] Settings > Map filters: choose which rows the button has
 - [x] Map settings and Map filters close each other; filter icons on the left; Parking row on top (off); lot sheets show permit color and who can park
+- [x] Settings-only categories: Athletics, Student Services, Shops, Greenhouses, Barns, Warehouses (58 buildings, off at first)
+- [x] Food hours and phone numbers from NMSU Dining; Westside Bistro (HRTM, Gerald Thomas Hall)
+- [ ] Westside Bistro hours: confirm this semester's days with HRTM (NMSU last announced Fridays 11-1 in Feb. 2025)
 - [ ] Floors, year built, code unknown for some new buildings (shown as Unknown until NMSU publishes them)
 - [ ] Photos of the residence halls and parks (none freely licensed found)
 - [ ] Entrance photos: take one per door and list it under entrancePhotos in data/source/building-extras.json

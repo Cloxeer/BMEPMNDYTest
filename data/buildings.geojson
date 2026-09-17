@@ -6,7 +6,8 @@
   "id and propertyNumber (NMSU property number), code, name, aka (other names search finds), address, built (year),",
   "floors ([1, 2, ...], empty when unknown), floorsSource, nmsuUrl, photos, source, category (\"study\" or \"living\"),",
   "floorImages and postedImages (floor -> picture file), description (paragraphs), doors ([lng, lat] points), codeSource,",
-  "historic (an official historic designation, or null). category can also be \"historic\" or \"staff\" (Staff Academic).",
+  "historic (an official historic designation, or null). category can also be \"historic\", \"staff\" (Staff Academic),",
+  "\"athletics\", \"services\" (Student Services), \"shop\", \"greenhouse\", \"barn\" or \"warehouse\".",
   "A missing fact is null or empty, and the app shows \"Unknown\" for it: nothing is guessed."
  ],
  "type": "FeatureCollection",
@@ -4211,6 +4212,2040 @@
     "coordinates": [
      -106.745917,
      32.28277
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "471",
+    "code": "AGX",
+    "name": "Aggie Express Convenience Store & Laundry",
+    "aka": [
+     "AGX",
+     "471",
+     "Aggie Express Convenience Store & Laundry"
+    ],
+    "address": "3555 Williams Dr., Las Cruces, NM 88001",
+    "propertyNumber": "471",
+    "built": "1992",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 471)",
+    "category": "services",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7488666,
+     32.2735174
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "417",
+    "code": "AFS",
+    "name": "Antenna Farm Shed",
+    "aka": [
+     "AFS",
+     "417",
+     "Antenna Farm Shed"
+    ],
+    "address": "3615 Locust St., Las Cruces, NM 88001",
+    "propertyNumber": "417",
+    "built": "1990",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 417)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7439424,
+     32.273715
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "254",
+    "code": "OCN",
+    "name": "FS Construction",
+    "aka": [
+     "OCN",
+     "254",
+     "Fs Construction"
+    ],
+    "address": "1530 Wells St., Las Cruces, NM 88001",
+    "propertyNumber": "254",
+    "built": "1962",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 254)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7457799,
+     32.275257
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "536",
+    "code": null,
+    "name": "Facilities and Services Recycling Center",
+    "aka": [
+     "N/A",
+     "536",
+     "Facilities And Services Recycling Center"
+    ],
+    "address": "3540 Locust St., Las Cruces, NM 88001",
+    "propertyNumber": "536",
+    "built": "1995",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 536)",
+    "category": "warehouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7451042,
+     32.2753341
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "455",
+    "code": "OMS",
+    "name": "Facilities and Services Sign Shop",
+    "aka": [
+     "OMS",
+     "455",
+     "Facilities And Services Sign Shop"
+    ],
+    "address": "1530 Wells St., Las Cruces, NM 88001",
+    "propertyNumber": "455",
+    "built": "1989",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 455)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7452623,
+     32.2756717
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "373",
+    "code": "OMP",
+    "name": "Transportation Services",
+    "aka": [
+     "OMP",
+     "373",
+     "Transportation Services"
+    ],
+    "address": "3535 Research Dr., Las Cruces, NM 88001",
+    "propertyNumber": "373",
+    "built": "1981",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 373)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7471181,
+     32.2755071
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "393",
+    "code": "GTG",
+    "name": "Geothermal Greenhouse",
+    "aka": [
+     "GTG",
+     "393",
+     "Geothermal Greenhouse"
+    ],
+    "address": "3490 Aggie Rodeo Dr., Las Cruces, NM 88011",
+    "propertyNumber": "393",
+    "built": "1985",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 393)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7171894,
+     32.2885709
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "392",
+    "code": "GTH",
+    "name": "Geothermal Greenhouse",
+    "aka": [
+     "GTH",
+     "392",
+     "Geothermal Greenhouse"
+    ],
+    "address": "3490 Aggie Rodeo Dr., Las Cruces, NM 88011",
+    "propertyNumber": "392",
+    "built": "1985",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 392)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7171931,
+     32.2888292
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "562",
+    "code": null,
+    "name": "SWTDI Aquaculture Greenhouse",
+    "aka": [
+     "N/A",
+     "562",
+     "Swtdi Aquaculture Greenhouse"
+    ],
+    "address": "3425 Water Pump Rd., Las Cruces, NM 88011",
+    "propertyNumber": "562",
+    "built": "1993",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 562)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.717152,
+     32.2893592
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "553",
+    "code": null,
+    "name": "Baseball Visitor's Dugout",
+    "aka": [
+     "N/A",
+     "553",
+     "Baseball Visitor'S Dugout"
+    ],
+    "address": "3315 Locust St., Las Cruces, NM 88003",
+    "propertyNumber": "553",
+    "built": "1997",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 553)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7442779,
+     32.2785103
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "579",
+    "code": null,
+    "name": "Baseball Press Box",
+    "aka": [
+     "N/A",
+     "579",
+     "Baseball Press Box"
+    ],
+    "address": "3315 Locust St., Las Cruces, NM 88003",
+    "propertyNumber": "579",
+    "built": "2000",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 579)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7446709,
+     32.278486
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "578",
+    "code": null,
+    "name": "Baseball Public Restrooms",
+    "aka": [
+     "N/A",
+     "578",
+     "Baseball Public Restrooms"
+    ],
+    "address": "3315 Locust St., Las Cruces, NM 88003",
+    "propertyNumber": "578",
+    "built": "2000",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 578)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7449119,
+     32.2786172
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "610",
+    "code": null,
+    "name": "Softball Film Room",
+    "aka": [
+     "N/A",
+     "610",
+     "Softball Film Room"
+    ],
+    "address": "1780 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "610",
+    "built": "2006",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 610)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7436515,
+     32.2795545
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "554",
+    "code": null,
+    "name": "Softball Office and Locker Room",
+    "aka": [
+     "N/A",
+     "554",
+     "Softball Office And Locker Room"
+    ],
+    "address": "1780 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "554",
+    "built": "1997",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 554)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7435182,
+     32.2800827
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "581",
+    "code": null,
+    "name": "Softball Press Box",
+    "aka": [
+     "N/A",
+     "581",
+     "Softball Press Box"
+    ],
+    "address": "1780 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "581",
+    "built": "2000",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 581)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7437201,
+     32.280399
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "261",
+    "code": "SHC",
+    "name": "Aggie Health & Wellness Center",
+    "aka": [
+     "SHC",
+     "261",
+     "Aggie Health & Wellness Center"
+    ],
+    "address": "3080 Breland Dr., Las Cruces, NM 88003",
+    "propertyNumber": "261",
+    "built": "1965",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 261)",
+    "category": "services",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7492473,
+     32.2807784
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "342",
+    "code": "ST",
+    "name": "Memorial Stadium & Locker Room Field House",
+    "aka": [
+     "ST",
+     "342",
+     "Memorial Stadium & Locker Room Field House"
+    ],
+    "address": "1810 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "342",
+    "built": "1978",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 342)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.741486,
+     32.2811136
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "628",
+    "code": null,
+    "name": "Football Coaches",
+    "aka": [
+     "N/A",
+     "628",
+     "Football Coaches"
+    ],
+    "address": "1814 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "628",
+    "built": "2009",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 628)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7415262,
+     32.281465
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "290",
+    "code": "FRB",
+    "name": "Feeding Research Building",
+    "aka": [
+     "FRB",
+     "290",
+     "Feeding Research Building"
+    ],
+    "address": "3175 Knox St., Las Cruces, NM 88001",
+    "propertyNumber": "290",
+    "built": "1969",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 290)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7565968,
+     32.2778316
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "216",
+    "code": "PMS",
+    "name": "PSL Machine Shop",
+    "aka": [
+     "PMS",
+     "216",
+     "Psl Machine Shop"
+    ],
+    "address": "1050 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "216",
+    "built": "1959",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 216)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7535709,
+     32.2780185
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "280",
+    "code": "PFS",
+    "name": "PSL Fabrication Shop",
+    "aka": [
+     "PFS",
+     "280",
+     "Psl Fabrication Shop"
+    ],
+    "address": "1050 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "280",
+    "built": "1966",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 280)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7529158,
+     32.278168
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "193",
+    "code": "BUL",
+    "name": "Bull Barn",
+    "aka": [
+     "BUL",
+     "193",
+     "Bull Barn"
+    ],
+    "address": "3145 Knox St., Las Cruces, NM 88001",
+    "propertyNumber": "193",
+    "built": "1957",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 193)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7568227,
+     32.278358
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "196",
+    "code": "HB",
+    "name": "Swine Barn",
+    "aka": [
+     "HB",
+     "196",
+     "Swine Barn"
+    ],
+    "address": "765 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "196",
+    "built": "1957",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 196)",
+    "category": "barn",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7589758,
+     32.2789315
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "241",
+    "code": "BEF",
+    "name": "Beef Office",
+    "aka": [
+     "BEF",
+     "241",
+     "Beef Office"
+    ],
+    "address": "965 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "241",
+    "built": "1963",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 241)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7561935,
+     32.2796759
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "376",
+    "code": "CFB",
+    "name": "Cattle Feed Barn/Animal Science",
+    "aka": [
+     "CFB",
+     "376",
+     "Cattle Feed Barn/Animal Science"
+    ],
+    "address": "955 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "376",
+    "built": "1982",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 376)",
+    "category": "barn",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7563554,
+     32.2796631
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "194",
+    "code": "SHB",
+    "name": "Sheep Barn",
+    "aka": [
+     "SHB",
+     "194",
+     "Sheep Barn"
+    ],
+    "address": "950 Frenger St., Las Cruces, NM 88001",
+    "propertyNumber": "194",
+    "built": "1957",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 194)",
+    "category": "barn",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.756453,
+     32.2800532
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "652",
+    "code": "SC",
+    "name": "Spiritual Center",
+    "aka": [
+     "SC",
+     "652",
+     "Spiritual Center"
+    ],
+    "address": "1720 E. University Ave., Las Cruces, NM 88003",
+    "propertyNumber": "652",
+    "built": "2015",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 652)",
+    "category": "services",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7451049,
+     32.2837698
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "632",
+    "code": null,
+    "name": "NMSU Bookstore",
+    "aka": [
+     "N/A",
+     "632",
+     "Nmsu Bookstore"
+    ],
+    "address": "1400 E. University Ave., Las Cruces, NM 88005",
+    "propertyNumber": "632",
+    "built": "2011",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 632)",
+    "category": "services",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7503062,
+     32.2847916
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "468",
+    "code": "COK",
+    "name": "Coca Cola Weight Training Facility",
+    "aka": [
+     "COK",
+     "468",
+     "Coca Cola Weight Training Facility"
+    ],
+    "address": "1800 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "468",
+    "built": "1992",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 468)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7421911,
+     32.280791
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "555",
+    "code": null,
+    "name": "Softball Visitor's Dugout",
+    "aka": [
+     "N/A",
+     "555",
+     "Softball Visitor'S Dugout"
+    ],
+    "address": "1780 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "555",
+    "built": "1997",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 555)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7439987,
+     32.2803347
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "580",
+    "code": null,
+    "name": "Softball Public Restrooms",
+    "aka": [
+     "N/A",
+     "580",
+     "Softball Public Restrooms"
+    ],
+    "address": "1780 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "580",
+    "built": "2000",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 580)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7440212,
+     32.2804079
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "609",
+    "code": null,
+    "name": "Softball Team Room",
+    "aka": [
+     "N/A",
+     "609",
+     "Softball Team Room"
+    ],
+    "address": "1780 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "609",
+    "built": "2006",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 609)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7436192,
+     32.2802671
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "220",
+    "code": "OCS",
+    "name": "FS Carpentry Shop",
+    "aka": [
+     "OCS",
+     "220",
+     "Fs Carpentry Shop"
+    ],
+    "address": "1530 Wells St., Las Cruces, NM 88001",
+    "propertyNumber": "220",
+    "built": "1960",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 220)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7459198,
+     32.2760676
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "153",
+    "code": "SQU",
+    "name": "Facilities and Services Storage Quonset",
+    "aka": [
+     "SQU",
+     "153",
+     "Facilities And Services Storage Quonset"
+    ],
+    "address": "1620 Wells St., Las Cruces, NM 88001",
+    "propertyNumber": "153",
+    "built": "1949",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 153)",
+    "category": "warehouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7456633,
+     32.2765573
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "279",
+    "code": "PGCP",
+    "name": "PSL Garage/Carpentry/Paint Shop",
+    "aka": [
+     "PGCP",
+     "279",
+     "Psl Garage/Carpentry/Paint Shop"
+    ],
+    "address": "1050 Stewart St., Las Cruces, NM 88001",
+    "propertyNumber": "279",
+    "built": "1966",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 279)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7540161,
+     32.2779665
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "432",
+    "code": "JGS",
+    "name": "J. Gordon Watts Lab Shop",
+    "aka": [
+     "JGS",
+     "432",
+     "J. Gordon Watts Lab Shop"
+    ],
+    "address": "650 College Dr., Las Cruces, NM 88005",
+    "propertyNumber": "432",
+    "built": "1980",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 432)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7633962,
+     32.2799661
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "352",
+    "code": "FGN",
+    "name": "Hort Farm Greenhouse",
+    "aka": [
+     "FGN",
+     "352",
+     "Hort Farm Greenhouse"
+    ],
+    "address": "113 W. University Ave., Las Cruces, NM 88005",
+    "propertyNumber": "352",
+    "built": "1978",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 352)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7730573,
+     32.2784913
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "351",
+    "code": "FGR",
+    "name": "Hort Farm Greenhouse",
+    "aka": [
+     "FGR",
+     "351",
+     "Hort Farm Greenhouse"
+    ],
+    "address": "113 W. University Ave., Las Cruces, NM 88005",
+    "propertyNumber": "351",
+    "built": "1978",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 351)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.772858,
+     32.2785811
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "421",
+    "code": "FGGC",
+    "name": "Hort Farm Greenhouse C",
+    "aka": [
+     "FGGC",
+     "421",
+     "Hort Farm Greenhouse C"
+    ],
+    "address": "113 W. University Ave., Las Cruces, NM 88005",
+    "propertyNumber": "421",
+    "built": "1981",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 421)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7724783,
+     32.2789486
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "420",
+    "code": "FGB",
+    "name": "Hort Farm Greenhouse B",
+    "aka": [
+     "FGB",
+     "420",
+     "Hort Farm Greenhouse B"
+    ],
+    "address": "113 W. University Ave., Las Cruces, NM 88005",
+    "propertyNumber": "420",
+    "built": "1980",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 420)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7725681,
+     32.2790872
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "584",
+    "code": null,
+    "name": "Hort Farm Greenhouse",
+    "aka": [
+     "N/A",
+     "584",
+     "Hort Farm Greenhouse"
+    ],
+    "address": "113 W. University Ave., Las Cruces, NM 88005",
+    "propertyNumber": "584",
+    "built": "2001",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 584)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7728472,
+     32.2781405
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "353",
+    "code": "FGH",
+    "name": "Hort Farm Greenhouse",
+    "aka": [
+     "FGH",
+     "353",
+     "Hort Farm Greenhouse"
+    ],
+    "address": "113 W. University Ave., Las Cruces, NM 88005",
+    "propertyNumber": "353",
+    "built": "1978",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 353)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7726412,
+     32.2782323
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "467",
+    "code": "BW",
+    "name": "Housing & Bookstore Warehouse",
+    "aka": [
+     "BW",
+     "467",
+     "Housing & Bookstore Warehouse"
+    ],
+    "address": "3533 Locust St., Las Cruces, NM 88001",
+    "propertyNumber": "467",
+    "built": "1992",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 467)",
+    "category": "warehouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7443664,
+     32.2756968
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "262",
+    "code": "FC",
+    "name": "Frenger Food Court",
+    "aka": [
+     "FC",
+     "262",
+     "Frenger Food Court"
+    ],
+    "address": "1420 Frenger Mall, Las Cruces, NM 88001",
+    "propertyNumber": "262",
+    "built": "1965",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 262)",
+    "category": "services",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.750775,
+      32.281308
+     ]
+    ],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7505662,
+     32.2812139
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "284",
+    "code": "PAC",
+    "name": "Pan American Center",
+    "aka": [
+     "PAC",
+     "284",
+     "Pan American Center"
+    ],
+    "address": "1810 E. University Ave., Las Cruces, NM 88001",
+    "propertyNumber": "284",
+    "built": "1968",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 284)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.742199,
+     32.2838205
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "390",
+    "code": "PGG",
+    "name": "PGEL Greenhouses",
+    "aka": [
+     "PGG",
+     "390",
+     "Pgel Greenhouses"
+    ],
+    "address": "2990 Knox St., Las Cruces, NM 88001",
+    "propertyNumber": "390",
+    "built": "1985",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 390)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7580306,
+     32.2803252
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "237",
+    "code": "OSB",
+    "name": "Facilities and Services Shops/Boiler Room",
+    "aka": [
+     "OSB",
+     "237",
+     "Facilities And Services Shops/Boiler Room"
+    ],
+    "address": "1520 Wells St., Las Cruces, NM 88001",
+    "propertyNumber": "237",
+    "built": "1960",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 237)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7467652,
+     32.2756767
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "222",
+    "code": "OWH",
+    "name": "FS Warehouse",
+    "aka": [
+     "OWH",
+     "222",
+     "Fs Warehouse"
+    ],
+    "address": "1600 Wells St., Las Cruces, NM 88001",
+    "propertyNumber": "222",
+    "built": "1960",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 222)",
+    "category": "warehouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7459908,
+     32.2763919
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "140",
+    "code": "BGE",
+    "name": "Biology Greenhouse, East",
+    "aka": [
+     "BGE",
+     "140",
+     "Biology Greenhouse, East"
+    ],
+    "address": "3080 Williams Ave., Las Cruces, NM 88003",
+    "propertyNumber": "140",
+    "built": "1966",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 140)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7511184,
+     32.2802672
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "139",
+    "code": "BGC",
+    "name": "Biology Greenhouse, East Center",
+    "aka": [
+     "BGC",
+     "139",
+     "Biology Greenhouse, East Center"
+    ],
+    "address": "3080 Williams Ave., Las Cruces, NM 88003",
+    "propertyNumber": "139",
+    "built": "1966",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 139)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7511743,
+     32.2802543
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "137",
+    "code": "BGW",
+    "name": "Biology Greenhouse, West",
+    "aka": [
+     "BGW",
+     "137",
+     "Biology Greenhouse, West"
+    ],
+    "address": "3080 Williams Ave., Las Cruces, NM 88003",
+    "propertyNumber": "137",
+    "built": "1966",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 137)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7512908,
+     32.2802293
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "138",
+    "code": "BGN",
+    "name": "Biology Greenhouse, West Center",
+    "aka": [
+     "BGN",
+     "138",
+     "Biology Greenhouse, West Center"
+    ],
+    "address": "3080 Williams Ave., Las Cruces, NM 88003",
+    "propertyNumber": "138",
+    "built": "1966",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 138)",
+    "category": "greenhouse",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7512338,
+     32.2802421
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "419",
+    "code": "HFS",
+    "name": "Horse Farm Storage",
+    "aka": [
+     "HFS",
+     "419",
+     "Horse Farm Storage"
+    ],
+    "address": "401 W. Union Ave., Las Cruces, NM 88005",
+    "propertyNumber": "419",
+    "built": "1946",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 419)",
+    "category": "barn",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7698938,
+     32.2718775
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "507",
+    "code": "HFH",
+    "name": "Horse Farm-Horse Barn",
+    "aka": [
+     "HFH",
+     "507",
+     "Horse Farm-Horse Barn"
+    ],
+    "address": "401 W. Union Ave., Las Cruces, NM 88005",
+    "propertyNumber": "507",
+    "built": "1946",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 507)",
+    "category": "barn",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7704197,
+     32.2713971
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "508",
+    "code": "FGU",
+    "name": "Hort Farm Pump House",
+    "aka": [
+     "FGU",
+     "508",
+     "Hort Farm Pump House"
+    ],
+    "address": "113 W. University Ave., Las Cruces, NM 88005",
+    "propertyNumber": "508",
+    "built": "1993",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 508)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7742708,
+     32.2800894
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "611",
+    "code": null,
+    "name": "Baseball Locker Room",
+    "aka": [
+     "611",
+     "Baseball Locker Room"
+    ],
+    "address": "3315 Locust St., Las Cruces, NM 88003",
+    "propertyNumber": "611",
+    "built": "2006",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 611)",
+    "category": "athletics",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7450655,
+     32.2788514
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "642",
+    "code": null,
+    "name": "Stud Barn",
+    "aka": [
+     "N/A",
+     "642",
+     "Stud Barn"
+    ],
+    "address": "401 W. Union Ave., Las Cruces, NM 88005",
+    "propertyNumber": "642",
+    "built": "2010",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 642)",
+    "category": "barn",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "Not published by NMSU yet"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7705812,
+     32.2716474
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "449",
+    "code": "WWE",
+    "name": "Well #10 (Wells & Espina)",
+    "aka": [
+     "WWE",
+     "449",
+     "Well #10 (Wells & Espina)"
+    ],
+    "address": "3500 S. Espina, Las Cruces, NM 88001",
+    "propertyNumber": "449",
+    "built": "1982",
+    "floors": [],
+    "floorsSource": "OpenStreetMap building:levels",
+    "nmsuUrl": null,
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 449)",
+    "category": "shop",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.754151,
+     32.2743576
     ]
    }
   }

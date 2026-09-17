@@ -6,7 +6,9 @@ WHAT IT DOES : Runs on a developer's computer (not in the app). For each buildin
                any hand-written extras, and writes the file the app reads.
                It also adds every other occupied main-campus building NMSU's records list
                as academic, office, lab, library, observatory or museum space: the
-               "Staff Academic" category (see STAFF_ACADEMIC_USES).
+               "Staff Academic" category (see STAFF_ACADEMIC_USES), and every Las Cruces
+               building of the uses in USE_CATEGORIES (athletics, student services, shops,
+               greenhouses, barns, warehouses).
 DEPENDS ON   : Python 3 and an internet connection. No extra packages. tools/json_files.py
 SOURCES      : NMSU Office of Space Planning "Buildings" layer: name, code, address,
                  year built, number of stories, map position, outline
@@ -135,8 +137,17 @@ HISTORIC = {'36', '32', '56', '154', '172', '179'}
 # Staff Academic: every other occupied Las Cruces main-campus building whose use in NMSU Space Planning's
 # records (Property_C, e.g. "OFFICE-2 STORY") starts with one of these. Picked by the script, not by hand.
 STAFF_ACADEMIC_USES = ('ACAD', 'OFFICE', 'LAB', 'LIBRARY', 'OBSERVATORY', 'MUSEUM')
+# More categories picked by use: every Las Cruces building (any status) whose Property_C starts with one of these.
+USE_CATEGORIES = [
+    ('athletics', ('ATHLETIC', 'GYM')),
+    ('services', ('RETAIL', 'STUDENT UNION', 'HEALTH CENTER')),
+    ('shop', ('SHOP',)),
+    ('greenhouse', ('GREEN HOUSE',)),
+    ('barn', ('BARN',)),
+    ('warehouse', ('WAREHOUSE',)),
+]
 # Short words in NMSU's building names that are abbreviations, so they stay in capitals ("PSL", not "Psl").
-ABBREVIATIONS = {'PSL', 'USDA', 'NMDA', 'VERL', 'HQ', 'FS', 'MTN'}
+ABBREVIATIONS = {'PSL', 'USDA', 'NMDA', 'VERL', 'HQ', 'FS', 'MTN', 'NMSU', 'SWTDI', 'PGEL'}
 SMALL_WORDS = {'AND', 'OF', 'THE', 'FOR'}  # stay lowercase inside a name
 
 NOT_ON_REGISTRAR_LIST = {'36', '56', '154', '172', '179', '285', '657', '365', '619', '190', '662', '604', '658', '605', '645', '413F', '462K', '206', '214', '369'}
@@ -148,7 +159,8 @@ BUILDINGS_NOTE = [
     'id and propertyNumber (NMSU property number), code, name, aka (other names search finds), address, built (year),',
     'floors ([1, 2, ...], empty when unknown), floorsSource, nmsuUrl, photos, source, category ("study" or "living"),',
     'floorImages and postedImages (floor -> picture file), description (paragraphs), doors ([lng, lat] points), codeSource,',
-    'historic (an official historic designation, or null). category can also be "historic" or "staff" (Staff Academic).',
+    'historic (an official historic designation, or null). category can also be "historic", "staff" (Staff Academic),',
+    '"athletics", "services" (Student Services), "shop", "greenhouse", "barn" or "warehouse".',
     'A missing fact is null or empty, and the app shows "Unknown" for it: nothing is guessed.',
 ]
 SHAPES_NOTE = [
@@ -320,9 +332,9 @@ def display_name(description):
             words.append(word.lower())
         else:
             parts = []
-            for part in word.split('/'):  # "HOUSE/MAIN" -> "House/Main"
+            for part in word.replace('-', '/-/').split('/'):  # "HOUSE/MAIN" -> "House/Main", "FARM-HORSE" -> "Farm-Horse"
                 parts.append(capitalize_first_letter(part))
-            words.append('/'.join(parts))
+            words.append('/'.join(parts).replace('/-/', '-'))
     return ' '.join(words)
 
 
@@ -357,13 +369,41 @@ def find_staff_academic():
     return found
 
 
+def use_of(record):
+    """A building's use, from NMSU's records: "OFFICE-2 STORY" -> "OFFICE"."""
+    return (record['Property_C'] or '').split('-')[0].strip()
+
+
+def find_by_use(already_listed):
+    """Every Las Cruces building whose use is in USE_CATEGORIES and isn't listed yet.
+    Returns ([(property number, name, None, None, None), ...], {property number: category})."""
+    url = NMSU_BUILDINGS + "?where=Campus%3D'LAS+CRUCES'&outFields=Property,Descriptio,Property_C&returnGeometry=false&f=json"
+    found = []
+    categories = {}
+    for row in download_json(url)['features']:
+        record = row['attributes']
+        number = record['Property']
+        if not number or number in already_listed or number in categories:
+            continue
+        for category, uses in USE_CATEGORIES:
+            if use_of(record) in uses:
+                categories[number] = category
+                found.append((number, display_name(record['Descriptio']), None, None, None))
+    return found, categories
+
+
 def main():
     """Download, combine and write every building."""
     staff_academic = find_staff_academic()
     staff_numbers = set()
+    listed = set()
+    for building in BUILDINGS + staff_academic:
+        for part in parts_of(building[0]):
+            listed.add(part)
     for building in staff_academic:
         staff_numbers.add(building[0])
-    buildings = BUILDINGS + staff_academic
+    by_use, use_categories = find_by_use(listed)
+    buildings = BUILDINGS + staff_academic + by_use
     official = download_official_records(buildings)
     osm = {}
     for feature in read_json(SOURCE / 'buildings-osm.geojson')['features']:
@@ -397,6 +437,8 @@ def main():
             category = 'historic'
         elif number in staff_numbers:
             category = 'staff'
+        elif number in use_categories:
+            category = use_categories[number]
 
         # Every building has the same fields, so every sheet looks the same.
         # Empty means "not added yet"; the app shows a message instead.
@@ -423,7 +465,7 @@ def main():
         if not building['code'] or building['code'] == 'N/A':
             building['code'] = None
             building['codeSource'] = 'Not published by NMSU yet'
-        elif number in staff_numbers:
+        elif number in staff_numbers or number in use_categories:
             building['codeSource'] = 'NMSU Space Planning'
         elif number in NOT_ON_REGISTRAR_LIST:
             building['codeSource'] = 'NMSU Space Planning (not on the Registrar list)'

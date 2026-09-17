@@ -154,6 +154,19 @@ export class BuildingSheet {
       if (building.category === 'food' && building.insideName) {
         facts.push([this.words.insideLabel, building.insideName]);
       }
+      if (building.category === 'food') {
+        // One line per day range, as NMSU Dining writes them; the label only on the first line.
+        for (let i = 0; i < building.hours.length; i += 1) {
+          let label = '';
+          if (i === 0) {
+            label = this.words.hoursLabel;
+          }
+          facts.push([label, building.hours[i]]);
+        }
+        if (building.phone) {
+          facts.push([this.words.phoneLabel, building.phone]);
+        }
+      }
       if (building.category === 'parking') {
         facts.push([this.words.permitColorLabel, building.permitColor]); // e.g. "Purple"
         facts.push([this.words.permitRuleLabel, building.permitRule]); // e.g. "South Campus Resident", "Free Parking"
