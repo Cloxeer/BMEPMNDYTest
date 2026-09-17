@@ -66,7 +66,7 @@ html:not(.config-ready) body { visibility: hidden; }
 /* Full-bleed pages (map, welcome) drop Framework7's page padding and scrolling. */
 .page-content.page-fill { padding: 0 !important; overflow: hidden; }
 #map { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
-/* Ordinary pages (locations, schedule, settings) scroll below their navbar. */
+/* Ordinary pages (locations, settings) scroll below their navbar. */
 .page-content.page-plain {
   padding: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px) + var(--s3)) 0 var(--s8);
 }
@@ -446,7 +446,7 @@ html:not(.config-ready) body { visibility: hidden; }
    keeps normal rounded corners, so nothing breaks. */
 @supports (corner-shape: squircle) {
   .pill, .bs-floor-img, .bs-photo img, .bs-switch, .bs-switch .button,
-  .search-field, .search-drop .search-results, .list.inset ul, .button, .empty-state,
+  .search-field, .search-drop .search-results, .list.inset ul, .button,
   .welcome-card .button { corner-shape: squircle; }
 }
 
@@ -624,11 +624,7 @@ html:not(.config-ready) body { visibility: hidden; }
 .welcome-card .by { color: var(--welcome-byline); margin-top: var(--s2); }
 .welcome-card .button-fill { background: var(--theme-white); color: var(--f7-theme-color); }
 
-/* ---------- 10. Empty pages (schedule) ---------- */
-.empty-state { text-align: center; padding: var(--empty-state-top-space) var(--s6) 0; }
-.empty-icon { font-size: var(--empty-state-icon-size); color: var(--f7-theme-color); }
-.empty-state h2 { font-size: var(--empty-state-title-size); margin: var(--s4) 0 var(--s2); }
-.empty-state p { color: var(--theme-text-soft); margin: 0 0 var(--s2); }
+/* ---------- 10. Small text helpers ---------- */
 .muted { color: var(--theme-text-muted); }
 
 /* ---------- 11. Bigger screens ---------- */

@@ -110,6 +110,7 @@ Three rules keep it predictable:
 | `data/floors/*.svg` | Hand-drawn | Evacuation maps posted in each building |
 | `data/rooms.json` | `tools/build_rooms.py` (+ `tools/indoor_routes.py`) | Rooms on our floor plans (with outlines and an indoor route from the nearest outside door / stairs) + rooms in NMSU's public class schedule (Banner; no floor or outline) |
 | `data/routes/walk.geojson`, `bike.geojson`, `drive.geojson` | `tools/build_routes.py` | OpenStreetMap paths and roads, sorted by OSM access tags; one-way streets kept for bikes and cars (NMSU publishes no path or road data) |
+| `data/entrances.json` | `tools/build_entrances.py` | Outside doors marked on our floor plans; photos listed under `entrancePhotos` in `data/source/building-extras.json` |
 | `data/building-shapes.geojson` | `tools/build_buildings.py` | NMSU Space Planning building outlines |
 | `data/photos/*.jpg` | Downloaded | Wikimedia Commons (licences in `data/source/photos.json`) |
 

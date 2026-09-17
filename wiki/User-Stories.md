@@ -85,3 +85,15 @@ Constraints: Only real NMSU locations.
 Effort Estimation: 8
 
 Acceptance Test: Open Locations, check it's sorted by distance, tap Horse Farm and check the map moves there.
+
+## 8: Pictures of entrances
+
+Story: As a freshman, I want pictures of the entrances of each building so that I can use them as landmarks to find the right door.
+
+Elaboration: Entrances are marked on the floor plan. Tapping one opens a photo of that entrance. If we don't have a photo yet, it says so.
+
+Constraints: Photos have to be ones we take ourselves of the real entrance.
+
+Effort Estimation: 8
+
+Acceptance Test: Open Hardman and Jacobs floor 1 and tap each entrance marker. Check that it opens the photo for that entrance, or the "we haven't taken a photo of this entrance yet" message if there isn't one.

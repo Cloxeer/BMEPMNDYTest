@@ -9,12 +9,15 @@
  *                highlight slides along with your finger.
  *                On our plan:
  *                  - tap a room to choose it (and you're asked if you want directions to it),
+ *                  - tap an entrance marker to see a photo of that entrance (or, if we
+ *                    haven't taken one, a note from us saying so),
  *                  - the chosen room is light blue, with arrows from where you
  *                    come in (js/planArt.js).
  *                The corner button opens the picture full screen.
  * DEPENDS ON   : Framework7's Swiper (<swiper-container>), ./config.js, ./store.js,
  *                ./planArt.js, #bs-slides and the switch in index.html,
- *                data/rooms.json (room outlines).
+ *                data/rooms.json (room outlines), data/entrances.json (doors),
+ *                Framework7 (message when an entrance has no photo).
  * CONTROLS     : the floor plan slides, the switch and #bs-caption.
  * USED BY      : js/buildingSheet.js
  */
@@ -42,12 +45,14 @@ function inside(points, x, y) {
 
 /**
  * Wire the floor plan slides.
+ * @param {Framework7} app - for the "no photo yet" message
  * @param {object[]} rooms - data/rooms.json
+ * @param {object[]} entrances - data/entrances.json
  * @param {(urls: string[], startAt: number) => void} openViewer - full-screen picture viewer
  * @param {() => void} askDirections - asks "Get directions to this room?" (js/askDirections.js)
  * @returns {{ show: (building: object, floor: number, room: object|null) => void, reset: () => void }}
  */
-export function initFloorPlan(rooms, openViewer, askDirections) {
+export function initFloorPlan(app, rooms, entrances, openViewer, askDirections) {
   const words = CONFIG.sheet;
   const slides = document.querySelector('#bs-slides'); // <swiper-container>
   const highlight = document.querySelector('.bs-switch .segmented-highlight');
@@ -153,7 +158,7 @@ export function initFloorPlan(rooms, openViewer, askDirections) {
       const from = room.indoorFrom === 'door' ? words.indoorFromDoorText : words.indoorFromStairsText;
       return roomName + ' · ' + floorName + (room.indoorRoute ? ' · ' + from : '');
     }
-    return hasRooms ? floorName + ' · ' + words.tapRoomText : floorName;
+    return hasRooms ? floorName + ' · ' + words.tapPlanText : floorName;
   }
 
   /**
@@ -167,6 +172,7 @@ export function initFloorPlan(rooms, openViewer, askDirections) {
     showing = { building, floor };
     const planFile = building.floorImages[String(floor)];
     const roomsHere = rooms.filter((r) => r.plan && r.plan === planFile);
+    const doorsHere = entrances.filter((e) => e.plan === planFile);
     const floorName = building.name + ', ' + CONFIG.pill.floorText + ' ' + floor;
 
     views.plan.slide.toggleAttribute('data-rooms', roomsHere.length > 0);
@@ -174,9 +180,10 @@ export function initFloorPlan(rooms, openViewer, askDirections) {
     fillSlide(views.posted, building.postedImages[String(floor)], floorName + ' ' + words.postedAltText);
 
     let picture = planFile;
-    if (planFile && room && room.plan === planFile) {
+    const roomOnPlan = room && room.plan === planFile ? room : null;
+    if (planFile && (roomOnPlan || doorsHere.length)) {
       try {
-        picture = await planWithRoom(planFile, room);
+        picture = await planWithRoom(planFile, roomOnPlan, doorsHere);
       } catch (error) {
         console.error(error); // show the plain plan instead
       }
@@ -188,19 +195,40 @@ export function initFloorPlan(rooms, openViewer, askDirections) {
 
   /* ---------- Taps on the pictures ---------- */
 
-  // Tap a room on our plan to choose it.
+  /**
+   * Show a photo of an entrance, or tell the user we haven't taken one yet.
+   * @param {object} entrance - a record from data/entrances.json
+   */
+  function openEntrance(entrance) {
+    if (entrance.photo) {
+      openViewer([entrance.photo], 0);
+      return;
+    }
+    app.dialog.alert(words.noEntrancePhotoText, words.entranceTitle + ' · ' + entrance.label);
+  }
+
+  // Tap an entrance to see it, or a room on our plan to choose it.
   views.plan.image.addEventListener('click', (event) => {
     const { building, floor } = showing;
     if (!building) return;
     const planFile = building.floorImages[String(floor)];
     const roomsHere = rooms.filter((r) => r.plan && r.plan === planFile);
-    if (!roomsHere.length) return;
+    const doorsHere = entrances.filter((e) => e.plan === planFile);
+    const anyHere = roomsHere[0] || doorsHere[0];
+    if (!anyHere) return;
 
     // Where the tap landed, in the plan's own units (its viewBox: "left top width height").
-    const [left, top, width, height] = roomsHere[0].viewBox.split(/\s+/).map(Number);
+    const [left, top, width, height] = anyHere.viewBox.split(/\s+/).map(Number);
     const box = views.plan.image.getBoundingClientRect();
     const x = left + ((event.clientX - box.left) / box.width) * width;
     const y = top + ((event.clientY - box.top) / box.height) * height;
+
+    // Entrances first: their markers sit on the building's edge, next to rooms.
+    const door = doorsHere.find((e) => Math.hypot(e.point[0] - x, e.point[1] - y) <= words.entranceTapRadius);
+    if (door) {
+      openEntrance(door);
+      return;
+    }
 
     // Smallest room under the tap (a small room can sit inside a bigger suite).
     const hits = roomsHere.filter((r) => inside(r.points, x, y));

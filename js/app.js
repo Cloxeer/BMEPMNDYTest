@@ -9,8 +9,7 @@
  *                    menu and welcome screen.
  * DEPENDS ON   : Framework7 (global `Framework7`), every js/ module,
  *                data/buildings.geojson and the campus files from tools/build_campuses.py.
- * CONTROLS     : start-up order, the menu, the welcome screen, the navbar title,
- *                the "Report a problem" button.
+ * CONTROLS     : start-up order, the menu, the welcome screen, the navbar title.
  * USED BY      : index.html
  */
 
@@ -74,12 +73,11 @@ function initMenu(app, campuses) {
   const menuElement = document.querySelector('#menu-popup');
   const pages = {
     locations: app.popup.create({ el: '#locations-popup' }),
-    schedule: app.popup.create({ el: '#schedule-popup' }),
     settings: app.popup.create({ el: '#settings-popup' }),
   };
   initLocations(campuses, pages.locations);
 
-  /** @param {string} current - 'map', 'locations', 'schedule' or 'settings' */
+  /** @param {string} current - 'map', 'locations' or 'settings' */
   function underline(current) {
     ['map', ...Object.keys(pages)].forEach((name) => {
       document.querySelector('#menu-' + name).classList.toggle('is-current', name === current);
@@ -157,17 +155,6 @@ function initTitle(buildingsById) {
 }
 
 /**
- * "Report a problem" isn't built yet; say so instead of doing nothing.
- * @param {Framework7} app
- */
-function initReportButton(app) {
-  document.querySelector('#report-btn').addEventListener('click', (event) => {
-    event.preventDefault();
-    app.dialog.alert(CONFIG.app.reportText, CONFIG.app.reportTitle);
-  });
-}
-
-/**
  * Replace the page with a readable message when start-up fails.
  * @param {Error} error
  */
@@ -195,12 +182,13 @@ async function main() {
   await loadConfig();
   const app = startFramework7();
 
-  const [buildingData, campuses, labels, outside, rooms] = await Promise.all([
+  const [buildingData, campuses, labels, outside, rooms, entrances] = await Promise.all([
     loadData('buildings.geojson'),
     loadData('campuses.geojson'), // NMSU class places, nearest first
     loadData('campus-labels.geojson'), // one name per place
     loadData('outside-mask.geojson'), // everything that isn't a class place
     loadData('rooms.json'), // rooms found on our floor plans (tools/build_rooms.py)
+    loadData('entrances.json'), // outside doors on our floor plans (tools/build_entrances.py)
   ]);
 
   // Each building's map position is its point in the data file.
@@ -209,7 +197,7 @@ async function main() {
 
   const map = initMap(buildingsById, campuses, labels, outside);
   const directionsButton = initDirectionsButton(app, buildingsById);
-  initBuildingSheet(app, buildingsById, rooms, directionsButton.ask);
+  initBuildingSheet(app, buildingsById, rooms, entrances, directionsButton.ask);
   initPill(buildingsById);
   const locate = initLocate(app, map);
   initMapSettings(app, locate);
@@ -217,7 +205,6 @@ async function main() {
   initSearch(buildings, rooms, buildingsById);
   initMenu(app, campuses);
   initWelcome(app);
-  initReportButton(app);
   initTitle(buildingsById);
   initSettings();
 

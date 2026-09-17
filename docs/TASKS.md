@@ -102,6 +102,9 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Map settings button (My location, Turn map with me, Building names, Back to campus; red = on, white = off)
 - [x] Directions button moved to the bottom (replaces Map settings when a building is selected); asks before starting; tapping a room asks too
 - [x] Faster building fly-in (420 ms) and sheet opening
+- [x] Favicon and home-screen icon; Schedule page and Report a problem button removed; building opens faster (320 ms)
+- [x] Tappable entrances on floor plans (photo, or a note from us if there isn't one yet)
+- [ ] Entrance photos: take one per door and list it under entrancePhotos in data/source/building-extras.json
 - [ ] Building photos: no freely licensed photos of the 8 remaining buildings exist online (Commons, Flickr CC checked); needs our own photos
 - [ ] Room-level arrival (phones can't detect floor or room indoors; would need indoor positioning hardware)
 - [ ] Driving directions (would need parking data and a road router; walking only for now)

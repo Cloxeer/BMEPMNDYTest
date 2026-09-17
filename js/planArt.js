@@ -3,6 +3,7 @@
  * @summary Draws the chosen room and the walk to it on top of one of our floor plans.
  *
  * WHAT IT DOES : Loads a floor plan SVG as text, adds on top of it:
+ *                  - a round marker on every outside door you can tap for its photo,
  *                  - the chosen room, filled light blue,
  *                  - the indoor route to it (from data/rooms.json, worked out by
  *                    tools/indoor_routes.py): a see-through blue line with > arrows,
@@ -47,22 +48,39 @@ function arrowsAlong(route, style) {
 }
 
 /**
- * A floor plan with the room highlighted and the indoor route drawn.
+ * SVG for one tappable entrance marker: a white circle with a crimson ring and dot.
+ * @param {object} entrance - a record from data/entrances.json
+ * @returns {string}
+ */
+function entranceMarker(entrance) {
+  const look = CONFIG.sheet;
+  const [x, y] = entrance.point;
+  return '<circle cx="' + x + '" cy="' + y + '" r="' + look.entranceRadius + '" fill="#ffffff" stroke="' +
+    CONFIG.theme.crimson + '" stroke-width="' + look.entranceRing + '"/>' +
+    '<circle cx="' + x + '" cy="' + y + '" r="' + look.entranceDot + '" fill="' + CONFIG.theme.crimson + '"/>';
+}
+
+/**
+ * A floor plan with its entrances marked, and (if chosen) the room highlighted with the indoor route.
  * @param {string} planFile - e.g. "data/floors/hjlc-1.svg"
- * @param {object} room - a record from data/rooms.json on this plan
+ * @param {object|null} room - a record from data/rooms.json on this plan, or null
+ * @param {object[]} entrances - records from data/entrances.json on this plan
  * @returns {Promise<string>} picture URL
  */
-export async function planWithRoom(planFile, room) {
+export async function planWithRoom(planFile, room, entrances) {
   const response = await fetch(planFile);
   if (!response.ok) throw new Error('Could not load ' + planFile);
   const plan = await response.text();
   const style = CONFIG.directions;
   const points = (list) => list.map((point) => point.join(',')).join(' ');
 
-  let extra = '<polygon points="' + points(room.points) + '" fill="' + style.roomColor +
-    '" stroke="' + style.roomEdge + '" stroke-width="' + style.roomEdgeWidth + '"/>';
+  let extra = '';
+  if (room) {
+    extra += '<polygon points="' + points(room.points) + '" fill="' + style.roomColor +
+      '" stroke="' + style.roomEdge + '" stroke-width="' + style.roomEdgeWidth + '"/>';
+  }
 
-  if (room.indoorRoute) {
+  if (room && room.indoorRoute) {
     const [startX, startY] = room.indoorRoute[0];
     extra +=
       '<polyline points="' + points(room.indoorRoute) + '" fill="none" stroke="' + style.lineColor +
@@ -73,6 +91,8 @@ export async function planWithRoom(planFile, room) {
       '<circle cx="' + startX + '" cy="' + startY + '" r="' + style.indoorStartRadius + '" fill="' + style.lineColor +
         '" stroke="#ffffff" stroke-width="' + style.indoorStartRadius / 3 + '"/>';
   }
+
+  extra += entrances.map(entranceMarker).join('');
 
   // Added last, so it's drawn on top; see-through, so room numbers still show.
   const picture = plan.replace('</svg>', extra + '</svg>');

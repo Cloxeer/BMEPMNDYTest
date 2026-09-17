@@ -30,9 +30,10 @@ import { initFloorPlan } from './floorPlan.js';
  * @param {Framework7} app
  * @param {Object.<string, object>} buildingsById
  * @param {object[]} rooms - data/rooms.json
+ * @param {object[]} entrances - data/entrances.json
  * @param {() => void} askDirections - from js/askDirections.js, asked after a room is tapped
  */
-export function initBuildingSheet(app, buildingsById, rooms, askDirections) {
+export function initBuildingSheet(app, buildingsById, rooms, entrances, askDirections) {
   const words = CONFIG.sheet;
 
   // Pulling the header down closes the sheet; scrolling the content never does.
@@ -81,7 +82,7 @@ export function initBuildingSheet(app, buildingsById, rooms, askDirections) {
 
   /* ---------- Section 1: floor plan (js/floorPlan.js) ---------- */
 
-  const floorPlan = initFloorPlan(rooms, openViewer, askDirections);
+  const floorPlan = initFloorPlan(app, rooms, entrances, openViewer, askDirections);
 
   /* ---------- Section 2: photos ---------- */
 

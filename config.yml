@@ -11,8 +11,6 @@
 
 app:
   name: "Better NMSU Maps"
-  reportTitle: "Coming soon"
-  reportText: "Issue reporting arrives later."
   startupErrorText: "Could not start the app. Check your internet connection and refresh."
 
 theme:
@@ -49,7 +47,7 @@ map:
   nearbyKm: 10
   fencePadding: 0.01
   selectZoom: 16.8
-  flyDuration: 420 # ms to fly to a chosen building: quick, with a soft landing
+  flyDuration: 320 # ms to fly to a chosen building: quick, with a soft landing
   flyCurve: 1.2 # how much the flight zooms out on the way (1 = barely)
   maxPixelRatio: 2 # sharp phones draw at most 2x, so cheaper phones stay smooth
   buildingNames: true # names above the info badges (people can switch this in Settings)
@@ -62,8 +60,8 @@ map:
   nameColor: "#1b1b1d"
   nameHalo: "#ffffff"
   nameHaloWidth: 1.5
-  sheetPauseAfterTap: 40 # ms between the map arriving at a tapped building and its sheet opening
-  sheetPauseAfterSearch: 100 # same, for a building picked in search
+  sheetPauseAfterTap: 0 # ms between the map arriving at a tapped building and its sheet opening
+  sheetPauseAfterSearch: 60 # same, for a building picked in search
   fitPadding: 48
   fitMaxZoom: 17
   fitDuration: 900
@@ -164,12 +162,18 @@ menu:
   delayStep: "0.2s"
 
 sheet:
-  planMissingText: "Floor plan not available yet."
-  noOfficialPlanText: "If you don't see it here, we haven't taken a photo yet."
+  planMissingText: "If you don't see it here, we haven't drawn this floor plan yet. - The Brainy Bunch"
+  noOfficialPlanText: "If you don't see it here, we haven't taken a photo yet. - The Brainy Bunch"
   noDescriptionText: "A full description for this building is coming soon."
   noPhotosText: "No photos of this building yet."
   roomFloorUnknownText: "floor not published by NMSU"
-  tapRoomText: "tap a room to choose it"
+  tapPlanText: "tap a room or an entrance"
+  entranceTitle: "Entrance"
+  noEntrancePhotoText: "If you don't see it here, we haven't taken a photo of this entrance yet. - The Brainy Bunch"
+  entranceTapRadius: 45 # floor-plan units around a door marker that count as tapping it
+  entranceRadius: 16 # floor-plan units
+  entranceRing: 5
+  entranceDot: 6
   arrivedTitleText: "You've arrived at"
   arrivedRoomText: "Follow the arrows on the plan to Room"
   arrivedBuildingText: "Choose a room on the plan for directions to it."
@@ -352,7 +356,3 @@ welcome:
   titleLineHeight: 1.15
   byline: "rgba(255, 255, 255, 0.85)"
 
-emptyState:
-  topSpace: "18vh"
-  iconSize: "44px"
-  titleSize: "20px"

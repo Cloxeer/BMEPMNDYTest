@@ -102,6 +102,9 @@ python tools/build_campuses.py
 # Rooms: floor plans + NMSU class schedule (update TERMS each semester)
 python tools/build_rooms.py
 
+# Entrances on the floor plans (no internet needed)
+python tools/build_entrances.py
+
 # Walking paths for directions (OpenStreetMap)
 python tools/build_routes.py
 ```
