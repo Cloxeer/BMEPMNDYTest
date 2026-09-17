@@ -7,6 +7,7 @@
  *                  - Study   (crimson: classroom buildings)
  *                  - Living  (orange: residence halls)
  *                  - Parks   (green: outdoor spaces)
+ *                  - Historic (brown), Food (pink, off at first), Parking (indigo, off at first)
  *                A filled circle means that kind of place is on the map; a white
  *                circle means it's hidden. The choice is remembered on this device.
  *                The badges on the map use the same colours, so the rows also
@@ -19,7 +20,7 @@
 
 import { CONFIG } from '../core/config.js';
 import { store } from '../core/store.js';
-import { escapeHtml } from '../core/html.js';
+import { escapeHtml, iconHtml } from '../core/html.js';
 import { readSaved, save } from '../core/storage.js';
 
 export class MapFiltersButton {
@@ -65,7 +66,7 @@ export class MapFiltersButton {
       const slot = this.categoryNames.length - 1 - row; // --i staggers the glide: the bottom row goes first
       html += '<button class="map-option" type="button" data-category="' + escapeHtml(name) + '" data-color' +
         ' style="--i: ' + slot + '; --row-color: ' + escapeHtml(look.color) + '">' +
-        '<span class="map-option-icon"><i class="icon f7-icons" aria-hidden="true">' + escapeHtml(look.icon) + '</i></span>' +
+        '<span class="map-option-icon">' + iconHtml(look.icon, look.iconSet) + '</span>' +
         '<span class="map-option-label">' + escapeHtml(look.label) + '</span></button>';
     }
     this.stack.innerHTML = html;
@@ -84,13 +85,22 @@ export class MapFiltersButton {
     }
   }
 
-  /** Start with the categories this device hid last time. */
+  /** Start with the categories this device hid last time, or (first visit) the ones config.yml starts hidden. */
   restoreSavedChoice() {
-    let saved;
-    try {
-      saved = JSON.parse(readSaved(this.settings.storageKey) || '[]');
-    } catch (error) {
-      return; // a broken saved value: show everything
+    const savedText = readSaved(this.settings.storageKey);
+    let saved = [];
+    if (savedText === null) {
+      for (const name of this.categoryNames) {
+        if (this.categories[name].startHidden) {
+          saved.push(name);
+        }
+      }
+    } else {
+      try {
+        saved = JSON.parse(savedText);
+      } catch (error) {
+        return; // a broken saved value: show everything
+      }
     }
     if (!Array.isArray(saved)) {
       return;

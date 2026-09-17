@@ -22,8 +22,10 @@
 
 import { CONFIG, loadConfig } from './core/config.js';
 import { store } from './core/store.js';
+import { keepAppOnPhone } from './core/offline.js';
 import { CampusMap } from './map/campusMap.js';
 import { MyLocation } from './map/myLocation.js';
+import { NorthCompass } from './map/northCompass.js';
 import { BottomPill } from './bottomBar/bottomPill.js';
 import { DirectionsButton } from './bottomBar/directionsButton.js';
 import { MapSettingsButton } from './bottomBar/mapSettingsButton.js';
@@ -79,19 +81,19 @@ async function loadData(fileName) {
 
 /**
  * Count what the app loaded, for the Data list on the Settings page.
- * @param {object[]} places - every building and park
+ * @param {object[]} places - every building and place
  * @param {object[]} rooms
  * @param {object[]} entrances
  * @param {object} campuses
  * @returns {object}
  */
 function countData(places, rooms, entrances, campuses) {
-  const counts = { buildings: 0, parks: 0, rooms: rooms.length, entrances: entrances.length, places: campuses.features.length, floorPlans: 0, photos: 0 };
+  const counts = { buildings: 0, park: 0, food: 0, parking: 0, rooms: rooms.length, entrances: entrances.length, places: campuses.features.length, floorPlans: 0, photos: 0 };
   for (const place of places) {
-    if (place.category === 'park') {
-      counts.parks += 1;
+    if (CONFIG.categories[place.category].isPlace) {
+      counts[place.category] += 1; // park, food or parking
     } else {
-      counts.buildings += 1;
+      counts.buildings += 1; // study, living or historic
     }
     counts.floorPlans += Object.keys(place.floorImages).length;
     counts.photos += place.photos.length;
@@ -139,7 +141,7 @@ async function startApp() {
     loadData('outside-mask.geojson'), // everything that isn't a class place
     loadData('rooms.json'), // rooms (tools/build_rooms.py)
     loadData('entrances.json'), // outside doors on our floor plans (tools/build_entrances.py)
-    loadData('parks.geojson'), // parks (tools/build_parks.py)
+    loadData('places.geojson'), // parks, food and parking lots (tools/build_places.py)
   ]);
   const buildingFile = files[0];
   const campuses = files[1];
@@ -147,12 +149,12 @@ async function startApp() {
   const outside = files[3];
   const rooms = files[4].rooms;
   const entrances = files[5].entrances;
-  const parkFile = files[6];
+  const placeFile = files[6];
 
-  // Buildings and parks use the same record shape; "category" tells them apart.
+  // Buildings and places use the same record shape; "category" tells them apart.
   // Each place's map position is the point in its data file.
   const places = [];
-  for (const feature of buildingFile.features.concat(parkFile.features)) {
+  for (const feature of buildingFile.features.concat(placeFile.features)) {
     const place = Object.assign({}, feature.properties);
     place.center = feature.geometry.coordinates;
     places.push(place);
@@ -168,12 +170,13 @@ async function startApp() {
   new BuildingSheet(app, buildingsById, rooms, entrances, () => directionsButton.ask());
   new BottomPill(buildingsById);
   const myLocation = new MyLocation(app, campusMap.map);
-  new MapSettingsButton(app, myLocation, campusMap, buildingsById);
+  new NorthCompass(campusMap, myLocation.compass);
+  new MapSettingsButton(app, myLocation, campusMap);
   new MapFiltersButton(campusMap);
   const routeCard = new RouteCard(app);
   new Directions(app, campusMap, myLocation, routeCard, buildingsById);
   new Search(places, rooms, buildingsById);
-  new Menu(app, campuses, campusMap);
+  new Menu(app, campuses, campusMap, places);
   showWelcome(app);
   followNavbarTitle(buildingsById);
   new SettingsPage(app, campusMap, countData(places, rooms, entrances, campuses));
@@ -183,6 +186,8 @@ async function startApp() {
   window.map = campusMap.map;
   window.store = store;
   window.CONFIG = CONFIG;
+
+  keepAppOnPhone(); // next time, the app opens from the phone's own copy
 }
 
 startApp().catch(showStartupError);

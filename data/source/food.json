@@ -1,0 +1,397 @@
+{
+  "//": [
+    "HOW TO FORMAT THIS FILE (read by tools/build_places.py; run it after editing)",
+    "\"food\" is a list of places to eat or drink on main campus that NMSU Dining currently lists (dining.nmsu.edu/where-to-eat.html).",
+    "Only add a place an official NMSU page lists as open, and remove one when NMSU stops listing it. Each place:",
+    "  \"id\": \"food-527454\"                         \"food-\" + its NMSU campus map id (or its name in lowercase-with-dashes if it has none)",
+    "  \"name\": \"Einstein Bros Bagels\", \"kind\": \"Cafe\"   as NMSU Dining writes them",
+    "  \"searchNames\": [\"Einstein Bros\"]            other spellings people type, so search finds it",
+    "  \"insideBuilding\": {\"name\": \"...\", \"propertyNumber\": \"285\"}   the building it is inside, or null",
+    "  \"concept3dId\": 527454                       its id on NMSU's campus map, or null",
+    "  \"lat\", \"lng\"                                from NMSU's campus map, or else the building it is inside",
+    "  \"sourceText\"                                the small print on its sheet: where these facts come from",
+    "  \"officialSources\": [\"https://...\"]         the pages that confirm it",
+    "  \"photos\": []                               same format as data/source/photos.json"
+  ],
+  "food": [
+    {
+      "id": "food-527454",
+      "name": "Einstein Bros Bagels",
+      "kind": "Cafe",
+      "searchNames": [
+        "Einstein Bros",
+        "Einstein Brothers Bagels",
+        "Einsteins"
+      ],
+      "insideBuilding": {
+        "name": "Corbett Center Student Union",
+        "propertyNumber": "285"
+      },
+      "concept3dId": 527454,
+      "lat": 32.282944,
+      "lng": -106.747917,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/menus/einstein-bagels.html",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-527480",
+      "name": "Taos Restaurant",
+      "kind": "Dining hall",
+      "searchNames": [
+        "Taos"
+      ],
+      "insideBuilding": {
+        "name": "Corbett Center Student Union",
+        "propertyNumber": "285"
+      },
+      "concept3dId": 527480,
+      "lat": 32.282848,
+      "lng": -106.747559,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/menus/taosmenu.html",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-wow",
+      "name": "WOW",
+      "kind": "Restaurant",
+      "searchNames": [],
+      "insideBuilding": {
+        "name": "Corbett Center Student Union",
+        "propertyNumber": "285"
+      },
+      "concept3dId": null,
+      "lat": 32.2828941,
+      "lng": -106.74770949,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); placed at the building it is inside (NMSU Office of Space Planning).",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/WOW-Menu.pdf",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-ramshi",
+      "name": "Ramshi",
+      "kind": "Restaurant",
+      "searchNames": [],
+      "insideBuilding": {
+        "name": "Corbett Center Student Union",
+        "propertyNumber": "285"
+      },
+      "concept3dId": null,
+      "lat": 32.2828941,
+      "lng": -106.74770949,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); placed at the building it is inside (NMSU Office of Space Planning).",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/RAMSHI-MENU.pdf",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-mediterranean",
+      "name": "Mediterranean",
+      "kind": "Restaurant",
+      "searchNames": [
+        "Mediterranean Grill"
+      ],
+      "insideBuilding": {
+        "name": "Corbett Center Student Union",
+        "propertyNumber": "285"
+      },
+      "concept3dId": null,
+      "lat": 32.2828941,
+      "lng": -106.74770949,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); placed at the building it is inside (NMSU Office of Space Planning).",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/Mediterranean-Menu.pdf",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-531041",
+      "name": "Pete's Patio",
+      "kind": "Restaurant",
+      "searchNames": [
+        "Petes Patio",
+        "Pete's Patio Bar"
+      ],
+      "insideBuilding": {
+        "name": "Corbett Center Student Union",
+        "propertyNumber": "285"
+      },
+      "concept3dId": 531041,
+      "lat": 32.282932,
+      "lng": -106.747276,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/menus/petes-patio.html",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-527482",
+      "name": "Wild Blue Modern Japanese Kitchen",
+      "kind": "Restaurant",
+      "searchNames": [
+        "Wild Blue Sushi",
+        "Wild Blue"
+      ],
+      "insideBuilding": {
+        "name": "Corbett Center Student Union",
+        "propertyNumber": "285"
+      },
+      "concept3dId": 527482,
+      "lat": 32.28281,
+      "lng": -106.747932,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/menus/wild-blue-sushi.html",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-527458",
+      "name": "Bookstore Cafe",
+      "kind": "Coffee",
+      "searchNames": [
+        "Starbucks",
+        "Bookstore Cafe",
+        "Starbucks at the Bookstore",
+        "Bookstore Coffee"
+      ],
+      "insideBuilding": {
+        "name": "NMSU Bookstore",
+        "propertyNumber": "632"
+      },
+      "concept3dId": 527458,
+      "lat": 32.284851,
+      "lng": -106.75013,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-527474",
+      "name": "Panda Express",
+      "kind": "Restaurant",
+      "searchNames": [
+        "Panda"
+      ],
+      "insideBuilding": {
+        "name": "NMSU Bookstore",
+        "propertyNumber": "632"
+      },
+      "concept3dId": 527474,
+      "lat": 32.284916,
+      "lng": -106.750496,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-527490",
+      "name": "Alma's Kitchen",
+      "kind": "Restaurant",
+      "searchNames": [
+        "Almas Kitchen"
+      ],
+      "insideBuilding": {
+        "name": "Frenger Food Court",
+        "propertyNumber": "262"
+      },
+      "concept3dId": 527490,
+      "lat": 32.281242,
+      "lng": -106.750496,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/Almas-Kitchen-Menu-2026.pdf",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-527488",
+      "name": "Coffee Haus",
+      "kind": "Coffee",
+      "searchNames": [
+        "Coffee House",
+        "Coffeehaus"
+      ],
+      "insideBuilding": {
+        "name": "Frenger Food Court",
+        "propertyNumber": "262"
+      },
+      "concept3dId": 527488,
+      "lat": 32.281208,
+      "lng": -106.750641,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-568589",
+      "name": "Gila Grill",
+      "kind": "Restaurant",
+      "searchNames": [],
+      "insideBuilding": {
+        "name": "Health and Social Services Building",
+        "propertyNumber": "590"
+      },
+      "concept3dId": 568589,
+      "lat": 32.28339,
+      "lng": -106.751572,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/menus/gila-grill.html",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-527456",
+      "name": "Einstein Bros Bagels (Health and Social Services)",
+      "kind": "Cafe",
+      "searchNames": [
+        "Einstein Bros Bagels",
+        "Einstein Bros",
+        "Einstein Brothers Bagels",
+        "Einsteins"
+      ],
+      "insideBuilding": {
+        "name": "Health and Social Services Building",
+        "propertyNumber": "590"
+      },
+      "concept3dId": 527456,
+      "lat": 32.283352,
+      "lng": -106.751556,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/menus/einstein-bagels.html",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-527460",
+      "name": "Zuhl Fuel",
+      "kind": "Coffee",
+      "searchNames": [
+        "Starbucks",
+        "Zuhl Fuel Starbucks"
+      ],
+      "insideBuilding": {
+        "name": "Zuhl Library",
+        "propertyNumber": "461"
+      },
+      "concept3dId": 527460,
+      "lat": 32.281429,
+      "lng": -106.749947,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/menus/zuhl-fuel.html",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-527478",
+      "name": "Subway",
+      "kind": "Restaurant",
+      "searchNames": [
+        "Subway Sandwiches"
+      ],
+      "insideBuilding": {
+        "name": "O'Donnell Hall",
+        "propertyNumber": "287"
+      },
+      "concept3dId": 527478,
+      "lat": 32.279205,
+      "lng": -106.751961,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-la-jefa",
+      "name": "La Jefa",
+      "kind": "Restaurant",
+      "searchNames": [
+        "La Jefa NMSU"
+      ],
+      "insideBuilding": {
+        "name": "Gerald Thomas Hall",
+        "propertyNumber": "244"
+      },
+      "concept3dId": null,
+      "lat": 32.2811321,
+      "lng": -106.75696089,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); placed at the building it is inside (NMSU Office of Space Planning).",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://dining.nmsu.edu/LA-JEFA-NMSU-MENU-16.pdf",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    },
+    {
+      "id": "food-527476",
+      "name": "1888 Taphouse & Kitchen",
+      "kind": "Restaurant",
+      "searchNames": [
+        "1888 Taphouse",
+        "Taphouse and Kitchen",
+        "1888 Tap House"
+      ],
+      "insideBuilding": {
+        "name": "NMSU Golf Course Clubhouse",
+        "propertyNumber": "597"
+      },
+      "concept3dId": 527476,
+      "lat": 32.286484,
+      "lng": -106.725784,
+      "sourceText": "Listed on NMSU Dining's Where to Eat page (dining.nmsu.edu); location from NMSU's campus map.",
+      "officialSources": [
+        "https://dining.nmsu.edu/where-to-eat.html",
+        "https://golf.nmsu.edu/1888_taphouse_kitchen/index.html",
+        "https://golf.nmsu.edu/1888_taphouse_kitchen/1888_Taphouse_Kitchen_FINAL%20MENU_2.pdf",
+        "https://map.nmsu.edu/?id=1888"
+      ],
+      "photos": []
+    }
+  ]
+}

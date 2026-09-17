@@ -10,7 +10,9 @@
     "  \"floorImages\": {\"1\": \"data/floors/x.svg\"}   floor number -> our redrawn floor plan",
     "  \"postedImages\": {\"1\": \"data/floors/x.jpg\"}  floor number -> photo of the evacuation map posted in the building",
     "  \"entrancePhotos\": {\"323-1-2\": \"data/photos/x.jpg\"}  entrance id (from data/entrances.json) -> photo of that door",
-    "  \"description\": [\"First paragraph.\", \"Second paragraph.\"]"
+    "  \"description\": [\"First paragraph.\", \"Second paragraph.\"]",
+    "  \"historic\": \"Listed on the National Register...\"   an official historic designation, shown on the sheet",
+    "  \"historicSource\": \"https://...\"            the official page for that designation"
   ],
   "323": {
     "code": "HJLC",
@@ -48,7 +50,9 @@
   },
   "33": {
     "floors": 2,
-    "floorsSource": "OpenStreetMap building:levels"
+    "floorsSource": "OpenStreetMap building:levels",
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
   },
   "619": {
     "aka": [
@@ -102,10 +106,118 @@
     "floorsSource": "OpenStreetMap building:levels (way 81817224 \"Rhodes-Garrett-Hamiel Residence Center\", building:levels=2, centered ~32.284404,-106.748920, near the complex). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly.",
     "aka": [
       "RGH"
-    ]
+    ],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
   },
   "605": {
     "floors": 3,
     "floorsSource": "OpenStreetMap building:levels (multiple Chamisa Village apartment buildings A-H, e.g. way 489138822-826 and relations 3603529/3603660/3603661, all building:levels=3, within the Property 605 footprint). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly."
+  },
+  "645": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count)"
+  },
+  "413F": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "aka": [
+      "Cervantes"
+    ]
+  },
+  "462K": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "aka": [
+      "VDM"
+    ]
+  },
+  "206": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "aka": [
+      "Student Family Housing"
+    ]
+  },
+  "214": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "aka": [
+      "Student Family Housing"
+    ]
+  },
+  "596": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "aka": [
+      "Stadium Annex"
+    ]
+  },
+  "251": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "aka": [
+      "Natatorium"
+    ]
+  },
+  "597": {
+    "floors": null,
+    "floorsSource": "Not published (NMSU lists no story count)"
+  },
+  "10": {
+    "historic": "Listed on the National Register of Historic Places (1988, #88001548)",
+    "historicSource": "https://npgallery.nps.gov/AssetDetail/NRIS/88001548"
+  },
+  "35": {
+    "historic": "Listed on the National Register of Historic Places (1989, #88001546)",
+    "historicSource": "https://npgallery.nps.gov/AssetDetail/NRIS/88001546"
+  },
+  "36": {
+    "historic": "Listed on the National Register of Historic Places (1989, #88001549)",
+    "historicSource": "https://npgallery.nps.gov/AssetDetail/NRIS/88001549"
+  },
+  "34": {
+    "historic": "Listed on the National Register of Historic Places (1989, #88001547)",
+    "historicSource": "https://npgallery.nps.gov/AssetDetail/NRIS/88001547"
+  },
+  "389": {
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+  },
+  "32": {
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+  },
+  "56": {
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+  },
+  "82": {
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+  },
+  "154": {
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+  },
+  "172": {
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+  },
+  "179": {
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+  },
+  "187": {
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+  },
+  "188": {
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+  },
+  "225": {
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
   }
 }

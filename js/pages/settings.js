@@ -144,7 +144,7 @@ export class SettingsPage {
 
   /**
    * Fill the Data list from what the app really loaded, and the credit at the bottom.
-   * @param {object} counts - { buildings, parks, rooms, entrances, places, floorPlans, photos }
+   * @param {object} counts - { buildings, park, food, parking, rooms, entrances, places, floorPlans, photos }
    */
   fillData(counts) {
     document.querySelector('#website-version').textContent = this.words.versionText + ' ' + this.words.version;

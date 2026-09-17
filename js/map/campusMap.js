@@ -9,10 +9,11 @@
  *                4. Tapping a badge chooses its place; tapping anywhere else lets go.
  *                5. Flies to a place whenever a different one is chosen, then
  *                   lets its sheet open.
- *                Other files use its methods: showHome, showPlace,
+ *                6. Draws the parking lots (./parkingLayers.js) while the Parking filter is on.
+ *                Other files use its methods: goHome, showHome, showPlace,
  *                setBuildingNames, setShownCategories, and `ready`.
  * DEPENDS ON   : maplibre-gl (the global `maplibregl`), ../core/config.js,
- *                ../core/store.js, ../logic/shapes.js, ./campusLayers.js, ./badges.js
+ *                ../core/store.js, ../logic/shapes.js, ./campusLayers.js, ./badges.js, ./parkingLayers.js
  * CONTROLS     : the #map element.
  * USED BY      : js/main.js (makes it and hands it to the files that need it)
  */
@@ -22,6 +23,7 @@ import { store } from '../core/store.js';
 import { allPointsOf, boxAround } from '../logic/shapes.js';
 import { addCampusLayers, hideBasemapBusinesses } from './campusLayers.js';
 import { addBadges, categoryFilter, badgePictureRule, nameColorRule } from './badges.js';
+import { setParkingLotsVisible } from './parkingLayers.js';
 
 /**
  * Starts fast and settles softly ("ease-out"), used for flying to places.
@@ -58,6 +60,7 @@ export class CampusMap {
     this.buildingsById = buildingsById;
     this.namesVisible = true; // the Building names setting
     this.shownCategories = Object.keys(CONFIG.categories); // Map filters: which categories are on the map
+    this.selectedId = null; // the chosen place, shown even when its category is switched off
 
     // `ready` finishes once the map has loaded and the badges are drawn (directions wait for it).
     this.ready = new Promise((resolve) => {
@@ -106,6 +109,9 @@ export class CampusMap {
     hideBasemapBusinesses(this.map);
     addCampusLayers(this.map, campuses, labels, outside);
     addBadges(this.map, this.buildingsById, this.shownCategories, this.namesVisible);
+    // Campus names go on top, so badges can't hide them (they only show zoomed out, before building names appear).
+    this.map.moveLayer('campus-name');
+    setParkingLotsVisible(this.map, this.shownCategories.includes('parking'));
     this.markSelected(store.get().selectedId);
     this.listenForTaps();
     this.markReady();
@@ -128,8 +134,9 @@ export class CampusMap {
     if (!this.hasBadges()) {
       return; // still loading: the badges are drawn with this choice
     }
-    this.map.setFilter('building-pins', categoryFilter(categories));
-    this.map.setFilter('building-names', categoryFilter(categories));
+    this.map.setFilter('building-pins', categoryFilter(categories, this.selectedId));
+    this.map.setFilter('building-names', categoryFilter(categories, this.selectedId));
+    setParkingLotsVisible(this.map, categories.includes('parking'));
   }
 
   /**
@@ -153,17 +160,35 @@ export class CampusMap {
    * @param {string|null} buildingId
    */
   markSelected(buildingId) {
+    this.selectedId = buildingId;
     if (!this.hasBadges()) {
       return; // still loading: drawEverything calls this again
     }
+    this.map.setFilter('building-pins', categoryFilter(this.shownCategories, buildingId));
+    this.map.setFilter('building-names', categoryFilter(this.shownCategories, buildingId));
     this.map.setLayoutProperty('building-pins', 'icon-image', badgePictureRule(buildingId));
     this.map.setPaintProperty('building-names', 'text-color', nameColorRule(buildingId));
   }
 
-  /** Tapping a badge (or its name) chooses its place; tapping anywhere else lets go. */
+  /**
+   * Is a point inside the fence around the Las Cruces places?
+   * @param {number[]} point - [lng, lat]
+   * @returns {boolean}
+   */
+  isInsideFence(point) {
+    const southWest = this.fence[0];
+    const northEast = this.fence[1];
+    return point[0] >= southWest[0] && point[0] <= northEast[0] && point[1] >= southWest[1] && point[1] <= northEast[1];
+  }
+
+  /** Tapping a badge (or its name, or a parking lot) chooses its place; tapping anywhere else lets go. */
   listenForTaps() {
     this.map.on('click', (event) => {
-      const hits = this.map.queryRenderedFeatures(event.point, { layers: ['building-pins', 'building-names'] });
+      const layers = ['building-pins', 'building-names']; // badges first
+      if (this.map.getLayer('parking-fill')) {
+        layers.push('parking-name', 'parking-fill'); // parking lots, once they've been downloaded
+      }
+      const hits = this.map.queryRenderedFeatures(event.point, { layers: layers });
       if (hits.length > 0) {
         store.selectBuilding(this.buildingsById[hits[0].properties.id], 'map');
       } else {
@@ -211,7 +236,12 @@ export class CampusMap {
       if (!building) {
         return; // nothing chosen
       }
-      this.map.setMaxBounds(this.fence);
+      // Places far from Las Cruces (e.g. parking at NMSU Alamogordo) lift the fence; nearby ones put it back.
+      if (this.isInsideFence(building.center)) {
+        this.map.setMaxBounds(this.fence);
+      } else {
+        this.map.setMaxBounds(null);
+      }
       // A short flight that starts quick and settles softly.
       this.map.flyTo({
         center: building.center,
@@ -224,8 +254,13 @@ export class CampusMap {
     });
   }
 
+  /** Fly "home" (config.yml map.homeBuilding, Corbett Center), facing north: Map settings > Home, and the compass. */
+  goHome() {
+    this.showHome(this.buildingsById[CONFIG.map.homeBuilding].center);
+  }
+
   /**
-   * Fly "home" to Corbett Center Student Union, facing north (Map settings > Home).
+   * Fly "home" to Corbett Center Student Union, zoomed out to show main campus, facing north.
    * @param {number[]} center - Corbett Center's [lng, lat]
    */
   showHome(center) {

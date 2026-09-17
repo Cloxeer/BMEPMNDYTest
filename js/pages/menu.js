@@ -1,34 +1,37 @@
 /**
  * @file js/pages/menu.js
- * @summary The full-screen menu: Map, Locations, Settings.
+ * @summary The full-screen menu: Map, Locations, Other Locations, Settings.
  *
  * WHAT IT DOES : The menu button (top left) fades the menu in, one word after
- *                another. The page you're on is underlined. Tapping Locations or
- *                Settings closes the menu and opens that page; closing a page
- *                takes you back to the map.
- * DEPENDS ON   : Framework7 (popups), ./locations.js, #menu-popup in index.html.
- * CONTROLS     : #menu-popup, and opening the Locations and Settings pages.
+ *                another. The page you're on is underlined. Tapping a page closes
+ *                the menu and opens that page; closing a page takes you back to the map.
+ * DEPENDS ON   : Framework7 (popups), ./locations.js, ./otherLocations.js, #menu-popup in index.html.
+ * CONTROLS     : #menu-popup, and opening the Locations, Other Locations and Settings pages.
  * USED BY      : js/main.js
  */
 
 import { LocationsPage } from './locations.js';
+import { OtherLocationsPage } from './otherLocations.js';
 
-const PAGE_NAMES = ['map', 'locations', 'settings']; // the menu's words, top to bottom
+const PAGE_NAMES = ['map', 'locations', 'other', 'settings']; // the menu's words, top to bottom (#menu-map, ...)
 
 export class Menu {
   /**
    * @param {Framework7} app
-   * @param {object} campuses - data/campuses.geojson (for the Locations page)
+   * @param {object} campuses - data/campuses.geojson (for the Other Locations page)
    * @param {CampusMap} campusMap
+   * @param {object[]} places - every building and place (for the Locations page)
    */
-  constructor(app, campuses, campusMap) {
+  constructor(app, campuses, campusMap, places) {
     this.menu = app.popup.create({ el: '#menu-popup' });
     this.menuElement = document.querySelector('#menu-popup');
     this.pages = {
       locations: app.popup.create({ el: '#locations-popup' }),
+      other: app.popup.create({ el: '#other-locations-popup' }),
       settings: app.popup.create({ el: '#settings-popup' }),
     };
-    new LocationsPage(campuses, this.pages.locations, campusMap);
+    new LocationsPage(places, this.pages.locations);
+    new OtherLocationsPage(campuses, this.pages.other, campusMap);
 
     this.underline('map');
 
@@ -41,7 +44,7 @@ export class Menu {
       this.underline('map');
       this.menu.close();
     });
-    for (const name of ['locations', 'settings']) {
+    for (const name of ['locations', 'other', 'settings']) {
       const page = this.pages[name];
       page.on('closed', () => this.underline('map'));
       document.querySelector('#menu-' + name).addEventListener('click', () => {
@@ -52,7 +55,7 @@ export class Menu {
     }
   }
 
-  /** @param {string} current - underline this page's word: 'map', 'locations' or 'settings' */
+  /** @param {string} current - underline this page's word: 'map', 'locations', 'other' or 'settings' */
   underline(current) {
     for (const name of PAGE_NAMES) {
       document.querySelector('#menu-' + name).classList.toggle('is-current', name === current);

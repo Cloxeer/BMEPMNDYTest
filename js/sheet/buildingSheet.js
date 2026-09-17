@@ -25,6 +25,15 @@ import { escapeHtml, safeUrl } from '../core/html.js';
 import { FloorPlan } from './floorPlan.js';
 import { PhotoViewer } from './photoViewer.js';
 
+/**
+ * Is this a place that isn't a building (a park, food place or parking lot)? See isPlace in config.yml categories.
+ * @param {object} building
+ * @returns {boolean}
+ */
+function isPlace(building) {
+  return Boolean(CONFIG.categories[building.category].isPlace);
+}
+
 export class BuildingSheet {
   /**
    * @param {Framework7} app
@@ -92,8 +101,8 @@ export class BuildingSheet {
     const photos = building.photos;
     this.photos.hidden = photos.length === 0;
     this.photosEmpty.hidden = photos.length > 0;
-    if (building.category === 'park') {
-      this.photosEmpty.textContent = this.words.parkNoPhotosText;
+    if (isPlace(building)) {
+      this.photosEmpty.textContent = this.words.placeNoPhotosText;
     } else {
       this.photosEmpty.textContent = this.words.noPhotosText;
     }
@@ -139,16 +148,29 @@ export class BuildingSheet {
    * @returns {Array[]}
    */
   factsFor(building) {
-    if (building.category === 'park') {
-      return [[this.words.typeLabel, building.kind]]; // parks aren't buildings: just their type
+    if (isPlace(building)) {
+      // Places aren't buildings: their type, and where it is or what permit it needs, when that applies.
+      const facts = [[this.words.typeLabel, building.kind]];
+      if (building.category === 'food' && building.insideName) {
+        facts.push([this.words.insideLabel, building.insideName]);
+      }
+      if (building.category === 'parking') {
+        facts.push([this.words.permitLabel, building.permit]);
+        facts.push([this.words.addressLabel, building.address || building.campus]);
+      }
+      return facts;
     }
     const code = building.code || this.words.unknownText;
-    return [
+    const facts = [
       [this.words.addressLabel, building.address],
       [this.words.buildingLabel, code + ' · ' + this.words.numberText + ' ' + building.propertyNumber],
       [this.words.builtLabel, building.built],
       [this.words.floorsLabel, building.floors.length],
     ];
+    if (building.historic) {
+      facts.push([this.words.historicLabel, building.historic]); // an official designation
+    }
+    return facts;
   }
 
   /**
@@ -157,8 +179,8 @@ export class BuildingSheet {
    * @returns {string}
    */
   sourceTextFor(building) {
-    if (building.category === 'park') {
-      return this.words.parkSourceText;
+    if (isPlace(building)) {
+      return building.source; // written by tools/build_places.py from the official source
     }
     // Name where the floor count comes from, only when it isn't NMSU's own data.
     let floorsNote = '';
@@ -174,18 +196,18 @@ export class BuildingSheet {
    * @param {object} building
    */
   fillAbout(building) {
-    const isPark = building.category === 'park';
+    const place = isPlace(building);
     const hasDescription = building.description.length > 0;
 
-    if (isPark) {
-      this.aboutTitle.textContent = this.words.parkAboutTitle;
+    if (place) {
+      this.aboutTitle.textContent = this.words.placeAboutTitle;
     } else {
       this.aboutTitle.textContent = this.words.aboutTitle;
     }
 
     let paragraphs = building.description;
-    if (!hasDescription && isPark) {
-      paragraphs = [this.words.parkNoDescriptionText];
+    if (!hasDescription && place) {
+      paragraphs = [this.words.placeNoDescriptionText];
     } else if (!hasDescription) {
       paragraphs = [this.words.noDescriptionText];
     }
@@ -255,7 +277,8 @@ export class BuildingSheet {
       if (key !== this.shownKey) {
         const differentBuilding = !this.shownKey.startsWith(state.selectedId + '|');
         if (differentBuilding) {
-          this.sheetElement.dataset.category = building.category; // parks hide the floor plan part (styles/sheet.css)
+          this.sheetElement.dataset.category = building.category;
+          this.sheetElement.toggleAttribute('data-place', isPlace(building)); // places hide the floor plan part (styles/sheet.css)
           this.floorPlan.reset();
           this.title.textContent = building.name;
           this.fillPhotos(building);

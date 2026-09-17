@@ -92,13 +92,44 @@ BUILDINGS = [
     ('658', 'Juniper Hall', None, 529217, None),
     ('185', 'Rhodes-Garrett-Hamiel Residence Hall', None, 529216, None),
     ('605', 'Chamisa Village', None, 527969, None),
+    # The rest of NMSU Housing's communities (housing.nmsu.edu). Apartment villages made of
+    # several buildings are one place on the map: their buildings are listed in COMPLEX_PARTS.
+    ('645', 'Chamisa Village II', None, 529224, None),
+    ('413F', 'Cervantes Village', None, 529189, None),
+    ('462K', 'Vista Del Monte', None, 529228, None),
+    ('206', 'Sutherland Village', None, 535321, None),
+    ('214', 'Tom Fort Village', None, 536066, None),
+    # Every other Las Cruces building with classes in the Fall 2026 + Spring 2027 schedule,
+    # where the schedule's name clearly matches NMSU's records:
+    ('596', 'Fulton Athletic Center', None, 660843, None),
+    ('251', 'Aquatics Center', None, 660950, None),
+    ('597', 'Golf Course Clubhouse', None, 660865, None),
+    ('369', 'Photovoltaic Center', None, 660870, None),
+    ('30', 'Campus Police / Ag Institute', None, 660999, None),
+    # Historic buildings not listed above: on the National Register of Historic Places, or named
+    # historic in NMSU's Heritage Preservation Plan (the designations are in building-extras.json).
+    ('36', 'Nason House', None, 525431, None),
+    ('32', 'Young Hall', None, 526017, None),
+    ('56', 'Dove Hall', None, 525503, None),
+    ('154', 'Garcia Center', None, 527925, None),
+    ('172', 'Hadley Hall', None, 525519, None),
+    ('179', "O'Loughlin House", None, 525434, None),
 ]
 
-# Residence halls: shown in the "Living" category (orange). Everything else is "Study" (crimson).
-LIVING = {'275', '604', '658', '185', '605'}
+# Apartment villages: the first property number (used in BUILDINGS) -> every building in the village.
+# Their outline on the map is all their buildings together.
+COMPLEX_PARTS = {
+    '413F': ['413F', '413G', '415H', '415J', '387B', '387D', '387E'],
+    '462K': ['462K', '462M', '462N', '462P', '526Q', '526R', '526S', '526T', '526U', '526V', '526W', '526X'],
+}
+
+# Residence halls: shown in the "Living" category (orange). Historic-only buildings: "Historic" (brown).
+# Everything else is "Study" (crimson). A study or living building can also be historic: see "historic" in building-extras.json.
+LIVING = {'275', '604', '658', '185', '605', '645', '413F', '462K', '206', '214'}
+HISTORIC = {'36', '32', '56', '154', '172', '179'}
 
 # Buildings with no classes aren't on the Registrar's list, so their code comes from Space Planning.
-NOT_ON_REGISTRAR_LIST = {'285', '657', '365', '619', '190', '662', '604', '658', '605'}
+NOT_ON_REGISTRAR_LIST = {'36', '56', '154', '172', '179', '285', '657', '365', '619', '190', '662', '604', '658', '605', '645', '413F', '462K', '206', '214', '369'}
 
 BUILDINGS_NOTE = [
     'Made by tools/build_buildings.py. Do not edit by hand: add a building to BUILDINGS in the script,',
@@ -106,7 +137,8 @@ BUILDINGS_NOTE = [
     'Format: GeoJSON. One Feature per building: a Point where NMSU places it, and properties:',
     'id and propertyNumber (NMSU property number), code, name, aka (other names search finds), address, built (year),',
     'floors ([1, 2, ...], empty when unknown), floorsSource, nmsuUrl, photos, source, category ("study" or "living"),',
-    'floorImages and postedImages (floor -> picture file), description (paragraphs), doors ([lng, lat] points), codeSource.',
+    'floorImages and postedImages (floor -> picture file), description (paragraphs), doors ([lng, lat] points), codeSource,',
+    'historic (an official historic designation, or null). category can also be "historic".',
     'A missing fact is null or empty, and the app shows "Unknown" for it: nothing is guessed.',
 ]
 SHAPES_NOTE = [
@@ -122,11 +154,17 @@ def download_json(url):
         return json.load(response)
 
 
+def parts_of(number):
+    """Every property number that makes up a building: just itself, or all of an apartment village's buildings."""
+    return COMPLEX_PARTS.get(number, [number])
+
+
 def property_numbers_query():
     """The ArcGIS search text for every building in BUILDINGS: Property IN ('323','461',...)."""
     quoted = []
     for building in BUILDINGS:
-        quoted.append("'" + building[0] + "'")
+        for part in parts_of(building[0]):
+            quoted.append("'" + part + "'")
     return 'Property+IN+(' + ','.join(quoted) + ')'
 
 
@@ -135,7 +173,8 @@ def download_official_records():
     url = NMSU_BUILDINGS + '?where=' + property_numbers_query() + '&outFields=*&returnGeometry=false&f=json'
     records = {}
     for row in download_json(url)['features']:
-        records[row['attributes']['Property']] = row['attributes']
+        # A few properties (e.g. Sutherland Village) have one row per house: keep the first.
+        records.setdefault(row['attributes']['Property'], row['attributes'])
     return records
 
 
@@ -143,10 +182,45 @@ def download_outlines():
     """NMSU's official outline (polygon) of every building in BUILDINGS, by property number."""
     url = (NMSU_BUILDINGS + '?where=' + property_numbers_query() + '&outFields=Property'
            '&returnGeometry=true&outSR=4326&f=geojson')
-    outlines = {}
+    shapes_by_property = {}  # property number -> every outline it has
     for feature in download_json(url)['features']:
-        outlines[feature['properties']['Property']] = feature['geometry']
+        shapes_by_property.setdefault(feature['properties']['Property'], []).append(feature['geometry'])
+
+    outlines = {}
+    for building in BUILDINGS:
+        geometries = []
+        for part in parts_of(building[0]):
+            geometries.extend(shapes_by_property[part])
+        outlines[building[0]] = combine_outlines(geometries)
     return outlines
+
+
+def combine_outlines(geometries):
+    """One outline from several: the same geometry when there's one, otherwise a MultiPolygon of them all."""
+    if len(geometries) == 1:
+        return geometries[0]
+    polygons = []
+    for geometry in geometries:
+        if geometry['type'] == 'Polygon':
+            polygons.append(geometry['coordinates'])
+        else:
+            polygons.extend(geometry['coordinates'])
+    return {'type': 'MultiPolygon', 'coordinates': polygons}
+
+
+def built_years(official, number):
+    """The year built, or "1983-1991" for an apartment village whose buildings were built in different years."""
+    years = []
+    for part in parts_of(number):
+        year = official[part]['DateBuilt']
+        if year and year not in years:
+            years.append(year)
+    years.sort()
+    if len(years) == 0:
+        return None
+    if len(years) == 1:
+        return years[0]
+    return years[0] + '–' + years[-1]
 
 
 def metres_to_outline(point, geometry):
@@ -256,6 +330,8 @@ def main():
         category = 'study'  # colour and Map filters group
         if number in LIVING:
             category = 'living'
+        elif number in HISTORIC:
+            category = 'historic'
 
         # Every building has the same fields, so every sheet looks the same.
         # Empty means "not added yet"; the app shows a message instead.
@@ -266,7 +342,7 @@ def main():
             'aka': other_names(record, number, extra),
             'address': record['Address_1'].title() + ', Las Cruces, NM ' + record['Zip_Code'],
             'propertyNumber': number,
-            'built': record['DateBuilt'],
+            'built': built_years(official, number),
             'floors': list(range(1, floors + 1)),
             'floorsSource': floors_source,
             'nmsuUrl': nmsu_url,
@@ -277,6 +353,7 @@ def main():
             'postedImages': existing_pictures(extra.get('postedImages', {}), number),  # floor -> photo of the posted map
             'description': extra.get('description', []),  # paragraphs
             'doors': doors_of(doors, outlines[number]),  # where directions lead (empty = the nearest path)
+            'historic': extra.get('historic'),  # an official historic designation, or None
         }
         if not building['code']:
             building['codeSource'] = 'Not published by NMSU yet'

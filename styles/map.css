@@ -1,7 +1,7 @@
 /*
   styles/map.css — the map, and the facing beam on your location dot.
 
-  CONTROLS     : #map, .user-heading, MapLibre's hidden location button.
+  CONTROLS     : #map, .user-heading, MapLibre's hidden location button, the compass.
   DEPENDS ON   : Framework7, and the CSS variables js/core/config.js makes from
                  config.yml (pill.height -> --pill-height, and so on).
   USED BY      : index.html
@@ -34,7 +34,20 @@
 /* MapLibre's own location button stays hidden; Map settings drives it (js/map/myLocation.js). */
 .maplibregl-ctrl-group:has(.maplibregl-ctrl-geolocate) { display: none; }
 
+/* ---------- The compass (Map settings > Compass) ----------
+   MapLibre's own compass button, restyled like Apple Maps: a small white circle
+   below the navbar, top left. Its needle points north as the map turns. */
+.maplibregl-ctrl-top-left { top: calc(var(--f7-navbar-height) + env(safe-area-inset-top, 0px) + var(--map-settings-compass-top)); left: var(--s1); }
+.maplibregl-ctrl-top-left .maplibregl-ctrl-group {
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 var(--pill-shadow-y) var(--pill-shadow-blur) var(--theme-shadow-strong);
+  animation: compass-in var(--pill-floor-move-time) var(--theme-smooth);
+}
+.maplibregl-ctrl-top-left .maplibregl-ctrl-compass { width: var(--map-settings-compass-size); height: var(--map-settings-compass-size); }
+@keyframes compass-in { from { opacity: 0; transform: scale(var(--pill-floor-start-scale)); } }
+
 /* ---------- "Reduce motion" setting ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .user-heading { transition: none !important; animation: none !important; }
+  .user-heading, .maplibregl-ctrl-top-left .maplibregl-ctrl-group { transition: none !important; animation: none !important; }
 }

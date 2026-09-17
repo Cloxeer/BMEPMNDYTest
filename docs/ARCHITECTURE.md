@@ -68,7 +68,9 @@ Four rules keep it predictable:
 | `js/core/config.js` | Loads `config.yml`, fills `CONFIG`, sets the CSS variables |
 | `js/core/store.js` | `Store` class: the app state and the actions that change it |
 | `js/core/storage.js` | Remembering choices on this device (safe when storage is blocked) |
-| `js/core/html.js` | Escapes data before it goes into HTML |
+| `js/core/html.js` | Escapes data before it goes into HTML; icon HTML |
+| `js/core/offline.js` | Turns on the service worker (`sw.js`) |
+| `sw.js` | Service worker: keeps the app, data, libraries and seen map tiles on the phone (Workbox), so repeat opens load in milliseconds and work offline |
 | **logic** | |
 | `js/logic/shapes.js` | Point inside a polygon, polygon area, box around points |
 | `js/logic/geo.js` | Distances in metres, "am I inside this building?" |
@@ -81,10 +83,12 @@ Four rules keep it predictable:
 | `js/map/badges.js` | The "i" badges and names, and the MapLibre rules that colour them |
 | `js/map/myLocation.js` | `MyLocation`: your blue dot (MapLibre's GeolocateControl) |
 | `js/map/compass.js` | `Compass`: the facing beam, and "Turn map with me" |
+| `js/map/northCompass.js` | `NorthCompass`: the small compass top left (Map settings > Compass, off at first); tap = Home |
+| `js/map/parkingLayers.js` | Parking lot shapes and names, downloaded the first time the Parking filter is switched on |
 | **bottomBar** | |
 | `js/bottomBar/bottomPill.js` | `BottomPill`: "Tap a building" / "Info" / "Floor 1", and the floor stack |
-| `js/bottomBar/mapSettingsButton.js` | `MapSettingsButton`: My location, Turn map with me, Building names, Home |
-| `js/bottomBar/mapFiltersButton.js` | `MapFiltersButton`: show or hide Study / Living / Parks |
+| `js/bottomBar/mapSettingsButton.js` | `MapSettingsButton`: My location, Turn map with me, Building names, Compass, Home |
+| `js/bottomBar/mapFiltersButton.js` | `MapFiltersButton`: show or hide Study / Living / Parks / Historic / Food / Parking (Food and Parking off at first) |
 | `js/bottomBar/directionsButton.js` | `DirectionsButton`: the "Get directions?" / "Change destination?" questions |
 | **directions** | |
 | `js/directions/directions.js` | `Directions`: follows GPS, finds the route (Dijkstra via geojson-path-finder), detects arriving |
@@ -98,8 +102,9 @@ Four rules keep it predictable:
 | `js/sheet/photoViewer.js` | `PhotoViewer`: full-screen pictures with pinch-zoom |
 | **pages** | |
 | `js/pages/search.js` | `Search`: the search drop-down (rooms, then buildings) |
-| `js/pages/menu.js` | `Menu`: the full-screen menu, opens Locations and Settings |
-| `js/pages/locations.js` | `LocationsPage`: every NMSU place, nearest first |
+| `js/pages/menu.js` | `Menu`: the full-screen menu, opens Locations, Other Locations and Settings |
+| `js/pages/locations.js` | `LocationsPage`: every place on our map you can go to, grouped by category |
+| `js/pages/otherLocations.js` | `OtherLocationsPage`: every NMSU property (campuses and sites), nearest first |
 | `js/pages/settings.js` | `SettingsPage`: choices, Reset, the Data list |
 | `js/pages/welcome.js` | The welcome screen, once per browser tab |
 | `js/pages/navbarTitle.js` | "Campus", or "To Zuhl Library" during directions |
@@ -132,6 +137,7 @@ answer (everything in `js/logic/`).
 | `arrived` | Directions brought you inside: the sheet shows "You've arrived" |
 | `travelMode` | `'walk'`, `'bike'` or `'drive'` |
 | `showNames` | Building names on the map |
+| `showCompass` | The small compass top left |
 | `units` | `'imperial'` (ft, mi) or `'metric'` (m, km) |
 | `hiddenCategories` | Map filters that are switched off |
 | `searching` | Is search open? |
@@ -148,7 +154,7 @@ answer (everything in `js/logic/`).
 | `startSearch()` / `endSearch()` | search open (nothing chosen) / closed |
 | `startDirections()` / `endDirections()` | directions on / off |
 | `arrived(b)` | you walked in: directions off, the sheet opens on the room's floor |
-| `setTravelMode(m)`, `setShowNames(on)`, `setUnits(u)` | the user's choices |
+| `setTravelMode(m)`, `setShowNames(on)`, `setShowCompass(on)`, `setUnits(u)` | the user's choices |
 | `toggleCategory(c)`, `setHiddenCategories(list)` | Map filters |
 
 ## Data structures and algorithms you'll find
@@ -172,7 +178,7 @@ Every data file starts with a `"//"` entry: what the file is and how to format i
 |---|---|---|
 | `data/buildings.geojson`, `building-shapes.geojson` | `tools/build_buildings.py` | NMSU Space Planning buildings layer, NMSU Registrar codes, `data/source/photos.json`, `data/source/building-extras.json` |
 | `data/campuses.geojson`, `campus-labels.geojson`, `outside-mask.geojson` | `tools/build_campuses.py` | NMSU Space Planning campus boundaries + ground-lease parcels, OpenStreetMap golf course |
-| `data/parks.geojson`, `park-shapes.geojson` | `tools/build_parks.py` | Campus parks from NMSU's campus map (`data/source/parks.json`); outlines from OpenStreetMap, or a small arrival circle |
+| `data/places.geojson`, `place-shapes.geojson`, `parking-lots.geojson` | `tools/build_places.py` | Places that aren't buildings: parks (NMSU's campus map, `data/source/parks.json`), food (NMSU Dining, `data/source/food.json`) and parking lots (NMSU Facilities GIS Parking layer) |
 | `data/rooms.json` | `tools/build_rooms.py` (+ `tools/indoor_routes.py`) | Rooms on our floor plans (outlines + indoor routes) and rooms in NMSU's public class schedule (no floor or outline) |
 | `data/entrances.json` | `tools/build_entrances.py` | Outside doors on our floor plans; photos under `entrancePhotos` in `data/source/building-extras.json` |
 | `data/routes/walk.geojson`, `bike.geojson`, `drive.geojson` | `tools/build_routes.py` | OpenStreetMap paths and roads, sorted by their access tags; one-way streets kept for bikes and cars |
@@ -185,6 +191,16 @@ Which source wins when they disagree:
 1. **NMSU Registrar** for building codes (what students see on schedules)
 2. **NMSU Office of Space Planning** for boundaries and building facts
 3. **OpenStreetMap** only where NMSU publishes nothing (golf course outline, some floor counts)
+
+## Speed
+
+- **The service worker (`sw.js`)** answers from the copy saved on the phone after the first visit:
+  in testing, every app file and data file came back in about 2–17 ms with nothing downloaded.
+  It refreshes that copy quietly in the background, so **a change shows up the second time the app
+  is opened** (or after a refresh). While editing on your computer, turn on "Update on reload" in the
+  browser's developer tools (Application > Service Workers) to always see your latest edit.
+- **Big files load only when needed:** route networks and outlines when directions start, parking
+  lot outlines when the Parking filter is first switched on.
 
 ## Things that look odd but are on purpose
 

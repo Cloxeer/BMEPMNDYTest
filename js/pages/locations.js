@@ -1,80 +1,110 @@
 /**
  * @file js/pages/locations.js
- * @summary The Locations page: every NMSU class place, nearest first.
+ * @summary The Locations page: every place on our map you can go to, grouped by kind.
  *
- * WHAT IT DOES : Lists the places from data/campuses.geojson in two groups,
- *                "Las Cruces" and "Around New Mexico". Tapping one closes the page
- *                and moves the map there. Distances follow the Units setting.
- * DEPENDS ON   : ../core/config.js, ../core/html.js, ../core/store.js (units),
- *                ../logic/turns.js (formatDistance), #locations-popup in index.html.
- * CONTROLS     : the #loc-near and #loc-far lists.
+ * WHAT IT DOES : One list per category in config.yml (Study, Living, Parks, Historic,
+ *                Food, Parking), each headed by the category's icon and colour, with
+ *                its places A to Z. Historic also lists study and living buildings that
+ *                have an official historic designation. Tapping a place closes the page, flies the map
+ *                there and opens its sheet (even if that category is switched off
+ *                in Map filters).
+ * DEPENDS ON   : ../core/config.js, ../core/store.js, ../core/html.js,
+ *                #locations-popup in index.html (Framework7 lists).
+ * CONTROLS     : #places-list.
  * USED BY      : js/pages/menu.js
  */
 
 import { CONFIG } from '../core/config.js';
-import { escapeHtml } from '../core/html.js';
 import { store } from '../core/store.js';
-import { formatDistance } from '../logic/turns.js';
+import { escapeHtml, iconHtml } from '../core/html.js';
 
 /**
- * One tappable row: the name and distance on top, "city · acres" below
- * (Framework7's media-list layout: item-title-row, then item-subtitle).
- * @param {object} place - a feature from data/campuses.geojson
- * @returns {HTMLLIElement}
+ * The small grey line under a place's name: "HJLC · 2902 Mcfie Cir." or "Coffee · Corbett Center Student Union".
+ * @param {object} place
+ * @returns {string}
  */
-function placeRow(place) {
-  const info = place.properties;
+function subtitleFor(place) {
   const parts = [];
-  if (info.City) {
-    parts.push(info.City);
+  if (place.code) {
+    parts.push(place.code);
   }
-  if (info.Acres) {
-    parts.push(info.Acres + ' ' + CONFIG.locations.acresText);
+  if (place.kind) {
+    parts.push(place.kind);
   }
-  const where = parts.join(' · ');
-  const distance = formatDistance(info.km * 1000, store.get().units);
+  if (place.insideName) {
+    parts.push(place.insideName);
+  } else if (place.campus) {
+    parts.push(place.campus);
+  } else if (place.address) {
+    parts.push(place.address);
+  }
+  return parts.join(' · ');
+}
 
-  const row = document.createElement('li');
-  row.innerHTML =
-    '<a href="#" class="item-link item-content"><div class="item-inner">' +
-    '<div class="item-title-row"><div class="item-title">' + escapeHtml(info.Name) + '</div>' +
-    '<div class="item-after">' + escapeHtml(distance) + '</div></div>' +
-    '<div class="item-subtitle">' + escapeHtml(where) + '</div></div></a>';
-  return row;
+/**
+ * Sort places A to Z by name (the list is copied, not changed).
+ * @param {object[]} places
+ * @returns {object[]}
+ */
+function sortedByName(places) {
+  const copy = places.slice();
+  copy.sort((a, b) => a.name.localeCompare(b.name, 'en', { numeric: true }));
+  return copy;
 }
 
 export class LocationsPage {
   /**
-   * @param {object} campuses - data/campuses.geojson (already nearest first)
+   * @param {object[]} places - every building and place
    * @param {object} page - the Framework7 popup for this page
-   * @param {CampusMap} campusMap - to move the map
    */
-  constructor(campuses, page, campusMap) {
-    const nearList = document.querySelector('#loc-near');
-    const farList = document.querySelector('#loc-far');
-    this.rows = []; // { row, km } for every place
+  constructor(places, page) {
+    const holder = document.querySelector('#places-list');
+    for (const category of Object.keys(CONFIG.categories)) {
+      const inCategory = [];
+      for (const place of places) {
+        const historicToo = category === 'historic' && place.historic;
+        if (place.category === category || historicToo) {
+          inCategory.push(place);
+        }
+      }
+      if (inCategory.length === 0) {
+        continue;
+      }
+      holder.appendChild(this.makeGroup(category, sortedByName(inCategory), page));
+    }
+  }
 
-    for (const place of campuses.features) {
-      const row = placeRow(place);
+  /**
+   * One category: a title with its icon, then a list of its places.
+   * @param {string} category
+   * @param {object[]} places - already sorted
+   * @param {object} page - closed when a place is tapped
+   * @returns {HTMLElement}
+   */
+  makeGroup(category, places, page) {
+    const look = CONFIG.categories[category];
+    const group = document.createElement('div');
+    group.className = 'places-group';
+    group.style.setProperty('--row-color', look.color);
+    group.innerHTML =
+      '<div class="block-title places-title">' + iconHtml(look.icon, look.iconSet) +
+      '<span>' + escapeHtml(look.label) + ' (' + places.length + ')</span></div>' +
+      '<div class="list media-list inset"><ul></ul></div>';
+    const list = group.querySelector('ul');
+
+    for (const place of places) {
+      const row = document.createElement('li');
+      row.innerHTML =
+        '<a href="#" class="item-link item-content"><div class="item-inner">' +
+        '<div class="item-title-row"><div class="item-title">' + escapeHtml(place.name) + '</div></div>' +
+        '<div class="item-subtitle">' + escapeHtml(subtitleFor(place)) + '</div></div></a>';
       row.querySelector('a').addEventListener('click', (event) => {
         event.preventDefault();
         page.close();
-        // Picking a place isn't app state (nothing gets chosen), so the map is moved directly.
-        campusMap.showPlace(place);
+        store.selectBuilding(place, 'search');
       });
-      if (place.properties.km <= CONFIG.map.nearbyKm) {
-        nearList.appendChild(row);
-      } else {
-        farList.appendChild(row);
-      }
-      this.rows.push({ row: row, km: place.properties.km });
+      list.appendChild(row);
     }
-
-    // When the Units setting changes, change every distance.
-    store.subscribe((state) => {
-      for (const item of this.rows) {
-        item.row.querySelector('.item-after').textContent = formatDistance(item.km * 1000, state.units);
-      }
-    });
+    return group;
   }
 }

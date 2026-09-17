@@ -77,6 +77,11 @@ BANNER_NAMES = {
     'Tejada Building, Extension Ann': '245',
     'Food Science, Security, and Sa': '662',
     'Ag Student Learning Center': '683',
+    'Fulton Athletic Center (Stadiu': '596',
+    'Natatorium': '251',
+    'Golf Course Clubhouse': '597',
+    'Photovotaic Center': '369',  # the schedule's own spelling
+    'Ag. Institute/Police/Parking': '30',
     'James B. Delamater Activity Ce': '321',
     'Rentfrow Gym': '211',
     'Garcia Residence Hall': '275',

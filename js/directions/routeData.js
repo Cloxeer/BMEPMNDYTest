@@ -4,13 +4,13 @@
  *
  * WHAT IT DOES : The first time directions start it loads:
  *                  - geojson-path-finder (the shortest-route library, from the CDN),
- *                  - the outline of every building and park (to tell when you've arrived).
+ *                  - the outline of every building and place (to tell when you've arrived).
  *                For each travel mode (walk, bike, drive) it loads that mode's
  *                paths from data/routes/ the first time it's used, and keeps it.
  * DEPENDS ON   : geojson-path-finder, ../logic/routeMath.js,
  *                data/routes/{walk,bike,drive}.geojson (tools/build_routes.py),
  *                data/building-shapes.geojson (tools/build_buildings.py),
- *                data/park-shapes.geojson (tools/build_parks.py).
+ *                data/place-shapes.geojson and parking-lots.geojson (tools/build_places.py).
  * USED BY      : js/directions/directions.js
  */
 
@@ -46,11 +46,12 @@ export class RouteData {
       const results = await Promise.all([
         import(PATH_FINDER_URL),
         loadJson('data/building-shapes.geojson'),
-        loadJson('data/park-shapes.geojson'),
+        loadJson('data/place-shapes.geojson'),
+        loadJson('data/parking-lots.geojson'),
       ]);
       this.PathFinder = results[0].default;
       this.outlines = {};
-      for (const shapes of [results[1], results[2]]) {
+      for (const shapes of [results[1], results[2], results[3]]) {
         for (const shape of shapes.features) {
           this.outlines[shape.properties.id] = shape.geometry;
         }

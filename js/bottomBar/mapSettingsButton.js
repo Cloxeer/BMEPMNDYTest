@@ -7,7 +7,8 @@
  *                  - My location        (on / off)
  *                  - Turn map with me   (on / off: the map faces the way you face)
  *                  - Building names     (on / off: the same switch as the Settings page)
- *                  - Home               (flies to Corbett Center Student Union, north up)
+ *                  - Compass            (on / off: a small compass top left, js/map/northCompass.js)
+ *                  - Home               (flies over main campus, centred on Corbett Center, north up)
  *                An option that's on has a red icon; off is white. Tap outside,
  *                or the button again, to close.
  *                When a building is chosen, this spot shows the Directions button
@@ -30,13 +31,11 @@ export class MapSettingsButton {
    * @param {Framework7} app - for messages
    * @param {MyLocation} myLocation - from js/map/myLocation.js
    * @param {CampusMap} campusMap - for flying home
-   * @param {Object.<string, object>} buildingsById - to find the home building
    */
-  constructor(app, myLocation, campusMap, buildingsById) {
+  constructor(app, myLocation, campusMap) {
     this.app = app;
     this.myLocation = myLocation;
     this.campusMap = campusMap;
-    this.buildingsById = buildingsById;
     this.settings = CONFIG.mapSettings;
     this.button = document.querySelector('#settings-btn');
     this.buttonIcon = this.button.querySelector('i');
@@ -78,7 +77,7 @@ export class MapSettingsButton {
 
   /**
    * Is an option on right now? Home is an action, so it's never "on".
-   * @param {string} name - 'location', 'follow', 'names' or 'home'
+   * @param {string} name - 'location', 'follow', 'names', 'compass' or 'home'
    * @returns {boolean|null} null for actions
    */
   isOptionOn(name) {
@@ -90,6 +89,9 @@ export class MapSettingsButton {
     }
     if (name === 'names') {
       return store.get().showNames;
+    }
+    if (name === 'compass') {
+      return store.get().showCompass;
     }
     return null;
   }
@@ -135,6 +137,8 @@ export class MapSettingsButton {
         this.toggleFollow();
       } else if (name === 'names') {
         store.setShowNames(!store.get().showNames);
+      } else if (name === 'compass') {
+        store.setShowCompass(!store.get().showCompass);
       } else if (name === 'home') {
         this.goHome();
       }
@@ -155,10 +159,10 @@ export class MapSettingsButton {
     this.showWhatIsOn();
   }
 
-  /** Fly home to Corbett Center Student Union, facing north. */
+  /** Fly home over main campus, facing north. */
   goHome() {
     this.myLocation.compass.setFollow(false);
-    this.campusMap.showHome(this.buildingsById[CONFIG.map.homeBuilding].center);
+    this.campusMap.goHome();
     this.setOpen(false);
   }
 

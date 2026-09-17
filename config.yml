@@ -48,7 +48,7 @@ map:
   fencePadding: 0.01
   selectZoom: 16.8
   homeBuilding: "285" # "Home" in Map settings flies here: Corbett Center Student Union
-  homeZoom: 17.2
+  homeZoom: 14.6 # zoomed out over main campus, just enough to show its name (campus names show below labelMaxZoom)
   flyDuration: 320 # ms to fly to a chosen building: quick, with a soft landing
   flyCurve: 1.2 # how much the flight zooms out on the way (1 = barely)
   maxPixelRatio: 2 # sharp phones draw at most 2x, so cheaper phones stay smooth
@@ -169,10 +169,10 @@ sheet:
   noDescriptionText: "A full description for this building is coming soon."
   noPhotosText: "No photos of this building yet."
   aboutTitle: "About this building"
-  # Parks use these instead of the building words above.
-  parkNoPhotosText: "No photos of this park yet."
-  parkNoDescriptionText: "A full description for this park is coming soon."
-  parkAboutTitle: "About this park"
+  # Places that aren't buildings (parks, food, parking lots) use these instead of the building words above.
+  placeNoPhotosText: "No photos of this place yet."
+  placeNoDescriptionText: "A full description for this place is coming soon."
+  placeAboutTitle: "About this place"
   roomFloorUnknownText: "floor not published by NMSU"
   tapPlanText: "tap a room or an entrance"
   floorsUnknownText: "Number of floors not published by NMSU"
@@ -200,7 +200,9 @@ sheet:
   builtLabel: "Built"
   floorsLabel: "Floors"
   typeLabel: "Type"
-  parkSourceText: "Location from NMSU's official campus map (map.nmsu.edu). Outline from OpenStreetMap where it has one."
+  insideLabel: "Inside"
+  historicLabel: "Historic"
+  permitLabel: "Permit"
   floorCountText: "floor count"
   codeSourceText: "Building code"
   factsSourceText: "Other facts: NMSU Office of Space Planning"
@@ -329,13 +331,26 @@ directions:
   roomEdgeWidth: 6 # in floor-plan units
 
 categories: # kinds of places on the map; the colours mean the same thing everywhere
+  # label: its name in Map filters and on the Locations page. icon: a Framework7 icon name, or a
+  # Google Material Symbols name when iconSet is "material" (add new ones to the fonts link in index.html).
+  # startHidden: off until the user switches it on in Map filters. letter: the badge letter (default badge.letter).
+  # isPlace: not a building, so its sheet has no floor plans (tools/build_places.py makes these).
   study: { label: "Study", color: "#8C0B42", icon: "book_fill" } # NMSU crimson: classes and learning
   living: { label: "Living", color: "#ff9500", icon: "bed_double_fill" } # Apple orange: warm, home
-  park: { label: "Parks", color: "#34c759", icon: "tree" } # Apple green: outdoors
+  park: { label: "Parks", color: "#34c759", icon: "tree", isPlace: true } # Apple green: outdoors
+  historic: { label: "Historic", color: "#a2845e", icon: "building_columns_fill" } # Apple brown: old stone and adobe
+  food: { label: "Food", color: "#ff2d55", icon: "restaurant", iconSet: "material", startHidden: true, isPlace: true } # Apple pink
+  parking: { label: "Parking", color: "#5856d6", icon: "local_parking", iconSet: "material", startHidden: true, letter: "P", isPlace: true } # Apple indigo
+
+parking: # parking lot shapes on the map (js/map/parkingLayers.js), shown with the Parking filter
+  fillOpacity: 0.18
+  edgeWidth: 1.5
+  nameSize: 12
+  nameMinZoom: 15
 
 mapFilters: # the round Map filters button right of the pill (js/bottomBar/mapFiltersButton.js)
   icon: "line_horizontal_3_decrease"
-  storageKey: "bnm_hidden_categories"
+  storageKey: "bnm_map_filters" # remembers which categories this device hid
 
 mapSettings: # the round Map settings button left of the pill (js/bottomBar/mapSettingsButton.js)
   icon: "map"
@@ -343,6 +358,7 @@ mapSettings: # the round Map settings button left of the pill (js/bottomBar/mapS
     location: { label: "My location", icon: "location_fill" }
     follow: { label: "Turn map with me", icon: "location_north_fill" }
     names: { label: "Building names", icon: "textformat" }
+    compass: { label: "Compass", icon: "compass_fill" }
     home: { label: "Home (Corbett Center)", icon: "house_fill" }
   rowHeight: "44px"
   iconCircle: "36px"
@@ -354,6 +370,10 @@ mapSettings: # the round Map settings button left of the pill (js/bottomBar/mapS
   compassWaitMs: 1500 # how long to wait for a first compass reading before saying there isn't one
   noCompassTitle: "Compass unavailable"
   noCompassText: "Turning the map with you needs your phone's compass. Allow motion access for this site, or try on a phone."
+  compassStorageKey: "bnm_compass" # remembers the Compass switch on this device (off at first)
+  compassLabel: "Compass: tap to go home, north up"
+  compassSize: "36px"
+  compassTop: "12px" # below the navbar
 
 locate:
   beamSize: "72px" # the "which way you face" beam around your location dot
@@ -366,6 +386,7 @@ locate:
 
 locations:
   acresText: "acres"
+  iconSize: "20px" # the category icons on the Locations page
 
 settings:
   buildingNamesKey: "bnm_building_names" # where this device remembers the Building names switch
@@ -386,10 +407,20 @@ settings:
       count: buildings
       countText: "buildings"
     - title: "Parks"
-      files: "data/parks.geojson, park-shapes.geojson (GeoJSON)"
+      files: "data/places.geojson, place-shapes.geojson (GeoJSON)"
       source: "NMSU's official campus map (map.nmsu.edu); park outlines from OpenStreetMap"
-      count: parks
+      count: park
       countText: "parks"
+    - title: "Food"
+      files: "data/places.geojson (GeoJSON)"
+      source: "NMSU's official dining pages and campus map"
+      count: food
+      countText: "places to eat"
+    - title: "Parking lots"
+      files: "data/places.geojson, place-shapes.geojson (GeoJSON)"
+      source: "NMSU Facilities GIS, Parking layer: lot outlines, names and permit colours"
+      count: parking
+      countText: "lots"
     - title: "Building outlines"
       files: "data/building-shapes.geojson (GeoJSON)"
       source: "NMSU Office of Space Planning"

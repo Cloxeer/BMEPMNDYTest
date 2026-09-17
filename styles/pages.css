@@ -1,7 +1,7 @@
 /*
   styles/pages.css — the welcome screen and the Settings page.
 
-  CONTROLS     : #welcome-popup, the Settings switches, the Data list and the credit.
+  CONTROLS     : #welcome-popup, the Settings switches, the Data list and the credit, the Locations page.
   DEPENDS ON   : Framework7, and the CSS variables js/core/config.js makes from
                  config.yml (pill.height -> --pill-height, and so on).
   USED BY      : index.html (loaded last)
@@ -29,3 +29,8 @@
 #data-sources .item-text { white-space: normal; display: block; -webkit-line-clamp: unset; max-height: none; overflow: visible; }
 .settings-credit { margin: var(--s6) 0 var(--s10); text-align: center; color: var(--theme-text-muted); font-size: var(--settings-credit-size); }
 .muted { color: var(--theme-text-muted); }
+
+/* ---------- Locations page ---------- */
+/* Each group's title: the category's icon, in its colour, then its name. */
+.places-title { display: flex; align-items: center; gap: var(--s2); color: var(--row-color); }
+.places-title .icon { font-size: var(--locations-icon-size); }

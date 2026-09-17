@@ -27,13 +27,14 @@
 import { CONFIG } from '../core/config.js';
 
 /**
- * Draw one round "i" badge as a picture the map can place on buildings.
+ * Draw one round badge as a picture the map can place on buildings.
  * Every badge is the same size, so choosing one never makes it jump.
  * @param {string} color - the category's colour (config.yml categories)
+ * @param {string} letter - the letter in the middle, e.g. "i" or "P"
  * @param {boolean} selected - true = blue ring, false = white ring
  * @returns {object} { width, height, data } for map.addImage
  */
-function drawBadgePicture(color, selected) {
+function drawBadgePicture(color, letter, selected) {
   const look = CONFIG.badge;
   const canvas = document.createElement('canvas');
   canvas.width = look.size * look.pixelRatio;
@@ -67,19 +68,25 @@ function drawBadgePicture(color, selected) {
   pen.font = look.letterFont;
   pen.textAlign = 'center';
   pen.textBaseline = 'middle';
-  pen.fillText(look.letter, middle, middle + look.letterOffset);
+  pen.fillText(letter, middle, middle + look.letterOffset);
 
   const image = pen.getImageData(0, 0, canvas.width, canvas.height);
   return { width: image.width, height: image.height, data: image.data };
 }
 
 /**
- * A map rule that only shows places whose category is switched on.
+ * A map rule that only shows places whose category is switched on, plus the chosen
+ * place (so a place found in search shows even when its category is switched off).
+ * Parking lots only get a badge while chosen: their shapes and names are drawn instead (./parkingLayers.js).
  * @param {string[]} shownCategories - e.g. ['study', 'park']
+ * @param {string|null} selectedId - the chosen place's id
  * @returns {Array} a MapLibre filter expression
  */
-export function categoryFilter(shownCategories) {
-  return ['in', ['get', 'category'], ['literal', shownCategories]];
+export function categoryFilter(shownCategories, selectedId) {
+  const categoryIsOn = ['in', ['get', 'category'], ['literal', shownCategories]];
+  const notParking = ['!=', ['get', 'category'], 'parking']; // parking lots are shown as shapes, not badges
+  const isSelected = ['==', ['get', 'id'], selectedId || ''];
+  return ['any', ['all', categoryIsOn, notParking], isSelected];
 }
 
 /**
@@ -115,9 +122,10 @@ export function addBadges(map, buildingsById, shownCategories, namesVisible) {
   // Two pictures per category colour: "badge-study", "badge-study-selected", "badge-living", ...
   const imageOptions = { pixelRatio: CONFIG.badge.pixelRatio };
   for (const category of Object.keys(CONFIG.categories)) {
-    const color = CONFIG.categories[category].color;
-    map.addImage('badge-' + category, drawBadgePicture(color, false), imageOptions);
-    map.addImage('badge-' + category + '-selected', drawBadgePicture(color, true), imageOptions);
+    const look = CONFIG.categories[category];
+    const letter = look.letter || CONFIG.badge.letter;
+    map.addImage('badge-' + category, drawBadgePicture(look.color, letter, false), imageOptions);
+    map.addImage('badge-' + category + '-selected', drawBadgePicture(look.color, letter, true), imageOptions);
   }
 
   // One map point per place.
@@ -136,7 +144,7 @@ export function addBadges(map, buildingsById, shownCategories, namesVisible) {
     type: 'symbol',
     source: 'buildings',
     layout: { 'icon-image': ['concat', 'badge-', ['get', 'category']], 'icon-allow-overlap': true },
-    filter: categoryFilter(shownCategories),
+    filter: categoryFilter(shownCategories, null),
   });
 
   // Names sit just above the badges and move with the map at full speed, like the badges.
@@ -151,7 +159,7 @@ export function addBadges(map, buildingsById, shownCategories, namesVisible) {
     type: 'symbol',
     source: 'buildings',
     minzoom: settings.namesMinZoom,
-    filter: categoryFilter(shownCategories),
+    filter: categoryFilter(shownCategories, null),
     layout: {
       visibility: visibility,
       'text-field': ['get', 'name'],

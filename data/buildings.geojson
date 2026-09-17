@@ -5,7 +5,8 @@
   "Format: GeoJSON. One Feature per building: a Point where NMSU places it, and properties:",
   "id and propertyNumber (NMSU property number), code, name, aka (other names search finds), address, built (year),",
   "floors ([1, 2, ...], empty when unknown), floorsSource, nmsuUrl, photos, source, category (\"study\" or \"living\"),",
-  "floorImages and postedImages (floor -> picture file), description (paragraphs), doors ([lng, lat] points), codeSource.",
+  "floorImages and postedImages (floor -> picture file), description (paragraphs), doors ([lng, lat] points), codeSource,",
+  "historic (an official historic designation, or null). category can also be \"historic\".",
   "A missing fact is null or empty, and the app shows \"Unknown\" for it: nothing is guessed."
  ],
  "type": "FeatureCollection",
@@ -51,6 +52,7 @@
      "This building is a LEED Gold certified building. LEED, or Leadership in Energy and Environmental Design, is a program that strives to create a more sustainable world. This building has been specifically designed to use fewer resources and decrease waste."
     ],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -105,6 +107,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -152,6 +155,7 @@
       32.283129
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Space Planning (not on the Registrar list)"
    },
    "geometry": {
@@ -206,6 +210,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -253,6 +258,7 @@
       32.2806
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -292,6 +298,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -329,6 +336,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -372,6 +380,7 @@
       32.280974
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -409,6 +418,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -446,6 +456,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -493,6 +504,7 @@
       32.279441
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -538,6 +550,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -576,6 +589,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -628,6 +642,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": "Listed on the National Register of Historic Places (1989, #88001547)",
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -670,6 +685,7 @@
       32.28167
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -712,6 +728,7 @@
       32.282267
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -750,6 +767,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -788,6 +806,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -831,6 +850,7 @@
       32.283154
      ]
     ],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -874,6 +894,7 @@
       32.279935
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -908,6 +929,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Space Planning (not on the Registrar list)"
    },
    "geometry": {
@@ -946,6 +968,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Space Planning (not on the Registrar list)"
    },
    "geometry": {
@@ -989,6 +1012,7 @@
       32.282925
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1035,6 +1059,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1082,6 +1107,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1120,6 +1146,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1165,6 +1192,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1203,6 +1231,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Space Planning (not on the Registrar list)"
    },
    "geometry": {
@@ -1245,6 +1274,7 @@
       32.279935
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1281,6 +1311,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1332,6 +1363,7 @@
       32.283242
      ]
     ],
+    "historic": "Listed on the National Register of Historic Places (1989, #88001546)",
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1366,6 +1398,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1408,6 +1441,7 @@
       32.281145
      ]
     ],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1444,6 +1478,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Space Planning (not on the Registrar list)"
    },
    "geometry": {
@@ -1506,6 +1541,7 @@
       32.281584
      ]
     ],
+    "historic": "Listed on the National Register of Historic Places (1988, #88001548)",
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1542,6 +1578,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1576,6 +1613,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Space Planning (not on the Registrar list)"
    },
    "geometry": {
@@ -1609,6 +1647,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "Not published by NMSU yet"
    },
    "geometry": {
@@ -1643,6 +1682,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1681,6 +1721,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1719,6 +1760,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": null,
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1767,6 +1809,7 @@
       32.284627
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Space Planning (not on the Registrar list)"
    },
    "geometry": {
@@ -1818,6 +1861,7 @@
       32.283858
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Space Planning (not on the Registrar list)"
    },
    "geometry": {
@@ -1856,6 +1900,7 @@
     "postedImages": {},
     "description": [],
     "doors": [],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
     "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
    },
    "geometry": {
@@ -1903,6 +1948,7 @@
       32.281786
      ]
     ],
+    "historic": null,
     "codeSource": "NMSU Space Planning (not on the Registrar list)"
    },
    "geometry": {
@@ -1910,6 +1956,625 @@
     "coordinates": [
      -106.7454112,
      32.2815313
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "645",
+    "code": "CAMPAPT",
+    "name": "Chamisa Village II",
+    "aka": [
+     "CAMPAPT",
+     "645",
+     "Chamisa Village Ii"
+    ],
+    "address": "1725 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "645",
+    "built": "2011",
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/529224",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 645)",
+    "category": "living",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7444636,
+     32.2820446
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "413F",
+    "code": "CERV",
+    "name": "Cervantes Village",
+    "aka": [
+     "CERV",
+     "413F",
+     "Cervantes Village Apt Complex",
+     "Cervantes"
+    ],
+    "address": "1500 Center Dr., Las Cruces, NM 88001",
+    "propertyNumber": "413F",
+    "built": "1983–1991",
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/529189",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 413F)",
+    "category": "living",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7472887,
+     32.2719622
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "462K",
+    "code": "VDM",
+    "name": "Vista Del Monte",
+    "aka": [
+     "VDM",
+     "462K",
+     "Vista Del Monte Apt Complex",
+     "VDM"
+    ],
+    "address": "1435 Standley Dr., Las Cruces, NM 88001",
+    "propertyNumber": "462K",
+    "built": "1992–1995",
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/529228",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 462K)",
+    "category": "living",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7480475,
+     32.273576
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "206",
+    "code": "SFH",
+    "name": "Sutherland Village",
+    "aka": [
+     "SFH",
+     "206",
+     "Sutherland Village",
+     "Student Family Housing"
+    ],
+    "address": "529 Sweet Ave., Las Cruces, NM 88001",
+    "propertyNumber": "206",
+    "built": "1958",
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/535321",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 206)",
+    "category": "living",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7512478,
+     32.2756265
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "214",
+    "code": "SFH",
+    "name": "Tom Fort Village",
+    "aka": [
+     "SFH",
+     "214",
+     "Tom Fort Village",
+     "Student Family Housing"
+    ],
+    "address": "1544 Standley Dr., Las Cruces, NM 88001",
+    "propertyNumber": "214",
+    "built": "1959",
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/536066",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 214)",
+    "category": "living",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7497278,
+     32.2732074
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "596",
+    "code": "FAC",
+    "name": "Fulton Athletic Center",
+    "aka": [
+     "FAC",
+     "596",
+     "Fulton Athletic Center (Stadium Annex)",
+     "Stadium Annex"
+    ],
+    "address": "1815 Wells St., Las Cruces, NM 88003",
+    "propertyNumber": "596",
+    "built": "2004",
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/660843",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 596)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7408743,
+     32.2786952
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "251",
+    "code": "NA",
+    "name": "Aquatics Center",
+    "aka": [
+     "NA",
+     "251",
+     "Aquatics Center",
+     "Natatorium"
+    ],
+    "address": "1520 Stewart St., Las Cruces, NM 88003",
+    "propertyNumber": "251",
+    "built": "1962",
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/660950",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 251)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7481707,
+     32.2798754
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "597",
+    "code": "GC",
+    "name": "Golf Course Clubhouse",
+    "aka": [
+     "GC",
+     "597",
+     "Golf Course Clubhouse"
+    ],
+    "address": "3500 Herb Wimberly Dr., Las Cruces, NM 88011",
+    "propertyNumber": "597",
+    "built": "2004",
+    "floors": [],
+    "floorsSource": "Not published (NMSU lists no story count)",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/660865",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 597)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.725737,
+     32.2864267
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "369",
+    "code": "PVC",
+    "name": "Photovoltaic Center",
+    "aka": [
+     "PVC",
+     "369",
+     "Photovoltaic Center"
+    ],
+    "address": "3705 Locust St., Las Cruces, NM 88001",
+    "propertyNumber": "369",
+    "built": "1980",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/660870",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 369)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.745481,
+     32.2712627
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "30",
+    "code": "AI",
+    "name": "Campus Police / Ag Institute",
+    "aka": [
+     "AI",
+     "30",
+     "Campus Police/Ag Institute"
+    ],
+    "address": "725 College Dr., Las Cruces, NM 88001",
+    "propertyNumber": "30",
+    "built": "1930",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/660999",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 30)",
+    "category": "study",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": null,
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7608076,
+     32.2819187
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "36",
+    "code": "NHS",
+    "name": "Nason House",
+    "aka": [
+     "NHS",
+     "36",
+     "Nason House"
+    ],
+    "address": "1070 E. University Ave., Las Cruces, NM 88001",
+    "propertyNumber": "36",
+    "built": "1918",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525431",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 36)",
+    "category": "historic",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": "Listed on the National Register of Historic Places (1989, #88001549)",
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7550432,
+     32.2839775
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "32",
+    "code": "YH",
+    "name": "Young Hall",
+    "aka": [
+     "YH",
+     "32",
+     "Young Hall"
+    ],
+    "address": "1300 South Horseshoe, Las Cruces, NM 88003",
+    "propertyNumber": "32",
+    "built": "1928",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/526017",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 32)",
+    "category": "historic",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "codeSource": "NMSU Registrar building abbreviations (records.nmsu.edu)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7521493,
+     32.2820651
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "56",
+    "code": "DH",
+    "name": "Dove Hall",
+    "aka": [
+     "DH",
+     "56",
+     "Dove Hall"
+    ],
+    "address": "1305 North Horseshoe, Las Cruces, NM 88003",
+    "propertyNumber": "56",
+    "built": "1936",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525503",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 56)",
+    "category": "historic",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.752529,
+      32.283114
+     ]
+    ],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7524206,
+     32.2831027
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "154",
+    "code": "GA",
+    "name": "Garcia Center",
+    "aka": [
+     "GA",
+     "154",
+     "Garcia Center"
+    ],
+    "address": "3024 Andrew Wall Place, Las Cruces, NM 88003",
+    "propertyNumber": "154",
+    "built": "1949",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/527925",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 154)",
+    "category": "historic",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.747718,
+      32.282021
+     ],
+     [
+      -106.747626,
+      32.282117
+     ]
+    ],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7476038,
+     32.2820387
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "172",
+    "code": "HH",
+    "name": "Hadley Hall",
+    "aka": [
+     "HH",
+     "172",
+     "Hadley Hall"
+    ],
+    "address": "2850 Weddell St., Las Cruces, NM 88001",
+    "propertyNumber": "172",
+    "built": "1953",
+    "floors": [
+     1,
+     2
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525519",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 172)",
+    "category": "historic",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [
+     [
+      -106.752884,
+      32.282171
+     ],
+     [
+      -106.752817,
+      32.282509
+     ],
+     [
+      -106.753113,
+      32.282418
+     ],
+     [
+      -106.753127,
+      32.28247
+     ]
+    ],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.752945,
+     32.2824495
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "179",
+    "code": "OLH",
+    "name": "O'Loughlin House",
+    "aka": [
+     "OLH",
+     "179",
+     "O'Loughlin House"
+    ],
+    "address": "1130 E. University Ave., Las Cruces, NM 88001",
+    "propertyNumber": "179",
+    "built": "1953",
+    "floors": [
+     1
+    ],
+    "floorsSource": "NMSU Space Planning",
+    "nmsuUrl": "https://map.nmsu.edu/?id=1888#!m/525434",
+    "photos": [],
+    "source": "NMSU Office of Space Planning, Buildings layer (property 179)",
+    "category": "historic",
+    "floorImages": {},
+    "postedImages": {},
+    "description": [],
+    "doors": [],
+    "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
+    "codeSource": "NMSU Space Planning (not on the Registrar list)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.7543647,
+     32.2841402
     ]
    }
   }

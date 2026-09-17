@@ -111,6 +111,11 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Map filters button: Study (crimson), Living (orange), Parks (green); badges use the same colours
 - [x] Settings: simpler data note; website version at the bottom
 - [x] Code rewritten for first-time coders: folders by part, one class per part, plain loops, "//" format notes in every data file (checked: same screens, same data)
+- [x] Locations page (every place on the map) + Other Locations (NMSU properties)
+- [x] Compass (Map settings, off at first; tap = Home), Home shows all of main campus
+- [x] Food (NMSU Dining) and Parking (NMSU Facilities GIS, 346 lots) categories, off at first, always searchable
+- [x] Every NMSU Housing community; every remaining class building that clearly matches NMSU records
+- [x] Service worker (Workbox): repeat opens load from the phone; parking outlines load only when needed
 - [ ] Floors, year built, code unknown for some new buildings (shown as Unknown until NMSU publishes them)
 - [ ] Photos of the residence halls and parks (none freely licensed found)
 - [ ] Entrance photos: take one per door and list it under entrancePhotos in data/source/building-extras.json

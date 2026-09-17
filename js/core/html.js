@@ -1,11 +1,12 @@
 /**
  * @file js/core/html.js
- * @summary Two helpers for putting data into HTML safely.
+ * @summary Helpers for putting data (and icons) into HTML safely.
  *
  * WHAT IT DOES : escapeHtml() makes text safe to put inside HTML, and safeUrl()
  *                only lets normal web links through. Use them whenever data from
  *                a data file goes into innerHTML, so a stray "<" or a bad link
  *                in a data file can never break the page or run code.
+ *                iconHtml() makes the HTML for an icon from Framework7's set or Google's Material Symbols.
  * DEPENDS ON   : nothing.
  * USED BY      : every file that builds HTML from data.
  */
@@ -35,4 +36,17 @@ export function safeUrl(url) {
     return escapeHtml(url);
   }
   return '#';
+}
+
+/**
+ * The HTML for an icon, e.g. a category's icon from config.yml.
+ * @param {string} name - e.g. "book_fill" (Framework7) or "restaurant" (Material Symbols)
+ * @param {string} [iconSet] - "material" for Google's Material Symbols; anything else means Framework7
+ * @returns {string}
+ */
+export function iconHtml(name, iconSet) {
+  if (iconSet === 'material') {
+    return '<i class="icon material-symbols-rounded" aria-hidden="true">' + escapeHtml(name) + '</i>';
+  }
+  return '<i class="icon f7-icons" aria-hidden="true">' + escapeHtml(name) + '</i>';
 }

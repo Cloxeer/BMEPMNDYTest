@@ -71,6 +71,79 @@
       },
       "photos": [],
       "notes": "NMSU's official map entry has no description text; the name identifies it as a garden of desert-themed sculpture. An Overpass search found an unnamed leisure=garden way (id 1005468391) at the exact coordinates, with an editor note that the area was xeriscaped -- consistent with a desert garden, though OSM does not tag it by name, so this match is a location-based inference rather than a confirmed name match. No freely licensed, clearly-identified photo of this garden was found on Wikimedia Commons."
+    },
+    {
+      "concept3dId": 531879,
+      "name": "Community Garden",
+      "kind": "Green Spaces",
+      "lat": 32.273735,
+      "lng": -106.750656,
+      "osmOutline": null,
+      "photos": [],
+      "notes": "Listed under Concept3D category 'Green Spaces' (catId 52732). Confirmed within the Las Cruces main-campus boundary polygon in data/campuses.geojson (read-only check). No matching named way found via OpenStreetMap Overpass search (bbox query for 'Community Garden' near campus returned no result), so osmOutline is null rather than guessed."
+    },
+    {
+      "concept3dId": 635851,
+      "name": "Jose Fernandez Memorial Garden",
+      "kind": "Green Spaces",
+      "lat": 32.280872,
+      "lng": -106.764687,
+      "osmOutline": null,
+      "photos": [],
+      "notes": "Listed under Concept3D category 'Green Spaces' (catId 52732). Also known simply as 'Jose Fernandez Garden' in NMSU news coverage; it hosts the NMSU Cooperative Extension Service vegetable-variety-trial garden, located south of University Ave. behind the Courtyard by Marriott Las Cruces at NMSU. Point falls inside the Las Cruces main-campus boundary polygon (read-only check against data/campuses.geojson), unlike Fabian Garcia Botanical Gardens which sits on NMSU's separate Fabian Garcia Science Center site. No matching OSM way found via Overpass search, so osmOutline is null."
+    },
+    {
+      "concept3dId": 527598,
+      "name": "Pat & Lou Sisbarro Field",
+      "kind": "Outdoor Spaces",
+      "lat": 32.280739,
+      "lng": -106.73864,
+      "osmOutline": {
+        "type": "way",
+        "id": 436921420
+      },
+      "photos": [],
+      "notes": "Listed under Concept3D category 'Outdoor Spaces' (catId 52253), on the eastern edge of main campus near Arrowhead Drive; within the main-campus boundary polygon. OSM way 436921420 'Pat and Lou Sisbarro Community Park' (leisure=park, addr 3401 Arrowhead Drive) sits ~30 m from the Concept3D point and clearly matches by name and location."
+    },
+    {
+      "concept3dId": 527605,
+      "name": "Pete's Hideout",
+      "kind": "Outdoor Spaces",
+      "lat": 32.276936,
+      "lng": -106.752365,
+      "osmOutline": null,
+      "photos": [],
+      "notes": "Small outdoor gathering space near Corbett Center/Zuhl area, listed under Concept3D category 'Outdoor Spaces'. No matching OSM way found."
+    },
+    {
+      "concept3dId": 535106,
+      "name": "Upper Intramural Field",
+      "kind": "Outdoor Spaces",
+      "lat": 32.27845,
+      "lng": -106.746643,
+      "osmOutline": null,
+      "photos": [],
+      "notes": "Turf field used for student intramural sports, listed under Concept3D category 'Outdoor Spaces'. No matching OSM way found."
+    },
+    {
+      "concept3dId": 535107,
+      "name": "Lower Intramural Field",
+      "kind": "Outdoor Spaces",
+      "lat": 32.276543,
+      "lng": -106.748756,
+      "osmOutline": null,
+      "photos": [],
+      "notes": "Turf field used for student intramural sports, adjacent to Upper Intramural Field, listed under Concept3D category 'Outdoor Spaces'. No matching OSM way found."
+    },
+    {
+      "concept3dId": 567653,
+      "name": "Outdoor Basketball",
+      "kind": "Outdoor Spaces",
+      "lat": 32.278748,
+      "lng": -106.751289,
+      "osmOutline": null,
+      "photos": [],
+      "notes": "Outdoor basketball court near the core of campus, listed under Concept3D category 'Outdoor Spaces'. Included for completeness since the task scope explicitly covers 'outdoor space' entries in that Concept3D category, though it is a hardscape court rather than a green space -- flag for a judgment call on whether to actually plot it as a park-type marker."
     }
   ]
 }

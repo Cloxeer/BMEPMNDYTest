@@ -15,15 +15,17 @@ What's done and what's next: [docs/TASKS.md](docs/TASKS.md).
 
 - Welcome screen, once per browser session
 - Colour map with NMSU's class places highlighted; everything else faded
-- 45 buildings with official facts (the 10 first-year buildings, the 30 academic buildings with the most class sections, and 5 residence halls); tap a badge to open its sheet
-- 5 campus parks from NMSU's official campus map
-- Map filters button: show or hide Study (crimson), Living (orange) and Parks (green); the badge colours match
+- 55 buildings with official facts: every Las Cruces building with classes in the schedule that clearly matches NMSU's records, and every NMSU Housing community; tap a badge to open its sheet
+- 12 campus parks and green spaces, 17 places to eat (NMSU Dining), and all 346 parking lots NMSU maps, with permit colours
+- Map filters: Study (crimson), Living (orange), Parks (green), Historic (brown), Food (pink) and Parking (indigo); Food and Parking start off, but search always finds them
+- Locations page: every place on the map by category; Other Locations: every NMSU property
+- Map settings: My location, Turn map with me, Building names, a small compass (tap it to go home), Home
+- Opens from the phone's own saved copy after the first visit (fast, and works offline)
 - Hardman & Jacobs has floor plans for floors 1–2 (tap to zoom)
 - Search by name, address, building code or number, or a room ("SH 118A", "hjlc 225")
 - Rooms on our floor plans are highlighted in light blue
 - Tap a room on a floor plan to choose it; arrows show the way in from the nearest door or stairs
 - Get directions: blue arrows along campus paths, a turn-by-turn card with time and distance; the sheet opens with "You've arrived" when you walk in
-- Locations page: every NMSU place, nearest first
 
 ## Change how it looks or behaves
 
@@ -58,7 +60,8 @@ On GitHub: **Settings → Pages → Deploy from a branch → `main` / `/ (root)`
 index.html              every screen
 config.yml              every changeable value
 js/main.js              starts the app: read this first
-js/core/                settings, app state, saving choices, safe HTML
+js/core/                settings, app state, saving choices, safe HTML, offline support
+sw.js                   service worker: keeps the app on the phone
 js/logic/               maths and text only (distances, search matching, turns, routes)
 js/map/                 the map, badges, your location, compass
 js/bottomBar/           the pill, Map settings, Map filters, Directions button
@@ -97,8 +100,8 @@ python tools/build_rooms.py
 # Entrances on the floor plans (no internet needed)
 python tools/build_entrances.py
 
-# Parks: data/source/parks.json + outlines from OpenStreetMap (needs internet)
-python tools/build_parks.py
+# Parks, food and parking lots (needs internet; run build_buildings.py first)
+python tools/build_places.py
 
 # Walking paths for directions (OpenStreetMap)
 python tools/build_routes.py

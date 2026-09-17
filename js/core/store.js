@@ -30,6 +30,7 @@ class Store {
       arrived: false, // true after directions brought you inside the chosen building
       travelMode: 'walk', // how directions travel: 'walk', 'bike' or 'drive'
       showNames: true, // building names above the badges (Settings page and Map settings)
+      showCompass: false, // the small compass in the top left corner (Map settings)
       units: 'imperial', // distances in 'imperial' (ft, mi) or 'metric' (m, km)
       hiddenCategories: [], // Map filters: categories switched off ('study', 'living', 'park')
       searching: false, // is the search drop-down open?
@@ -225,6 +226,16 @@ class Store {
   setShowNames(on) {
     if (on !== this.state.showNames) {
       this.update({ showNames: on });
+    }
+  }
+
+  /**
+   * Show or hide the compass in the top left corner of the map.
+   * @param {boolean} on
+   */
+  setShowCompass(on) {
+    if (on !== this.state.showCompass) {
+      this.update({ showCompass: on });
     }
   }
 
