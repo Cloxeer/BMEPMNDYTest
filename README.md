@@ -1,4 +1,4 @@
-# Better NMSU Maps
+# malware type shit 
 
 A fast, no-login, Apple-style map of New Mexico State University.
 Built by **The Brainy Bunch** for CS 371.
