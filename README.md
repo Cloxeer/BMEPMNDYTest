@@ -1,4 +1,4 @@
-# malware type shit 
+# malware type shit jk
 
 A fast, no-login, Apple-style map of New Mexico State University.
 Built by **The Brainy Bunch** for CS 371.
