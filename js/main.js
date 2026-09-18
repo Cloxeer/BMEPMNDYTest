@@ -2,7 +2,8 @@
  * @file js/main.js
  * @summary Starts the app. Read this file first: it shows every part and the order they start in.
  *
- * WHAT IT DOES : 1. loads config.yml,
+ * WHAT IT DOES : 0. (index.html has already painted the welcome screen and started the first downloads)
+ *                1. loads config.yml,
  *                2. starts Framework7 (the iOS-style buttons, sheets and popups),
  *                3. loads just what the first screen needs (the buildings and the campus shapes),
  *                4. creates every part of the app and hands each one what it needs,
@@ -38,7 +39,7 @@ import { BuildingSheet } from './sheet/buildingSheet.js';
 import { Search } from './pages/search.js';
 import { Menu } from './pages/menu.js';
 import { SettingsPage } from './pages/settings.js';
-import { showWelcome } from './pages/welcome.js';
+import { stylesReady, appIsReady } from './pages/welcome.js';
 import { followNavbarTitle } from './pages/navbarTitle.js';
 
 /**
@@ -49,7 +50,7 @@ import { followNavbarTitle } from './pages/navbarTitle.js';
 function startFramework7() {
   const bottomBar = document.querySelector('#pill');
   let openPopups = 0;
-  return new Framework7({
+  const app = new Framework7({
     el: '#app',
     name: CONFIG.app.name,
     theme: 'ios',
@@ -66,6 +67,27 @@ function startFramework7() {
       },
     },
   });
+  return app;
+}
+
+// The Framework7 parts whose tap rules this app uses: popup-close, sheet-close and
+// accordion-item-toggle. Add a part here if index.html starts using another one's classes
+// (e.g. "tab-link" needs 'tabs').
+const FRAMEWORK7_TAP_RULES_WE_USE = ['popup', 'sheet', 'accordion'];
+
+/**
+ * On every tap, Framework7 checks the tapped element against the tap rules ("clicks") of every
+ * one of its parts, and each check searches the page. Most parts (login screens, swipeouts,
+ * floating buttons...) are never on our page, so their rules can only cost time. Removing them
+ * makes every tap about ten times cheaper for Framework7, and changes nothing we use.
+ * @param {Framework7} app
+ */
+function keepOnlyTheTapRulesWeUse(app) {
+  for (const name of Object.keys(app.modules)) {
+    if (FRAMEWORK7_TAP_RULES_WE_USE.indexOf(name) === -1) {
+      delete app.modules[name].clicks;
+    }
+  }
 }
 
 /**
@@ -128,6 +150,10 @@ function countData(places, rooms, entrances, campuses) {
  */
 function showStartupError(error) {
   console.error(error);
+  const boot = document.querySelector('#boot');
+  if (boot) {
+    boot.remove(); // the welcome screen would cover the message
+  }
   const box = document.createElement('div');
   box.className = 'startup-error';
   if (error.name === 'YAMLException') {
@@ -178,6 +204,7 @@ async function startApp() {
     loadData('outside-mask.geojson'), // everything that isn't a class place
     loadMapStyle(), // the background map's own style file
   ]);
+  await stylesReady(); // Framework7 measures the page, so its styles must be in first
   const app = startFramework7();
   const files = await downloads;
   const campuses = files[1];
@@ -199,8 +226,7 @@ async function startApp() {
   const routeCard = new RouteCard(app);
   new Directions(app, campusMap, myLocation, routeCard, buildingsById);
   const search = new Search(places, [], buildingsById);
-  new Menu(app, campuses, campusMap, () => places);
-  showWelcome(app);
+  const menu = new Menu(app, campuses, campusMap, () => places);
   followNavbarTitle(buildingsById);
   const settingsPage = new SettingsPage(app, campusMap);
 
@@ -211,7 +237,11 @@ async function startApp() {
   window.CONFIG = CONFIG;
 
   keepAppOnPhone(); // next time, the app opens from the phone's own copy
-  loadTheRest(campusMap, sheet, search, settingsPage, buildingsById, places, campuses);
+  // Only now: Framework7 still uses every part's definition while its parts are being set up
+  // (trimming straight after `new Framework7` stopped the sheet from reporting "closed").
+  keepOnlyTheTapRulesWeUse(app);
+  appIsReady(); // the welcome screen can go
+  loadTheRest(campusMap, sheet, search, settingsPage, buildingsById, places, campuses, menu);
 }
 
 /**
@@ -223,23 +253,26 @@ async function startApp() {
  * @param {Object.<string, object>} buildingsById - places are added to it
  * @param {object[]} places - places are added to it
  * @param {object} campuses
+ * @param {Menu} menu - builds its pages once everything has loaded
  */
-async function loadTheRest(campusMap, sheet, search, settingsPage, buildingsById, places, campuses) {
+async function loadTheRest(campusMap, sheet, search, settingsPage, buildingsById, places, campuses, menu) {
   const files = await Promise.all([
     loadData('places.geojson'), // parks, food and parking lots (tools/build_places.py)
     loadData('rooms.json'), // rooms (tools/build_rooms.py)
     loadData('entrances.json'), // outside doors on our floor plans (tools/build_entrances.py)
-    loadData('descriptions.json'), // the buildings' descriptions (tools/build_buildings.py)
+    loadData('descriptions.json'), // the buildings' descriptions and photos (tools/build_buildings.py)
   ]);
   const newPlaces = recordsFrom(files[0]);
   const rooms = files[1].rooms;
   const entrances = files[2].entrances;
   const descriptions = files[3].descriptions;
+  const photos = files[3].photos;
 
   // Every building gets its description from descriptions.json. Parks and food places
   // bring their own (in places.geojson); parking lots have none.
   for (const place of places) {
     place.description = descriptions[place.id] || [];
+    place.photos = photos[place.id] || [];
   }
 
   for (const place of newPlaces) {
@@ -253,6 +286,7 @@ async function loadTheRest(campusMap, sheet, search, settingsPage, buildingsById
   sheet.redraw(); // the open sheet, now with its description
   search.addRooms(rooms); // the new places are already in `places`, the list search was given
   search.readyWordsWhenIdle(); // so the first key press is instant
+  menu.buildPagesWhenIdle(); // so the first tap on a page only has to show it
   sheet.setRooms(rooms, entrances);
   settingsPage.fillData(countData(places, rooms, entrances, campuses));
 }

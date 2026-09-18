@@ -5,8 +5,9 @@
  * WHAT IT DOES : The menu button (top left) fades the menu in, one word after
  *                another. The page you're on is underlined. Tapping a page closes
  *                the menu and opens that page; closing a page takes you back to the map.
- *                Each page is built the first time it's opened, so starting the app
- *                stays fast (the Locations page alone is hundreds of rows).
+ *                Each page is built in a quiet moment after start-up (or when first opened,
+ *                if that comes sooner), so neither starting the app nor the first tap on a
+ *                page has to do it.
  * DEPENDS ON   : Framework7 (popups), ./locations.js, ./otherLocations.js, #menu-popup in index.html.
  * CONTROLS     : #menu-popup, and opening the Locations, Other Locations and Settings pages.
  * USED BY      : js/main.js
@@ -62,20 +63,47 @@ export class Menu {
   }
 
   /**
-   * Open a page, building it the first time.
+   * Open a page (built ahead of time by buildPagesWhenIdle, or now if it hasn't been yet).
    * @param {string} name - 'locations', 'other' or 'settings'
    */
   openPage(name) {
-    if (!this.pages[name]) {
-      this.pages[name] = this.app.popup.create({ el: POPUP_IDS[name] });
-      this.pages[name].on('closed', () => this.underline('map'));
-      if (name === 'locations') {
-        new LocationsPage(this.getPlaces(), this.pages[name]);
-      } else if (name === 'other') {
-        new OtherLocationsPage(this.campuses, this.pages[name], this.campusMap);
-      }
-    }
+    this.buildPage(name);
     this.pages[name].open();
+  }
+
+  /**
+   * Make a page once: its Framework7 popup and, for Locations and Other Locations, its lists.
+   * @param {string} name - 'locations', 'other' or 'settings'
+   */
+  buildPage(name) {
+    if (this.pages[name]) {
+      return; // already made
+    }
+    this.pages[name] = this.app.popup.create({ el: POPUP_IDS[name] });
+    this.pages[name].on('closed', () => this.underline('map'));
+    if (name === 'locations') {
+      new LocationsPage(this.getPlaces(), this.pages[name]);
+    } else if (name === 'other') {
+      new OtherLocationsPage(this.campuses, this.pages[name], this.campusMap);
+    }
+  }
+
+  /**
+   * Build every page in quiet moments after start-up (js/main.js calls this once every place has
+   * loaded), so the first tap on a page only has to show it. One page per quiet moment; stops
+   * by itself when all are built.
+   */
+  buildPagesWhenIdle() {
+    const later = window.requestIdleCallback || ((work) => setTimeout(work, 200));
+    const waiting = ['settings', 'locations', 'other'];
+    const next = () => {
+      const name = waiting.shift();
+      if (name) {
+        this.buildPage(name);
+        later(next);
+      }
+    };
+    later(next);
   }
 
   /** @param {string} current - underline this page's word: 'map', 'locations', 'other' or 'settings' */

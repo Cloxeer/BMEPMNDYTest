@@ -1,7 +1,8 @@
 /*
-  styles/pages.css — the welcome screen and the Settings page.
+  styles/pages.css — the Settings, Locations and Other Locations pages.
+  (The welcome screen's styles are in index.html, so it paints before any stylesheet arrives.)
 
-  CONTROLS     : #welcome-popup, the Settings switches, the Data list and the credit, the Locations page.
+  CONTROLS     : the Settings switches, the Data list and the credit, the Locations page.
   DEPENDS ON   : Framework7, and the CSS variables js/core/config.js makes from
                  config.yml (pill.height -> --pill-height, and so on).
   USED BY      : index.html (loaded last)
@@ -9,16 +10,6 @@
   RULES : • Values come from config.yml. Change them there, not here.
           • Spacing uses --s1 … --s16: multiples of theme.spacingUnit (4px), set in styles/base.css.
 */
-
-/* ---------- Welcome screen ---------- */
-#welcome-popup { background: var(--f7-theme-color); }
-#welcome-popup .page,
-#welcome-popup .page-content { background: transparent; }
-.welcome-card { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--theme-white); }
-.welcome-h { margin: 0; line-height: var(--welcome-title-line-height); color: var(--theme-white); }
-.welcome-card .brand { color: var(--theme-white); }
-.welcome-card .by { color: var(--welcome-byline); margin-top: var(--s2); }
-.welcome-card .button-fill { background: var(--theme-white); color: var(--f7-theme-color); }
 
 /* ---------- Settings page ---------- */
 /* Settings page */
@@ -79,3 +70,11 @@
 /* Long lists (Parking has 356 rows): the phone only lays out the rows near the screen,
    so opening, closing and scrolling a group stays cheap. 64px is about one row's height. */
 .places-group li { content-visibility: auto; contain-intrinsic-size: auto 64px; }
+/* Pages open in one frame: the browser only lays out the groups that are on the screen, and
+   the ones further down when they scroll into view. 240px is a rough group height, used only
+   to size the scroll bar until the group is really laid out. */
+.page-plain > .list,
+.page-plain > .block-footer,
+.page-plain > .settings-credit { content-visibility: auto; contain-intrinsic-size: auto 240px; }
+/* Each full-screen page is drawn on its own: changes inside it never make the browser re-check the map. */
+.popup { contain: layout style; }

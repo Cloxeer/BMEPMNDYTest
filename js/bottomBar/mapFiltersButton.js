@@ -23,6 +23,7 @@ import { CONFIG } from '../core/config.js';
 import { store } from '../core/store.js';
 import { escapeHtml, iconHtml } from '../core/html.js';
 import { readSaved, save } from '../core/storage.js';
+import { afterNextPaint } from '../core/afterPaint.js';
 
 export class MapFiltersButton {
   /**
@@ -118,6 +119,21 @@ export class MapFiltersButton {
     }
   }
 
+  /**
+   * Show and hide the kinds of places on the map, and remember the choice on this device.
+   * @param {string[]} hiddenCategories
+   */
+  showOnMap(hiddenCategories) {
+    const shownCategories = [];
+    for (const name of this.categoryNames) {
+      if (!hiddenCategories.includes(name)) {
+        shownCategories.push(name);
+      }
+    }
+    this.campusMap.setShownCategories(shownCategories);
+    save(this.settings.storageKey, JSON.stringify(hiddenCategories));
+  }
+
   /** Start with the rows and hidden categories this device chose last time, or config.yml's defaults. */
   restoreSavedChoice() {
     this.restoreSavedOptions();
@@ -194,25 +210,26 @@ export class MapFiltersButton {
       save(this.settings.optionsKey, JSON.stringify(state.filterOptions));
     }
 
-    // Rows: filled = shown, white = hidden.
-    for (const row of this.stack.querySelectorAll('[data-category]')) {
-      const shown = !state.hiddenCategories.includes(row.dataset.category);
-      row.classList.toggle('is-on', shown);
-      row.setAttribute('aria-pressed', String(shown));
-    }
-
-    // The map and the saved choice only change when the choice does.
+    // Only when the choice changes (or the rows were rebuilt): every other change in the app skips this.
     const hidden = state.hiddenCategories.join(',');
-    if (hidden !== this.lastHidden) {
-      this.lastHidden = hidden;
-      const shownCategories = [];
-      for (const name of this.categoryNames) {
-        if (!state.hiddenCategories.includes(name)) {
-          shownCategories.push(name);
-        }
+    if (hidden !== this.lastHidden || options !== this.lastPaintedOptions) {
+      this.lastPaintedOptions = options;
+      // Rows: filled = shown, white = hidden. This is what the tap shows straight away.
+      for (const row of this.stack.querySelectorAll('[data-category]')) {
+        const shown = !state.hiddenCategories.includes(row.dataset.category);
+        row.classList.toggle('is-on', shown);
+        row.setAttribute('aria-pressed', String(shown));
       }
-      this.campusMap.setShownCategories(shownCategories);
-      save(this.settings.storageKey, JSON.stringify(state.hiddenCategories));
+    }
+    if (hidden !== this.lastHidden) {
+      const starting = this.lastHidden === null;
+      this.lastHidden = hidden;
+      if (starting) {
+        this.showOnMap(state.hiddenCategories); // at start-up the map must know straight away
+      } else {
+        // The map (the slow part) and the saved choice follow just after the row has changed on screen.
+        afterNextPaint(() => this.showOnMap(store.get().hiddenCategories));
+      }
     }
 
     // Only while looking at the map: the sheet covers it, and directions hide the whole bar.

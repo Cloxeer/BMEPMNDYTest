@@ -31,26 +31,105 @@
   <link rel="modulepreload" href="js/map/campusMap.js" />
   <link rel="modulepreload" href="js/map/badges.js" />
   <link rel="modulepreload" href="js/map/campusLayers.js" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.css" />
+  <!-- Download the libraries now; they are run after the welcome screen is painted (end of <body>). -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/framework7@8.3.4/framework7-bundle.min.js" as="script" crossorigin />
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" as="script" crossorigin />
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js" as="script" crossorigin />
+  <!-- Start the first screen's data downloads now, in parallel, instead of after config.yml has been read.
+       ("crossorigin" makes these match the fetch() calls in js/main.js, so they are used, not fetched twice.) -->
+  <link rel="preload" href="config.yml" as="fetch" crossorigin />
+  <link rel="preload" href="data/buildings.geojson" as="fetch" crossorigin />
+  <link rel="preload" href="data/campuses.geojson" as="fetch" crossorigin />
+  <link rel="preload" href="data/campus-labels.geojson" as="fetch" crossorigin />
+  <link rel="preload" href="data/outside-mask.geojson" as="fetch" crossorigin />
+  <link rel="preload" href="https://tiles.openfreemap.org/styles/liberty" as="fetch" crossorigin />
+
+  <!-- The boot screen's own look, written right here so it paints the moment the page arrives,
+       before any library or stylesheet has downloaded. Colours: theme.crimson and white in config.yml. -->
+  <style>
+    .boot { position: fixed; inset: 0; z-index: 20000; display: flex; align-items: center; justify-content: center;
+      background: #8C0B42; color: #fff; text-align: center; transition: opacity 0.3s ease;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    .boot.is-gone { opacity: 0; pointer-events: none; }
+    .boot-h { margin: 0; font-size: 26px; line-height: 1.15; font-weight: 700; }
+    .boot-by { margin: 8px 0 64px; font-size: 13px; opacity: 0.85; }
+    .boot-enter { padding: 8px 12px; border: 0; border-radius: 4px; background: #fff; color: #8C0B42; cursor: pointer;
+      font: 500 16px inherit; font-family: inherit; text-transform: uppercase; }
+    .boot-wait { display: none; margin: 0; font-size: 14px; opacity: 0.85; }
+    .boot.is-leaving .boot-enter, .boot.is-splash .boot-enter { display: none; }
+    .boot.is-leaving .boot-wait, .boot.is-splash .boot-wait { display: block; }
+    /* Until the app's styles are in, only the welcome screen exists as far as the browser is
+       concerned: the rest isn't laid out at all, so the first paint is just this one screen. */
+    body.booting > :not(#boot) { display: none !important; }
+  </style>
+
+  <!-- Every stylesheet below loads without holding up the first paint ("print" until it has
+       arrived, then "all"). The boot screen covers the app until they are all in (js/pages/welcome.js). -->
+  <!-- Framework7's core styles plus only the parts this app uses (popup, sheet, dialog, photo browser
+       and its swiper, toggle, accordion), joined into one file by jsDelivr. The full bundle has
+       3,624 rules the phone must check on every change; this has 1,326. Using another Framework7
+       part (e.g. tabs)? Add its "npm/framework7@8.3.4/components/<name>/<name>.min.css" here. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/framework7@8.3.4/framework7.min.css,npm/framework7@8.3.4/components/popup/popup.min.css,npm/framework7@8.3.4/components/sheet/sheet.min.css,npm/framework7@8.3.4/components/dialog/dialog.min.css,npm/framework7@8.3.4/components/photo-browser/photo-browser.min.css,npm/framework7@8.3.4/components/swiper/swiper.min.css,npm/framework7@8.3.4/components/toggle/toggle.min.css,npm/framework7@8.3.4/components/accordion/accordion.min.css" media="print" onload="this.media='all'" />
   <!-- App icon: favicon.svg (sharp at any size), a PNG for browsers without SVG icons, and the iPhone home-screen icon -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7-icons@5/css/framework7-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7-icons@5/css/framework7-icons.css" media="print" onload="this.media='all'" />
   <!-- Google's Material Symbols: only the icons Framework7's set doesn't have (walk / bike / car, parking, food) -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,1,0&icon_names=directions_bike,directions_car,directions_walk,local_parking,restaurant" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,500,1,0&icon_names=directions_bike,directions_car,directions_walk,local_parking,restaurant" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" media="print" onload="this.media='all'" />
   <!-- Our styles, one file per part of the screen. The order matters: later files can build on earlier ones. -->
-  <link rel="stylesheet" href="styles/base.css" />
-  <link rel="stylesheet" href="styles/map.css" />
-  <link rel="stylesheet" href="styles/search.css" />
-  <link rel="stylesheet" href="styles/bottomBar.css" />
-  <link rel="stylesheet" href="styles/routeCard.css" />
-  <link rel="stylesheet" href="styles/menu.css" />
-  <link rel="stylesheet" href="styles/sheet.css" />
-  <link rel="stylesheet" href="styles/pages.css" />
+  <link rel="stylesheet" href="styles/base.css" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="styles/map.css" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="styles/search.css" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="styles/bottomBar.css" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="styles/routeCard.css" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="styles/menu.css" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="styles/sheet.css" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="styles/pages.css" media="print" onload="this.media='all'" />
 </head>
-<body>
+<body class="booting">
+
+  <!-- Boot screen: the welcome screen, painted as soon as the page arrives (styles in <head>).
+       The app loads behind it. "Enter Map" answers at once: if the app is ready it opens the map,
+       if not it says "Loading the map…" until it is. Returning in the same tab shows just the
+       name while loading. js/pages/welcome.js takes it away when the app is ready. -->
+  <div id="boot" class="boot" role="dialog" aria-label="Welcome">
+    <div>
+      <h1 class="boot-h">Welcome to</h1>
+      <h1 class="boot-h">Better NMSU Maps</h1>
+      <p class="boot-by">by The Brainy Bunch</p>
+      <button id="boot-enter" class="boot-enter" type="button">Enter Map &rarr;</button>
+      <p class="boot-wait" role="status">Loading the map&hellip;</p>
+    </div>
+  </div>
+  <script>
+    // Runs before any library, so "Enter Map" works from the very first moment.
+    // The key must match welcome.storageKey in config.yml.
+    (function () {
+      const boot = document.getElementById('boot');
+      let seen = false;
+      try {
+        seen = sessionStorage.getItem('bnm_visited') === '1';
+      } catch (error) {
+        // private mode: just show the welcome again
+      }
+      if (seen) {
+        boot.classList.add('is-splash'); // already welcomed in this tab
+      }
+      document.getElementById('boot-enter').addEventListener('click', function () {
+        try {
+          sessionStorage.setItem('bnm_visited', '1');
+        } catch (error) {
+          // not being able to remember is harmless
+        }
+        boot.classList.add('is-leaving');
+        if (window.appIsReady) {
+          boot.classList.add('is-gone');
+        }
+      });
+    })();
+  </script>
 
   <div id="app">
     <div class="view view-main view-init safe-areas">
@@ -281,21 +360,6 @@
       </div></div>
     </div>
 
-    <!-- Welcome popup (first visit only). -->
-    <div class="popup popup-tablet-fullscreen" id="welcome-popup">
-      <div class="view"><div class="page"><div class="page-content page-fill">
-        <div class="welcome-card">
-          <div class="block">
-            <h1 class="welcome-h">Welcome to</h1>
-            <h1 class="welcome-h brand">Better NMSU Maps</h1>
-            <p class="by">by The Brainy Bunch</p>
-          </div>
-          <div class="block">
-            <a id="enter-map" class="button button-large button-fill popup-close" href="#">Enter Map &rarr;</a>
-          </div>
-        </div>
-      </div></div></div>
-    </div>
 
   </div>
 
@@ -360,9 +424,43 @@
     </button>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/framework7@8/framework7-bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
-  <script type="module" src="js/main.js"></script>
+  <!-- Start the app only after the welcome screen has been painted: running the libraries takes
+       a slow phone a few hundred milliseconds, and the screen must not wait for that. They are
+       already downloading (the preloads in <head>), so nothing is lost. They run in this order,
+       then js/main.js, which needs all three. -->
+  <script>
+    (function () {
+      const libraries = [
+        'https://cdn.jsdelivr.net/npm/framework7@8.3.4/framework7-bundle.min.js',
+        'https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js',
+        'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js',
+      ];
+      function startApp() {
+        for (const url of libraries) {
+          const script = document.createElement('script');
+          script.src = url;
+          script.async = false; // run in the order above
+          script.crossOrigin = 'anonymous'; // matches the preload, so it is downloaded only once
+          document.body.appendChild(script);
+        }
+        const main = document.createElement('script');
+        main.type = 'module';
+        main.src = 'js/main.js';
+        // A module doesn't wait for the scripts above, so it is added once the last one has run
+        // (or failed: then js/main.js shows its "could not start" message instead of a blank screen).
+        const last = document.body.lastElementChild;
+        last.addEventListener('load', function () {
+          document.body.appendChild(main);
+        });
+        last.addEventListener('error', function () {
+          document.body.appendChild(main);
+        });
+      }
+      // The next frame is painted first (requestAnimationFrame), then the app starts (setTimeout).
+      requestAnimationFrame(function () {
+        setTimeout(startApp, 0);
+      });
+    })();
+  </script>
 </body>
 </html>

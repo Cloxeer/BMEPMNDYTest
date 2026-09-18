@@ -183,6 +183,8 @@ DESCRIPTIONS_NOTE = [
     "or the building's page on NMSU's campus map, then run python tools/build_buildings.py",
     'Format: "descriptions" is {property number: [paragraph, paragraph, ...]}. The app loads it just after the map,',
     'because the map does not need it and it is the longest text in the project.',
+    '"photos" is {property number: [photo, ...]} (same shape as data/source/photos.json, plus imageUrl/thumbUrl for',
+    "photos linked from NMSU's campus map). Kept here, not in buildings.geojson, so the first screen loads faster.",
 ]
 SHAPES_NOTE = [
     'Made by tools/build_buildings.py. Do not edit by hand.',
@@ -504,6 +506,7 @@ def main():
     features = []
     shapes = []
     descriptions = {}
+    photo_lists = {}  # building id -> its photos; like the descriptions, kept out of the first file
     for number, name, osm_name, map_id, photo_key in buildings:
         record = official[number]
         extra = extras.get(number, {})
@@ -576,7 +579,7 @@ def main():
             'floorsSource': floors_source,
             'floorsKnown': floors_known,
             'nmsuUrl': nmsu_url,
-            'photos': building_photos,
+            'photos': [],  # filled in by the app from data/descriptions.json, after the map is up
             'source': 'NMSU Office of Space Planning, Buildings layer (property ' + number + ')',
             'category': category,
             'floorImages': existing_pictures(extra.get('floorImages', {}), number),  # floor -> our redrawn plan
@@ -596,6 +599,8 @@ def main():
             building['codeSource'] = REGISTRAR
 
         descriptions[number] = description  # paragraphs, written to their own file below
+        if building_photos:
+            photo_lists[number] = building_photos
         shapes.append({'type': 'Feature', 'properties': {'id': number}, 'geometry': outlines[number]})
         position = [round(record['Longitude'], 7), round(record['Latitude'], 7)]
         features.append({'type': 'Feature', 'properties': building, 'geometry': {'type': 'Point', 'coordinates': position}})
@@ -606,7 +611,7 @@ def main():
 
     write_json(OUTPUT, BUILDINGS_NOTE, {'type': 'FeatureCollection', 'features': features}, 'pretty')
     print(len(features), 'buildings written to', OUTPUT)
-    write_json(DESCRIPTIONS_OUTPUT, DESCRIPTIONS_NOTE, {'descriptions': descriptions}, 'pretty')
+    write_json(DESCRIPTIONS_OUTPUT, DESCRIPTIONS_NOTE, {'descriptions': descriptions, 'photos': photo_lists}, 'pretty')
     print(len(descriptions), 'descriptions written to', DESCRIPTIONS_OUTPUT)
     write_json(SHAPES_OUTPUT, SHAPES_NOTE, {'type': 'FeatureCollection', 'features': shapes}, 'compact')
     print(len(shapes), 'outlines written to', SHAPES_OUTPUT)

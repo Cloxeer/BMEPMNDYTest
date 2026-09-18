@@ -1,29 +1,46 @@
 /**
  * @file js/pages/welcome.js
- * @summary The welcome screen, shown once each time the browser tab is opened.
+ * @summary Takes the boot screen away once the app is ready.
  *
- * WHAT IT DOES : Opens the welcome popup unless it was already seen in this tab.
- *                "Enter Map" closes it and remembers that it was seen.
- * DEPENDS ON   : Framework7 (popup), ../core/config.js, ../core/storage.js,
- *                #welcome-popup in index.html.
- * CONTROLS     : #welcome-popup.
+ * WHAT IT DOES : The welcome ("boot") screen is plain HTML at the top of index.html, so it
+ *                paints the instant the page arrives, long before the libraries have loaded.
+ *                Its own little script handles "Enter Map". This file is called when the app
+ *                has started: if the visitor already tapped "Enter Map" (or was welcomed
+ *                earlier in this tab), the screen fades away; otherwise it waits for the tap.
+ *                Once gone, it is removed, so it costs nothing afterwards.
+ * DEPENDS ON   : #boot in index.html (and its script).
+ * CONTROLS     : #boot.
  * USED BY      : js/main.js
  */
 
-import { CONFIG } from '../core/config.js';
-import { readForThisVisit, saveForThisVisit } from '../core/storage.js';
-
 /**
- * Show the welcome screen on the first visit of each browser session.
- * @param {Framework7} app
+ * Wait until every stylesheet in index.html has arrived. They load without holding up the
+ * first paint, so the app waits for them here before Framework7 lays anything out.
+ * @returns {Promise<void>}
  */
-export function showWelcome(app) {
-  const key = CONFIG.welcome.storageKey;
-  const seen = readForThisVisit(key) === '1';
-  if (!seen) {
-    app.popup.open('#welcome-popup');
+export function stylesReady() {
+  const waits = [];
+  for (const link of document.querySelectorAll('link[rel="stylesheet"]')) {
+    if (link.media !== 'all') {
+      // Still on its way ("print"): its onload switches it on. A failed one must not stop the app.
+      waits.push(new Promise((done) => {
+        link.addEventListener('load', done, { once: true });
+        link.addEventListener('error', done, { once: true });
+      }));
+    }
   }
+  // Then the rest of the page may be laid out (it was hidden while booting, see index.html).
+  return Promise.all(waits).then(() => document.body.classList.remove('booting'));
+}
 
-  // "Enter Map" closes the popup by itself (it has Framework7's popup-close class).
-  document.querySelector('#enter-map').addEventListener('click', () => saveForThisVisit(key, '1'));
+/** The app is ready: let "Enter Map" open it at once, and fade the screen away if it was already tapped. */
+export function appIsReady() {
+  window.appIsReady = true;
+  const boot = document.querySelector('#boot');
+  const waiting = boot.classList.contains('is-leaving') || boot.classList.contains('is-splash');
+  if (waiting) {
+    boot.classList.add('is-gone');
+  }
+  // Once it has faded (now or after "Enter Map"), take it out of the page.
+  boot.addEventListener('transitionend', () => boot.remove(), { once: true });
 }

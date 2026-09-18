@@ -62,7 +62,7 @@ html:not(.config-ready) body { visibility: hidden; }
 .nav-spacer { display: inline-block; width: var(--s6); } /* keeps the title centred next to a lone close button */
 
 /* ---------- Page layouts ---------- */
-/* Full-bleed pages (map, welcome) drop Framework7's page padding and scrolling. */
+/* Full-bleed pages (the map) drop Framework7's page padding and scrolling. */
 .page-content.page-fill { padding: 0 !important; overflow: hidden; }
 /* Ordinary pages (locations, settings) scroll below their navbar. */
 .page-content.page-plain {
@@ -75,5 +75,5 @@ html:not(.config-ready) body { visibility: hidden; }
 @supports (corner-shape: squircle) {
   .pill, .bs-floor-img, .bs-photo img, .bs-switch, .bs-switch .button,
   .search-field, .search-drop .search-results, .list.inset ul, .button,
-  .welcome-card .button { corner-shape: squircle; }
+  .boot-enter { corner-shape: squircle; }
 }

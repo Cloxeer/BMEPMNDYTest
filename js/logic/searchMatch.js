@@ -29,13 +29,41 @@ function allowedTypos(typed) {
   return 0;
 }
 
+// Answers already worked out during this key press: "typed word|building word" -> true/false.
+// Many buildings share words ("hall", "las", "cruces"), so each pair is only checked once.
+const answers = new Map();
+
 /**
- * Does one typed word match one word of a building?
+ * Forget the remembered answers. Call it once at the start of every search, so the memory
+ * never grows past one key press's worth.
+ */
+export function startNewSearch() {
+  answers.clear();
+}
+
+/**
+ * Does one typed word match one word of a building? Remembered for the rest of this key press.
  * @param {string} typed - lowercase, e.g. "harmon"
  * @param {string} word - lowercase, e.g. "hardman"
  * @returns {boolean}
  */
 function wordMatches(typed, word) {
+  const key = typed + '|' + word;
+  let answer = answers.get(key);
+  if (answer === undefined) {
+    answer = checkWord(typed, word);
+    answers.set(key, answer);
+  }
+  return answer;
+}
+
+/**
+ * The actual check behind wordMatches(): the start of the word, or close to it with a typo or two.
+ * @param {string} typed
+ * @param {string} word
+ * @returns {boolean}
+ */
+function checkWord(typed, word) {
   if (word.startsWith(typed)) {
     return true;
   }

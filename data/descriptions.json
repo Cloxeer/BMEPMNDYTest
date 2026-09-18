@@ -3,7 +3,9 @@
   "Made by tools/build_buildings.py. Do not edit by hand: edit \"description\" in data/source/building-extras.json,",
   "or the building's page on NMSU's campus map, then run python tools/build_buildings.py",
   "Format: \"descriptions\" is {property number: [paragraph, paragraph, ...]}. The app loads it just after the map,",
-  "because the map does not need it and it is the longest text in the project."
+  "because the map does not need it and it is the longest text in the project.",
+  "\"photos\" is {property number: [photo, ...]} (same shape as data/source/photos.json, plus imageUrl/thumbUrl for",
+  "photos linked from NMSU's campus map). Kept here, not in buildings.geojson, so the first screen loads faster."
  ],
  "descriptions": {
   "323": [
@@ -788,5 +790,2627 @@
    "Animal & Range Sciences"
   ],
   "449": []
+ },
+ "photos": {
+  "323": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Hardman_and_Jacobs_Undergrad_Learning_Center_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Hardman_and_Jacobs_Undergrad_Learning_Center_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525521",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hardman and Jacobs Undergraduate Learning Center\" (map id 525521), matched to Hardman and Jacobs Undergraduate Learning Center by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Hardman_and_Jacobs_Undergrad_Learning_Center_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Hardman_and_Jacobs_Undergrad_Learning_Center_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525521",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hardman and Jacobs Undergraduate Learning Center\" (map id 525521), matched to Hardman and Jacobs Undergraduate Learning Center by name and position."
+   }
+  ],
+  "461": [
+   {
+    "file": "data/photos/zuhl-library-1.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:NMSU_Zuhl_2008.JPG",
+    "license": "CC BY 3.0",
+    "author": "Zereshk",
+    "verifiedHow": "In Commons Category:Zuhl Library, description \"New Mexico State University, Zuhl Library\", and the \"ZUHL LIBRARY\" sign is legible on the entrance arcade."
+   },
+   {
+    "file": "data/photos/zuhl-library-2.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:NMSU_ZuhlLibrary.jpg",
+    "license": "CC BY-SA 3.0",
+    "author": "Terry Umbenhaur",
+    "verifiedHow": "In Commons Category:Zuhl Library with description \"Zuhl Library with Organ Mountains in the background\"; same arched gable as photo 1, though the building fills only the lower right (mostly mountains)."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/461.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/461.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526019",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Zuhl Library\" (map id 526019), matched to Zuhl Library by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Zuhl_Library_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Zuhl_Library_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526019",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Zuhl Library\" (map id 526019), matched to Zuhl Library by name and position."
+   }
+  ],
+  "285": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Corbett_Center.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Corbett_Center.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526646",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Corbett Center\" (map id 526646), matched to Corbett Center Student Union by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/285.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/285.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526646",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Corbett Center\" (map id 526646), matched to Corbett Center Student Union by name and position."
+   }
+  ],
+  "278": [
+   {
+    "file": "data/photos/branson-hall-library-1.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Branson_Library_New_Mexico_State_University_Las_Cruces.jpg",
+    "license": "Public domain (PD-self)",
+    "author": "AllenS",
+    "verifiedHow": "In Commons Category:Branson Hall Library, description names Branson Library at NMSU Las Cruces, and \"BRANSON HALL LIBRARY\" lettering is legible on the tower."
+   },
+   {
+    "file": "data/photos/branson-hall-library-2.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:NMSU_BransonLibrary.jpg",
+    "license": "CC BY-SA 3.0",
+    "author": "Terry Umbenhaur",
+    "verifiedHow": "In Commons Category:Branson Hall Library, description \"Branson Library, New Mexico State University\", and \"BRANSON HALL LIBRARY\" lettering is visible on the facade."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Branson_Library.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Branson_Library.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526015",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Branson Library\" (map id 526015), matched to Branson Library by name and position."
+   }
+  ],
+  "391": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Science_Hall_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Science_Hall_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525545",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Science Hall\" (map id 525545), matched to Science Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Science_Hall_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Science_Hall_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525545",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Science Hall\" (map id 525545), matched to Science Hall by name and position."
+   }
+  ],
+  "386": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Business_Complex_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Business_Complex_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525491",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Business Complex Building\" (map id 525491), matched to Business Complex by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Business_Complex_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Business_Complex_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525491",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Business Complex Building\" (map id 525491), matched to Business Complex by name and position."
+   }
+  ],
+  "189": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Jett_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Jett_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525525",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Jett Hall\" (map id 525525), matched to Jett Hall by name and position."
+   }
+  ],
+  "184": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Breland_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Breland_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525489",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Breland Hall\" (map id 525489), matched to Breland Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Breland_Hall_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Breland_Hall_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525489",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Breland Hall\" (map id 525489), matched to Breland Hall by name and position."
+   }
+  ],
+  "397": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-John_Whitlock_Henderson_Hall_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-John_Whitlock_Henderson_Hall_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525527",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"John Whitlock Hernandez Hall\" (map id 525527), matched to John Whitlock Hernandez Hall by name and position."
+   }
+  ],
+  "364": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Clara_Belle_Williams_Hall_and_Speech_Building.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Clara_Belle_Williams_Hall_and_Speech_Building.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525497",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Clara Belle Williams Hall\" (map id 525497), matched to Clara Belle Williams Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Clara_Belle_Williams_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Clara_Belle_Williams_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525497",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Clara Belle Williams Hall\" (map id 525497), matched to Clara Belle Williams Hall by name and position."
+   }
+  ],
+  "287": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-O_Donnell_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-O_Donnell_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525539",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"O'Donnell Hall\" (map id 525539), matched to O'Donnell Hall by name and position."
+   }
+  ],
+  "389": [
+   {
+    "file": "data/photos/music-building-1.jpg",
+    "author": "AllenS",
+    "license": "Public domain (PD-self)",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Music_Building,_Armory%E2%80%93Gymnasium.jpg",
+    "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Music_Building_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Music_Building_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525535",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Music Building\" (map id 525535), matched to Music Building by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Music_Building_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Music_Building_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525535",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Music Building\" (map id 525535), matched to Music Building by name and position."
+   }
+  ],
+  "187": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Chemistry_and_Biochemistry_Building_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Chemistry_and_Biochemistry_Building_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525495",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Chemistry Building\" (map id 525495), matched to Chemistry Building by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Chemistry_and_Biochemistry_Building_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Chemistry_and_Biochemistry_Building_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525495",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Chemistry Building\" (map id 525495), matched to Chemistry Building by name and position."
+   }
+  ],
+  "34": [
+   {
+    "file": "data/photos/foster-hall-1.jpg",
+    "author": "AllenS",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Foster_Hall_New_Mexico_State_University_Las_Cruces.jpg",
+    "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+   },
+   {
+    "file": "data/photos/foster-hall-2.jpg",
+    "author": "Jerri Wells",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Foster_Hall_NMSU.jpg",
+    "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Foster_Hall_Detail_.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Foster_Hall_Detail_.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525509",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Foster Hall\" (map id 525509), matched to Foster Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Foster_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Foster_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525509",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Foster Hall\" (map id 525509), matched to Foster Hall by name and position."
+   }
+  ],
+  "249": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/249.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/249.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525541",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Pete V. Domenici Hall\" (map id 525541), matched to Pete V. Domenici Hall by name and position."
+   }
+  ],
+  "83": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Milton_Hall_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Milton_Hall_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525533",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Milton Hall\" (map id 525533), matched to Milton Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Milton_Hall_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Milton_Hall_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525533",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Milton Hall\" (map id 525533), matched to Milton Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Milton_Hall_3.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Milton_Hall_3.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525533",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Milton Hall\" (map id 525533), matched to Milton Hall by name and position."
+   }
+  ],
+  "244": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Gerald_Thomas_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Gerald_Thomas_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525513",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Gerald Thomas Hall\" (map id 525513), matched to Gerald Thomas Hall by name and position."
+   }
+  ],
+  "590": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Health_and_Social_Services_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Health_and_Social_Services_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525523",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Health And Social Services Building\" (map id 525523), matched to Health and Social Services Building by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Health_and_Social_Services_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Health_and_Social_Services_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525523",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Health And Social Services Building\" (map id 525523), matched to Health and Social Services Building by name and position."
+   }
+  ],
+  "188": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Gardiner_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Gardiner_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525511",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Gardiner Hall\" (map id 525511), matched to Gardiner Hall by name and position."
+   }
+  ],
+  "541": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Ed_and_Harold_Foreman_Engineering_Complex.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Ed_and_Harold_Foreman_Engineering_Complex.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525505",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Ed And Harold Foreman Engineering Complex\" (map id 525505), matched to Engineering Complex III by name and position."
+   }
+  ],
+  "657": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Devasthali_Hall_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Devasthali_Hall_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525386",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Devasthali Hall\" (map id 525386), matched to Devasthali Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Devasthali_Hall_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Devasthali_Hall_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525386",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Devasthali Hall\" (map id 525386), matched to Devasthali Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Devasthali_Hall_3.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Devasthali_Hall_3.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525386",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Devasthali Hall\" (map id 525386), matched to Devasthali Hall by name and position."
+   }
+  ],
+  "365": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Speech_Building.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Speech_Building.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525499",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Communication Sciences Building\" (map id 525499), matched to Communication Sciences Building by name and position."
+   }
+  ],
+  "288": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Guthrie_Hall_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Guthrie_Hall_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525517",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Guthrie Hall\" (map id 525517), matched to Guthrie Hall by name and position."
+   }
+  ],
+  "551": [
+   {
+    "file": "data/photos/skeen-hall-1.jpg",
+    "author": "Abraham Sanogo",
+    "license": "CC BY 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:NMSU_Skeen_Hall_2008.jpg",
+    "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Skeen_Hall_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Skeen_Hall_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525547",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Skeen Hall\" (map id 525547), matched to Skeen Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Skeen_Hall_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Skeen_Hall_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525547",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Skeen Hall\" (map id 525547), matched to Skeen Hall by name and position."
+   }
+  ],
+  "631": [
+   {
+    "file": "data/photos/center-for-the-arts-1.jpg",
+    "author": "Holzman Moss Bottino Architecture",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Center_for_the_Arts.jpg",
+    "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Center_for_the_Arts_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Center_for_the_Arts_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525493",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Center For The Arts\" (map id 525493), matched to Center for the Arts by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Center_for_the_Arts_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Center_for_the_Arts_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525493",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Center For The Arts\" (map id 525493), matched to Center for the Arts by name and position."
+   }
+  ],
+  "368": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Knox_Hall_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Knox_Hall_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525531",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Knox Hall\" (map id 525531), matched to Knox Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Knox_Hall_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Knox_Hall_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525531",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Knox Hall\" (map id 525531), matched to Knox Hall by name and position."
+   }
+  ],
+  "33": [
+   {
+    "file": "data/photos/kent-hall-1.jpg",
+    "author": "AllenS",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Museum.jpg",
+    "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Kent_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Kent_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525529",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Kent Hall\" (map id 525529), matched to Kent Hall by name and position."
+   }
+  ],
+  "619": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/619.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/619.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525398",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Health and Social Services Annex\" (map id 525398), matched to Health & Social Services Annex by name and position."
+   }
+  ],
+  "363": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Engineering_Complex_I.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Engineering_Complex_I.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525507",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Engineering Complex I\" (map id 525507), matched to Engineering Complex I by name and position."
+   }
+  ],
+  "82": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Biology_Annex.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Biology_Annex.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525487",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Biology Annex\" (map id 525487), matched to Biology Annex by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/82-Biology_Annex.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/82-Biology_Annex.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525487",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Biology Annex\" (map id 525487), matched to Biology Annex by name and position."
+   }
+  ],
+  "35": [
+   {
+    "file": "data/photos/conroy-honors-center-1.jpg",
+    "author": "AllenS",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Conroy_Honors_Center.jpg",
+    "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/35-2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/35-2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525485",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"William B. Conroy Honors Center\" (map id 525485), matched to William B. Conroy Honors Center by name and position."
+   }
+  ],
+  "385": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/385-Theatre_Scene_Shop.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/385-Theatre_Scene_Shop.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525468",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Theatre Scene Shop\" (map id 525468), matched to Theatre Scene Shop by name and position."
+   }
+  ],
+  "225": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Astronomy_Building.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Astronomy_Building.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525366",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Astronomy Building\" (map id 525366), matched to Astronomy Building by name and position."
+   }
+  ],
+  "190": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/189-Jett_Hall_190-Jett_Annex.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/189-Jett_Hall_190-Jett_Annex.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525426",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Jett Annex\" (map id 525426), matched to Jett Annex by name and position."
+   }
+  ],
+  "10": [
+   {
+    "file": "data/photos/goddard-hall-1.jpg",
+    "author": "AllenS",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:New_Mexico_State_University_Goddard_Hall_(cropped).jpg",
+    "verifiedHow": "Wikimedia Commons file page names this NMSU building; licence read from the file page."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Goddard_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Goddard_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525515",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Goddard Hall\" (map id 525515), matched to Goddard Hall by name and position."
+   }
+  ],
+  "245": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Tejada_Building.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Tejada_Building.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525467",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tejada Building, Extension Annex\" (map id 525467), matched to Tejada Building, Extension Annex by name and position."
+   }
+  ],
+  "321": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Activity_Center.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Activity_Center.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525956",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"James B. Delamater Activity Center\" (map id 525956), matched to James B. Delamater Activity Center by name and position."
+   }
+  ],
+  "211": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Rentfrow_Gymnasium_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Rentfrow_Gymnasium_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525543",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Rentfrow Hall\" (map id 525543), matched to Rentfrow Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Rentfrow_Gymnasium_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Rentfrow_Gymnasium_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525543",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Rentfrow Hall\" (map id 525543), matched to Rentfrow Hall by name and position."
+   }
+  ],
+  "275": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/275.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/275.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536447",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Garcia Residence Hall\" (map id 536447), matched to Garcia Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/GardinerHall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/GardinerHall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536447",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Garcia Residence Hall\" (map id 536447), matched to Garcia Hall by name and position."
+   }
+  ],
+  "604": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Pinon_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Pinon_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/527939",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Pinon Hall\" (map id 527939), matched to Piñon Hall by name and position."
+   }
+  ],
+  "658": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Juniper_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Juniper_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/529217",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Juniper Hall\" (map id 529217), matched to Juniper Hall by name and position."
+   }
+  ],
+  "645": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Chamisa_II_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Chamisa_II_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/529224",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Chamisa Village II F\" (map id 529224), matched to Chamisa Village II by name and position."
+   }
+  ],
+  "413F": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Cervantes_Village_3.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Cervantes_Village_3.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/529189",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Cervantes Village Apartment Complex (F)\" (map id 529189), matched to Cervantes Village by name and position."
+   }
+  ],
+  "462K": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Vista_Del_Montes_Apt_Complex_1_10.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Vista_Del_Montes_Apt_Complex_1_10.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/529228",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Vista Del Monte Apartment X\" (map id 529228), matched to Vista Del Monte by name and position."
+   }
+  ],
+  "206": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Sutherland_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Sutherland_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535321",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535321), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_98.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_98.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535431",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535431), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_97.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_97.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535434",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535434), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_107.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_107.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535435",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535435), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_108.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_108.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535436",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535436), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_109.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_109.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535438",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535438), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_106.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_106.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535439",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535439), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_105.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_105.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535440",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535440), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_96.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_96.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535441",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535441), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_95.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_95.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535442",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535442), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_94.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_94.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535443",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535443), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_104.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_104.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535451",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535451), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_103.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_103.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535452",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535452), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_102.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_102.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535453",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535453), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_117.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_117.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535465",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535465), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_168.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_168.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535549",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535549), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_167.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_167.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535550",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535550), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_165.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_165.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535551",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535551), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_164.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_164.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535552",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535552), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_163.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_163.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535553",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535553), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_166.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_166.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535554",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535554), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_126.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_126.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535564",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535564), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_125.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_125.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535565",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535565), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_124.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_124.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535566",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535566), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_123.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_123.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535567",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535567), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_122.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_122.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535568",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535568), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_121.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_121.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535569",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535569), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_120.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_120.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535570",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535570), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_119.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_119.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535571",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535571), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_118.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_118.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535572",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535572), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_153.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_153.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535591",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535591), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_152.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_152.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535598",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535598), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_140.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_140.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535602",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535602), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_139.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_139.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535603",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535603), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_138.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_138.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535604",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535604), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_137.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_137.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535605",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535605), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_136.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_136.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535606",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535606), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_135.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_135.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535608",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535608), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_134.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_134.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535609",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535609), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_133.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_133.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535610",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535610), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_151.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_151.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535614",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535614), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_150.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_150.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535615",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535615), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_147.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_147.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535616",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535616), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_149.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_149.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535617",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535617), matched to Sutherland Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_148.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Sutherland_148.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/535619",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sutherland Village\" (map id 535619), matched to Sutherland Village by name and position."
+   }
+  ],
+  "214": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Tom_Fort_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Tom_Fort_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536066",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536066), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_99.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_99.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536197",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536197), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_13.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_13.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536277",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536277), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_14.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_14.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536278",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536278), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_15.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_15.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536279",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536279), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_16.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_16.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536280",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536280), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_30.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_30.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536296",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536296), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_32.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_32.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536298",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536298), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_33.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_33.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536299",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536299), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_34.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_34.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536300",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536300), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_35.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_35.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536301",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536301), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_36.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_36.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536302",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536302), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_37.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_37.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536303",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536303), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_38.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_38.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536304",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536304), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_39.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_39.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536305",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536305), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_52.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_52.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536318",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536318), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_53.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_53.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536319",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536319), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_54.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_54.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536320",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536320), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_55.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_55.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536321",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536321), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_56.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_56.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536322",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536322), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_57.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_57.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536323",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536323), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_58.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_58.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536324",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536324), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_70.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_70.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536345",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536345), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_71.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_71.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536346",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536346), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_72.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_72.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536347",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536347), matched to Tom Fort Village by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_73.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/1Tom_Fort_73.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536348",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tom Fort Village\" (map id 536348), matched to Tom Fort Village by name and position."
+   }
+  ],
+  "596": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Fulton_Athletic_Center.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Fulton_Athletic_Center.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536703",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Stan Fulton Athletics Center\" (map id 536703), matched to Fulton Athletic Center by name and position."
+   }
+  ],
+  "251": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Aquatic_Center_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Aquatic_Center_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525924",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Aquatics Center\" (map id 525924), matched to Aquatics Center by name and position."
+   }
+  ],
+  "597": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Golf_Course_Clubhouse.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Golf_Course_Clubhouse.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525934",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Golf Course Clubhouse\" (map id 525934), matched to Golf Course Clubhouse by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/GolfCourse.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/GolfCourse.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525934",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Golf Course Clubhouse\" (map id 525934), matched to Golf Course Clubhouse by name and position."
+   }
+  ],
+  "369": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Photovoltaic_Center.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Photovoltaic_Center.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525437",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Photovoltaic Center\" (map id 525437), matched to Photovoltaic Center by name and position."
+   }
+  ],
+  "30": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Campus_Police-Ag_Institute.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Campus_Police-Ag_Institute.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/527930",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Campus Police/Ag Institute\" (map id 527930), matched to Campus Police / Ag Institute by name and position."
+   }
+  ],
+  "158": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/4.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/4.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525409",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Office & Labs\" (map id 525409), matched to Hort Farm Office & Labs by name and position."
+   }
+  ],
+  "36": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Nason_House.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Nason_House.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525431",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Nason House\" (map id 525431), matched to Nason House by name and position."
+   }
+  ],
+  "32": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Young_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Young_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526017",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Young Hall\" (map id 526017), matched to Young Hall by name and position."
+   }
+  ],
+  "56": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Dove_Hall_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Dove_Hall_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525503",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Dove Hall\" (map id 525503), matched to Dove Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Dove_Hall_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Dove_Hall_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525503",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Dove Hall\" (map id 525503), matched to Dove Hall by name and position."
+   }
+  ],
+  "154": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Garcia_Center.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Garcia_Center.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/527925",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Garcia Center\" (map id 527925), matched to Garcia Center by name and position."
+   }
+  ],
+  "172": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Hadley_Hall_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Hadley_Hall_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525519",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hadley Hall\" (map id 525519), matched to Hadley Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Hadley_Hall_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Hadley_Hall_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525519",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hadley Hall\" (map id 525519), matched to Hadley Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Hadley_Hall_3.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Hadley_Hall_3.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525519",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hadley Hall\" (map id 525519), matched to Hadley Hall by name and position."
+   }
+  ],
+  "179": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-O_Laughlin_House.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-O_Laughlin_House.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525434",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"O'Loughlin House\" (map id 525434), matched to O'Loughlin House by name and position."
+   }
+  ],
+  "601": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Tennis_Center.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Tennis_Center.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525951",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tennis Center\" (map id 525951), matched to Tennis Center by name and position."
+   }
+  ],
+  "355": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Wells_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Wells_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525482",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Wells Hall\" (map id 525482), matched to Wells Hall by name and position."
+   }
+  ],
+  "552": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Baseball_Office_and_Locker_Rooms.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Baseball_Office_and_Locker_Rooms.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525925",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Baseball Office And Locker Room\" (map id 525925), matched to Baseball Office and Locker Room by name and position."
+   }
+  ],
+  "612": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Football_Team_Building.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Football_Team_Building.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525933",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Football Team Building\" (map id 525933), matched to Football Team Building by name and position."
+   }
+  ],
+  "348": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/348-Passive_Solar.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/348-Passive_Solar.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/611769",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Passive Solar\" (map id 611769), matched to Passive Solar by name and position."
+   }
+  ],
+  "514": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Photovoltaic_Labs.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Photovoltaic_Labs.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525438",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Photovoltaic Labs\" (map id 525438), matched to Photovoltaic Labs by name and position."
+   }
+  ],
+  "388": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/South_Campus_Residential_Offices.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/South_Campus_Residential_Offices.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525992",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"South Campus Residential Offices (Vista Del Monte Community Center)\" (map id 525992), matched to South Campus Residential Offices (Vista Del Monte Community Center) by name and position."
+   }
+  ],
+  "329": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Cropping_Systems_Research.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Cropping_Systems_Research.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525376",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Cropping Systems Research\" (map id 525376), matched to Cropping Systems Research by name and position."
+   }
+  ],
+  "212": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Sugarman_Space_Grant.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Sugarman_Space_Grant.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525464",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sugerman Space Grant Building\" (map id 525464), matched to Sugerman Space Grant Building by name and position."
+   }
+  ],
+  "372": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/372-Metabolism_and_Physiology_Lab.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/372-Metabolism_and_Physiology_Lab.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525430",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Metabolism & Physiology Lab\" (map id 525430), matched to Metabolism & Physiology Lab by name and position."
+   }
+  ],
+  "126": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Compute_Center_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Compute_Center_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525501",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Computer Center\" (map id 525501), matched to Computer Center by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Computer_Center_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Computer_Center_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525501",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Computer Center\" (map id 525501), matched to Computer Center by name and position."
+   }
+  ],
+  "426": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Food_Safety_Laboratory.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Food_Safety_Laboratory.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525393",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Food Safety Laboratory (Previously Named Pgel Headhouse/Lab)\" (map id 525393), matched to Food Safety Laboratory by name and position."
+   }
+  ],
+  "585": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Wooton_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Wooton_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526011",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Jornada USDA Exp. Range HQ (Wooton Hall)\" (map id 526011), matched to Jornada USDA Exp. Range HQ (Wooton Hall) by name and position."
+   }
+  ],
+  "2": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/2-Nematology_Lab.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/2-Nematology_Lab.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525433",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Nematology Lab\" (map id 525433), matched to Nematology Lab by name and position."
+   }
+  ],
+  "643": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMDA_Addition.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMDA_Addition.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526008",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"NMDA State Chemist Laboratory\" (map id 526008), matched to NMDA State Chemist Laboratory by name and position."
+   }
+  ],
+  "319": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Tombaugh_Observatory_North_2.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Tombaugh_Observatory_North_2.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525471",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tombaugh Observatory (South)\" (map id 525471), matched to Tombaugh Observatory (South) by name and position."
+   }
+  ],
+  "318": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Tombaugh_Observatory_North_1.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Tombaugh_Observatory_North_1.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525469",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tombaugh Observatory (Center)\" (map id 525469), matched to Tombaugh Observatory (Center) by name and position."
+   }
+  ],
+  "317": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/317-Tombaugh_Observatory_North.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/317-Tombaugh_Observatory_North.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525470",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Tombaugh Observatory (North)\" (map id 525470), matched to Tombaugh Observatory (North) by name and position."
+   }
+  ],
+  "338": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Educational_Services_Center.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Educational_Services_Center.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/527919",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Educational Services Center\" (map id 527919), matched to Educational Services Center by name and position."
+   }
+  ],
+  "221": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/FS_Office.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/FS_Office.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525985",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"FS Office\" (map id 525985), matched to FS Office by name and position."
+   }
+  ],
+  "282": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Stucky_Hall.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Stucky_Hall.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525462",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Stucky Hall\" (map id 525462), matched to Stucky Hall by name and position."
+   }
+  ],
+  "44": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Alumni_and_Visitor_Center.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Alumni_and_Visitor_Center.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/536956",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Alumni & Visitors Center/Zuhl Museum: Home of the Zuhl Collection\" (map id 536956), matched to Alumni & Visitors Center by name and position."
+   }
+  ],
+  "359": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/J._Gordon_Watts_Entomology_Lab__West.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/J._Gordon_Watts_Entomology_Lab__West.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525421",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"J. Gordon Watts Entomology Lab, West\" (map id 525421), matched to J. Gordon Watts Entomology Lab, West by name and position."
+   }
+  ],
+  "360": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/J._Gordon_Watts_Entomology_Lab__Middle.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/J._Gordon_Watts_Entomology_Lab__Middle.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525420",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"J. Gordon Watts Entomology Lab, Middle\" (map id 525420), matched to J. Gordon Watts Entomology Lab, Middle by name and position."
+   }
+  ],
+  "361": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/J._Gordon_Watts_Entomology_Lab__East.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/J._Gordon_Watts_Entomology_Lab__East.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525419",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"J. Gordon Watts Entomology Lab, East\" (map id 525419), matched to J. Gordon Watts Entomology Lab, East by name and position."
+   }
+  ],
+  "447": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/J._Gordon_Watts_Freezer_Storage.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/J._Gordon_Watts_Freezer_Storage.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525422",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"J. Gordon Watts Lab Freezer Storage\" (map id 525422), matched to J. Gordon Watts Lab Freezer Storage by name and position."
+   }
+  ],
+  "588": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/588-Equine_Education_Center.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/588-Equine_Education_Center.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525388",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Equine Education Center\" (map id 525388), matched to Equine Education Center by name and position."
+   }
+  ],
+  "394D": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Genisis_D.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Genisis_D.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526000",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Genesis Center Office\" (map id 526000), matched to Genesis Center Office by name and position."
+   }
+  ],
+  "394C": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Genisis_C.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Genisis_C.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525999",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Genesis Center C\" (map id 525999), matched to Genesis Center C by name and position."
+   }
+  ],
+  "394B": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Genisis_B.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Genisis_B.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525998",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Genesis Center B\" (map id 525998), matched to Genesis Center B by name and position."
+   }
+  ],
+  "412A": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Academic_Research_A.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Academic_Research_A.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525359",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Academic Research A\" (map id 525359), matched to Academic Research A by name and position."
+   }
+  ],
+  "394A": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Genisis_A.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Genisis_A.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525997",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Genesis Center A\" (map id 525997), matched to Genesis Center A by name and position."
+   }
+  ],
+  "412C": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Academic_Research_C.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Academic_Research_C.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525361",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Academic Research C\" (map id 525361), matched to Academic Research C by name and position."
+   }
+  ],
+  "371": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/371-Wind_Tunnel_Research_Building.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/371-Wind_Tunnel_Research_Building.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525486",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Wind Tunnel/Research Building\" (map id 525486), matched to Wind Tunnel/Research Building by name and position."
+   }
+  ],
+  "263": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Clinton_P._Anderson_Hall_1.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Clinton_P._Anderson_Hall_1.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525457",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"PSL, Clinton P. Anderson Hall\" (map id 525457), matched to PSL, Clinton P. Anderson Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Clinton_P._Anderson_Hall_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Clinton_P._Anderson_Hall_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525457",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"PSL, Clinton P. Anderson Hall\" (map id 525457), matched to PSL, Clinton P. Anderson Hall by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Clinton_P._Anderson_Hall_3.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Clinton_P._Anderson_Hall_3.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525457",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"PSL, Clinton P. Anderson Hall\" (map id 525457), matched to PSL, Clinton P. Anderson Hall by name and position."
+   }
+  ],
+  "412B": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/412B_-Academic_Research_B.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/412B_-Academic_Research_B.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525360",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Academic Research B\" (map id 525360), matched to Academic Research B by name and position."
+   }
+  ],
+  "283": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/283-24_Observatory_A_Mtn_North.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/283-24_Observatory_A_Mtn_North.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525357",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"24\" Observatory, \"A\" Mtn North\" (map id 525357), matched to 24\" Observatory, \"A\" MTN North by name and position."
+   }
+  ],
+  "161": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Memorial_Tower.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Memorial_Tower.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525429",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Memorial Tower\" (map id 525429), matched to Memorial Tower by name and position."
+   }
+  ],
+  "633": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/American_Indian_Student_Center.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/American_Indian_Student_Center.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526643",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"American Indian Student Center\" (map id 526643), matched to American Indian Student Center by name and position."
+   }
+  ],
+  "471": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/471-Aggie_Express_Convenience_Store_and_Laundry.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/471-Aggie_Express_Convenience_Store_and_Laundry.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526652",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Aggie Express Convenience Store & Laundry\" (map id 526652), matched to Aggie Express Convenience Store & Laundry by name and position."
+   }
+  ],
+  "417": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Antenna_Farm_Shed.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Antenna_Farm_Shed.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525967",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Antenna Farm Shed\" (map id 525967), matched to Antenna Farm Shed by name and position."
+   }
+  ],
+  "254": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_095433.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_095433.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525982",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"FS Construction\" (map id 525982), matched to FS Construction by name and position."
+   }
+  ],
+  "536": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Aggie_Recycling_Center.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Aggie_Recycling_Center.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525976",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Facilities And Services Recycling Center\" (map id 525976), matched to Facilities and Services Recycling Center by name and position."
+   }
+  ],
+  "455": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Sign_Shop.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Sign_Shop.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525978",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Facilities And Services Sign Shop\" (map id 525978), matched to Facilities and Services Sign Shop by name and position."
+   }
+  ],
+  "373": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/373-Transportation_Services.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/373-Transportation_Services.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525990",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Transportation Services\" (map id 525990), matched to Transportation Services by name and position."
+   }
+  ],
+  "562": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/SWTDI.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/SWTDI.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525466",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"SWTDI Aquaculture Greenhouse\" (map id 525466), matched to SWTDI Aquaculture Greenhouse by name and position."
+   }
+  ],
+  "553": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Baseball_Visitors_Dugout.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Baseball_Visitors_Dugout.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525929",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Baseball Visitor's Dugout\" (map id 525929), matched to Baseball Visitor's Dugout by name and position."
+   }
+  ],
+  "579": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Baseball_Press_Box.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Baseball_Press_Box.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525926",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Baseball Press Box\" (map id 525926), matched to Baseball Press Box by name and position."
+   }
+  ],
+  "578": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Baseball_Public_Restrooms.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Baseball_Public_Restrooms.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525927",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Baseball Public Restrooms\" (map id 525927), matched to Baseball Public Restrooms by name and position."
+   }
+  ],
+  "610": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Softball_Film_Room.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Softball_Film_Room.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525944",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Softball Film Room\" (map id 525944), matched to Softball Film Room by name and position."
+   }
+  ],
+  "554": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Softball_Office_and_Locker_Rooms.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Softball_Office_and_Locker_Rooms.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525945",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Softball Office And Locker Room\" (map id 525945), matched to Softball Office and Locker Room by name and position."
+   }
+  ],
+  "581": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_092235.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_092235.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525946",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Softball Press Box\" (map id 525946), matched to Softball Press Box by name and position."
+   }
+  ],
+  "261": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Aggie_Health_and_Wellness_Center_3.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Aggie_Health_and_Wellness_Center_3.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526640",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Aggie Health & Wellness Center\" (map id 526640), matched to Aggie Health & Wellness Center by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Aggie_Health_and_Wellness_Center_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Aggie_Health_and_Wellness_Center_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526640",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Aggie Health & Wellness Center\" (map id 526640), matched to Aggie Health & Wellness Center by name and position."
+   }
+  ],
+  "342": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Memorial_Stadium.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Memorial_Stadium.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525958",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Memorial Stadium & Locker Room Field House\" (map id 525958), matched to Memorial Stadium & Locker Room Field House by name and position."
+   }
+  ],
+  "628": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Football_Coaches_Building.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Football_Coaches_Building.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525932",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Football Coaches Building\" (map id 525932), matched to Football Coaches by name and position."
+   }
+  ],
+  "290": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/290-Feeding_Research_Building.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/290-Feeding_Research_Building.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525391",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Feeding Research Building\" (map id 525391), matched to Feeding Research Building by name and position."
+   }
+  ],
+  "193": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/bull_barn.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/bull_barn.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525372",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Bull Barn\" (map id 525372), matched to Bull Barn by name and position."
+   }
+  ],
+  "196": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/196-Swine_Barn.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/196-Swine_Barn.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525465",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Swine Barn\" (map id 525465), matched to Swine Barn by name and position."
+   }
+  ],
+  "241": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/241-Beef_Office.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/241-Beef_Office.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525367",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Beef Office\" (map id 525367), matched to Beef Office by name and position."
+   }
+  ],
+  "376": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/376-Cattle_Feed_Barn_Animal_Science.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/376-Cattle_Feed_Barn_Animal_Science.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525373",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Cattle Feed Barn/Animal Science\" (map id 525373), matched to Cattle Feed Barn/Animal Science by name and position."
+   }
+  ],
+  "194": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/194-Sheep_Barn.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/194-Sheep_Barn.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525460",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Sheep Barn\" (map id 525460), matched to Sheep Barn by name and position."
+   }
+  ],
+  "652": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Spiritual_Center.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Spiritual_Center.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/527923",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Spiritual Center\" (map id 527923), matched to Spiritual Center by name and position."
+   }
+  ],
+  "632": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/632.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/632.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526637",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"NMSU Bookstore\" (map id 526637), matched to NMSU Bookstore by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Barnes_Noble.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Barnes_Noble.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/995104",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"NMSU Bookstore\" (map id 995104), matched to NMSU Bookstore by name and position."
+   }
+  ],
+  "468": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/468-Coca_Cola_Weight_Training_Facility.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/468-Coca_Cola_Weight_Training_Facility.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525931",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Coca Cola Weight Training Facility\" (map id 525931), matched to Coca Cola Weight Training Facility by name and position."
+   }
+  ],
+  "555": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_092310.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_092310.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525950",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Softball Visitor's Dugout\" (map id 525950), matched to Softball Visitor's Dugout by name and position."
+   }
+  ],
+  "580": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_092149.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_092149.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525947",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Softball Public Restrooms\" (map id 525947), matched to Softball Public Restrooms by name and position."
+   }
+  ],
+  "220": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_095611.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_095611.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525981",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"FS Carpentry Shop\" (map id 525981), matched to FS Carpentry Shop by name and position."
+   }
+  ],
+  "153": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/152-FS_Quonset_153-Facilities_and_Services_Storage_Quonset.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/152-FS_Quonset_153-Facilities_and_Services_Storage_Quonset.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525979",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Facilities And Services Storage Quonset\" (map id 525979), matched to Facilities and Services Storage Quonset by name and position."
+   }
+  ],
+  "432": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/J._Gordon_Watts_Entomology_Labs.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/J._Gordon_Watts_Entomology_Labs.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525423",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"J. Gordon Watts Lab Shop\" (map id 525423), matched to J. Gordon Watts Lab Shop by name and position."
+   }
+  ],
+  "352": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_green.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_green.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525402",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525402), matched to Hort Farm Greenhouse by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_store.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_store.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525403",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525403), matched to Hort Farm Greenhouse by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/n_green.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/n_green.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525404",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525404), matched to Hort Farm Greenhouse by name and position."
+   }
+  ],
+  "351": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_green.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_green.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525402",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525402), matched to Hort Farm Greenhouse by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_store.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_store.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525403",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525403), matched to Hort Farm Greenhouse by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/n_green.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/n_green.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525404",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525404), matched to Hort Farm Greenhouse by name and position."
+   }
+  ],
+  "421": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/e_green.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/e_green.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525407",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse C\" (map id 525407), matched to Hort Farm Greenhouse C by name and position."
+   }
+  ],
+  "420": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/e_green_2.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/e_green_2.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525406",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse B\" (map id 525406), matched to Hort Farm Greenhouse B by name and position."
+   }
+  ],
+  "584": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_green.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_green.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525402",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525402), matched to Hort Farm Greenhouse by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_store.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_store.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525403",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525403), matched to Hort Farm Greenhouse by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/n_green.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/n_green.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525404",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525404), matched to Hort Farm Greenhouse by name and position."
+   }
+  ],
+  "353": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_green.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_green.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525402",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525402), matched to Hort Farm Greenhouse by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_store.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/back_store.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525403",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525403), matched to Hort Farm Greenhouse by name and position."
+   },
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/n_green.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/n_green.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525404",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Hort Farm Greenhouse\" (map id 525404), matched to Hort Farm Greenhouse by name and position."
+   }
+  ],
+  "467": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Housing_and_Bookstore_Warehouse.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Housing_and_Bookstore_Warehouse.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/527934",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Housing & Bookstore Warehouse\" (map id 527934), matched to Housing & Bookstore Warehouse by name and position."
+   }
+  ],
+  "262": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Frenger_Food_Court.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/NMSU_Main_Campus_Builidings-Frenger_Food_Court.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/526649",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Frenger Food Court\" (map id 526649), matched to Frenger Food Court by name and position."
+   }
+  ],
+  "284": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/284.JPG&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/284.JPG&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525960",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Pan American Center\" (map id 525960), matched to Pan American Center by name and position."
+   }
+  ],
+  "390": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Pgel_Greenhouses.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Pgel_Greenhouses.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525436",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Pgel Greenhouses\" (map id 525436), matched to PGEL Greenhouses by name and position."
+   }
+  ],
+  "237": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_095005.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_095005.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525977",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Facilities And Services Shops/Boiler Room\" (map id 525977), matched to Facilities and Services Shops/Boiler Room by name and position."
+   }
+  ],
+  "222": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_094913.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/20201125_094913.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525975",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Facilities And Services FS Warehouse\" (map id 525975), matched to FS Warehouse by name and position."
+   }
+  ],
+  "419": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Horse_Farm_Storage.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Horse_Farm_Storage.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525399",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Horse Farm Storage\" (map id 525399), matched to Horse Farm Storage by name and position."
+   }
+  ],
+  "507": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Horse_Farm_-_Horse_Barn.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Horse_Farm_-_Horse_Barn.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525400",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Horse Farm-Horse Barn\" (map id 525400), matched to Horse Farm-Horse Barn by name and position."
+   }
+  ],
+  "611": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Baseball_Office_and_Locker_Rooms.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Baseball_Office_and_Locker_Rooms.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/612307",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Baseball Locker Room\" (map id 612307), matched to Baseball Locker Room by name and position."
+   }
+  ],
+  "642": [
+   {
+    "file": null,
+    "imageUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Stud_Barn.jpg&w=800&h=533&r=1",
+    "thumbUrl": "https://cms.concept3d.com/map/lib/image-cache/i.php?mapId=1888&image=1888/Stud_Barn.jpg&w=320&h=213&r=1",
+    "sourceUrl": "https://map.nmsu.edu/?id=1888#!m/525463",
+    "license": "NMSU's campus map",
+    "author": "New Mexico State University",
+    "verifiedHow": "Listed on NMSU's campus map page for \"Stud Barn\" (map id 525463), matched to Stud Barn by name and position."
+   }
+  ]
  }
 }

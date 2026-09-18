@@ -21,8 +21,9 @@
 import { CONFIG } from '../core/config.js';
 import { store } from '../core/store.js';
 import { escapeHtml } from '../core/html.js';
+import { afterNextPaint } from '../core/afterPaint.js';
 import { readSaved, save, forget } from '../core/storage.js';
-import { buildingWords, typedWords, buildingMatches, roomScore } from '../logic/searchMatch.js';
+import { buildingWords, typedWords, buildingMatches, roomScore, startNewSearch } from '../logic/searchMatch.js';
 
 /**
  * Wrap every place a typed word appears in <mark>, e.g. "hall" in "Science Hall".
@@ -244,6 +245,7 @@ export class Search {
    */
   showResults(text) {
     this.readyWords();
+    startNewSearch();
     const typed = typedWords(text);
     this.picks = [];
     this.results.hidden = typed.length === 0;
@@ -329,7 +331,12 @@ export class Search {
 
     if (!this.showing) {
       this.fill(''); // closing just hides the results
-      this.input.blur();
+      // Put the keyboard away just after this frame (it makes the phone re-measure the page).
+      afterNextPaint(() => {
+        if (!this.showing) {
+          this.input.blur();
+        }
+      });
       return;
     }
     // Opening brings back what was typed last time.

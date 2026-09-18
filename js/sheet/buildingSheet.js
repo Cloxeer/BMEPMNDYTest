@@ -22,6 +22,7 @@
 import { CONFIG } from '../core/config.js';
 import { store } from '../core/store.js';
 import { escapeHtml, safeUrl } from '../core/html.js';
+import { afterNextPaint } from '../core/afterPaint.js';
 import { hoursRow } from '../logic/hours.js';
 import { FloorPlan } from './floorPlan.js';
 import { PhotoViewer } from './photoViewer.js';
@@ -421,29 +422,66 @@ export class BuildingSheet {
   /* ---------- Following the store ---------- */
 
   /**
+   * What the sheet shows, as one string: building, floor and room. Same string = nothing to redo.
+   * @param {object} state
+   * @returns {string}
+   */
+  keyFor(state) {
+    if (!this.buildingsById[state.selectedId]) {
+      return this.shownKey; // nothing chosen: leave the sheet's contents as they are
+    }
+    let roomNumber = '';
+    if (state.selectedRoom) {
+      roomNumber = state.selectedRoom.number;
+    }
+    return state.selectedId + '|' + state.activeFloor + '|' + roomNumber;
+  }
+
+  /** Fill the sheet right after the next frame is on screen (only once, however many changes come first). */
+  showContentSoon() {
+    if (this.contentWaiting) {
+      return;
+    }
+    this.contentWaiting = true;
+    afterNextPaint(() => {
+      this.contentWaiting = false;
+      this.showContent(store.get()); // whatever is chosen by then
+    });
+  }
+
+  /**
+   * Fill the sheet for the chosen building, floor and room.
+   * @param {object} state
+   */
+  showContent(state) {
+    const building = this.buildingsById[state.selectedId];
+    const key = this.keyFor(state);
+    if (!building || key === this.shownKey) {
+      return;
+    }
+    const differentBuilding = !this.shownKey.startsWith(state.selectedId + '|');
+    if (differentBuilding) {
+      this.sheetElement.dataset.category = building.category;
+      this.sheetElement.toggleAttribute('data-place', isPlace(building)); // places hide the floor plan part (styles/sheet.css)
+      this.floorPlan.reset();
+      this.title.textContent = building.name;
+      this.fillPhotos(building);
+      this.fillAbout(building);
+    }
+    this.shownKey = key;
+    this.floorPlan.show(building, state.activeFloor, state.selectedRoom);
+  }
+
+  /**
    * Show the chosen building, floor and room, and open or close the sheet.
    * @param {object} state
    */
   update(state) {
-    const building = this.buildingsById[state.selectedId];
-    if (building) {
-      let roomNumber = '';
-      if (state.selectedRoom) {
-        roomNumber = state.selectedRoom.number;
-      }
-      const key = state.selectedId + '|' + state.activeFloor + '|' + roomNumber;
-      if (key !== this.shownKey) {
-        const differentBuilding = !this.shownKey.startsWith(state.selectedId + '|');
-        if (differentBuilding) {
-          this.sheetElement.dataset.category = building.category;
-          this.sheetElement.toggleAttribute('data-place', isPlace(building)); // places hide the floor plan part (styles/sheet.css)
-          this.floorPlan.reset();
-          this.title.textContent = building.name;
-          this.fillPhotos(building);
-          this.fillAbout(building);
-        }
-        this.shownKey = key;
-        this.floorPlan.show(building, state.activeFloor, state.selectedRoom);
+    if (this.keyFor(state) !== this.shownKey) {
+      if (this.sheetIsOpen || state.sheetOpen) {
+        this.showContent(state); // on screen: change it now (e.g. another floor)
+      } else {
+        this.showContentSoon(); // still closed (it opens after the map's flight): fill it just after this tap's frame
       }
     }
     this.fillArrived(state);

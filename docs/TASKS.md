@@ -139,6 +139,8 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Addresses written the same way everywhere ("2902 McFie Cir.", "1040 S. Horseshoe")
 - [x] Food: a big "See the menu" button first, hours as a day-by-day list with today marked, tap to call
 - [x] Locations page: every group folds open and closed with an arrow
+- [x] Speed: welcome screen paints in 0.3 s on a cheap phone (was 2.9 s); taps 3-20 ms instead of 18-177 ms; only the Framework7 parts we use
+- [ ] Speed still over 10 ms on a cheap phone: opening a full page the first time (menu ~35 ms, Locations ~90 ms, Settings ~40 ms) and some search keys (10-22 ms) - Framework7 popups restyle the whole page when they open
 - [ ] No photo on NMSU's map (29): e.g. Rhodes-Garrett-Hamiel, Chamisa Village, PSL shops, Biology Greenhouses, WOW, Ramshi, Mediterranean, La Jefa - needs our own photos
 - [ ] No description on NMSU's map (8): Ag Student Learning Center, Well #10, Pride Field, Desert Sculpture Garden, WOW, Ramshi, Mediterranean, La Jefa
 - [ ] Four "Hort Farm Greenhouse" buildings share the photos of NMSU's one pin for them; check which greenhouse each photo shows

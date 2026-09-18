@@ -508,7 +508,5 @@ settings:
   creditSize: "13px"
 
 welcome:
-  storageKey: "bnm_visited"
-  titleLineHeight: 1.15
-  byline: "rgba(255, 255, 255, 0.85)"
+  storageKey: "bnm_visited" # also written in index.html's boot-screen script (it runs before this file is read)
 

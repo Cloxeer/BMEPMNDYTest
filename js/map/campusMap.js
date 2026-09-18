@@ -18,6 +18,7 @@
  * USED BY      : js/main.js (makes it and hands it to the files that need it)
  */
 
+import { afterNextPaint } from '../core/afterPaint.js';
 import { CONFIG } from '../core/config.js';
 import { store } from '../core/store.js';
 import { allPointsOf, boxAround } from '../logic/shapes.js';
@@ -268,27 +269,37 @@ export class CampusMap {
         return;
       }
       lastSelectedId = state.selectedId;
-      this.markSelected(state.selectedId);
-      const building = this.buildingsById[state.selectedId];
-      if (!building) {
-        return; // nothing chosen
-      }
-      // Places far from Las Cruces (e.g. parking at NMSU Alamogordo) lift the fence; nearby ones put it back.
-      if (this.isInsideFence(building.center)) {
-        this.map.setMaxBounds(this.fence);
-      } else {
-        this.map.setMaxBounds(null);
-      }
-      // A short flight that starts quick and settles softly.
-      this.map.flyTo({
-        center: building.center,
-        zoom: Math.max(this.map.getZoom(), CONFIG.map.selectZoom),
-        duration: CONFIG.map.flyDuration,
-        curve: CONFIG.map.flyCurve,
-        easing: easeOut,
-        essential: true,
-      }, { flightTo: building.id, via: state.selectedVia });
+      // The tap's own frame shows first (e.g. search closing); the map starts moving one frame later.
+      afterNextPaint(() => this.showSelection());
     });
+  }
+
+  /** Mark the chosen place and fly to it (whatever is chosen by now, if it changed again meanwhile). */
+  showSelection() {
+    const state = store.get();
+    if (state.selectedId === this.selectedId) {
+      return; // already shown (it was chosen twice quickly)
+    }
+    this.markSelected(state.selectedId);
+    const building = this.buildingsById[state.selectedId];
+    if (!building) {
+      return; // nothing chosen
+    }
+    // Places far from Las Cruces (e.g. parking at NMSU Alamogordo) lift the fence; nearby ones put it back.
+    if (this.isInsideFence(building.center)) {
+      this.map.setMaxBounds(this.fence);
+    } else {
+      this.map.setMaxBounds(null);
+    }
+    // A short flight that starts quick and settles softly.
+    this.map.flyTo({
+      center: building.center,
+      zoom: Math.max(this.map.getZoom(), CONFIG.map.selectZoom),
+      duration: CONFIG.map.flyDuration,
+      curve: CONFIG.map.flyCurve,
+      easing: easeOut,
+      essential: true,
+    }, { flightTo: building.id, via: state.selectedVia });
   }
 
   /** Fly "home" (config.yml map.homeBuilding, Corbett Center), facing north: Map settings > Home, and the compass. */

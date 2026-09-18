@@ -107,7 +107,8 @@ Four rules keep it predictable:
 | `js/pages/locations.js` | `LocationsPage`: every place on our map you can go to, grouped by category |
 | `js/pages/otherLocations.js` | `OtherLocationsPage`: every NMSU property (campuses and sites), nearest first |
 | `js/pages/settings.js` | `SettingsPage`: choices, Map filters rows, Reset, the Data list |
-| `js/pages/welcome.js` | The welcome screen, once per browser tab |
+| `js/pages/welcome.js` | Takes the welcome ("boot") screen away when the app is ready; waits for the stylesheets before Framework7 starts |
+| `js/core/afterPaint.js` | `afterNextPaint(work)`: run work just after the tap's frame is on screen (map flights, filling a sheet that opens later) |
 | `js/pages/navbarTitle.js` | "Campus", or "To Zuhl Library" during directions |
 | **styles** (loaded in this order) | |
 | `styles/base.css` | Framework7 colours, spacing scale, page layouts, navbars, squircle corners |
@@ -199,6 +200,31 @@ Which source wins when they disagree:
 
 ## Speed
 
+The rule: **every tap answers within 10 ms, on a cheap phone too**, and nothing piles up on the phone.
+Measured with Chrome slowed 6x (a cheap Android phone) over 4G:
+
+| | Before | Now |
+|---|---|---|
+| Something on screen, first visit | 2.9 s | 0.3 s (a blank page takes as long) |
+| Something on screen, repeat visit | 0.66 s | 0.28 s |
+| "Enter Map", closing a sheet, filters, closing pages | 18–35 ms | 3–10 ms |
+| Opening a building from search | 72 ms | 13–20 ms |
+| Framework7's own work on every tap | 2.2 ms (desktop) | 0.4 ms |
+
+How:
+
+- **The welcome screen is plain HTML** at the top of `index.html`, styled in `<head>`, so it paints the moment
+  the page arrives. Stylesheets load without blocking it (`media="print"` until loaded), the rest of the page is
+  `display: none` until they are in (`body.booting`), and the libraries run only after that first paint.
+- **Only the Framework7 we use:** the core styles plus popup, sheet, dialog, photo browser, swiper, toggle and
+  accordion (1,326 CSS rules instead of 3,624), and only the tap rules ("clicks") of popup, sheet and accordion
+  (`keepOnlyTheTapRulesWeUse` in `main.js`, run after start-up: running it earlier stopped the sheet's "closed" event).
+- **A tap does only what it shows; the rest waits one frame** (`js/core/afterPaint.js`): the map's flight,
+  filling the sheet (it slides up after the flight), putting the keyboard away, redrawing the map after a filter.
+- **Pages are built in quiet moments** after start-up (`Menu.buildPagesWhenIdle`), long lists add their rows a
+  screenful at a time, and off-screen groups skip layout (`content-visibility: auto`).
+- **Search** keeps one reusable typo table and remembers each word's answer for the key press
+  (`js/logic/searchMatch.js`), and prepares every place's words while the phone is idle.
 - **The first screen loads first.** `main.js` downloads only the buildings and campus shapes, starts
   Framework7 while they're on their way, and creates the map. Everything else (places, rooms, doors,
   descriptions) loads straight afterwards and is handed to the parts that use it, so the map appears sooner.
@@ -225,7 +251,8 @@ Which source wins when they disagree:
   nearest outside door (floor 1) or stairs (upper floors) to the room's edge.
 - **Some rooms have no highlight.** Rooms from the class schedule have no published floor or outline.
 - **The bottom bar sits outside `#app`** with a high `z-index` so it floats above Framework7's sheet.
-- **The page stays hidden until `config.yml` loads**, so nothing flashes unstyled.
+- **The welcome screen's styles and a few lines of script are inside `index.html`**, not in styles/ or js/: they
+  must work before any file has downloaded. Its sessionStorage key must match `welcome.storageKey` in config.yml.
 - **Leased NMSU land is cut out of the campus shapes** (not painted over), so the real map shows through.
 - **The order parts are created in `main.js` matters.** Each part starts listening to the store
   when it's created, and they update in that order.
