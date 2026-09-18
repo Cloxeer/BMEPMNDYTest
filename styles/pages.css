@@ -62,3 +62,17 @@
 .places-group .list.inset { margin-top: 0; margin-bottom: var(--s4); }
 .places-title .places-arrow { margin-left: auto; font-size: var(--locations-arrow-size); color: var(--theme-text-muted); transition: transform 0.25s ease; }
 .places-group.accordion-item-opened .places-arrow { transform: rotate(180deg); }
+
+/* ---------- Grouped lists (Settings, Locations, Other Locations), like iPhone Settings ----------
+   Every list is a white rounded card, set in from the screen edge, and every section title and
+   footer starts where the text inside the rows starts, so everything lines up on one edge. */
+.page-plain { --page-text-edge: calc(var(--f7-list-inset-side-margin) + var(--f7-list-item-padding-horizontal)); }
+.page-plain .list.inset ul { background: var(--theme-white); }
+.page-plain .block-title,
+.page-plain .block-footer {
+  margin-left: var(--page-text-edge);
+  margin-right: var(--page-text-edge);
+  padding-left: 0;
+  padding-right: 0;
+}
+.page-plain .places-group .places-title { padding-left: var(--page-text-edge); padding-right: var(--page-text-edge); margin-left: 0; margin-right: 0; }

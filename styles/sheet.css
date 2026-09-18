@@ -120,7 +120,24 @@
 }
 .bs-photos[hidden] { display: none; }
 .bs-photo { flex: 0 0 var(--sheet-photo-width); padding: 0; border: none; background: none; scroll-snap-align: center; cursor: zoom-in; }
-.bs-photo img { display: block; width: 100%; aspect-ratio: var(--sheet-photo-ratio); object-fit: cover; border-radius: var(--sheet-image-radius); }
+.bs-photo img { display: block; width: 100%; aspect-ratio: var(--sheet-photo-ratio); object-fit: cover; border-radius: var(--sheet-image-radius); transition: opacity 0.3s ease; }
+.bs-photo[hidden] { display: none; }
+/* Skeleton: until a photo arrives, its card is a grey shape with a soft light sweeping across,
+   so it's clear a photo is on its way. The photo then fades in over it. */
+.bs-photo { border-radius: var(--sheet-image-radius); }
+.bs-photo.is-loading {
+  background: linear-gradient(100deg, var(--theme-line-soft) 30%, var(--theme-white) 50%, var(--theme-line-soft) 70%);
+  background-size: 300% 100%;
+  animation: photo-skeleton 1.2s ease-in-out infinite;
+}
+.bs-photo.is-loading img { opacity: 0; }
+@keyframes photo-skeleton {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bs-photo.is-loading { animation: none; }
+}
 
 .bs-section { margin-top: var(--s6); text-align: left; border-top: var(--sheet-divider-width) solid var(--theme-line-strong); padding-top: var(--s5); }
 .bs-h3 { font-size: var(--sheet-heading-size); margin: 0 0 var(--s3); color: var(--f7-theme-color); }

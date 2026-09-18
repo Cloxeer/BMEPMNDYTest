@@ -22,6 +22,8 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- NMSU's photo server: connect early, so a building's photos start sooner (plain images need no "crossorigin") -->
+  <link rel="preconnect" href="https://cms.concept3d.com" />
   <!-- The first screen's own files, so the browser fetches them all at once instead of one after another. -->
   <link rel="modulepreload" href="js/main.js" />
   <link rel="modulepreload" href="js/core/config.js" />
@@ -224,7 +226,7 @@
         </div></div>
         <div class="page-content page-plain">
           <div class="block-title">Map</div>
-          <div class="list simple-list"><ul>
+          <div class="list simple-list inset"><ul>
             <!-- Framework7 toggle; js/pages/settings.js remembers every choice on this device -->
             <li>
               <label for="setting-building-names">Building names</label>
@@ -241,7 +243,7 @@
           <div class="block-footer" id="filter-options-footer"></div>
 
           <div class="block-title">Directions</div>
-          <div class="list simple-list"><ul>
+          <div class="list simple-list inset"><ul>
             <li>
               <span>Travel by</span>
               <div class="segmented segmented-strong settings-switch" id="setting-travel" role="radiogroup" aria-label="Travel by">
@@ -262,7 +264,7 @@
           </ul></div>
 
           <div class="block-title">Saved on this device</div>
-          <div class="list simple-list"><ul>
+          <div class="list simple-list inset"><ul>
             <li>
               <span>Search text and choices</span>
               <a href="#" class="link" id="setting-reset">Reset</a>

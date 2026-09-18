@@ -83,6 +83,10 @@ export class BuildingSheet {
     this.floorPlan = new FloorPlan(app, this.photoViewer, askDirections);
 
     this.photos.addEventListener('click', (event) => this.onPhotoTap(event));
+    // Each photo sits on a shimmering grey card until it arrives, then fades in (styles/sheet.css).
+    // Image load events don't bubble, so they are caught on the way down ("true").
+    this.photos.addEventListener('load', (event) => this.onPhotoLoaded(event.target), true);
+    this.photos.addEventListener('error', (event) => this.onPhotoFailed(event.target), true);
     this.foodHere.addEventListener('click', (event) => {
       const chip = event.target.closest('[data-place]');
       if (chip) {
@@ -142,9 +146,15 @@ export class BuildingSheet {
       const photo = photos[index];
       // Our own photos are files in the project; NMSU's are links to its campus map, with a small copy for the strip.
       const small = photo.file || photo.thumbUrl || photo.imageUrl;
-      photosHtml += '<button class="bs-photo" type="button" data-index="' + index + '">' +
+      // The first photo is on screen straight away, so it loads first and at once; the rest wait until
+      // they are about to be scrolled into view.
+      let loading = 'loading="lazy"';
+      if (index === 0) {
+        loading = 'loading="eager" fetchpriority="high"';
+      }
+      photosHtml += '<button class="bs-photo is-loading" type="button" data-index="' + index + '">' +
         '<img src="' + escapeHtml(small) + '" alt="' + escapeHtml(this.words.photoAltText + ' ' + building.name) +
-        '" loading="lazy" decoding="async" /></button>';
+        '" ' + loading + ' decoding="async" /></button>';
       const author = photo.author || this.words.unknownText;
       const credit = escapeHtml(this.words.photoCreditText + ' ' + author) +
         ', <a href="' + safeUrl(photo.sourceUrl) + '" class="external" target="_blank" rel="noopener">' +
@@ -155,6 +165,40 @@ export class BuildingSheet {
     }
     this.photos.innerHTML = photosHtml;
     this.credit.innerHTML = credits.join(' · ');
+    // A photo the phone already has may be ready before the listeners above could hear it.
+    for (const image of this.photos.querySelectorAll('img')) {
+      if (image.complete && image.naturalWidth > 0) {
+        this.onPhotoLoaded(image);
+      }
+    }
+  }
+
+  /**
+   * A photo arrived: take away its skeleton so it fades in.
+   * @param {HTMLImageElement} image
+   */
+  onPhotoLoaded(image) {
+    const card = image.closest('.bs-photo');
+    if (card) {
+      card.classList.remove('is-loading');
+    }
+  }
+
+  /**
+   * A photo couldn't be loaded (e.g. NMSU removed it): hide its card rather than leave an empty grey box.
+   * If none are left, say there are no photos.
+   * @param {HTMLImageElement} image
+   */
+  onPhotoFailed(image) {
+    const card = image.closest('.bs-photo');
+    if (!card) {
+      return;
+    }
+    card.hidden = true;
+    if (!this.photos.querySelector('.bs-photo:not([hidden])')) {
+      this.photos.hidden = true;
+      this.photosEmpty.hidden = false;
+    }
   }
 
   /**
