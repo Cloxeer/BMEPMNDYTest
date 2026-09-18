@@ -15,36 +15,6 @@
  */
 
 /**
- * How many single-letter changes turn one word into another (the "Levenshtein distance").
- * It fills in a table row by row: each cell is the cheapest way to turn the
- * start of `a` into the start of `b`.
- * @param {string} a
- * @param {string} b
- * @returns {number} e.g. "harmon" -> "hardman" is 2
- */
-function typoDistance(a, b) {
-  let previousRow = [];
-  for (let j = 0; j <= b.length; j += 1) {
-    previousRow.push(j);
-  }
-  for (let i = 1; i <= a.length; i += 1) {
-    const row = [i];
-    for (let j = 1; j <= b.length; j += 1) {
-      let change = 1;
-      if (a[i - 1] === b[j - 1]) {
-        change = 0;
-      }
-      const remove = previousRow[j] + 1;
-      const add = row[j - 1] + 1;
-      const swap = previousRow[j - 1] + change;
-      row[j] = Math.min(remove, add, swap);
-    }
-    previousRow = row;
-  }
-  return previousRow[b.length];
-}
-
-/**
  * How many typos are allowed in a typed word. None for short words (too many false matches).
  * @param {string} typed
  * @returns {number}
@@ -74,8 +44,58 @@ function wordMatches(typed, word) {
     return false;
   }
   // Compare with the start of the word: one letter shorter, the same length, or one letter longer.
+  return startIsClose(typed, word, typos);
+}
+
+// Two rows reused for every comparison, so typing doesn't create thousands of throwaway arrays.
+let previousRow = new Int32Array(64);
+let currentRow = new Int32Array(64);
+
+/**
+ * Is the start of `word` (typed.length - 1, typed.length or typed.length + 1 letters of it)
+ * within `typos` changes of `typed`? It counts single-letter changes (the "Levenshtein
+ * distance") with a table filled in row by row: each cell is the cheapest way to turn the start
+ * of `typed` into the start of the word, e.g. "harmon" -> "hardman" is 2. ONE table answers all
+ * three starts at once, because its last row holds the distance to every start of the word. It also gives up early once every cell in a row is already too
+ * big (the numbers in a row can only grow from there).
+ * @param {string} typed
+ * @param {string} word
+ * @param {number} typos - the most changes allowed
+ * @returns {boolean}
+ */
+function startIsClose(typed, word, typos) {
+  const b = word.slice(0, typed.length + 1);
+  if (b.length + 1 > previousRow.length) {
+    previousRow = new Int32Array(b.length + 1);
+    currentRow = new Int32Array(b.length + 1);
+  }
+  for (let j = 0; j <= b.length; j += 1) {
+    previousRow[j] = j;
+  }
+  for (let i = 1; i <= typed.length; i += 1) {
+    currentRow[0] = i;
+    let smallest = i;
+    for (let j = 1; j <= b.length; j += 1) {
+      let change = 1;
+      if (typed[i - 1] === b[j - 1]) {
+        change = 0;
+      }
+      const cell = Math.min(previousRow[j] + 1, currentRow[j - 1] + 1, previousRow[j - 1] + change);
+      currentRow[j] = cell;
+      if (cell < smallest) {
+        smallest = cell;
+      }
+    }
+    if (smallest > typos) {
+      return false; // every start of the word is already too far away
+    }
+    const swap = previousRow;
+    previousRow = currentRow;
+    currentRow = swap;
+  }
+  // previousRow now holds the distance from `typed` to each start of the word.
   for (let length = typed.length - 1; length <= typed.length + 1; length += 1) {
-    if (typoDistance(typed, word.slice(0, length)) <= typos) {
+    if (previousRow[Math.min(length, b.length)] <= typos) {
       return true;
     }
   }

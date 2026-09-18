@@ -120,6 +120,10 @@ export class MapSettingsButton {
 
   /** @param {boolean} open - show or hide the options */
   setOpen(open) {
+    if (open === this.isOpen) {
+      return; // already so: every tap on the page asks to close, so this must cost nothing
+    }
+    this.isOpen = open;
     this.stack.classList.toggle('is-open', open);
     this.stack.inert = !open; // hidden options can't be tapped or reached with Tab
     this.button.classList.toggle('is-open', open);

@@ -12,7 +12,7 @@
  *                  - map tiles: the same, keeping at most MAX_TILES of them for a week, so
  *                    the phone's storage doesn't fill up,
  *                  - building photos linked from NMSU's campus map: saved once, at most
- *                    MAX_PHOTOS of them for a month (a photo never changes at the same address).
+ *                    MAX_PHOTOS of them for a week, so they never fill the phone.
  *                Google's Workbox library does the caching work.
  * DEPENDS ON   : Workbox (loaded from Google's CDN below).
  * USED BY      : js/core/offline.js (registers it)
@@ -24,8 +24,8 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.3.0/workbox
 
 const MAX_TILES = 1500; // map tiles kept on the phone
 const TILE_DAYS = 7; // how long a saved tile is used before it's downloaded again
-const MAX_PHOTOS = 300; // building photos kept on the phone
-const PHOTO_DAYS = 30;
+const MAX_PHOTOS = 40; // building photos kept on the phone (about 15 MB at most; the oldest go first)
+const PHOTO_DAYS = 7;
 const LIBRARY_HOSTS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com', 'storage.googleapis.com'];
 
 // Only answers with good responses are saved. Status 0 is a font or script from another site

@@ -76,3 +76,6 @@
   padding-right: 0;
 }
 .page-plain .places-group .places-title { padding-left: var(--page-text-edge); padding-right: var(--page-text-edge); margin-left: 0; margin-right: 0; }
+/* Long lists (Parking has 356 rows): the phone only lays out the rows near the screen,
+   so opening, closing and scrolling a group stays cheap. 64px is about one row's height. */
+.places-group li { content-visibility: auto; contain-intrinsic-size: auto 64px; }

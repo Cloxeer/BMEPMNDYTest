@@ -252,6 +252,7 @@ async function loadTheRest(campusMap, sheet, search, settingsPage, buildingsById
   campusMap.addPlaces(newPlaces);
   sheet.redraw(); // the open sheet, now with its description
   search.addRooms(rooms); // the new places are already in `places`, the list search was given
+  search.readyWordsWhenIdle(); // so the first key press is instant
   sheet.setRooms(rooms, entrances);
   settingsPage.fillData(countData(places, rooms, entrances, campuses));
 }

@@ -65,6 +65,10 @@ export class BottomPill {
 
   /** @param {boolean} open - show or hide the stack of other floors */
   setStackOpen(open) {
+    if (open === this.stackOpen) {
+      return; // already so: every tap on the page asks to close, so this must cost nothing
+    }
+    this.stackOpen = open;
     this.stack.classList.toggle('is-open', open);
     this.stack.inert = !open; // hidden floor buttons can't be reached with the Tab key
     this.pill.classList.toggle('is-stack-open', open);

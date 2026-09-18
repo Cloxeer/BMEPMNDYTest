@@ -35,6 +35,7 @@ from shapely.geometry import shape
 
 from json_files import read_json, write_json
 import nmsu_map
+from build_buildings import tidy_address  # the same address style as the buildings
 
 PROJECT = Path(__file__).resolve().parent.parent
 SOURCE = PROJECT / 'data' / 'source'
@@ -243,7 +244,8 @@ def build_food(features, shapes):
 
 
 def parking_name(lot_name):
-    """ "LOT 79H" -> "Lot 79H". A lot with no published name is just called a parking lot."""
+    """ "LOT 79H" -> "Lot 79H". A lot with no published name (NMSU sometimes writes just a space) is a parking lot."""
+    lot_name = (lot_name or '').strip()
     if not lot_name:
         return 'Parking lot'
     words = []
@@ -283,8 +285,11 @@ def build_parking(features, lot_shapes):
         record['permitColor'] = permit_color(properties)
         record['permitRule'] = permit_rule(properties)
         campus = CAMPUS_NAMES.get(properties.get('CAMPUS'))
-        if properties.get('FULLADDR') and properties.get('BLDG_CITY'):
-            record['address'] = properties['FULLADDR'].title() + ', ' + properties['BLDG_CITY'].title() + ', NM'
+        # NMSU's layer writes a single space when a lot has no street address: then the page shows its campus.
+        street = (properties.get('FULLADDR') or '').strip()
+        city = (properties.get('BLDG_CITY') or '').strip()
+        if street and city:
+            record['address'] = tidy_address(street) + ', ' + city.title() + ', NM'
         if campus:
             record['aka'] = [campus]
             record['campus'] = campus

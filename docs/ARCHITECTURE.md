@@ -188,7 +188,7 @@ Every data file starts with a `"//"` entry: what the file is and how to format i
 | `data/routes/walk.geojson`, `bike.geojson`, `drive.geojson` | `tools/build_routes.py` | OpenStreetMap paths and roads, sorted by their access tags; one-way streets kept for bikes and cars |
 | `data/floors/*.svg` | Hand-drawn | Evacuation maps posted in each building. Each plan has a compass, turned to match NMSU Space Planning's outline of that building (checked against the compass on the posted map) |
 | `data/photos/*.jpg` | Downloaded | Wikimedia Commons (licences in `data/source/photos.json`) |
-| Photos from NMSU's campus map | Linked, not copied | `imageUrl` / `thumbUrl` on each place's `photos`; the service worker keeps up to 300 on the phone |
+| Photos from NMSU's campus map | Linked, not copied | `imageUrl` / `thumbUrl` on each place's `photos`; the service worker keeps the last 40 on the phone for a week (about 15 MB at most) |
 | `tools/json_files.py` | — | Writes every data file with its `"//"` note first |
 
 Which source wins when they disagree:

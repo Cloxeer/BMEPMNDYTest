@@ -100,6 +100,7 @@ export class Search {
     // Each place's searchable words, worked out once each (not on every key press),
     // the first time search is opened.
     this.wordsOf = {};
+    this.picks = []; // what tapping each shown result does, by its data-pick number
 
     this.listen();
     store.subscribe((state) => this.update(state));
@@ -116,6 +117,29 @@ export class Search {
     this.rooms = rooms;
   }
 
+  /**
+   * Work out every place's searchable words ahead of time, a few at a time while the phone has
+   * nothing else to do, so the first key press doesn't have to do it all at once. Stops by itself
+   * when every place is done (it never keeps running).
+   */
+  readyWordsWhenIdle() {
+    const later = window.requestIdleCallback || ((work) => setTimeout(() => work({ timeRemaining: () => 4 }), 50));
+    let next = 0;
+    const work = (deadline) => {
+      while (next < this.buildings.length && deadline.timeRemaining() > 1) {
+        const building = this.buildings[next];
+        if (!this.wordsOf[building.id]) {
+          this.wordsOf[building.id] = buildingWords(building);
+        }
+        next += 1;
+      }
+      if (next < this.buildings.length) {
+        later(work); // not finished: carry on in the next quiet moment
+      }
+    };
+    later(work);
+  }
+
   /** Work out the searchable words of any place that doesn't have them yet. */
   readyWords() {
     for (const building of this.buildings) {
@@ -126,6 +150,14 @@ export class Search {
   }
 
   listen() {
+    // One listener for every result row (rows are remade on each key press).
+    this.list.addEventListener('click', (event) => {
+      const row = event.target.closest('[data-pick]');
+      if (row) {
+        event.preventDefault();
+        this.picks[Number(row.dataset.pick)](); // choosing a result also ends search
+      }
+    });
     this.searchButton.addEventListener('click', () => {
       if (store.get().searching) {
         store.endSearch();
@@ -160,32 +192,26 @@ export class Search {
   /* ---------- Result rows ---------- */
 
   /**
-   * One result row: a bold title, a grey subtitle, and a chevron.
+   * One result row's HTML: a bold title, a grey subtitle, and a chevron.
+   * Tapping it runs this.picks[index] (one listener for the whole list, in listen()).
    * @param {string} title
    * @param {string} subtitle
    * @param {string[]} typed - the typed words, for highlighting
-   * @param {() => void} onPick - what tapping it does
-   * @returns {HTMLLIElement}
+   * @param {number} index - its place in this.picks
+   * @returns {string}
    */
-  resultRow(title, subtitle, typed, onPick) {
-    const row = document.createElement('li');
-    row.innerHTML =
-      '<a href="#" class="item-link item-content"><div class="item-inner">' +
+  resultRow(title, subtitle, typed, index) {
+    return '<li><a href="#" class="item-link item-content" data-pick="' + index + '"><div class="item-inner">' +
       '<div class="item-title-row"><div class="item-title">' + highlight(title, typed) + '</div></div>' +
       '<div class="item-subtitle">' + highlight(subtitle, typed) + '</div>' +
-      '</div></a>';
-    row.querySelector('a').addEventListener('click', (event) => {
-      event.preventDefault();
-      onPick(); // choosing a result also ends search
-    });
-    return row;
+      '</div></a></li>';
   }
 
   /**
    * A row for a room: "Room 225" / "Floor 2 · Classroom · HJLC · Hardman and Jacobs …".
    * @param {object} room
    * @param {string[]} typed
-   * @returns {HTMLLIElement}
+   * @returns {string}
    */
   roomRow(room, typed) {
     const building = this.buildingsById[room.building];
@@ -195,31 +221,34 @@ export class Search {
     }
     // The floor goes first, so it isn't the part cut off on a narrow screen.
     const subtitle = joinWithDots([floor, room.name, building.code, building.name]);
-    return this.resultRow(this.words.roomText + ' ' + room.number, subtitle, typed,
-      () => store.selectRoom(building, room, 'search'));
+    this.picks.push(() => store.selectRoom(building, room, 'search'));
+    return this.resultRow(this.words.roomText + ' ' + room.number, subtitle, typed, this.picks.length - 1);
   }
 
   /**
    * A row for a building: its name / "code · address".
    * @param {object} building
    * @param {string[]} typed
-   * @returns {HTMLLIElement}
+   * @returns {string}
    */
   buildingRow(building, typed) {
     const subtitle = joinWithDots([building.code, building.address]);
-    return this.resultRow(building.name, subtitle, typed, () => store.selectBuilding(building, 'search'));
+    this.picks.push(() => store.selectBuilding(building, 'search'));
+    return this.resultRow(building.name, subtitle, typed, this.picks.length - 1);
   }
 
   /**
    * Show the results for the typed text. Nothing typed = no results panel.
+   * Only the rows that fit (maxResults) are made; searching stops once there are enough.
    * @param {string} text
    */
   showResults(text) {
     this.readyWords();
     const typed = typedWords(text);
-    this.list.innerHTML = '';
+    this.picks = [];
     this.results.hidden = typed.length === 0;
     if (typed.length === 0) {
+      this.list.innerHTML = '';
       return;
     }
 
@@ -235,26 +264,30 @@ export class Search {
       }
     }
 
-    const rows = [];
+    const max = this.words.maxResults;
+    let html = '';
+    let count = 0;
     for (const room of exactRooms.concat(partialRooms)) {
-      rows.push(this.roomRow(room, typed));
+      if (count === max) {
+        break;
+      }
+      html += this.roomRow(room, typed);
+      count += 1;
     }
     for (const building of this.buildings) {
+      if (count === max) {
+        break; // enough rows: no need to look further
+      }
       if (buildingMatches(typed, this.wordsOf[building.id])) {
-        rows.push(this.buildingRow(building, typed));
+        html += this.buildingRow(building, typed);
+        count += 1;
       }
     }
 
-    const shownRows = rows.slice(0, this.words.maxResults);
-    if (shownRows.length === 0) {
-      const empty = document.createElement('li');
-      empty.className = 'search-empty';
-      empty.textContent = this.words.noMatchText + ' "' + text.trim() + '"';
-      this.list.appendChild(empty);
+    if (count === 0) {
+      html = '<li class="search-empty">' + escapeHtml(this.words.noMatchText + ' "' + text.trim() + '"') + '</li>';
     }
-    for (const row of shownRows) {
-      this.list.appendChild(row);
-    }
+    this.list.innerHTML = html;
   }
 
   /* ---------- Remembering what was typed ---------- */

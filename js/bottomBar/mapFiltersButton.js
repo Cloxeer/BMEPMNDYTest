@@ -103,6 +103,10 @@ export class MapFiltersButton {
 
   /** @param {boolean} open - show or hide the rows */
   setOpen(open) {
+    if (open === this.isOpen) {
+      return; // already so: every tap on the page asks to close, so this must cost nothing
+    }
+    this.isOpen = open;
     this.stack.classList.toggle('is-open', open);
     this.stack.inert = !open;
     this.button.classList.toggle('is-open', open);
