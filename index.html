@@ -107,6 +107,16 @@
             <p><strong id="bs-arrived-title"></strong><span id="bs-arrived-text"></span></p>
           </div>
 
+          <!-- Food places only: the menu and the opening hours come first, where they're easy to find -->
+          <section id="bs-food-card" class="bs-food-card" hidden>
+            <a id="bs-menu-button" class="bs-menu-button external" href="#" target="_blank" rel="noopener" hidden>
+              <i class="icon f7-icons" aria-hidden="true">book_fill</i><span id="bs-menu-text"></span>
+            </a>
+            <h3 id="bs-hours-title" class="bs-h3"></h3>
+            <ul id="bs-hours" class="bs-hours"></ul>
+            <a id="bs-phone" class="bs-phone external" href="#" hidden></a>
+          </section>
+
           <!-- 1. Floor plan. Two slides you can swipe between (or pick with the switch):
                our redrawn plan, and the photo of the map posted in the building. -->
           <div class="segmented segmented-strong bs-switch" role="tablist">
@@ -154,7 +164,6 @@
             <!-- Food inside this building (js/sheet/buildingSheet.js); tap one to go to it -->
             <div id="bs-food" class="bs-food" hidden></div>
             <!-- "external" tells Framework7 to leave this link alone so the browser opens it -->
-            <a id="bs-menu-link" class="bs-link external" href="#" target="_blank" rel="noopener" hidden></a>
             <a id="bs-link" class="bs-link external" href="#" target="_blank" rel="noopener">Open on NMSU’s official map ↗</a>
             <p id="bs-source" class="bs-source"></p>
           </section>

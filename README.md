@@ -72,7 +72,7 @@ js/pages/               search, menu, Locations, Settings, welcome, navbar title
 styles/                 one stylesheet per part of the screen
 data/                   files the app reads (don't edit the built ones by hand)
 data/floors/            floor plans (SVG, redrawn from posted evacuation maps)
-data/photos/            building photos (licensed; credits in data/source/photos.json)
+data/photos/            building photos (licensed; credits in data/source/photos.json); NMSU's own photos are linked from its campus map
 data/source/            inputs for the tools below
 tools/                  scripts that rebuild data/ from official sources
 ```

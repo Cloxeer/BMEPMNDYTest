@@ -22,6 +22,7 @@
 import { CONFIG } from '../core/config.js';
 import { store } from '../core/store.js';
 import { escapeHtml, safeUrl } from '../core/html.js';
+import { hoursRow } from '../logic/hours.js';
 import { FloorPlan } from './floorPlan.js';
 import { PhotoViewer } from './photoViewer.js';
 
@@ -65,7 +66,13 @@ export class BuildingSheet {
     this.description = document.querySelector('#bs-description');
     this.facts = document.querySelector('#bs-facts');
     this.link = document.querySelector('#bs-link');
-    this.menuLink = document.querySelector('#bs-menu-link');
+    this.foodCard = document.querySelector('#bs-food-card');
+    this.menuButton = document.querySelector('#bs-menu-button');
+    this.hoursTitle = document.querySelector('#bs-hours-title');
+    this.hoursList = document.querySelector('#bs-hours');
+    this.phoneLink = document.querySelector('#bs-phone');
+    document.querySelector('#bs-menu-text').textContent = this.words.menuButtonText;
+    this.hoursTitle.textContent = this.words.hoursLabel;
     this.foodHere = document.querySelector('#bs-food');
     this.source = document.querySelector('#bs-source');
 
@@ -133,13 +140,18 @@ export class BuildingSheet {
     const credits = [];
     for (let index = 0; index < photos.length; index += 1) {
       const photo = photos[index];
+      // Our own photos are files in the project; NMSU's are links to its campus map, with a small copy for the strip.
+      const small = photo.file || photo.thumbUrl || photo.imageUrl;
       photosHtml += '<button class="bs-photo" type="button" data-index="' + index + '">' +
-        '<img src="' + escapeHtml(photo.file) + '" alt="' + escapeHtml(this.words.photoAltText + ' ' + building.name) +
-        '" loading="lazy" /></button>';
+        '<img src="' + escapeHtml(small) + '" alt="' + escapeHtml(this.words.photoAltText + ' ' + building.name) +
+        '" loading="lazy" decoding="async" /></button>';
       const author = photo.author || this.words.unknownText;
-      credits.push(escapeHtml(this.words.photoCreditText + ' ' + author) +
+      const credit = escapeHtml(this.words.photoCreditText + ' ' + author) +
         ', <a href="' + safeUrl(photo.sourceUrl) + '" class="external" target="_blank" rel="noopener">' +
-        escapeHtml(photo.license) + '</a>');
+        escapeHtml(photo.license) + '</a>';
+      if (credits.indexOf(credit) === -1) {
+        credits.push(credit); // five photos from the same page need one credit, not five
+      }
     }
     this.photos.innerHTML = photosHtml;
     this.credit.innerHTML = credits.join(' · ');
@@ -157,7 +169,7 @@ export class BuildingSheet {
     }
     const urls = [];
     for (const photo of building.photos) {
-      urls.push(photo.file);
+      urls.push(photo.file || photo.imageUrl);
     }
     this.photoViewer.open(urls, Number(photoButton.dataset.index));
   }
@@ -176,19 +188,6 @@ export class BuildingSheet {
       if (building.category === 'food' && building.insideName) {
         facts.push([this.words.insideLabel, building.insideName]);
       }
-      if (building.category === 'food') {
-        // One line per day range, as NMSU Dining writes them; the label only on the first line.
-        for (let i = 0; i < building.hours.length; i += 1) {
-          let label = '';
-          if (i === 0) {
-            label = this.words.hoursLabel;
-          }
-          facts.push([label, building.hours[i]]);
-        }
-        if (building.phone) {
-          facts.push([this.words.phoneLabel, building.phone]);
-        }
-      }
       if (building.category === 'parking') {
         facts.push([this.words.permitColorLabel, building.permitColor]); // e.g. "Purple"
         facts.push([this.words.permitRuleLabel, building.permitRule]); // e.g. "South Campus Resident", "Free Parking"
@@ -201,7 +200,7 @@ export class BuildingSheet {
       [this.words.addressLabel, building.address],
       [this.words.buildingLabel, code + ' · ' + this.words.numberText + ' ' + building.propertyNumber],
       [this.words.builtLabel, building.built],
-      [this.words.floorsLabel, building.floors.length],
+      [this.words.floorsLabel, this.floorsText(building)],
     ];
     if (building.historic) {
       facts.push([this.words.historicLabel, building.historic]); // an official designation
@@ -222,6 +221,9 @@ export class BuildingSheet {
     let floorsNote = '';
     if (building.floorsSource !== 'NMSU Space Planning') {
       floorsNote = ' (' + this.words.floorCountText + ': ' + building.floorsSource + ')';
+    }
+    if (building.builtSource && building.builtSource !== 'NMSU Space Planning') {
+      floorsNote += ' (' + this.words.builtYearText + ': ' + building.builtSource + ')';
     }
     let descriptionNote = '';
     if (building.descriptionSource) {
@@ -268,13 +270,59 @@ export class BuildingSheet {
     this.link.hidden = !building.nmsuUrl; // a brand-new building may not be on NMSU's map yet
     this.link.href = safeUrl(building.nmsuUrl || '');
 
-    // Food places have a menu on NMSU's own pages; buildings show the food inside them instead.
-    this.menuLink.hidden = !building.menuUrl;
-    this.menuLink.href = safeUrl(building.menuUrl || '');
-    this.menuLink.textContent = this.words.menuLinkText;
+    // Food places show their menu and hours at the top; buildings show the food inside them instead.
+    this.fillFoodCard(building);
     this.fillFoodHere(building);
 
     this.source.textContent = this.sourceTextFor(building);
+  }
+
+  /**
+   * "3", or for a building whose floor count NMSU doesn't publish, "Ground floor (count not published)".
+   * @param {object} building
+   * @returns {string}
+   */
+  floorsText(building) {
+    if (building.floorsKnown === false) {
+      return this.words.groundFloorOnlyText;
+    }
+    return String(building.floors.length);
+  }
+
+  /**
+   * A food place's card at the top of its page: a big "See the menu" button, the hours
+   * one row per day range (today's row marked), and the phone number to tap and call.
+   * @param {object} building
+   */
+  fillFoodCard(building) {
+    const food = building.category === 'food';
+    this.foodCard.hidden = !food;
+    if (!food) {
+      return;
+    }
+    this.menuButton.hidden = !building.menuUrl; // not every place has a menu online
+    this.menuButton.href = safeUrl(building.menuUrl || '');
+
+    const today = new Date().getDay();
+    let html = '';
+    for (const line of building.hours) {
+      const row = hoursRow(line, today);
+      html += '<li class="bs-hours-row' + (row.isToday ? ' is-today' : '') + '">' +
+        '<span class="bs-hours-days">' + escapeHtml(row.days) +
+        (row.isToday ? ' <em>' + escapeHtml(this.words.todayText) + '</em>' : '') + '</span>' +
+        '<span class="bs-hours-times">' + escapeHtml(row.times) + '</span>' +
+        (row.note ? '<small class="bs-hours-note">' + escapeHtml(row.note) + '</small>' : '') + '</li>';
+    }
+    if (building.hours.length === 0) {
+      html = '<li class="bs-hours-row"><span class="bs-hours-times">' + escapeHtml(this.words.unknownText) + '</span></li>';
+    }
+    this.hoursList.innerHTML = html;
+
+    this.phoneLink.hidden = !building.phone;
+    if (building.phone) {
+      this.phoneLink.href = 'tel:' + building.phone.replace(/[^0-9+]/g, '');
+      this.phoneLink.textContent = this.words.callText + ' ' + building.phone;
+    }
   }
 
   /**

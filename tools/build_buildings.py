@@ -9,8 +9,8 @@ WHAT IT DOES : Runs on a developer's computer (not in the app). For each buildin
                "Staff Academic" category (see STAFF_ACADEMIC_USES), and every Las Cruces
                building of the uses in USE_CATEGORIES (athletics, student services, shops,
                greenhouses, barns, warehouses).
-DEPENDS ON   : Python 3 and an internet connection. No extra packages. tools/json_files.py
-SOURCES      : NMSU campus map (map.nmsu.edu, Concept3D): the description on each building's page
+DEPENDS ON   : Python 3 and an internet connection. No extra packages. tools/json_files.py, tools/nmsu_map.py
+SOURCES      : NMSU campus map (map.nmsu.edu, Concept3D): the description and photos on each building's page (copied once, politely, by tools/nmsu_map.py)
                NMSU Office of Space Planning "Buildings" layer: name, code, address,
                  year built, number of stories, map position, outline
                NMSU Registrar building abbreviations (records.nmsu.edu): the code
@@ -27,7 +27,6 @@ WRITES       : data/buildings.geojson (one point per building, with its facts)
 RUN          : python tools/build_buildings.py
 """
 
-import html
 import json
 import math
 import re
@@ -35,6 +34,7 @@ import urllib.request
 from pathlib import Path
 
 from json_files import read_json, write_json
+import nmsu_map
 
 # Paths start from the project folder, so the script works from any folder.
 PROJECT = Path(__file__).resolve().parent.parent
@@ -46,7 +46,6 @@ DOOR_DISTANCE_M = 4  # an OpenStreetMap door this close (metres) to NMSU's outli
 METRES_PER_DEGREE = 111320
 NMSU_BUILDINGS = ('https://services6.arcgis.com/r7ZUBDL24w5VsBnN/arcgis/rest/services/'
                   'buildings_642026_WFL1/FeatureServer/9/query')
-NMSU_MAP = 'https://api.concept3d.com/locations/{id}?map=1888&key=0001085cc708b9cef47080f064612ca5'
 NMSU_MAP_LIST = 'https://api.concept3d.com/locations?map=1888&key=0001085cc708b9cef47080f064612ca5'
 SAME_PLACE_METRES = 120  # a campus map point this close to a building, with the same name, is that building
 MAP_DESCRIPTION_SOURCE = "NMSU's official campus map (map.nmsu.edu)"
@@ -170,8 +169,8 @@ BUILDINGS_NOTE = [
     'Made by tools/build_buildings.py. Do not edit by hand: add a building to BUILDINGS in the script,',
     'or change data/source/building-extras.json or data/source/photos.json, then run python tools/build_buildings.py',
     'Format: GeoJSON. One Feature per building: a Point where NMSU places it, and properties:',
-    'id and propertyNumber (NMSU property number), code, name, aka (other names search finds), address, built (year),',
-    'floors ([1, 2, ...], empty when unknown), floorsSource, nmsuUrl, photos, source, category ("study" or "living"),',
+    'id and propertyNumber (NMSU property number), code, name, aka (other names search finds), address, built (year), builtSource,',
+    'floors ([1, 2, ...]; just [1], the ground floor, when NMSU publishes no count), floorsSource, floorsKnown, nmsuUrl, photos, source, category ("study" or "living"),',
     'and descriptionSource. The descriptions themselves are in data/descriptions.json.',
     'floorImages and postedImages (floor -> picture file), doors ([lng, lat] points), codeSource,',
     'historic (an official historic designation, or null), descriptionSource (where the description came from).',
@@ -379,21 +378,32 @@ def find_map_ids(map_places, record, names):
     return found
 
 
-def map_description(map_id):
-    """The description NMSU's campus map shows for a building, as paragraphs. Empty when it has none."""
-    if not map_id:
-        return []
-    page = download_json(NMSU_MAP.format(id=map_id))
-    text = page.get('description') or ''
-    text = re.sub(r'<br\s*/?>|</p>', '\n', text)  # line breaks become new paragraphs
-    text = re.sub(r'<[^>]+>', '', text)  # drop the rest of the HTML
-    text = html.unescape(text).replace('\r', '')
-    paragraphs = []
-    for line in text.split('\n'):
-        line = line.strip()
-        if line:
-            paragraphs.append(line)
-    return paragraphs
+# How street words are written, so every address looks the same. Only the look changes:
+# "2902 MCFIE CIRCLE" and "2902 Mcfie Cir." are the same place, shown as "2902 McFie Cir.".
+STREET_WORDS = {
+    'north': 'N.', 'n': 'N.', 'south': 'S.', 's': 'S.', 'east': 'E.', 'e': 'E.', 'west': 'W.', 'w': 'W.',
+    'street': 'St.', 'st': 'St.', 'avenue': 'Ave.', 'ave': 'Ave.', 'drive': 'Dr.', 'dr': 'Dr.',
+    'road': 'Rd.', 'rd': 'Rd.', 'circle': 'Cir.', 'cir': 'Cir.', 'place': 'Pl.', 'pl': 'Pl.',
+    'mcfie': 'McFie',
+}
+# Street names NMSU sometimes writes without "St." (the same street as its other addresses).
+STREETS_NEEDING_ST = ['Espina']
+
+
+def tidy_address(street):
+    """NMSU's street line, tidied: "2902 MCFIE CIRCLE" -> "2902 McFie Cir.", "1040 SOUTH HORSESHOE" -> "1040 S. Horseshoe"."""
+    words = []
+    for word in street.split():
+        key = word.lower().strip('.,')
+        if key in STREET_WORDS and len(words) > 0:  # never the house number
+            words.append(STREET_WORDS[key])
+        else:
+            words.append(word[:1].upper() + word[1:].lower())
+    text = ' '.join(words)
+    for name in STREETS_NEEDING_ST:
+        if text.endswith(' ' + name):
+            text += ' St.'
+    return text
 
 
 def display_name(description):
@@ -501,27 +511,38 @@ def main():
         if 'floors' in extra:  # checked by hand when NMSU lists no story count (see building-extras.json)
             floors = extra['floors'] or 0
             floors_source = extra['floorsSource']
-        if floors == 0:
-            print('WARNING: no floor count for', number, name)
+        # No published count: every building has a ground floor, so only that one is shown,
+        # and floorsKnown tells the app to say the count itself isn't published.
+        floors_known = floors > 0
+        if not floors_known:
+            floors = 1
+            floors_source = 'not published by NMSU; ground floor shown'
 
         # NMSU's campus map: the id listed above, plus any point with this building's name at this spot.
         # The description comes from the first one that has one.
-        map_ids = []
-        if map_id:
+        # Pins checked by hand in building-extras.json come first ("mapIds"), and a pin that
+        # matched by name but belongs to a neighbouring building is dropped ("notMapIds").
+        map_ids = list(extra.get('mapIds', []))
+        if map_id and map_id not in map_ids:
             map_ids.append(map_id)
         for other_id in find_map_ids(map_places, record, [name, record['Descriptio']]):
             if other_id not in map_ids:
                 map_ids.append(other_id)
+        for wrong_id in extra.get('notMapIds', []):
+            if wrong_id in map_ids:
+                map_ids.remove(wrong_id)
 
         description = extra.get('description', [])
         description_source = None
         for candidate in map_ids:
             if description:
                 break
-            description = map_description(candidate)
+            description = nmsu_map.description(candidate)
             if description:
                 description_source = MAP_DESCRIPTION_SOURCE
                 map_ids = [candidate] + map_ids  # link to the page the description came from
+        # Every photo on those NMSU map pages, after our own freely licensed ones.
+        building_photos = photos_for(photos, photo_key) + nmsu_map.photos(map_ids, name)
 
         nmsu_url = None  # None: not on NMSU's campus map yet
         if map_ids:
@@ -545,13 +566,17 @@ def main():
             'code': extra.get('code', record['Address_2']),
             'name': name,
             'aka': other_names(record, number, extra),
-            'address': record['Address_1'].title() + ', Las Cruces, NM ' + record['Zip_Code'],
+            'address': tidy_address(record['Address_1']) + ', Las Cruces, NM ' + record['Zip_Code'],
             'propertyNumber': number,
-            'built': built_years(official, number),
+            # NMSU Space Planning's year, unless it was checked against NMSU's own description
+            # and corrected in building-extras.json ("built" + "builtSource").
+            'built': extra.get('built', built_years(official, number)),
+            'builtSource': extra.get('builtSource', 'NMSU Space Planning'),
             'floors': list(range(1, floors + 1)),
             'floorsSource': floors_source,
+            'floorsKnown': floors_known,
             'nmsuUrl': nmsu_url,
-            'photos': photos_for(photos, photo_key),
+            'photos': building_photos,
             'source': 'NMSU Office of Space Planning, Buildings layer (property ' + number + ')',
             'category': category,
             'floorImages': existing_pictures(extra.get('floorImages', {}), number),  # floor -> our redrawn plan

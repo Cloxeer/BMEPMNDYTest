@@ -4,7 +4,8 @@
  *
  * WHAT IT DOES : One list per category in config.yml (Study, Housing, Parks, Food,
  *                Staff Academic, Historic, Parking), each headed by the category's icon and colour, with
- *                its places A to Z. Historic also lists study and living buildings that
+ *                its places A to Z. Each list folds away: tap its title (the arrow turns) to open
+ *                or close it, using Framework7's accordion, so the page starts as a short overview. Historic also lists study and living buildings that
  *                have an official historic designation. Tapping a place closes the page, flies the map
  *                there and opens its sheet (even if that category is switched off
  *                in Map filters).
@@ -78,7 +79,7 @@ export class LocationsPage {
   }
 
   /**
-   * One category: a title with its icon, then a list of its places.
+   * One category: a title with its icon and an arrow, then a list of its places that opens and closes.
    * @param {string} category
    * @param {object[]} places - already sorted
    * @param {object} page - closed when a place is tapped
@@ -87,13 +88,19 @@ export class LocationsPage {
   makeGroup(category, places, page) {
     const look = CONFIG.categories[category];
     const group = document.createElement('div');
-    group.className = 'places-group';
+    group.className = 'places-group accordion-item'; // Framework7 opens and closes it, smoothly
     group.style.setProperty('--row-color', look.color);
     group.innerHTML =
-      '<div class="block-title places-title">' + iconHtml(look.icon, look.iconSet) +
-      '<span>' + escapeHtml(look.label) + ' (' + places.length + ')</span></div>' +
-      '<div class="list media-list inset"><ul></ul></div>';
+      '<a href="#" class="block-title places-title accordion-item-toggle" role="button" aria-expanded="false">' +
+      iconHtml(look.icon, look.iconSet) +
+      '<span>' + escapeHtml(look.label) + ' (' + places.length + ')</span>' +
+      '<i class="icon f7-icons places-arrow" aria-hidden="true">chevron_down</i></a>' +
+      '<div class="accordion-item-content"><div class="list media-list inset"><ul></ul></div></div>';
     const list = group.querySelector('ul');
+    const toggle = group.querySelector('.accordion-item-toggle');
+    // Framework7 tells the item when it opens or closes; screen readers are told too.
+    group.addEventListener('accordion:open', () => toggle.setAttribute('aria-expanded', 'true'));
+    group.addEventListener('accordion:close', () => toggle.setAttribute('aria-expanded', 'false'));
 
     for (const place of places) {
       const row = document.createElement('li');

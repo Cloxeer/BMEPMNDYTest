@@ -7,6 +7,10 @@
     "  \"aka\": [\"Hardman\", \"Jacobs\"]               other names people search for",
     "  \"floors\": 2                                the number of floors, only when NMSU lists none (null = unknown)",
     "  \"floorsSource\": \"OpenStreetMap ...\"         where that floor count comes from (required with \"floors\")",
+    "  \"built\": \"1956\"                            the year built, only when NMSU's own description shows Space Planning's year is wrong",
+    "  \"builtSource\": \"NMSU campus map description\" where that year comes from (required with \"built\")",
+    "  \"mapIds\": [660918]                          more pins of this building on NMSU's campus map, checked by hand (tried first)",
+    "  \"notMapIds\": [525394]                       a pin that matched by name but is a different building",
     "  \"floorImages\": {\"1\": \"data/floors/x.svg\"}   floor number -> our redrawn floor plan",
     "  \"postedImages\": {\"1\": \"data/floors/x.jpg\"}  floor number -> photo of the evacuation map posted in the building",
     "  \"entrancePhotos\": {\"323-1-2\": \"data/photos/x.jpg\"}  entrance id (from data/entrances.json) -> photo of that door",
@@ -38,7 +42,9 @@
   },
   "249": {
     "floors": 2,
-    "floorsSource": "OpenStreetMap building:levels"
+    "floorsSource": "OpenStreetMap building:levels",
+    "built": "2014",
+    "builtSource": "NMSU's campus map description"
   },
   "657": {
     "floors": null,
@@ -52,12 +58,16 @@
     "floors": 2,
     "floorsSource": "OpenStreetMap building:levels",
     "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
-    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf",
+    "built": "1930",
+    "builtSource": "NMSU's campus map description"
   },
   "619": {
     "aka": [
       "HSS Annex"
-    ]
+    ],
+    "built": "2013",
+    "builtSource": "NMSU's campus map description"
   },
   "385": {
     "floors": null,
@@ -65,7 +75,12 @@
   },
   "662": {
     "floors": null,
-    "floorsSource": "Not published (NMSU lists no story count and OpenStreetMap has none)"
+    "floorsSource": "Not published (NMSU lists no story count and OpenStreetMap has none)",
+    "mapIds": [
+      895206
+    ],
+    "built": "2023",
+    "builtSource": "NMSU's campus map description"
   },
   "683": {
     "floors": null,
@@ -81,7 +96,9 @@
     "floorsSource": "OpenStreetMap building:levels",
     "aka": [
       "Rentfrow Gym"
-    ]
+    ],
+    "built": "1959",
+    "builtSource": "NMSU's campus map description"
   },
   "275": {
     "floors": 2,
@@ -108,11 +125,17 @@
       "RGH"
     ],
     "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
-    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf",
+    "mapIds": [
+      660918
+    ]
   },
   "605": {
     "floors": 3,
-    "floorsSource": "OpenStreetMap building:levels (multiple Chamisa Village apartment buildings A-H, e.g. way 489138822-826 and relations 3603529/3603660/3603661, all building:levels=3, within the Property 605 footprint). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly."
+    "floorsSource": "OpenStreetMap building:levels (multiple Chamisa Village apartment buildings A-H, e.g. way 489138822-826 and relations 3603529/3603660/3603661, all building:levels=3, within the Property 605 footprint). Space Planning's Property_C for this record is just \"DORM\" with no story count, so it could not supply floors directly.",
+    "mapIds": [
+      660855
+    ]
   },
   "645": {
     "floors": null,
@@ -151,6 +174,10 @@
     "floorsSource": "Not published (NMSU lists no story count)",
     "aka": [
       "Stadium Annex"
+    ],
+    "mapIds": [
+      536703,
+      536704
     ]
   },
   "251": {
@@ -190,7 +217,9 @@
   },
   "56": {
     "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
-    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf",
+    "built": "1939",
+    "builtSource": "NMSU's campus map description"
   },
   "82": {
     "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
@@ -206,7 +235,9 @@
   },
   "179": {
     "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
-    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+    "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf",
+    "built": "1952",
+    "builtSource": "NMSU's campus map description"
   },
   "187": {
     "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
@@ -219,5 +250,152 @@
   "225": {
     "historic": "Named historic in NMSU's Heritage Preservation Plan (2011)",
     "historicSource": "https://facilities.nmsu.edu/documents/Appendix-A-Heritage-Preservation-Plan-Volume-I-adopted-03.14.11.pdf"
+  },
+  "465": {
+    "mapIds": [
+      661017
+    ],
+    "built": "2003",
+    "builtSource": "NMSU's campus map description"
+  },
+  "535": {
+    "mapIds": [
+      660797
+    ]
+  },
+  "534": {
+    "mapIds": [
+      660798
+    ]
+  },
+  "387A": {
+    "mapIds": [
+      528040
+    ]
+  },
+  "387C": {
+    "mapIds": [
+      528042
+    ]
+  },
+  "281": {
+    "mapIds": [
+      660873
+    ]
+  },
+  "426": {
+    "mapIds": [
+      525393,
+      660893
+    ]
+  },
+  "44": {
+    "mapIds": [
+      536956,
+      536975
+    ]
+  },
+  "628": {
+    "mapIds": [
+      525932,
+      534814,
+      535389
+    ]
+  },
+  "216": {
+    "mapIds": [
+      660876
+    ]
+  },
+  "280": {
+    "mapIds": [
+      660878
+    ]
+  },
+  "609": {
+    "mapIds": [
+      535009,
+      660927
+    ]
+  },
+  "279": {
+    "mapIds": [
+      660934
+    ]
+  },
+  "222": {
+    "mapIds": [
+      525975
+    ]
+  },
+  "140": {
+    "mapIds": [
+      661015
+    ]
+  },
+  "139": {
+    "mapIds": [
+      661015
+    ]
+  },
+  "137": {
+    "mapIds": [
+      661015
+    ]
+  },
+  "138": {
+    "mapIds": [
+      661015
+    ]
+  },
+  "508": {
+    "mapIds": [
+      661020,
+      530747
+    ]
+  },
+  "392": {
+    "mapIds": [
+      525395,
+      660829
+    ],
+    "notMapIds": [
+      525394,
+      660828
+    ]
+  },
+  "393": {
+    "notMapIds": [
+      525395,
+      660829
+    ]
+  },
+  "189": {
+    "built": "1957",
+    "builtSource": "NMSU's campus map description"
+  },
+  "397": {
+    "built": "1989",
+    "builtSource": "NMSU's campus map description"
+  },
+  "83": {
+    "built": "1947",
+    "builtSource": "NMSU's campus map description"
+  },
+  "590": {
+    "built": "2004",
+    "builtSource": "NMSU's campus map description"
+  },
+  "551": {
+    "built": "2000",
+    "builtSource": "NMSU's campus map description"
+  },
+  "126": {
+    "built": "1978",
+    "builtSource": "NMSU's campus map description"
+  },
+  "161": {
+    "built": "1951",
+    "builtSource": "NMSU's campus map description"
   }
 }

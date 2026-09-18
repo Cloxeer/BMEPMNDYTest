@@ -56,3 +56,9 @@
 /* Each group's title: the category's icon, in its colour, then its name. */
 .places-title { display: flex; align-items: center; gap: var(--s2); color: var(--row-color); }
 .places-title .icon { font-size: var(--locations-icon-size); }
+/* Each group folds away (Framework7 accordion): the whole title is the button, the arrow turns when open. */
+.places-group { border-bottom: 1px solid var(--theme-line-soft); }
+.places-group .places-title { margin: 0; padding-top: var(--s4); padding-bottom: var(--s4); text-decoration: none; cursor: pointer; }
+.places-group .list.inset { margin-top: 0; margin-bottom: var(--s4); }
+.places-title .places-arrow { margin-left: auto; font-size: var(--locations-arrow-size); color: var(--theme-text-muted); transition: transform 0.25s ease; }
+.places-group.accordion-item-opened .places-arrow { transform: rotate(180deg); }

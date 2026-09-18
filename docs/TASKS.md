@@ -133,6 +133,15 @@ Status: [ ] todo · [~] in progress · [x] done (verified in browser)
 - [x] Compass on the Hardman and Jacobs floor plans, turned the way the building really faces (12 deg on floor 1)
 - [x] Map filters: 4 rows plus a fifth "Swap filters" row (opens Settings); the count shakes when it's full
 - [x] OpenStreetMap parking areas kept in data/source/osm-parking.geojson, so rebuilds don't wait on OpenStreetMap
+- [x] NMSU campus map copied politely (one page every 4-9 s, saved as it goes): 167 of 196 locations have NMSU's description and photos, 188 have a description, 290 photos linked
+- [x] Year built checked against NMSU's own descriptions: 15 corrected, 2 kept (the other year was about something else)
+- [x] Floors unknown: only the ground floor is shown, and the page says NMSU doesn't publish the count
+- [x] Addresses written the same way everywhere ("2902 McFie Cir.", "1040 S. Horseshoe")
+- [x] Food: a big "See the menu" button first, hours as a day-by-day list with today marked, tap to call
+- [x] Locations page: every group folds open and closed with an arrow
+- [ ] No photo on NMSU's map (29): e.g. Rhodes-Garrett-Hamiel, Chamisa Village, PSL shops, Biology Greenhouses, WOW, Ramshi, Mediterranean, La Jefa - needs our own photos
+- [ ] No description on NMSU's map (8): Ag Student Learning Center, Well #10, Pride Field, Desert Sculpture Garden, WOW, Ramshi, Mediterranean, La Jefa
+- [ ] Four "Hort Farm Greenhouse" buildings share the photos of NMSU's one pin for them; check which greenhouse each photo shows
 - [ ] Floors, year built, code unknown for some new buildings (shown as Unknown until NMSU publishes them)
 - [ ] Photos of the residence halls and parks (none freely licensed found)
 - [ ] Entrance photos: take one per door and list it under entrancePhotos in data/source/building-extras.json

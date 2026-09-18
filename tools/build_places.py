@@ -34,6 +34,7 @@ from pathlib import Path
 from shapely.geometry import shape
 
 from json_files import read_json, write_json
+import nmsu_map
 
 PROJECT = Path(__file__).resolve().parent.parent
 SOURCE = PROJECT / 'data' / 'source'
@@ -188,7 +189,10 @@ def build_parks(features, shapes):
         record = place_record('park-' + map_id, 'park', park['name'], park['kind'], '')
         record['aka'] = [park['kind']]
         record['nmsuUrl'] = NMSU_MAP_LINK + map_id
-        record['photos'] = usable_photos(park['photos'])
+        # The description and photos exactly as NMSU's campus map has them (tools/nmsu_map.py).
+        map_ids = [map_id] + park.get('moreMapIds', [])  # its other pins on NMSU's map, checked by hand
+        record['description'] = nmsu_map.description(map_id)
+        record['photos'] = usable_photos(park['photos']) + nmsu_map.photos(map_ids, park['name'])
 
         outline = park['osmOutline']
         if outline:
@@ -216,7 +220,11 @@ def build_food(features, shapes):
         record['aka'] = food['searchNames']
         record['photos'] = usable_photos(food.get('photos', []))
         if food.get('concept3dId'):
-            record['nmsuUrl'] = NMSU_MAP_LINK + str(food['concept3dId'])
+            map_id = str(food['concept3dId'])
+            record['nmsuUrl'] = NMSU_MAP_LINK + map_id
+            # The description and photos exactly as NMSU's campus map has them (tools/nmsu_map.py).
+            record['description'] = nmsu_map.description(map_id)
+            record['photos'] = record['photos'] + nmsu_map.photos([map_id], food['name'])
         record['hours'] = food['hours']  # as the official page writes them, e.g. "Mon. - Thur.: 7 am - 3 pm"
         record['phone'] = food['phone']
         record['hoursSource'] = food['hoursSource']

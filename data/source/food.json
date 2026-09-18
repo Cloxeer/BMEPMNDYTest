@@ -590,14 +590,15 @@
         "name": "Gerald Thomas Hall",
         "propertyNumber": "244"
       },
-      "concept3dId": null,
+      "concept3dId": 527462,
       "lat": 32.2811321,
       "lng": -106.75696089,
-      "sourceText": "Run by students of NMSU's School of Hotel, Restaurant and Tourism Management (NMSU Newsroom, Feb. 2025; 100west.nmsu.edu); placed at the building it is inside (NMSU Office of Space Planning).",
+      "sourceText": "Run by students of NMSU's School of Hotel, Restaurant and Tourism Management (NMSU Newsroom, Feb. 2025; 100west.nmsu.edu); placed at the building it is inside (NMSU Office of Space Planning). On NMSU's campus map under its earlier name, 100 West Cafe.",
       "officialSources": [
         "https://newsroom.nmsu.edu/news/nmsu-students-to-unveil-rebranded-campus-restaurant-feb.-28/s/09481e03-a2e8-43dd-b48b-e5e7e42d5e7c",
         "https://hrtm.nmsu.edu/about/about-us.html",
-        "https://100west.nmsu.edu"
+        "https://100west.nmsu.edu",
+        "https://map.nmsu.edu/?id=1888#!m/527462"
       ],
       "photos": [],
       "hours": [

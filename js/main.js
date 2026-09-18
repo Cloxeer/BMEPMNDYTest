@@ -236,17 +236,18 @@ async function loadTheRest(campusMap, sheet, search, settingsPage, buildingsById
   const entrances = files[2].entrances;
   const descriptions = files[3].descriptions;
 
-  // Every building gets its description; places (parks, food, parking) have none.
+  // Every building gets its description from descriptions.json. Parks and food places
+  // bring their own (in places.geojson); parking lots have none.
   for (const place of places) {
     place.description = descriptions[place.id] || [];
   }
 
   for (const place of newPlaces) {
+    if (!place.description) {
+      place.description = [];
+    }
     places.push(place);
     buildingsById[place.id] = place;
-  }
-  for (const place of newPlaces) {
-    place.description = [];
   }
   campusMap.addPlaces(newPlaces);
   sheet.redraw(); // the open sheet, now with its description

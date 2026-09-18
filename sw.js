@@ -10,7 +10,9 @@
  *                    update shows the next time the app opens ("stale while revalidate"),
  *                  - libraries and fonts from CDNs: the same,
  *                  - map tiles: the same, keeping at most MAX_TILES of them for a week, so
- *                    the phone's storage doesn't fill up.
+ *                    the phone's storage doesn't fill up,
+ *                  - building photos linked from NMSU's campus map: saved once, at most
+ *                    MAX_PHOTOS of them for a month (a photo never changes at the same address).
  *                Google's Workbox library does the caching work.
  * DEPENDS ON   : Workbox (loaded from Google's CDN below).
  * USED BY      : js/core/offline.js (registers it)
@@ -22,6 +24,8 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.3.0/workbox
 
 const MAX_TILES = 1500; // map tiles kept on the phone
 const TILE_DAYS = 7; // how long a saved tile is used before it's downloaded again
+const MAX_PHOTOS = 300; // building photos kept on the phone
+const PHOTO_DAYS = 30;
 const LIBRARY_HOSTS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com', 'storage.googleapis.com'];
 
 // Only answers with good responses are saved. Status 0 is a font or script from another site
@@ -48,6 +52,18 @@ workbox.routing.registerRoute(
     plugins: [
       goodAnswers,
       new workbox.expiration.ExpirationPlugin({ maxEntries: MAX_TILES, maxAgeSeconds: TILE_DAYS * 24 * 60 * 60 }),
+    ],
+  }),
+);
+
+// 4. Building photos on NMSU's campus map: the same address is always the same picture, so the saved one is used.
+workbox.routing.registerRoute(
+  ({ url }) => url.hostname === 'cms.concept3d.com',
+  new workbox.strategies.CacheFirst({
+    cacheName: 'nmsu-photos',
+    plugins: [
+      goodAnswers,
+      new workbox.expiration.ExpirationPlugin({ maxEntries: MAX_PHOTOS, maxAgeSeconds: PHOTO_DAYS * 24 * 60 * 60, purgeOnQuotaError: true }),
     ],
   }),
 );

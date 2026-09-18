@@ -136,6 +136,39 @@
 .bs-row dd { flex: 1; font-size: var(--sheet-body-size); color: var(--theme-text-strong); margin: 0; }
 .bs-link { display: inline-block; margin-top: var(--s2); font-size: var(--sheet-link-size); font-weight: var(--sheet-link-weight); color: var(--f7-theme-color); }
 .bs-link[hidden] { display: none; }
+
+/* A food place's card: the menu button stands out (full width, filled, the app's colour), hours below it. */
+.bs-food-card { margin-bottom: var(--s5); text-align: left; }
+.bs-food-card[hidden], .bs-menu-button[hidden], .bs-phone[hidden] { display: none; }
+.bs-menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s2);
+  height: var(--sheet-menu-button-height);
+  margin-bottom: var(--s4);
+  border-radius: var(--s3);
+  background: var(--f7-theme-color);
+  color: #fff;
+  font: 600 var(--sheet-menu-button-size) var(--theme-font);
+  text-decoration: none;
+}
+.bs-menu-button:active { filter: brightness(0.9); }
+.bs-menu-button .icon { font-size: var(--sheet-menu-button-size); }
+.bs-hours { list-style: none; margin: 0 0 var(--s3); padding: 0; }
+.bs-hours-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s1) var(--s3);
+  padding: var(--s2) 0;
+  border-bottom: 1px solid var(--theme-line-soft);
+}
+.bs-hours-row.is-today { font-weight: 600; }
+.bs-hours-days em { font-style: normal; color: var(--f7-theme-color); font-size: var(--sheet-label-size); margin-left: var(--s1); }
+.bs-hours-times { text-align: right; margin-left: auto; }
+.bs-hours-note { flex-basis: 100%; color: var(--theme-text-muted); font-size: var(--sheet-label-size); }
+.bs-phone { display: inline-block; font-weight: 600; color: var(--f7-theme-color); }
 /* Food inside a building: one small button each, like iOS chips. */
 .bs-food { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s3); }
 .bs-food[hidden] { display: none; }

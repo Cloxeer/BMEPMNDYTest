@@ -76,6 +76,7 @@ Four rules keep it predictable:
 | `js/logic/geo.js` | Distances in metres, "am I inside this building?" |
 | `js/logic/searchMatch.js` | What counts as a search match: room numbers, codes, small typos |
 | `js/logic/turns.js` | A route → the next turn, distances, time ("590 ft · Turn right onto the path") |
+| `js/logic/hours.js` | NMSU Dining's hours lines → tidy rows ("Mon – Thu · 7 AM – 3 PM"), and whether today is one of them |
 | `js/logic/routeMath.js` | Segment costs, nearest network point, where a route starts and ends |
 | **map** | |
 | `js/map/campusMap.js` | `CampusMap`: creates the map, flies to the chosen place, handles taps |
@@ -178,7 +179,8 @@ Every data file starts with a `"//"` entry: what the file is and how to format i
 
 | File | Made by | From |
 |---|---|---|
-| `data/buildings.geojson`, `building-shapes.geojson`, `descriptions.json` | `tools/build_buildings.py` | NMSU Space Planning buildings layer, NMSU Registrar codes, `data/source/photos.json`, `data/source/building-extras.json` |
+| `data/buildings.geojson`, `building-shapes.geojson`, `descriptions.json` | `tools/build_buildings.py` | NMSU Space Planning buildings layer, NMSU Registrar codes, NMSU's campus map (descriptions and photo links, via `tools/nmsu_map.py`), `data/source/photos.json`, `data/source/building-extras.json` |
+| `data/source/nmsu-map-locations.json` | `tools/nmsu_map.py` | Each building's, park's and food place's record on NMSU's campus map (map.nmsu.edu), copied word for word, once, one request every 4–9 s. The build tools read it instead of asking NMSU again |
 | `data/campuses.geojson`, `campus-labels.geojson`, `outside-mask.geojson` | `tools/build_campuses.py` | NMSU Space Planning campus boundaries + ground-lease parcels, OpenStreetMap golf course |
 | `data/places.geojson`, `place-shapes.geojson`, `parking-lots.geojson` | `tools/build_places.py` | Places that aren't buildings: parks (NMSU's campus map), food with its hours (NMSU Dining), and parking lots (NMSU Facilities GIS Parking layer, plus OpenStreetMap parking at NMSU properties that layer misses) |
 | `data/rooms.json` | `tools/build_rooms.py` (+ `tools/indoor_routes.py`) | Rooms on our floor plans (outlines + indoor routes) and rooms in NMSU's public class schedule (no floor or outline) |
@@ -186,6 +188,7 @@ Every data file starts with a `"//"` entry: what the file is and how to format i
 | `data/routes/walk.geojson`, `bike.geojson`, `drive.geojson` | `tools/build_routes.py` | OpenStreetMap paths and roads, sorted by their access tags; one-way streets kept for bikes and cars |
 | `data/floors/*.svg` | Hand-drawn | Evacuation maps posted in each building. Each plan has a compass, turned to match NMSU Space Planning's outline of that building (checked against the compass on the posted map) |
 | `data/photos/*.jpg` | Downloaded | Wikimedia Commons (licences in `data/source/photos.json`) |
+| Photos from NMSU's campus map | Linked, not copied | `imageUrl` / `thumbUrl` on each place's `photos`; the service worker keeps up to 300 on the phone |
 | `tools/json_files.py` | — | Writes every data file with its `"//"` note first |
 
 Which source wins when they disagree:

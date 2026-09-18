@@ -202,7 +202,9 @@ sheet:
   floorsLabel: "Floors"
   typeLabel: "Type"
   insideLabel: "Inside"
-  menuLinkText: "See the menu ↗"
+  menuButtonText: "See the menu"
+  todayText: "Today"
+  callText: "Call"
   foodHereText: "Food here:"
   hoursLabel: "Hours"
   phoneLabel: "Phone"
@@ -210,6 +212,8 @@ sheet:
   permitColorLabel: "Permit color"
   permitRuleLabel: "Who can park"
   floorCountText: "floor count"
+  builtYearText: "year built"
+  groundFloorOnlyText: "Ground floor (NMSU doesn't publish the number of floors)"
   codeSourceText: "Building code"
   factsSourceText: "Other facts: NMSU Office of Space Planning"
   descriptionSourceText: "Description"
@@ -236,6 +240,8 @@ sheet:
   bodySize: "14px"
   bodyLineHeight: 1.55
   chipHeight: "30px" # the small food buttons on a building's page
+  menuButtonHeight: "50px" # the big "See the menu" button on a food place's page
+  menuButtonSize: "17px"
   labelWidth: "80px"
   labelSize: "13px"
   linkSize: "14px"
@@ -422,6 +428,7 @@ locate:
 locations:
   acresText: "acres"
   iconSize: "20px" # the category icons on the Locations page
+  arrowSize: "15px" # the arrow that opens and closes each group
 
 settings:
   filtersTitle: "Map filters"
